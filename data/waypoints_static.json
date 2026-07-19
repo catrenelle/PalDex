@@ -1,0 +1,1370 @@
+[
+  {
+    "pointId": "WorldTree_MiddleBoss_1",
+    "instanceId": "F94B3D32-448028F2-4CE513B1-302ACC94",
+    "name": "Rotmist Root",
+    "x": 628791.56,
+    "y": -610720.44,
+    "z": 28290.314,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "WorldTree_MiddleBoss_3",
+    "instanceId": "5543641F-4C980A98-63F64685-A91FE619",
+    "name": "Forbidden Laboratory",
+    "x": 621794.3,
+    "y": -757914.56,
+    "z": 21127.602,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "WorldTree_MiddleBoss_2",
+    "instanceId": "EA56C74B-459DAB2F-5F596EA1-7049167A",
+    "name": "Shinespore Root",
+    "x": 405904.9,
+    "y": -729214.1,
+    "z": 22741.145,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "WorldTree_A",
+    "instanceId": "16B14E08-4BBB4C71-E9D07A9D-C84B80BD",
+    "name": "The Verdant Rootpath",
+    "x": 512111.75,
+    "y": -510662.66,
+    "z": 43480.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "WorldTree_E",
+    "instanceId": "D786C632-4A293AB1-560774B1-5B998290",
+    "name": "Alluvion Lakefront",
+    "x": 491660.0,
+    "y": -593705.0,
+    "z": 17375.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "WorldTree_D",
+    "instanceId": "9FDF4C7C-4CEB40E1-03E989A1-C34A245D",
+    "name": "Corroded Hollow",
+    "x": 600577.56,
+    "y": -599143.06,
+    "z": 29241.38,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "WorldTree_C_2",
+    "instanceId": "4B246295-4566096E-B1EB74A0-B48E5C5D",
+    "name": "Remnant Riverside",
+    "x": 592964.0,
+    "y": -625779.6,
+    "z": 17596.232,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "WorldTree_I",
+    "instanceId": "6FBBBA0F-4CDDB97C-81C58C91-7E8927BD",
+    "name": "Boreal Summit",
+    "x": 602911.06,
+    "y": -680562.44,
+    "z": 21863.082,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "WorldTree_lab",
+    "instanceId": "59D85766-4636366A-726EB39E-F372B315",
+    "name": "Abandoned Laboratory",
+    "x": 621850.0,
+    "y": -742575.0,
+    "z": 23205.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "WorldTree_N",
+    "instanceId": "83904860-4D716A58-A64781A9-A342B717",
+    "name": "Gilded City Ruins",
+    "x": 518900.25,
+    "y": -671976.2,
+    "z": 27418.047,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "WorldTree_LastBoss",
+    "instanceId": "A5664AB7-4E0D030D-03BF2DAF-87C67A0F",
+    "name": "Within the Seal",
+    "x": 501010.0,
+    "y": -748555.0,
+    "z": 41485.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "WorldTree_L",
+    "instanceId": "C5F1A3CA-46EAE25B-999783B3-ECC569ED",
+    "name": "Spore Cloister",
+    "x": 483205.0,
+    "y": -672790.0,
+    "z": 18210.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "WorldTree_M",
+    "instanceId": "630C0726-466D28CD-B94B368A-D12BFE63",
+    "name": "Lacrymal Shoal",
+    "x": 477460.0,
+    "y": -724635.0,
+    "z": 19817.887,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "WorldTree_C_1",
+    "instanceId": "D758455B-40BC4D1A-8ABB3EB6-2DD009D3",
+    "name": "Dusty Ravine",
+    "x": 570652.3,
+    "y": -558439.5,
+    "z": 22368.93,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "WorldTree_B",
+    "instanceId": "321E111B-4B7AA9D9-01864F87-404A70F2",
+    "name": "Whimsical Wisteria Grove",
+    "x": 524166.12,
+    "y": -567334.4,
+    "z": 25453.11,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "Boss_KingWhale",
+    "instanceId": "77699B11-460416B5-7ADEDFB9-89B78E68",
+    "name": "Deserted Islet",
+    "x": -108666.75,
+    "y": 79119.87,
+    "z": 395.50513,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "Boss_Forest",
+    "instanceId": "A51FC0C1-47435750-046C48B2-54793A8B",
+    "name": "Free Pal Alliance Tower Entrance",
+    "x": -265220.0,
+    "y": 173530.0,
+    "z": 5810.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint1",
+    "instanceId": "AECFED0D-41AFEE11-F30B4F96-87BC3243",
+    "name": "Mount Obsidian - Midpoint",
+    "x": -327531.78,
+    "y": -70410.55,
+    "z": 18970.016,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint3",
+    "instanceId": "5970E8E6-48D2A83A-FDFF7C91-51D9BEF5",
+    "name": "Eternal Pyre Tower Entrance",
+    "x": -367707.78,
+    "y": -114950.9,
+    "z": 61372.66,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint4",
+    "instanceId": "2EC07ACC-4505CB72-6DE38A84-246CA999",
+    "name": "Ancient Civilization Ruins",
+    "x": -414446.72,
+    "y": -24603.322,
+    "z": 3560.0862,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint5",
+    "instanceId": "5F426B49-469368B0-C131D3A6-DB8F7831",
+    "name": "Fisherman's Point",
+    "x": -465895.0,
+    "y": -62137.754,
+    "z": -1834.4438,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint6",
+    "instanceId": "F8E5CB81-43F4FA2F-6213E6B4-54569F87",
+    "name": "Mount Obsidian - Anubis Statue",
+    "x": -416557.53,
+    "y": -90012.16,
+    "z": 23301.867,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint7",
+    "instanceId": "01ACCA6E-4BDAA682-20821FB0-5AB54E4D",
+    "name": "Beach of Everlasting Summer",
+    "x": -383183.16,
+    "y": -210790.92,
+    "z": 819.818,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint9",
+    "instanceId": "65B10BB1-4ABDA9C2-109167B2-1901D195",
+    "name": "PIDF Tower Entrance",
+    "x": 29780.533,
+    "y": 406913.2,
+    "z": 15662.839,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint11",
+    "instanceId": "2BC5E460-49E69D35-49CFB589-48BE3288",
+    "name": "Sand Dunes Entrance",
+    "x": -50300.984,
+    "y": 287392.38,
+    "z": 264.78598,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint12",
+    "instanceId": "3697999C-458BF8A3-C7973382-969FBDF9",
+    "name": "Duneshelter",
+    "x": 35588.66,
+    "y": 321331.25,
+    "z": 623.0466,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint13",
+    "instanceId": "4669582D-4081BF55-0AFB66A0-5D043A3D",
+    "name": "Deep Sand Dunes",
+    "x": 117624.25,
+    "y": 400134.78,
+    "z": -1949.7037,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint14",
+    "instanceId": "DC0ECF92-41B4410C-59EE619F-56D1106A",
+    "name": "Cold Shore",
+    "x": -119037.29,
+    "y": 138340.36,
+    "z": -1220.292,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint15",
+    "instanceId": "71C4B2B2-407F2BBB-D77572A2-0C7FF0F5",
+    "name": "No Man's Trail",
+    "x": -80506.16,
+    "y": 141464.77,
+    "z": 8131.1357,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint16",
+    "instanceId": "EC94023A-4CA571FF-0FD19E90-944F4231",
+    "name": "Icy Weasel Hill",
+    "x": -39402.426,
+    "y": 159611.86,
+    "z": 16996.168,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint17",
+    "instanceId": "2A2B744B-41AC7996-4DAE6B89-CAC51FC3",
+    "name": "Unthawable Lake",
+    "x": 8000.5303,
+    "y": 111770.55,
+    "z": 2554.3777,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint18",
+    "instanceId": "22095BFA-48A46172-F8D154B2-EBEB7493",
+    "name": "Land of Absolute Zero",
+    "x": 102159.82,
+    "y": 48527.027,
+    "z": 28394.287,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint20",
+    "instanceId": "E0819EFB-41581AEA-C3A029B0-EE2FE195",
+    "name": "PAL Genetic Research Unit Tower Entrance",
+    "x": 89624.984,
+    "y": 94363.32,
+    "z": 67279.08,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "SkyIsland_BOSS",
+    "instanceId": "AEBCC3FF-41ACF925-2B3499A8-9E0BAD55",
+    "name": "Azure Covenant Tower Entrance",
+    "x": -777490.0,
+    "y": -40589.0,
+    "z": 60158.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "SkyIsland_D",
+    "instanceId": "26F321B4-4481BC01-C5174D9D-38409597",
+    "name": "The Azure Tapestry",
+    "x": -758105.0,
+    "y": -61810.0,
+    "z": 28905.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "SkyIsland_A",
+    "instanceId": "C2EC8AFD-4C5D84F8-14ED2E9E-54E498FC",
+    "name": "Enchanted Firmament",
+    "x": -818013.06,
+    "y": 59827.72,
+    "z": 46837.625,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "SkyIsland_E",
+    "instanceId": "0EBF6F3D-441ACA70-7517B9B7-BAA6590D",
+    "name": "Farcry Marsh",
+    "x": -771309.94,
+    "y": 8647.208,
+    "z": 43073.56,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "SkyIsland_B",
+    "instanceId": "714B5DDC-402A89D7-FC703C9B-0B2BF274",
+    "name": "Crystalline Archipelago",
+    "x": -829095.7,
+    "y": -19262.846,
+    "z": 37892.625,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "SkyIsland_C",
+    "instanceId": "B34E33AD-445D619D-70AD6BBD-BF7CDE4D",
+    "name": "Waterlily Gorge",
+    "x": -811466.56,
+    "y": -85874.31,
+    "z": 46247.586,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint8",
+    "instanceId": "CD9FE0D4-49087418-7ED9919D-0E4D2A09",
+    "name": "Ruined Fortress City",
+    "x": -237086.58,
+    "y": -100489.86,
+    "z": 515.7418,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint83",
+    "instanceId": "902C96F4-4BC84002-E39B52AC-BFC61452",
+    "name": "Feybreak Shipwreck",
+    "x": -798776.8,
+    "y": -479574.8,
+    "z": -2050.2622,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint63",
+    "instanceId": "4CCF456A-440C6CD5-F2347AAA-3E163F21",
+    "name": "Arena Entrance",
+    "x": -117215.02,
+    "y": 446689.97,
+    "z": -1887.2981,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint64",
+    "instanceId": "A136990F-4E2C1C96-C0384BA2-60CD0BC3",
+    "name": "Sakurajima - Mushroom Wetlands",
+    "x": -63520.734,
+    "y": -55005.938,
+    "z": -1731.8119,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint65",
+    "instanceId": "F1A1AB83-4E138B2A-938D0AA9-0E9A65E3",
+    "name": "Sakurajima - Southern Sandbar",
+    "x": -86709.57,
+    "y": -140441.75,
+    "z": -2030.9984,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint67",
+    "instanceId": "49C3516D-459F15C7-0ABEE88C-D7F4D331",
+    "name": "Moonflower Tower Entrance",
+    "x": -25522.21,
+    "y": -118365.34,
+    "z": 6257.67,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint68",
+    "instanceId": "1749FBB3-4126AB77-11670481-717C9FEC",
+    "name": "Cherry Blossom Crossroads",
+    "x": -25915.371,
+    "y": -78926.164,
+    "z": 3126.5598,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint69",
+    "instanceId": "C4D49492-4DAB97D9-E30AFB92-B6029307",
+    "name": "Sakurajima - Northern Rock Field",
+    "x": 32787.098,
+    "y": -81420.33,
+    "z": -2019.838,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint70",
+    "instanceId": "C808C584-4EB34E9E-DA773AA2-09CEBA01",
+    "name": "Secluded Cemetery",
+    "x": -2188.7988,
+    "y": -148545.86,
+    "z": 2988.4814,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint71",
+    "instanceId": "10F777FB-4B9BFA0C-AD790887-D87DDBC2",
+    "name": "Scorched Ashland",
+    "x": -503990.0,
+    "y": -214380.0,
+    "z": -1845.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint72",
+    "instanceId": "916CC961-42D38225-BD3C9290-D6321073",
+    "name": "Stone Pillar Cave Entrance",
+    "x": -588140.0,
+    "y": -253780.0,
+    "z": 695.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint73",
+    "instanceId": "DEAA0D38-438D8CF0-2BC7CC82-621B33B0",
+    "name": "Loess Plains",
+    "x": -792350.0,
+    "y": -251110.0,
+    "z": -558.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint74",
+    "instanceId": "F31B7801-4AD39541-85416DA1-55E50CCD",
+    "name": "Hidden Passage to the Oculus Gate",
+    "x": -698514.94,
+    "y": -322880.4,
+    "z": 15540.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint75",
+    "instanceId": "6D227CD3-475783FB-16D797B2-06DD8C13",
+    "name": "The Oculus Gate, Tower in Sight",
+    "x": -760285.44,
+    "y": -354966.22,
+    "z": 4290.4717,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint76",
+    "instanceId": "9521FEBF-4A6D0D02-AE9F80AE-9513B99C",
+    "name": "Feybreak Tower Entrance",
+    "x": -888080.0,
+    "y": -433080.0,
+    "z": 19030.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint78",
+    "instanceId": "72626BD0-492AD65E-59BDB499-C9BED99A",
+    "name": "Scorched Hill",
+    "x": -699510.0,
+    "y": -389030.0,
+    "z": 32620.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint79",
+    "instanceId": "6B05B93C-445473B5-A9597A90-CEBFF27B",
+    "name": "Deserted Ash Plateau",
+    "x": -591120.0,
+    "y": -484260.0,
+    "z": 6808.7915,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint80",
+    "instanceId": "3A84A3DD-43C34B93-6CE6F188-42A6FE1D",
+    "name": "Emberstone Plateau",
+    "x": -671901.25,
+    "y": -172407.56,
+    "z": -443.9525,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint81",
+    "instanceId": "23F4D1CB-454D1E23-F252C294-47F5A384",
+    "name": "Shield Dragon Tunnel",
+    "x": -572461.56,
+    "y": -287224.06,
+    "z": 26.334074,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint59",
+    "instanceId": "76B00091-4943BADD-C56BCFBA-E2BF051E",
+    "name": "Isle of Silence Church Ruins",
+    "x": -130060.375,
+    "y": -53406.69,
+    "z": 1715.6251,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint60",
+    "instanceId": "866881DB-443444AA-7F4E7C8E-5DCDAA29",
+    "name": "Marsh Island Church Ruins",
+    "x": -250506.48,
+    "y": 341109.6,
+    "z": 2293.3206,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint86",
+    "instanceId": "2EE8ACF4-47C0CFC2-C3C11E94-8E691448",
+    "name": "Isle of the Glacial Core",
+    "x": 168489.0,
+    "y": 221797.6,
+    "z": -2020.1418,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint85",
+    "instanceId": "CF5FAE4A-487231DD-D8487C9B-19453128",
+    "name": "Oasis Isle",
+    "x": -33882.15,
+    "y": 564292.5,
+    "z": -2106.5835,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint89",
+    "instanceId": "52E1E065-410F78AF-13B18CB1-136EC8D6",
+    "name": "Isle of Decayed Treasures",
+    "x": -197915.22,
+    "y": 438001.44,
+    "z": -2071.6843,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint84",
+    "instanceId": "E74D687D-4CAAF5EA-085E0B8A-76F8B652",
+    "name": "Sunlit Isle",
+    "x": -335853.84,
+    "y": 335361.28,
+    "z": -2090.0576,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint87",
+    "instanceId": "5669E366-45C97EE9-F38D3087-38ED30A7",
+    "name": "Frostbitten Isle",
+    "x": -558410.44,
+    "y": 121112.1,
+    "z": -1607.2306,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint90",
+    "instanceId": "F6AFBCDA-4D7AF6C3-73407DBC-8556FBAE",
+    "name": "Sealed Realm of Terraria",
+    "x": -488718.2,
+    "y": -35724.94,
+    "z": -2096.6929,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint88",
+    "instanceId": "27508F28-4B175C5C-2B9BFC85-AD773E4F",
+    "name": "Phantom Isle",
+    "x": -209326.02,
+    "y": -249227.56,
+    "z": -2089.9614,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint101",
+    "instanceId": "BD930697-4C7C85C4-B76B318D-2A397F4C",
+    "name": "Desiccated Coast",
+    "x": 14388.184,
+    "y": 476545.6,
+    "z": -1918.263,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint102",
+    "instanceId": "E8A85FF5-44C205E1-B04F7E93-109B8197",
+    "name": "Thirst's End",
+    "x": -71914.8,
+    "y": 472172.2,
+    "z": -2019.3085,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint103",
+    "instanceId": "825ED1AD-422E5E0C-94332C83-5B74D3B4",
+    "name": "Desert Backbone",
+    "x": -38212.004,
+    "y": 406147.06,
+    "z": 10096.222,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint104",
+    "instanceId": "4DA12CD4-49AA1A3D-B7C6CABF-9D6EA90D",
+    "name": "Sandbar of Solitude",
+    "x": -105662.5,
+    "y": 400797.0,
+    "z": 5159.2085,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint105",
+    "instanceId": "C94EC274-4732C721-BA614480-2FD11EC2",
+    "name": "The Furthest Flats",
+    "x": 191211.2,
+    "y": 375334.7,
+    "z": 964.78546,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint106",
+    "instanceId": "2913E38E-4924F762-AF9B1293-03898A31",
+    "name": "Seaward Passage",
+    "x": 178736.56,
+    "y": 305772.44,
+    "z": -1604.7367,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint107",
+    "instanceId": "C2A21FB1-48CA559F-48140296-37CEF75F",
+    "name": "Frozen Dune Cape",
+    "x": 125988.695,
+    "y": 274597.84,
+    "z": 752.6667,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint108",
+    "instanceId": "2F3A56DA-4022EB1E-43D3439E-CEE2AA2C",
+    "name": "Windwatch Outlook",
+    "x": 12156.847,
+    "y": 249201.39,
+    "z": 2949.056,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint113",
+    "instanceId": "04CB216B-487AD789-C47E2DBA-08B0B49F",
+    "name": "Thawtide Cape",
+    "x": 69604.09,
+    "y": 196989.27,
+    "z": 20218.293,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint114",
+    "instanceId": "211BCB17-4B47C566-C6F92E9C-EB999F98",
+    "name": "Garden Beneath the Astral Mountains",
+    "x": 107940.74,
+    "y": -28036.3,
+    "z": 24447.9,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint115",
+    "instanceId": "DD713763-4D024A8F-CFE6CB9F-08887F86",
+    "name": "Garden Beneath the Cliffs",
+    "x": -38097.316,
+    "y": 53412.523,
+    "z": 278.38712,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint116",
+    "instanceId": "341551F7-47D44FA8-4DB87F8C-8D2DCB48",
+    "name": "Sakurajima: West Coast",
+    "x": -43926.746,
+    "y": -173600.95,
+    "z": 934.47943,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint91",
+    "instanceId": "15BD61D9-481EE7F6-3CB32BB4-E10A05CA",
+    "name": "Isle of Murmurs Beach",
+    "x": -131353.92,
+    "y": 54481.742,
+    "z": -2063.9304,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint92",
+    "instanceId": "C5C2695D-4EA3C55C-419D7A8C-8D184631",
+    "name": "Anubis Dunes",
+    "x": -160345.17,
+    "y": 98540.79,
+    "z": 2792.7969,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "New_SmallIsland02",
+    "instanceId": "C1D34C6C-424DD841-00593493-6F590865",
+    "name": "Flamepulse Islet",
+    "x": 63442.54,
+    "y": 507395.38,
+    "z": -1871.3588,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "New_SmallIsland01",
+    "instanceId": "31078A16-494A996F-94DC1382-8638EAD4",
+    "name": "Islet of Circular Ruins",
+    "x": -153135.81,
+    "y": 589409.5,
+    "z": -2038.8029,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "New_SmallIsland03",
+    "instanceId": "4CE58457-4E74956A-7F94D68D-846F931D",
+    "name": "Scouring Islet",
+    "x": -451245.0,
+    "y": 363338.16,
+    "z": 12413.929,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "New_SmallIsland04",
+    "instanceId": "CE7CDCFA-48F15174-B4FCF49C-03F240ED",
+    "name": "Bicornis Islet",
+    "x": -984033.7,
+    "y": -371189.75,
+    "z": -2048.8804,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "New_SmallIsland05",
+    "instanceId": "33A82FD2-4431633F-5738F8AE-02FFAC42",
+    "name": "Glacial Memento Islet",
+    "x": -568698.6,
+    "y": -603451.94,
+    "z": -2010.9452,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "New_SmallIsland06",
+    "instanceId": "7A803ABD-4C208C8D-5C7EE197-C9D2AD65",
+    "name": "Sandstone Gate Islet",
+    "x": -426910.2,
+    "y": -436850.9,
+    "z": -134.47757,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "New_SmallIsland07",
+    "instanceId": "B5A9156C-4C3911FD-3A4FFA8F-807DD5A4",
+    "name": "Suncrest Islet",
+    "x": -61819.008,
+    "y": -246053.52,
+    "z": -1979.8654,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint112",
+    "instanceId": "618F02C5-46F19191-2D423986-85A2BBA2",
+    "name": "Heatwave Gate",
+    "x": -301681.94,
+    "y": -5184.112,
+    "z": 524.71594,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint93",
+    "instanceId": "B03880F3-4C398AEE-56A024B8-E510649D",
+    "name": "Whisperwind Cliffs",
+    "x": -266957.53,
+    "y": 93228.6,
+    "z": 5259.8403,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint94",
+    "instanceId": "F3C0FFDE-41C2BF4E-FD8A0689-86C6B02E",
+    "name": "Whisperwind Hill",
+    "x": -236840.52,
+    "y": 34772.58,
+    "z": 13438.904,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint95",
+    "instanceId": "37878F61-4B4EB008-307DBBBD-C7B79505",
+    "name": "Windscream Valley",
+    "x": -311508.88,
+    "y": 76832.29,
+    "z": 7803.8345,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint96",
+    "instanceId": "B0609E19-416F6731-E997F89C-F9B66A14",
+    "name": "Sea Breeze Coast",
+    "x": -421434.34,
+    "y": 29307.666,
+    "z": 1858.3652,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint109",
+    "instanceId": "4DB2FF94-4B1E545F-41FBC6AF-86BEBEB5",
+    "name": "Mount Obsidian - Second Ascent",
+    "x": -259198.7,
+    "y": -59353.414,
+    "z": 10128.573,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint110",
+    "instanceId": "837C6214-424040FC-EF9D48BA-20E248BA",
+    "name": "Mount Obsidian Trail",
+    "x": -287201.44,
+    "y": -217568.95,
+    "z": 2651.3833,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint111",
+    "instanceId": "20B16780-488A8F23-A80502BC-608A0192",
+    "name": "Dry Dunes",
+    "x": -415272.22,
+    "y": -162408.61,
+    "z": 14643.447,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint97",
+    "instanceId": "4667D690-47622BF7-A9FFD788-D24B6131",
+    "name": "Dustview Coast",
+    "x": -119900.85,
+    "y": 351109.22,
+    "z": -789.13727,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint98",
+    "instanceId": "C6A85419-4E8AF1B5-CEF381A1-A276CB92",
+    "name": "Altar of the Windcaller",
+    "x": -156482.23,
+    "y": 317415.3,
+    "z": -2033.7722,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint99",
+    "instanceId": "F3481071-4796CFCE-B04D7C8F-7B41493D",
+    "name": "Mossanda Inner Coast",
+    "x": -224958.11,
+    "y": 285919.22,
+    "z": -1124.7188,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint100",
+    "instanceId": "EC4896F4-4C4C9BD9-93DAE2B2-C1F31BBA",
+    "name": "Verdant Stream",
+    "x": -74928.58,
+    "y": 212787.06,
+    "z": 9490.945,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint117",
+    "instanceId": "FC8F024D-40741A13-3EB9DA88-201AE7F0",
+    "name": "Crimson Cliffs",
+    "x": -578061.0,
+    "y": -158216.08,
+    "z": 7648.4697,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint118",
+    "instanceId": "59AABD18-4966FE16-E9BA8EA0-BD0EFDED",
+    "name": "Hill Entrance",
+    "x": -509887.22,
+    "y": -299269.03,
+    "z": 718.595,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint119",
+    "instanceId": "CAC914F5-4EE678E0-9CF8ECA4-D81E60A0",
+    "name": "Curved Redrock",
+    "x": -506737.8,
+    "y": -396063.44,
+    "z": 2103.6282,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint120",
+    "instanceId": "A166CA6F-4C1D191A-A59951AD-1CA49A92",
+    "name": "Scarlet Outlook",
+    "x": -603491.1,
+    "y": -338965.25,
+    "z": 16584.988,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint121",
+    "instanceId": "4C1930B5-4689C382-5400F6B3-954FC07B",
+    "name": "Crimson Labyrinth",
+    "x": -651722.9,
+    "y": -373365.22,
+    "z": 30373.21,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint122",
+    "instanceId": "8C1EE640-439F980E-A6BA3D9B-256D4FAD",
+    "name": "Crystallized Great Tree",
+    "x": -644486.0,
+    "y": -276536.5,
+    "z": 11481.623,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint123",
+    "instanceId": "82C086DB-44672C9D-828F19B3-A383BE70",
+    "name": "Wildlands Floodgate",
+    "x": -725188.75,
+    "y": -238441.89,
+    "z": 7291.6997,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint124",
+    "instanceId": "69A3B9E6-4018BA4C-158BDDA7-CD713463",
+    "name": "Oilfield Overlook",
+    "x": -714540.9,
+    "y": -458346.56,
+    "z": -2080.5579,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint125",
+    "instanceId": "80729706-432E53B2-A3D07C82-D14C8749",
+    "name": "Shady Mushroom Cliffs",
+    "x": -771223.4,
+    "y": -441798.28,
+    "z": -337.43472,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint126",
+    "instanceId": "4618840B-4FE6381F-C6982AA5-282F9614",
+    "name": "Silent Lake",
+    "x": -810648.44,
+    "y": -393963.72,
+    "z": 5908.759,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint127",
+    "instanceId": "DC737674-4AEDB97B-BEB044AA-3AACAB26",
+    "name": "Azure Cliffs",
+    "x": -865524.3,
+    "y": -352355.03,
+    "z": -123.57442,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint128",
+    "instanceId": "F8841769-4DF90381-B2B21D9E-039B2CCD",
+    "name": "Amethyst Outcrop",
+    "x": -923275.1,
+    "y": -385109.12,
+    "z": -258.75784,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint129",
+    "instanceId": "B795E2B1-4189A7D1-EEAD6E97-E89C91B7",
+    "name": "Exile's Cape",
+    "x": -886234.25,
+    "y": -483745.94,
+    "z": -1122.6705,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FootOfWorldTree",
+    "instanceId": "0994C20A-46B5522F-E1709097-3C3C5452",
+    "name": "Foot of the World Tree",
+    "x": 192505.83,
+    "y": -227006.47,
+    "z": 6371.875,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint61",
+    "instanceId": "6DB6B7B2-431CA2EF-FFC88EB4-5805BA6A",
+    "name": "Bridge of the Twin Knights",
+    "x": -294830.0,
+    "y": 152240.0,
+    "z": 190.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint62",
+    "instanceId": "74270C2F-45B8DCA6-6B6A1FAA-A911D024",
+    "name": "Ravine Entrance",
+    "x": -319000.0,
+    "y": 127170.0,
+    "z": -2049.4475,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint49",
+    "instanceId": "41E36D9A-4B2BA79A-3AD1B7B8-3B16F77D",
+    "name": "Isle of Silence",
+    "x": -137210.0,
+    "y": -91340.0,
+    "z": -2090.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint50",
+    "instanceId": "F382ADAE-4259150B-F994FF87-3ECF242B",
+    "name": "Isle of Murmurs",
+    "x": -88645.85,
+    "y": -3922.8848,
+    "z": -876.45087,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint51",
+    "instanceId": "91DAC6F3-4D2A9FD7-F01471B5-166C6C02",
+    "name": "Kelpsea Hill",
+    "x": -170400.0,
+    "y": -29240.0,
+    "z": -1930.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint52",
+    "instanceId": "596996B9-48716D3F-D2283C8B-5C6E829C",
+    "name": "Sea Breeze Archipelago - Castaway Beach",
+    "x": -450320.0,
+    "y": 112630.0,
+    "z": -2090.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint53",
+    "instanceId": "3E8E504B-4A3975FD-3862E1BC-85A5D4F6",
+    "name": "Sea Breeze Archipelago Church",
+    "x": -376750.0,
+    "y": 124630.0,
+    "z": 2270.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint54",
+    "instanceId": "8CA5E977-4FF1BBC1-156ABCA0-9E616480",
+    "name": "Small Cove",
+    "x": -374180.0,
+    "y": 63960.0,
+    "z": -1933.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint55",
+    "instanceId": "7170881D-44249E90-902F728E-240493AF",
+    "name": "Islandhopper Coast",
+    "x": -265980.0,
+    "y": 268690.0,
+    "z": -1979.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint56",
+    "instanceId": "513E1660-44565A0B-D3360F94-142577E8",
+    "name": "Marsh Island",
+    "x": -282110.0,
+    "y": 355570.0,
+    "z": -1940.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint57",
+    "instanceId": "6231802D-40C81C00-445379AE-238D9F90",
+    "name": "Eastern Wild Island",
+    "x": -170718.69,
+    "y": 409753.16,
+    "z": 4049.16,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint58",
+    "instanceId": "F6C005A1-4B38FE0B-57F1C786-9FD899CB",
+    "name": "Natural Bridge",
+    "x": -221399.27,
+    "y": 330684.53,
+    "z": -1744.8054,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint41",
+    "instanceId": "15314BE9-4E2FB8D0-18D5749B-E9A318F0",
+    "name": "Cinnamoth Forest",
+    "x": -248770.11,
+    "y": 126205.84,
+    "z": 5847.363,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint42",
+    "instanceId": "DF9FB9CB-41B43052-A9C74FA7-9A826A50",
+    "name": "Sealed Realm of the Ardent",
+    "x": -338560.0,
+    "y": 107660.0,
+    "z": -1390.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint43",
+    "instanceId": "B44AA244-45864494-E7569597-ACCAEFC6",
+    "name": "Deep Bamboo Thicket",
+    "x": -215388.52,
+    "y": 8854.223,
+    "z": 13150.679,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint44",
+    "instanceId": "3A0F1239-47BE045B-C415C6B0-61A5285A",
+    "name": "Sealed Realm of the Myriad Flames",
+    "x": -195236.17,
+    "y": 36718.49,
+    "z": 8293.606,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint48",
+    "instanceId": "75BD9923-489E2A4E-BCED5A81-175D5928",
+    "name": "Pristine Snow Field",
+    "x": 6.0000005,
+    "y": -4.8830407E-05,
+    "z": 6588.961,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint25",
+    "instanceId": "23B9E99C-4A454B99-220AF7B4-A58FD8DE",
+    "name": "Ascetic Falls",
+    "x": -326403.84,
+    "y": 55136.727,
+    "z": 6871.9824,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint26",
+    "instanceId": "A1BC65AA-445619EF-338E0388-BC010648",
+    "name": "Foot of the Volcano",
+    "x": -349535.5,
+    "y": -4035.1057,
+    "z": 859.367,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint29",
+    "instanceId": "79C561B7-47335A7A-0A8FBF9F-AE280E62",
+    "name": "Sealed Realm of the Swordmaster",
+    "x": -283781.0,
+    "y": 59352.684,
+    "z": 5226.3853,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint30",
+    "instanceId": "B001852C-491FF5E7-0C4747BF-F9972924",
+    "name": "Investigator's Fork",
+    "x": -218636.78,
+    "y": 58528.145,
+    "z": 3716.1538,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint31",
+    "instanceId": "16C7164C-43E2B96B-EDCC6696-E2E592F7",
+    "name": "Ancient Ritual Site",
+    "x": -257951.39,
+    "y": 151247.84,
+    "z": -8.337428,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint32",
+    "instanceId": "28D514E7-4B51FD9E-B078A891-DB0787C2",
+    "name": "Mount Flopie Summit",
+    "x": -167684.92,
+    "y": 167519.23,
+    "z": 9175.596,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint33",
+    "instanceId": "F8DF603B-4C750B37-D943C9AF-6A911946",
+    "name": "Lake Center",
+    "x": -221230.0,
+    "y": 165130.0,
+    "z": -54.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint34",
+    "instanceId": "923B7813-45D2AB7E-CED6BABD-6E97ECE8",
+    "name": "Hypocrite Hill",
+    "x": -237610.0,
+    "y": 190610.0,
+    "z": 3987.783,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint35",
+    "instanceId": "ACAE5FB0-4D48DE41-97443E9C-0993086B",
+    "name": "Sealed Realm of the Mystic",
+    "x": -151842.0,
+    "y": 213101.45,
+    "z": 3279.4417,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint36",
+    "instanceId": "4D2F2045-49AB656C-A1EA4B8E-39C484F3",
+    "name": "Snowy Mountain Crossroads",
+    "x": -125476.0,
+    "y": 201720.0,
+    "z": 6886.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint37",
+    "instanceId": "1BDEABA2-40B16995-41C17F83-E59E61DF",
+    "name": "Frostbound Mountains Summit",
+    "x": -103434.984,
+    "y": 234761.17,
+    "z": 19438.463,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint38",
+    "instanceId": "A277AE63-41EF40D8-4D711EA5-2303353F",
+    "name": "Sealed Realm of the Swift",
+    "x": -115430.0,
+    "y": 289090.0,
+    "z": 3045.1614,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint39",
+    "instanceId": "2DE17020-48A1D4A8-2126168C-49BE51A9",
+    "name": "Mossanda Forest",
+    "x": -177770.0,
+    "y": 265010.0,
+    "z": 873.1743,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint40",
+    "instanceId": "BF8B1232-44ADB794-A06EA8A1-0503FBDD",
+    "name": "Gobfin's Turf",
+    "x": -219172.86,
+    "y": 226394.84,
+    "z": -1970.383,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint45",
+    "instanceId": "603ED0CD-4CFB9AFD-C9E11F80-5594CCE5",
+    "name": "Rayne Syndicate Tower Entrance",
+    "x": -317777.2,
+    "y": 212103.31,
+    "z": -762.5511,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint21",
+    "instanceId": "DDBBFFAF-43D9219A-E68DF987-44DF0831",
+    "name": "Grassy Behemoth Hills",
+    "x": -342035.0,
+    "y": 236885.0,
+    "z": -1751.6062,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint22",
+    "instanceId": "6282FE1E-4029EDCD-B14135AA-4C171E4C",
+    "name": "Desolate Church",
+    "x": -314840.0,
+    "y": 186850.0,
+    "z": 3270.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint23",
+    "instanceId": "6E03F846-4BAD9E45-8B843AA3-0BE1CC8F",
+    "name": "Hill of Beginnings",
+    "x": -358785.0,
+    "y": 267940.0,
+    "z": 7910.0,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint24",
+    "instanceId": "979BF204-4C8E8FE5-59B598A9-5A83EDE3",
+    "name": "Small Settlement",
+    "x": -346617.56,
+    "y": 191706.6,
+    "z": -308.70828,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint27",
+    "instanceId": "9FBB93D8-4811BE42-4A37C391-DBFBB476",
+    "name": "Sealed Realm of the Frozen Wings",
+    "x": -278468.03,
+    "y": 212679.42,
+    "z": -910.3164,
+    "icon": "T_icon_compass_FTtower.png"
+  },
+  {
+    "pointId": "FTPoint28",
+    "instanceId": "41727100-495D21DC-905D309C-53989914",
+    "name": "Fort Ruins",
+    "x": -302825.0,
+    "y": 241060.0,
+    "z": -1089.6859,
+    "icon": "T_icon_compass_FTtower.png"
+  }
+]

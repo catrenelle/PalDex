@@ -1,0 +1,200 @@
+[
+  {
+    "pointId": "WatchTower_WorldTree_1",
+    "instanceId": "47E04FF2-45A4FB6F-4E1E9C86-4ED8F2B0",
+    "name": "Dusty Ravine Watchtower",
+    "x": 564135.0,
+    "y": -574054.25,
+    "z": 37021.555,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_WorldTree_2",
+    "instanceId": "A9213E6E-425F2F69-6D8B3EB1-9AA547FE",
+    "name": "Gilded City Ruins Watchtower",
+    "x": 508240.53,
+    "y": -696869.5,
+    "z": 39688.38,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_3",
+    "instanceId": "D8C1A865-41DACA78-B1250AB9-B85B7E67",
+    "name": "Crescent Moon Shore Watchtower",
+    "x": -197246.98,
+    "y": 140509.75,
+    "z": 9963.954,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_11",
+    "instanceId": "0C0AF9F3-4C0491BC-AD80B1BF-355B9A98",
+    "name": "Deep Bamboo Thicket Watchtower",
+    "x": -194570.64,
+    "y": 14375.1,
+    "z": 17213.0,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_15",
+    "instanceId": "3BF1495E-406AD5F4-37DA5AA2-134954A2",
+    "name": "Dry Sandy Beach Watchtower",
+    "x": -440660.47,
+    "y": -159426.78,
+    "z": 15264.548,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_22",
+    "instanceId": "FD235A5B-4F02CD76-312A459D-77398CA6",
+    "name": "Sunreach Watchtower",
+    "x": -809414.25,
+    "y": 23955.219,
+    "z": 48140.3,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_1",
+    "instanceId": "11E3E3C4-4F040B34-E3809CB6-9CD87435",
+    "name": "Windswept Island Watchtower",
+    "x": -348065.06,
+    "y": 151660.97,
+    "z": 11552.678,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_2",
+    "instanceId": "58A29B81-4E069D61-EC75B1A6-E9658FC1",
+    "name": "Eastern Wild Island Watchtower",
+    "x": -192413.88,
+    "y": 393187.28,
+    "z": 11260.543,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_4",
+    "instanceId": "CCCD29E4-44CEB548-D5B5E589-DAF086F2",
+    "name": "Searing Dunes Watchtower",
+    "x": -30426.688,
+    "y": 364547.25,
+    "z": 9125.222,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_5",
+    "instanceId": "8A9AE3B4-4AD758ED-D7FE44BA-9B75000B",
+    "name": "Sandstone Plateau Watchtower",
+    "x": 85482.984,
+    "y": 306597.12,
+    "z": 17835.303,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_6",
+    "instanceId": "DEE0F8BB-4609C832-85CE6CA8-0B84B679",
+    "name": "Verdant Stream Watchtower",
+    "x": -169159.0,
+    "y": 251231.89,
+    "z": 18801.836,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_7",
+    "instanceId": "E9FC0844-4BFE7E3E-E6E06F84-AC8688EC",
+    "name": "Icy Weasel Hill Watchtower",
+    "x": -26445.188,
+    "y": 140098.22,
+    "z": 24138.191,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_8",
+    "instanceId": "84D48EA3-46661917-81868E80-9ACBCBCE",
+    "name": "Astral Mountains Garden Watchtower",
+    "x": 80120.2,
+    "y": 21277.258,
+    "z": 33828.99,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_9",
+    "instanceId": "EDE1AB2C-44B18468-79BB789C-3951B2F7",
+    "name": "Bamboo Groves Watchtower",
+    "x": -291317.66,
+    "y": 50195.65,
+    "z": 14675.524,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_10",
+    "instanceId": "4C204C38-42EAB210-A7A9DA9D-2CF9CBBE",
+    "name": "Sea Breeze Archipelago Watchtower",
+    "x": -428372.0,
+    "y": 81104.96,
+    "z": 2593.4348,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_12",
+    "instanceId": "F46296FF-4274FEDB-F32DC595-7835A18A",
+    "name": "Sakurajima Watchtower",
+    "x": -49811.684,
+    "y": -104909.195,
+    "z": 6064.368,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_13",
+    "instanceId": "E8351DF3-48B26867-2F0A2198-40C6BE47",
+    "name": "Scorched Obsidian Watchtower",
+    "x": -364381.7,
+    "y": -55619.266,
+    "z": 21182.738,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_18",
+    "instanceId": "6948B791-4C8D1701-DB7F4081-E4D970E5",
+    "name": "Burning Fault Watchtower",
+    "x": -627561.25,
+    "y": -208730.97,
+    "z": 20437.008,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_20",
+    "instanceId": "5FA6EB49-4384E413-4BAA589F-02A580DC",
+    "name": "Frozen Coral Hill Watchtower",
+    "x": -784793.9,
+    "y": -354726.72,
+    "z": 19680.756,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_17",
+    "instanceId": "328BCAC9-4E01988D-944C4F85-D49E457C",
+    "name": "Loess Plains Watchtower",
+    "x": -741294.8,
+    "y": -283378.06,
+    "z": 31715.244,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_19",
+    "instanceId": "C5E2ABA1-4A8F6D35-EF4A81AD-47EC19C9",
+    "name": "Scorched Plateau Watchtower",
+    "x": -629186.6,
+    "y": -425621.62,
+    "z": 29177.29,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  },
+  {
+    "pointId": "WatchTower_21",
+    "instanceId": "479A228C-4032AAF1-44B3808E-753E1690",
+    "name": "Arid Wasteland Watchtower",
+    "x": -634614.8,
+    "y": -310380.88,
+    "z": 34943.29,
+    "icon": "T_icon_compass_FTUnlockMap.png"
+  }
+]

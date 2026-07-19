@@ -1,0 +1,13 @@
+.venv/
+.git/
+__pycache__/
+*.pyc
+backend/secrets.py
+data/saves/
+data/extracted/
+data/players.json
+data/bases.json
+extractor/
+deploy/
+node_modules/
+server_run.log

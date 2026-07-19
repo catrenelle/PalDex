@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>PalDex - PalletTown01 Live Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  /* Matches the map textures' own void color (sampled from T_WorldMap.png
+     corners: rgb(13,22,30)) so the canvas edge doesn't cut hard to black. */
+  html, body, #map { height: 100%; margin: 0; background: #0d161e; }
+  #controls {
+    position: absolute; top: 10px; right: 10px; z-index: 1000;
+    background: rgba(20, 22, 26, 0.85); color: #ddd; font: 13px system-ui, sans-serif;
+    padding: 8px 12px; border-radius: 6px; text-align: right;
+  }
+  #status { white-space: nowrap; }
+  #offline-toggle-row { margin-top: 4px; }
+  #offline-toggle-row label { cursor: pointer; user-select: none; }
+  .player-label {
+    background: rgba(20, 22, 26, 0.85); color: #fff; font: 12px system-ui, sans-serif;
+    padding: 2px 6px; border-radius: 4px; white-space: nowrap; border: 1px solid #555;
+  }
+  .player-label.offline { opacity: 0.55; }
+
+  #legend {
+    position: absolute; top: 10px; left: 10px; bottom: 10px; z-index: 1000;
+    background: rgba(20, 22, 26, 0.9); color: #ddd; font: 13px system-ui, sans-serif;
+    border-radius: 6px; width: 230px; display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  #app-title {
+    font-size: 16px; font-weight: 700; color: #eee; margin: 0;
+    padding: 12px 12px 0; letter-spacing: 0.02em;
+  }
+  #app-title span { color: #6fa8dc; }
+  #legend h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em;
+    color: #9ab; margin: 0; padding: 10px 12px 6px;
+  }
+  #view-as-row { padding: 0 12px 10px; border-bottom: 1px solid #333; }
+  #view-as-row select {
+    width: 100%; background: #1a1d22; color: #eee; border: 1px solid #444;
+    border-radius: 4px; padding: 4px 6px; font: 13px system-ui, sans-serif;
+  }
+  #collection-note {
+    font-size: 11px; color: #d9a441; margin-top: 6px; line-height: 1.4;
+    display: none;
+  }
+  #collection-note.visible { display: block; }
+  #effigies-header {
+    display: flex; align-items: center; gap: 8px; padding: 10px 12px;
+    cursor: pointer; user-select: none;
+  }
+  #effigies-header:hover { background: rgba(255,255,255,0.05); }
+  #effigies-header .chevron {
+    font-size: 10px; color: #9ab; transition: transform 0.15s; width: 10px;
+  }
+  #effigies-header.expanded .chevron { transform: rotate(90deg); }
+  #effigies-header .section-title {
+    flex: 1; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: #9ab;
+  }
+  #effigies-header .rt-count { color: #9ab; font-size: 11px; }
+  #relic-type-list {
+    display: none; overflow-y: auto; flex: 1; padding: 4px 6px; border-top: 1px solid #333;
+  }
+  #relic-type-list.expanded { display: block; }
+  .relic-type-row {
+    display: flex; align-items: center; gap: 8px; padding: 4px 6px;
+    border-radius: 4px; cursor: pointer; user-select: none;
+  }
+  .relic-type-row:hover { background: rgba(255,255,255,0.06); }
+  .relic-type-row img { width: 24px; height: 24px; object-fit: contain; }
+  .relic-type-row .rt-label { flex: 1; }
+  .relic-type-row .rt-count { color: #9ab; font-size: 11px; }
+  .relic-marker { width: 22px; height: 22px; }
+  .relic-marker img {
+    /* !important: see the note on .boss-marker .portrait below - Leaflet's
+       own CSS otherwise forces width back to auto. */
+    width: 100% !important; height: 100% !important; object-fit: contain;
+    filter: drop-shadow(0 0 3px rgba(0,0,0,0.9));
+  }
+
+  /* Shared collapsible section header + checklist, reused by Bosses/Bounty. */
+  .section-header {
+    display: flex; align-items: center; gap: 8px; padding: 10px 12px;
+    cursor: pointer; user-select: none; border-top: 1px solid #333;
+  }
+  .section-header:hover { background: rgba(255,255,255,0.05); }
+  .section-header .chevron {
+    font-size: 10px; color: #9ab; transition: transform 0.15s; width: 10px;
+  }
+  .section-header.expanded .chevron { transform: rotate(90deg); }
+  .section-header .section-title {
+    flex: 1; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: #9ab;
+  }
+  .section-header .rt-count { color: #9ab; font-size: 11px; }
+  .type-list {
+    display: none; overflow-y: auto; max-height: 220px; padding: 4px 6px; border-top: 1px solid #333;
+  }
+  .type-list.expanded { display: block; }
+  .type-row {
+    display: flex; align-items: center; gap: 8px; padding: 4px 6px;
+    border-radius: 4px; cursor: pointer; user-select: none;
+  }
+  .type-row:hover { background: rgba(255,255,255,0.06); }
+  .type-row img { width: 24px; height: 24px; object-fit: contain; border-radius: 50%; }
+  .type-row.icon-square img { border-radius: 0; }
+  .type-row .rt-label { flex: 1; }
+  .type-row .rt-count { color: #9ab; font-size: 11px; }
+
+  .boss-marker, .bounty-marker, .oilrig-marker, .tower-marker, .journal-marker, .schematic-marker { display: flex; align-items: center; justify-content: center; }
+  .boss-marker .portrait, .bounty-marker .portrait, .oilrig-marker .portrait, .tower-marker .portrait, .journal-marker .portrait, .schematic-marker .portrait {
+    /* !important: Leaflet's own CSS (.leaflet-marker-pane img { width: auto })
+       outranks a plain ".foo-marker .portrait" selector on specificity (an
+       extra bare "img" beats our two classes) and forces width back to
+       auto/aspect-ratio-derived - invisible for the square boss/tower icons
+       this rule was written against, but it silently stretched the
+       non-square Journal note photos to ~1.8x their intended width before
+       this was caught. */
+    width: 30px !important; height: 30px !important; border-radius: 50%; border: 2px solid #fff;
+    box-shadow: 0 0 6px rgba(0,0,0,0.85); object-fit: cover; background: #222;
+  }
+  .bounty-marker .portrait { border-color: #c0392b; }
+  .oilrig-marker .portrait { border-color: #4a90d9; object-fit: contain; }
+  .tower-marker .portrait, .journal-marker .portrait, .schematic-marker .portrait {
+    border-radius: 0; border: none; background: transparent; object-fit: contain;
+    box-shadow: 0 0 4px rgba(0,0,0,0.9);
+  }
+  .boss-marker .level-badge, .bounty-marker .level-badge, .oilrig-marker .level-badge, .tower-marker .level-badge, .journal-marker .level-badge {
+    position: absolute; top: -4px; left: -4px; min-width: 15px; height: 15px;
+    padding: 0 2px; border-radius: 8px; background: #1a1d22; border: 1.5px solid #fff;
+    display: flex; align-items: center; justify-content: center;
+    font: 700 9px system-ui, sans-serif; color: #fff;
+  }
+  .boss-marker .defeated-check, .bounty-marker .defeated-check, .oilrig-marker .defeated-check, .tower-marker .defeated-check, .journal-marker .defeated-check, .schematic-marker .defeated-check {
+    position: absolute; bottom: -3px; right: -3px; width: 13px; height: 13px;
+    border-radius: 50%; background: #2ecc71; border: 1.5px solid #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; line-height: 1; color: #fff;
+  }
+
+  /* Watchtowers/Waypoints/Bases: on the game's own map these are greyed-out
+     silhouettes until unlocked/owned, full color after — a different visual
+     language from the checkmark badge used by Bosses/Bounty/Towers. Bases
+     use the same "dim" treatment for bases belonging to another guild. */
+  .watchtower-marker, .waypoint-marker, .base-marker { display: flex; align-items: center; justify-content: center; }
+  .watchtower-marker .portrait-wrap, .waypoint-marker .portrait-wrap, .base-marker .portrait-wrap {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  }
+  /* Layered drop-shadows fake a solid outline around the transparent-PNG
+     icons so they stay readable against any terrain color, regardless of
+     collected/not-collected state. */
+  .watchtower-marker .portrait, .waypoint-marker .portrait, .base-marker .portrait {
+    /* !important: see the same note on .boss-marker .portrait above - Leaflet's
+       own CSS otherwise forces width back to auto. Currently harmless here
+       (every icon these three sections use happens to be square) but keep it
+       honest rather than relying on that coincidence. */
+    width: 100% !important; height: 100% !important; object-fit: contain;
+    filter: drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000)
+      drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000)
+      drop-shadow(0 0 3px rgba(0,0,0,0.95));
+  }
+  .watchtower-marker .not-collected .portrait, .waypoint-marker .not-collected .portrait, .base-marker .not-collected .portrait {
+    /* The game's own compass icons for these are already near-monochrome
+       (white/pale blue), so grayscale(1) alone barely changes them —
+       darken too so "not yet unlocked"/"other guild" reads clearly against
+       the bright icon shown once collected (the black outline above keeps
+       it visible either way). */
+    filter: grayscale(1) brightness(0.45) drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000)
+      drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000)
+      drop-shadow(0 0 3px rgba(0,0,0,0.95));
+    opacity: 0.75;
+  }
+
+  .boss-tooltip .bt-name { font-weight: 700; }
+  .boss-tooltip .bt-line { color: #cde; }
+  .boss-tooltip .bt-weak { color: #f2b56b; }
+  .boss-tooltip .bt-preview { color: #9ab; font-style: italic; }
+
+  /* Leaflet's own default tooltip styling is a white box, dark (#222) text,
+     and white-space:nowrap - every tooltip on this map (Bosses/Towers/
+     Journals/etc.) was inheriting that unchanged, so our light text colors
+     above (#cde/#9ab/#f2b56b, chosen for a dark background) read as
+     low-contrast on white, and nowrap kept long lines (e.g. a Journal
+     preview) as one unbroken strip instead of wrapping - together making
+     text both hard to read and absurdly wide. Override to match the rest of
+     the UI's dark theme (same rgba(20,22,26,*) used by #legend/.player-label)
+     and let content actually wrap within a fixed max-width. */
+  .leaflet-tooltip:not(.player-label) {
+    /* An explicit width, not max-width: Leaflet positions tooltips purely
+       via CSS transform (no left/right), and Chromium's shrink-to-fit sizing
+       for an unconstrained absolutely-positioned element in that situation
+       collapses width down to its longest unbreakable word, ignoring
+       max-width entirely (confirmed empirically - raising max-width from
+       260px to 1000px made no difference, width stayed ~70-90px). An
+       explicit width sidesteps that shrink-to-fit computation altogether. */
+    background: rgba(20, 22, 26, 0.95); border: 1px solid #555; color: #eee;
+    white-space: normal; width: 220px; box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  }
+  #global-toggle-row {
+    padding: 8px 12px; border-top: 1px solid #333; flex-shrink: 0;
+    display: flex; gap: 8px;
+  }
+  #global-toggle-row button {
+    flex: 1; background: #1a1d22; color: #eee; border: 1px solid #444;
+    border-radius: 4px; padding: 6px; font: 13px system-ui, sans-serif;
+    cursor: pointer; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  #global-toggle-row button:hover { background: rgba(255,255,255,0.08); }
+
+  .leaflet-tooltip-top:before { border-top-color: rgba(20, 22, 26, 0.95); }
+  .leaflet-tooltip-bottom:before { border-bottom-color: rgba(20, 22, 26, 0.95); }
+  .leaflet-tooltip-left:before { border-left-color: rgba(20, 22, 26, 0.95); }
+  .leaflet-tooltip-right:before { border-right-color: rgba(20, 22, 26, 0.95); }
+</style>
+</head>
+<body>
+<div id="legend">
+  <div id="app-title">Pal<span>Dex</span></div>
+  <h2>View</h2>
+  <div id="view-as-row">
+    <select id="view-as-player">
+      <option value="">All players (no filter)</option>
+    </select>
+    <div id="collection-note">Couldn't load this player's save data (not found/parse error) — showing everything.</div>
+  </div>
+  <div id="watchtowers-header" class="section-header">
+    <span class="chevron">&#9656;</span>
+    <input type="checkbox" id="watchtowers-master-toggle" checked title="Show/hide all Watchtowers" />
+    <span class="section-title">Watchtowers</span>
+    <span id="watchtowers-total-count" class="rt-count"></span>
+  </div>
+  <div id="watchtower-type-list" class="type-list"></div>
+  <div id="waypoints-header" class="section-header">
+    <span class="chevron">&#9656;</span>
+    <input type="checkbox" id="waypoints-master-toggle" checked title="Show/hide all Waypoints" />
+    <span class="section-title">Waypoints</span>
+    <span id="waypoints-total-count" class="rt-count"></span>
+  </div>
+  <div id="waypoint-type-list" class="type-list"></div>
+  <div id="effigies-header">
+    <span class="chevron">&#9656;</span>
+    <input type="checkbox" id="effigies-master-toggle" checked title="Show/hide all effigies" />
+    <span class="section-title">Effigies</span>
+    <span id="effigies-total-count" class="rt-count"></span>
+  </div>
+  <div id="relic-type-list"></div>
+  <div id="journals-header" class="section-header">
+    <span class="chevron">&#9656;</span>
+    <input type="checkbox" id="journals-master-toggle" checked title="Show/hide all Journals" />
+    <span class="section-title">Journals</span>
+    <span id="journals-total-count" class="rt-count"></span>
+  </div>
+  <div id="journal-type-list" class="type-list"></div>
+  <div id="schematics-header" class="section-header">
+    <span class="chevron">&#9656;</span>
+    <input type="checkbox" id="schematics-master-toggle" checked title="Show/hide all Schematics" />
+    <span class="section-title">Schematics</span>
+    <span id="schematics-total-count" class="rt-count"></span>
+  </div>
+  <div id="schematic-type-list" class="type-list"></div>
+  <div id="bosses-header" class="section-header">
+    <span class="chevron">&#9656;</span>
+    <input type="checkbox" id="bosses-master-toggle" checked title="Show/hide all bosses" />
+    <span class="section-title">Bosses</span>
+    <span id="bosses-total-count" class="rt-count"></span>
+  </div>
+  <div id="boss-type-list" class="type-list"></div>
+  <div id="bounty-header" class="section-header">
+    <span class="chevron">&#9656;</span>
+    <input type="checkbox" id="bounty-master-toggle" checked title="Show/hide all bounty targets" />
+    <span class="section-title">Bounty</span>
+    <span id="bounty-total-count" class="rt-count"></span>
+  </div>
+  <div id="bounty-type-list" class="type-list"></div>
+  <div id="towers-header" class="section-header">
+    <span class="chevron">&#9656;</span>
+    <input type="checkbox" id="towers-master-toggle" checked title="Show/hide all Challenge Towers" />
+    <span class="section-title">Towers</span>
+    <span id="towers-total-count" class="rt-count"></span>
+  </div>
+  <div id="tower-type-list" class="type-list"></div>
+  <div id="bases-header" class="section-header">
+    <span class="chevron">&#9656;</span>
+    <input type="checkbox" id="bases-master-toggle" checked title="Show/hide guild bases" />
+    <span class="section-title">Bases</span>
+    <span id="bases-total-count" class="rt-count"></span>
+  </div>
+  <div id="base-type-list" class="type-list"></div>
+  <div id="oilrigs-header" class="section-header">
+    <span class="chevron">&#9656;</span>
+    <input type="checkbox" id="oilrigs-master-toggle" checked title="Show/hide oil rig raid zones" />
+    <span class="section-title">Oil Rigs</span>
+    <span id="oilrigs-total-count" class="rt-count"></span>
+  </div>
+  <div id="oilrig-type-list" class="type-list"></div>
+  <div id="global-toggle-row">
+    <button id="show-all-btn" type="button">Show All</button>
+    <button id="hide-all-btn" type="button">Hide All</button>
+  </div>
+</div>
+<div id="controls">
+  <div id="status">Loading...</div>
+  <div id="offline-toggle-row">
+    <label><input type="checkbox" id="offline-toggle" /> Show offline players</label>
+  </div>
+</div>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  // Must match backend/coord.py exactly. Leaflet renders a *higher* row
+  // (lat) value toward screen-top (confirmed empirically), so the Tree box
+  // — which should appear above the main map — needs the higher row range,
+  // while keeping the lower column range to stay on the left.
+  const MAIN_SIZE = 8192;
+  const TREE_SIZE = 1933;
+  const TREE_GAP = 200;
+  const TREE_ROW_OFFSET = MAIN_SIZE + TREE_GAP;
+  const MAIN_COL_OFFSET = TREE_SIZE + TREE_GAP;
+
+  const mainBounds = [[0, MAIN_COL_OFFSET], [MAIN_SIZE, MAIN_COL_OFFSET + MAIN_SIZE]];
+  const treeBounds = [[TREE_ROW_OFFSET, 0], [TREE_ROW_OFFSET + TREE_SIZE, TREE_SIZE]];
+  const combinedBounds = [[0, 0], [TREE_ROW_OFFSET + TREE_SIZE, MAIN_COL_OFFSET + MAIN_SIZE]];
+
+  const map = L.map('map', {
+    crs: L.CRS.Simple,
+    minZoom: -4,
+    maxZoom: 2,
+    zoomControl: false, // default topleft position clashes with #legend
+  });
+  L.control.zoom({ position: 'bottomright' }).addTo(map);
+  L.imageOverlay('/assets/map.png', mainBounds).addTo(map);
+  L.imageOverlay('/assets/tree.png', treeBounds).addTo(map);
+  map.fitBounds(combinedBounds);
+
+  function colorForUid(uid) {
+    let hash = 0;
+    for (const ch of uid) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
+    return `hsl(${hash % 360}, 80%, 65%)`;
+  }
+
+  // ---------- Players ----------
+  const markers = new Map(); // uid -> L.marker
+  const offlineToggle = document.getElementById('offline-toggle');
+  const viewAsSelect = document.getElementById('view-as-player');
+  let lastPlayerData = null;
+  let knownPlayerUids = new Set();
+
+  function renderPlayers() {
+    const data = lastPlayerData;
+    if (!data) return;
+
+    // Save-file data alone has no online flag (just "last known position at
+    // logout"); RCON's ShowPlayers gives the real online set. If RCON is
+    // unreachable (online_known false), show everyone rather than nothing.
+    const showOffline = offlineToggle.checked;
+    const visible = data.online_known
+      ? data.players.filter(p => p.online || showOffline)
+      : data.players;
+
+    const seen = new Set();
+    for (const p of visible) {
+      seen.add(p.uid);
+      const isOffline = data.online_known && !p.online;
+      // Leaflet CRS.Simple + imageOverlay(bounds=[[0,0],[H,W]]) takes
+      // [row, col] directly, matching image pixel space with no extra flip.
+      const latlng = [p.pixel_y, p.pixel_x];
+      const label = `${p.nickname}${p.level != null ? ' (Lv ' + p.level + ')' : ''}${isOffline ? ' (offline)' : ''}`;
+      const opacity = isOffline ? 0.5 : 1;
+      let marker = markers.get(p.uid);
+      const iconHtml = `<div style="width:14px;height:14px;border-radius:50%;background:${colorForUid(p.uid)};border:2px solid #fff;box-shadow:0 0 6px rgba(0,0,0,0.8);opacity:${opacity};"></div>`;
+      if (!marker) {
+        marker = L.marker(latlng, {
+          icon: L.divIcon({ className: '', html: iconHtml, iconSize: [14, 14] }),
+        }).addTo(map);
+        marker.bindTooltip(label, {
+          permanent: true, direction: 'right',
+          className: 'player-label' + (isOffline ? ' offline' : ''), offset: [8, 0],
+        });
+        markers.set(p.uid, marker);
+      } else {
+        marker.setLatLng(latlng);
+        marker.setIcon(L.divIcon({ className: '', html: iconHtml, iconSize: [14, 14] }));
+        marker.setTooltipContent(label);
+        const tooltipEl = marker.getTooltip()?.getElement();
+        if (tooltipEl) tooltipEl.classList.toggle('offline', isOffline);
+      }
+    }
+    for (const [uid, marker] of markers) {
+      if (!seen.has(uid)) {
+        map.removeLayer(marker);
+        markers.delete(uid);
+      }
+    }
+
+    const updated = data.updated_at ? new Date(data.updated_at).toLocaleTimeString() : '—';
+    const onlineCount = data.online_known ? data.players.filter(p => p.online).length : data.players.length;
+    const rconNote = data.online_known ? '' : ' (RCON unreachable — showing all)';
+    document.getElementById('status').textContent = `${onlineCount} online${rconNote} · updated ${updated}`;
+
+    // Populate the "View As" dropdown once per newly-seen player set.
+    const currentUids = new Set(data.players.map(p => p.uid));
+    let changed = currentUids.size !== knownPlayerUids.size;
+    if (!changed) for (const u of currentUids) if (!knownPlayerUids.has(u)) { changed = true; break; }
+    if (changed) {
+      knownPlayerUids = currentUids;
+      const selected = viewAsSelect.value;
+      viewAsSelect.innerHTML = '<option value="">All players (no filter)</option>';
+      for (const p of [...data.players].sort((a, b) => a.nickname.localeCompare(b.nickname))) {
+        const opt = document.createElement('option');
+        opt.value = p.uid;
+        opt.textContent = p.nickname;
+        viewAsSelect.appendChild(opt);
+      }
+      viewAsSelect.value = selected;
+    }
+  }
+
+  async function refreshPlayers() {
+    try {
+      const res = await fetch('/api/players', { cache: 'no-store' });
+      lastPlayerData = await res.json();
+    } catch (e) {
+      document.getElementById('status').textContent = 'Failed to reach server';
+      return;
+    }
+    renderPlayers();
+  }
+
+  offlineToggle.addEventListener('change', renderPlayers);
+  refreshPlayers();
+  setInterval(refreshPlayers, 10000);
+
+  // ---------- Relics (shown to the user as "Effigies") ----------
+  const relicMarkers = new Map(); // relic id -> L.marker
+  const visibleTypes = new Set(); // relic type keys currently shown
+  let relicData = null;
+
+  function renderRelics() {
+    if (!relicData) return;
+    const playerUid = viewAsSelect.value;
+    // Once a player is selected, hide effigies that player has already
+    // collected (backend/parse.py: RelicObtainForInstanceFlagByType).
+    const hidingCollected = !!playerUid && relicData.collection_known;
+    document.getElementById('collection-note').classList.toggle(
+      'visible', !!playerUid && !relicData.collection_known
+    );
+
+    const seen = new Set();
+    for (const r of relicData.relics) {
+      if (!visibleTypes.has(r.type)) continue;
+      if (hidingCollected && r.collected) continue;
+      seen.add(r.id);
+      const latlng = [r.pixel_y, r.pixel_x];
+      let marker = relicMarkers.get(r.id);
+      if (!marker) {
+        marker = L.marker(latlng, {
+          icon: L.divIcon({
+            className: 'relic-marker',
+            html: `<img src="/assets/relic_icons/${r.icon}" />`,
+            iconSize: [22, 22],
+          }),
+        }).addTo(map);
+        marker.bindTooltip(r.label, { direction: 'top' });
+        relicMarkers.set(r.id, marker);
+      } else if (!map.hasLayer(marker)) {
+        marker.addTo(map);
+      }
+    }
+    for (const [id, marker] of relicMarkers) {
+      if (!seen.has(id) && map.hasLayer(marker)) {
+        map.removeLayer(marker);
+      }
+    }
+  }
+
+  const countEls = new Map(); // type key -> .rt-count span
+  const effigiesHeader = document.getElementById('effigies-header');
+  const relicTypeList = document.getElementById('relic-type-list');
+  const masterToggle = document.getElementById('effigies-master-toggle');
+  const totalCountEl = document.getElementById('effigies-total-count');
+
+  function setEffigiesExpanded(expanded) {
+    effigiesHeader.classList.toggle('expanded', expanded);
+    relicTypeList.classList.toggle('expanded', expanded);
+    effigiesHeader.querySelector('.chevron').innerHTML = expanded ? '&#9662;' : '&#9656;';
+  }
+  effigiesHeader.addEventListener('click', (e) => {
+    if (e.target === masterToggle) return;
+    setEffigiesExpanded(!relicTypeList.classList.contains('expanded'));
+  });
+  setEffigiesExpanded(false); // default collapsed
+
+  function updateMasterToggle() {
+    const total = Object.keys(relicData?.types || {}).length;
+    const visibleCount = visibleTypes.size;
+    masterToggle.checked = visibleCount === total;
+    masterToggle.indeterminate = visibleCount > 0 && visibleCount < total;
+  }
+  masterToggle.addEventListener('click', (e) => e.stopPropagation());
+  masterToggle.addEventListener('change', () => {
+    const checked = masterToggle.checked;
+    masterToggle.indeterminate = false;
+    for (const cb of document.querySelectorAll('#relic-type-list input[type=checkbox]')) {
+      cb.checked = checked;
+      if (checked) visibleTypes.add(cb.dataset.type);
+      else visibleTypes.delete(cb.dataset.type);
+    }
+    renderRelics();
+  });
+
+  function buildLegend() {
+    const list = relicTypeList;
+    list.innerHTML = '';
+    countEls.clear();
+
+    for (const [typeKey, meta] of Object.entries(relicData.types)) {
+      visibleTypes.add(typeKey);
+      const row = document.createElement('label');
+      row.className = 'relic-type-row';
+      row.innerHTML = `
+        <input type="checkbox" checked data-type="${typeKey}" />
+        <img src="/assets/relic_icons/${meta.icon}" />
+        <span class="rt-label">${meta.label}</span>
+        <span class="rt-count"></span>
+      `;
+      row.querySelector('input').addEventListener('change', (e) => {
+        if (e.target.checked) visibleTypes.add(typeKey);
+        else visibleTypes.delete(typeKey);
+        updateMasterToggle();
+        renderRelics();
+      });
+      list.appendChild(row);
+      countEls.set(typeKey, row.querySelector('.rt-count'));
+    }
+    updateMasterToggle();
+    updateRelicCounts();
+  }
+
+  function updateRelicCounts() {
+    const totals = {};
+    const collected = {};
+    let totalAll = 0, collectedAll = 0;
+    for (const r of relicData.relics) {
+      totals[r.type] = (totals[r.type] || 0) + 1;
+      totalAll++;
+      if (r.collected) {
+        collected[r.type] = (collected[r.type] || 0) + 1;
+        collectedAll++;
+      }
+    }
+    for (const [typeKey, el] of countEls) {
+      const total = totals[typeKey] || 0;
+      el.textContent = relicData.collection_known ? `${collected[typeKey] || 0} / ${total}` : `${total}`;
+    }
+    totalCountEl.textContent = relicData.collection_known ? `${collectedAll} / ${totalAll}` : `${totalAll}`;
+  }
+
+  async function loadRelics({ rebuildLegend } = {}) {
+    const playerUid = viewAsSelect.value;
+    const url = playerUid ? `/api/relics?view_as=${encodeURIComponent(playerUid)}` : '/api/relics';
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      relicData = await res.json();
+    } catch (e) {
+      return;
+    }
+    if (rebuildLegend) buildLegend();
+    else updateRelicCounts();
+    renderRelics();
+  }
+
+  viewAsSelect.addEventListener('change', () => {
+    loadRelics(); loadBosses(); loadBounties(); loadTowers(); loadJournals(); loadSchematics(); loadWatchtowers(); loadWaypoints(); loadBases();
+  });
+  loadRelics({ rebuildLegend: true });
+
+  // ---------- Shared: collapsible "Bosses"/"Bounty"-style checklist section ----------
+  // Groups markers by `type_key` (species for Bosses, name for Bounty) into an
+  // expandable checklist, mirroring the Effigies section's UX.
+  function createTypeChecklistSection({
+    headerId, listId, masterToggleId, countId, markerClass, iconSize, sortByLevel, squareIcon,
+    iconDir = 'boss_icons', collectedField = 'defeated', knownFlagKey = 'defeat_known', visualStyle = 'checkmark',
+    collectedWord,
+  }) {
+    const header = document.getElementById(headerId);
+    const list = document.getElementById(listId);
+    const masterToggle = document.getElementById(masterToggleId);
+    const totalCountEl = document.getElementById(countId);
+    const visibleTypes = new Set();
+    const countEls = new Map(); // type_key -> .rt-count span
+    const markers = new Map(); // entry id -> L.marker
+    let data = null;
+
+    function setExpanded(expanded) {
+      header.classList.toggle('expanded', expanded);
+      list.classList.toggle('expanded', expanded);
+      header.querySelector('.chevron').innerHTML = expanded ? '&#9662;' : '&#9656;';
+    }
+    header.addEventListener('click', (e) => {
+      if (e.target === masterToggle) return;
+      setExpanded(!list.classList.contains('expanded'));
+    });
+    setExpanded(false);
+
+    function updateMasterToggle(total) {
+      const visibleCount = visibleTypes.size;
+      masterToggle.checked = visibleCount === total;
+      masterToggle.indeterminate = visibleCount > 0 && visibleCount < total;
+    }
+    masterToggle.addEventListener('click', (e) => e.stopPropagation());
+
+    function tooltipHtml(entry) {
+      const title = entry.boss_name ? `${entry.name} — ${entry.boss_name}`
+        : entry.guild_id ? `${entry.name} — Base` : entry.name;
+      const levelPart = entry.level != null ? ` (Lv ${entry.level})` : '';
+      const hardLine = entry.level_hard != null ? `<div class="bt-line">Hard: Lv ${entry.level_hard}</div>` : '';
+      const elLine = entry.elements?.length ? `<div class="bt-line">${entry.elements.join(' / ')}</div>` : '';
+      const weakLine = entry.weaknesses?.length ? `<div class="bt-weak">Weak to: ${entry.weaknesses.join(', ')}</div>` : '';
+      // Guild bases: as much guild context as the save data has.
+      const leaderLine = entry.guild_leader ? `<div class="bt-line">Leader: ${entry.guild_leader}</div>` : '';
+      const memberLine = entry.guild_member_count != null
+        ? `<div class="bt-line">${entry.guild_member_count} member${entry.guild_member_count === 1 ? '' : 's'}</div>` : '';
+      const word = collectedWord || (visualStyle === 'grayscale' ? 'Unlocked' : 'Defeated');
+      const collectedLine = entry[collectedField] ? `<div class="bt-line">✓ ${word}</div>` : '';
+      const approxLine = entry.position_exact === false ? '<div class="bt-line">(approximate location)</div>' : '';
+      const previewLine = entry.preview ? `<div class="bt-preview">${entry.preview}</div>` : '';
+      return `<div class="boss-tooltip"><div class="bt-name">${title}${levelPart}</div>${hardLine}${elLine}${weakLine}${leaderLine}${memberLine}${previewLine}${collectedLine}${approxLine}</div>`;
+    }
+
+    function markerHtml(entry) {
+      if (visualStyle === 'grayscale') {
+        // Only dim when we actually know the collection state for the
+        // selected player — with "All players (no filter)" selected there's
+        // no per-player save to check, so show full color rather than
+        // implying "not collected" for everything.
+        const cls = (data?.defeatKnown && !entry[collectedField]) ? ' not-collected' : '';
+        return `<div class="portrait-wrap${cls}"><img class="portrait" src="/assets/${iconDir}/${entry.icon}" /></div>`;
+      }
+      const checkHtml = entry[collectedField] ? '<div class="defeated-check">&#10003;</div>' : '';
+      const levelHtml = entry.level != null ? `<div class="level-badge">${entry.level}</div>` : '';
+      return `<div style="position:relative;"><img class="portrait" src="/assets/${iconDir}/${entry.icon}" />${levelHtml}${checkHtml}</div>`;
+    }
+
+    function render(entries) {
+      const seen = new Set();
+      for (const entry of entries) {
+        if (!visibleTypes.has(entry.type_key)) continue;
+        if (entry.has_position === false) continue; // e.g. Volcano Tower - no known location
+        seen.add(entry.id);
+        const latlng = [entry.pixel_y, entry.pixel_x];
+        const html = markerHtml(entry);
+        let marker = markers.get(entry.id);
+        if (!marker) {
+          marker = L.marker(latlng, {
+            icon: L.divIcon({ className: markerClass, html, iconSize: [iconSize, iconSize] }),
+          }).addTo(map);
+          marker.bindTooltip(tooltipHtml(entry), { direction: 'top' });
+          markers.set(entry.id, marker);
+        } else {
+          if (!map.hasLayer(marker)) marker.addTo(map);
+          marker.setIcon(L.divIcon({ className: markerClass, html, iconSize: [iconSize, iconSize] }));
+          marker.setTooltipContent(tooltipHtml(entry));
+        }
+      }
+      for (const [id, marker] of markers) {
+        if (!seen.has(id) && map.hasLayer(marker)) map.removeLayer(marker);
+      }
+    }
+
+    function buildList(entries, defeatKnown) {
+      list.innerHTML = '';
+      countEls.clear();
+      visibleTypes.clear();
+
+      const byType = new Map(); // type_key -> {icon, name, level, entries: []}
+      for (const entry of entries) {
+        let group = byType.get(entry.type_key);
+        if (!group) {
+          group = { icon: entry.icon, name: entry.name, level: entry.level, entries: [] };
+          byType.set(entry.type_key, group);
+        }
+        group.entries.push(entry);
+      }
+
+      const sortedGroups = sortByLevel
+        ? [...byType.entries()].sort((a, b) => (a[1].level ?? 0) - (b[1].level ?? 0) || a[1].name.localeCompare(b[1].name))
+        : [...byType.entries()].sort((a, b) => a[1].name.localeCompare(b[1].name));
+
+      for (const [typeKey, group] of sortedGroups) {
+        visibleTypes.add(typeKey);
+        const noLocation = group.entries.every(e => e.has_position === false);
+        const levelPrefix = sortByLevel && group.level != null ? `Lv ${group.level} ` : '';
+        const row = document.createElement('label');
+        row.className = 'type-row' + (squareIcon ? ' icon-square' : '');
+        row.innerHTML = `
+          <input type="checkbox" checked data-type="${typeKey}" />
+          <img src="/assets/${iconDir}/${group.icon}" />
+          <span class="rt-label">${levelPrefix}${group.name}${noLocation ? ' (no map location)' : ''}</span>
+          <span class="rt-count"></span>
+        `;
+        row.querySelector('input').addEventListener('change', (e) => {
+          if (e.target.checked) visibleTypes.add(typeKey);
+          else visibleTypes.delete(typeKey);
+          updateMasterToggle(byType.size);
+          render(data.entries);
+        });
+        list.appendChild(row);
+        countEls.set(typeKey, row.querySelector('.rt-count'));
+      }
+      updateMasterToggle(byType.size);
+      updateCounts(entries, defeatKnown);
+    }
+
+    function updateCounts(entries, defeatKnown) {
+      const totals = new Map();
+      const defeated = new Map();
+      let totalAll = 0, defeatedAll = 0;
+      for (const entry of entries) {
+        totals.set(entry.type_key, (totals.get(entry.type_key) || 0) + 1);
+        totalAll++;
+        if (entry[collectedField]) {
+          defeated.set(entry.type_key, (defeated.get(entry.type_key) || 0) + 1);
+          defeatedAll++;
+        }
+      }
+      for (const [typeKey, el] of countEls) {
+        const total = totals.get(typeKey) || 0;
+        el.textContent = defeatKnown ? `${defeated.get(typeKey) || 0} / ${total}` : `${total}`;
+      }
+      totalCountEl.textContent = defeatKnown ? `${defeatedAll} / ${totalAll}` : `${totalAll}`;
+    }
+
+    masterToggle.addEventListener('change', () => {
+      const checked = masterToggle.checked;
+      masterToggle.indeterminate = false;
+      for (const cb of list.querySelectorAll('input[type=checkbox]')) {
+        cb.checked = checked;
+        if (checked) visibleTypes.add(cb.dataset.type);
+        else visibleTypes.delete(cb.dataset.type);
+      }
+      if (data) render(data.entries);
+    });
+
+    return {
+      async load(url, entriesKey, { rebuildList }) {
+        try {
+          const res = await fetch(url, { cache: 'no-store' });
+          const json = await res.json();
+          data = { entries: json[entriesKey], defeatKnown: json[knownFlagKey] };
+        } catch (e) {
+          return;
+        }
+        if (rebuildList) buildList(data.entries, data.defeatKnown);
+        else updateCounts(data.entries, data.defeatKnown);
+        render(data.entries);
+      },
+    };
+  }
+
+  // ---------- Bosses (Pal field bosses, e.g. Penking) ----------
+  const bossSection = createTypeChecklistSection({
+    headerId: 'bosses-header', listId: 'boss-type-list', masterToggleId: 'bosses-master-toggle',
+    countId: 'bosses-total-count', markerClass: 'boss-marker', iconSize: 30, sortByLevel: true,
+  });
+
+  async function loadBosses({ rebuildList } = {}) {
+    const playerUid = viewAsSelect.value;
+    const url = playerUid ? `/api/bosses?view_as=${encodeURIComponent(playerUid)}` : '/api/bosses';
+    await bossSection.load(url, 'bosses', { rebuildList });
+  }
+
+  loadBosses({ rebuildList: true });
+
+  // ---------- Bounty (named human "boss" NPCs, e.g. "Scoot") ----------
+  const bountySection = createTypeChecklistSection({
+    headerId: 'bounty-header', listId: 'bounty-type-list', masterToggleId: 'bounty-master-toggle',
+    countId: 'bounty-total-count', markerClass: 'bounty-marker', iconSize: 30, sortByLevel: true,
+  });
+
+  async function loadBounties({ rebuildList } = {}) {
+    const playerUid = viewAsSelect.value;
+    const url = playerUid ? `/api/bounties?view_as=${encodeURIComponent(playerUid)}` : '/api/bounties';
+    await bountySection.load(url, 'targets', { rebuildList });
+  }
+
+  loadBounties({ rebuildList: true });
+
+  // ---------- Towers (8 Challenge Towers, e.g. "Rayne Syndicate Tower") ----------
+  const towerSection = createTypeChecklistSection({
+    headerId: 'towers-header', listId: 'tower-type-list', masterToggleId: 'towers-master-toggle',
+    countId: 'towers-total-count', markerClass: 'tower-marker', iconSize: 30,
+    sortByLevel: true, squareIcon: true,
+  });
+
+  async function loadTowers({ rebuildList } = {}) {
+    const playerUid = viewAsSelect.value;
+    const url = playerUid ? `/api/towers?view_as=${encodeURIComponent(playerUid)}` : '/api/towers';
+    await towerSection.load(url, 'towers', { rebuildList });
+  }
+
+  loadTowers({ rebuildList: true });
+
+  // ---------- Journals (collectible lore Notes, e.g. "Castaway's Journal") ----------
+  const journalSection = createTypeChecklistSection({
+    headerId: 'journals-header', listId: 'journal-type-list', masterToggleId: 'journals-master-toggle',
+    countId: 'journals-total-count', markerClass: 'journal-marker', iconSize: 26, squareIcon: true,
+    iconDir: 'note_icons', collectedField: 'collected', knownFlagKey: 'collection_known',
+    collectedWord: 'Read',
+  });
+
+  async function loadJournals({ rebuildList } = {}) {
+    const playerUid = viewAsSelect.value;
+    const url = playerUid ? `/api/notes?view_as=${encodeURIComponent(playerUid)}` : '/api/notes';
+    await journalSection.load(url, 'notes', { rebuildList });
+  }
+
+  loadJournals({ rebuildList: true });
+
+  // ---------- Schematics (one-time Ancient Shrine terminal pickups, e.g.
+  // "Old Revolver Schematic 2") — no compass/map icon in-game, unlike
+  // Watchtowers/Waypoints, so this uses the checkmark style (like Journals/
+  // Towers) rather than grayscale. Each of the 106 rows is its own unique
+  // location (1:1, like Towers/Oil Rigs), so type_key is just the entry's
+  // own id — one checklist row per Schematic. The Dog Coin bonus reuses the
+  // generic `preview` tooltip line Journals already introduced.
+  const schematicSection = createTypeChecklistSection({
+    headerId: 'schematics-header', listId: 'schematic-type-list', masterToggleId: 'schematics-master-toggle',
+    countId: 'schematics-total-count', markerClass: 'schematic-marker', iconSize: 26, squareIcon: true,
+    iconDir: 'schematic_icons', collectedField: 'collected', knownFlagKey: 'collection_known',
+    collectedWord: 'Collected',
+  });
+
+  async function loadSchematics({ rebuildList } = {}) {
+    const playerUid = viewAsSelect.value;
+    const url = playerUid ? `/api/schematics?view_as=${encodeURIComponent(playerUid)}` : '/api/schematics';
+    await schematicSection.load(url, 'schematics', { rebuildList });
+  }
+
+  loadSchematics({ rebuildList: true });
+
+  // ---------- Oil Rigs (raid zones, not bosses — no per-player state) ----------
+  const oilrigSection = createTypeChecklistSection({
+    headerId: 'oilrigs-header', listId: 'oilrig-type-list', masterToggleId: 'oilrigs-master-toggle',
+    countId: 'oilrigs-total-count', markerClass: 'oilrig-marker', iconSize: 30,
+  });
+
+  async function loadOilrigs({ rebuildList } = {}) {
+    await oilrigSection.load('/api/oilrigs', 'zones', { rebuildList });
+  }
+
+  loadOilrigs({ rebuildList: true });
+
+  // ---------- Watchtowers / Waypoints (fast-travel points) ----------
+  // Greyed out until unlocked, full color after (visualStyle: 'grayscale'),
+  // unlike the checkmark badge used by Bosses/Bounty/Towers above.
+  const watchtowerSection = createTypeChecklistSection({
+    headerId: 'watchtowers-header', listId: 'watchtower-type-list', masterToggleId: 'watchtowers-master-toggle',
+    countId: 'watchtowers-total-count', markerClass: 'watchtower-marker', iconSize: 36,
+    iconDir: 'fasttravel_icons', collectedField: 'collected', knownFlagKey: 'collection_known',
+    visualStyle: 'grayscale',
+  });
+
+  async function loadWatchtowers({ rebuildList } = {}) {
+    const playerUid = viewAsSelect.value;
+    const url = playerUid ? `/api/watchtowers?view_as=${encodeURIComponent(playerUid)}` : '/api/watchtowers';
+    await watchtowerSection.load(url, 'points', { rebuildList });
+  }
+
+  loadWatchtowers({ rebuildList: true });
+
+  const waypointSection = createTypeChecklistSection({
+    headerId: 'waypoints-header', listId: 'waypoint-type-list', masterToggleId: 'waypoints-master-toggle',
+    countId: 'waypoints-total-count', markerClass: 'waypoint-marker', iconSize: 30,
+    iconDir: 'fasttravel_icons', collectedField: 'collected', knownFlagKey: 'collection_known',
+    visualStyle: 'grayscale',
+  });
+
+  async function loadWaypoints({ rebuildList } = {}) {
+    const playerUid = viewAsSelect.value;
+    const url = playerUid ? `/api/waypoints?view_as=${encodeURIComponent(playerUid)}` : '/api/waypoints';
+    await waypointSection.load(url, 'points', { rebuildList });
+  }
+
+  loadWaypoints({ rebuildList: true });
+
+  // ---------- Bases (guild-owned bases, read live from Level.sav) ----------
+  // Same dim-vs-full-color language as Watchtowers/Waypoints, but "collected"
+  // here means "belongs to the viewed player's guild" (own_guild) rather
+  // than a per-instance unlock flag — bases belonging to other guilds are
+  // dimmed, the viewed player's own guild's bases stay full color, and with
+  // no player selected every base shows full color (guild ownership unknown).
+  const baseSection = createTypeChecklistSection({
+    headerId: 'bases-header', listId: 'base-type-list', masterToggleId: 'bases-master-toggle',
+    countId: 'bases-total-count', markerClass: 'base-marker', iconSize: 32,
+    iconDir: 'base_icons', collectedField: 'own_guild', knownFlagKey: 'guild_known',
+    visualStyle: 'grayscale', squareIcon: true, collectedWord: 'Your Guild',
+  });
+
+  async function loadBases({ rebuildList } = {}) {
+    const playerUid = viewAsSelect.value;
+    const url = playerUid ? `/api/bases?view_as=${encodeURIComponent(playerUid)}` : '/api/bases';
+    await baseSection.load(url, 'bases', { rebuildList });
+  }
+
+  loadBases({ rebuildList: true });
+
+  // ---------- Global "Show All" / "Hide All" ----------
+  // Every section (Effigies' bespoke checkbox + every createTypeChecklistSection
+  // instance) already has its own master-toggle checkbox that flips all of
+  // that section's sub-type rows on/off and re-renders — this just drives
+  // all of them at once via their existing 'change' handlers rather than
+  // duplicating that toggle/re-render logic here.
+  const ALL_MASTER_TOGGLE_IDS = [
+    'watchtowers-master-toggle', 'waypoints-master-toggle', 'effigies-master-toggle',
+    'journals-master-toggle', 'schematics-master-toggle', 'bosses-master-toggle',
+    'bounty-master-toggle', 'towers-master-toggle', 'bases-master-toggle', 'oilrigs-master-toggle',
+  ];
+  function setAllSections(checked) {
+    for (const id of ALL_MASTER_TOGGLE_IDS) {
+      const cb = document.getElementById(id);
+      if (cb.checked !== checked) {
+        cb.checked = checked;
+        cb.dispatchEvent(new Event('change'));
+      }
+    }
+  }
+  document.getElementById('show-all-btn').addEventListener('click', () => setAllSections(true));
+  document.getElementById('hide-all-btn').addEventListener('click', () => setAllSections(false));
+</script>
+</body>
+</html>

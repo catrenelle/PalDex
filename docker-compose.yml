@@ -1,0 +1,22 @@
+services:
+  paldex:
+    build: .
+    image: paldex:latest
+    restart: unless-stopped
+    ports:
+      - "30024:5151"
+    environment:
+      - RCON_PASSWORD=${RCON_PASSWORD}
+      - AMP_HOST=${AMP_HOST}
+      - AMP_USER=${AMP_USER}
+      - AMP_SAVE_ROOT=${AMP_SAVE_ROOT}
+      - AMP_WORLD_GUID=${AMP_WORLD_GUID}
+    volumes:
+      # Seeded from the image's baked-in data/ (static schematics/relics/etc.
+      # JSON) on first run, then persists the live-refreshed players.json,
+      # bases.json, and data/saves/ save-file cache across restarts.
+      - paldex_data:/app/data
+      - ${PALDEX_SSH_KEY_HOST_PATH:-./deploy/paldex_deploy_key}:/run/secrets/paldex_ssh_key:ro
+
+volumes:
+  paldex_data:

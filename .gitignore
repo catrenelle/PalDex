@@ -1,0 +1,15 @@
+.venv/
+data/saves/
+data/extracted/
+data/players.json
+data/bases.json
+__pycache__/
+*.pyc
+backend/secrets.py
+deploy/paldex_deploy_key
+deploy/paldex_deploy_key.pub
+deploy/.env
+node_modules/
+extractor/PalExtract/bin/
+extractor/PalExtract/obj/
+server_run.log

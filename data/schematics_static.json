@@ -1,0 +1,1062 @@
+[
+  {
+    "id": "D_OldRevolver",
+    "name": "Old Revolver Schematic 2",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "486837A0-436F0097-FD509395-FE1B32C3",
+    "x": -153259.47,
+    "y": 200653.2,
+    "z": 11604.734
+  },
+  {
+    "id": "I_HCHP",
+    "name": "Vanguard Charm Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "4BDB51A6-4A259844-E547629A-BB44EAEE",
+    "x": -513854.3,
+    "y": -216288.66,
+    "z": -875.78674
+  },
+  {
+    "id": "J_SuperJumpAir_2",
+    "name": "Air Walker EX Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "5955BF10-4CA6A3C0-EA1C5E8A-7AC0FBB5",
+    "x": -750547.7,
+    "y": 20549.383,
+    "z": 41712.3
+  },
+  {
+    "id": "J_PPAT",
+    "name": "Dogen Emblem Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "18DB34AC-4E66C596-D878CB98-FE190F40",
+    "x": -814772.6,
+    "y": 20300.047,
+    "z": 42495.37
+  },
+  {
+    "id": "J_Launcher",
+    "name": "Applied Mining Handbook I",
+    "icon": "T_itemicon_WorkSuitability_AddTicket_Mining.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "5191490C-4E52590D-75E73EB7-C6228A86",
+    "x": -793159.5,
+    "y": -54318.605,
+    "z": 26565.688
+  },
+  {
+    "id": "B_Musket",
+    "name": "Musket Schematic 3",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "8C2E26FC-4BF24220-8125EC80-18BDC020",
+    "x": -380577.62,
+    "y": 31263.764,
+    "z": -139.06256
+  },
+  {
+    "id": "B_ElementBoost_Water",
+    "name": "Water Support Whistle Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "521F2896-43D5CCD6-4229639D-8DE14266",
+    "x": -266974.94,
+    "y": 15169.333,
+    "z": 4846.3345
+  },
+  {
+    "id": "B_ElementBoost_Normal",
+    "name": "Neutral Support Whistle Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "F3925FF9-4518D3C2-197C8BB0-3BEF75EB",
+    "x": -330105.16,
+    "y": 81369.68,
+    "z": -2020.0162
+  },
+  {
+    "id": "B_CoolResist",
+    "name": "Thermal Undershirt Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "A151B666-4641FCDC-6D9FD8BC-7292D8A5",
+    "x": -82055.13,
+    "y": 33486.035,
+    "z": -1084.6221
+  },
+  {
+    "id": "B_AquaResist",
+    "name": "Ring of Water Resistance Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "91949CFB-4F1FA919-5B478FBA-EB04BB67",
+    "x": -144250.44,
+    "y": -69065.6,
+    "z": -1485.4269
+  },
+  {
+    "id": "C_DarkResist",
+    "name": "Ring of Dark Resistance Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "8965E4E5-44F56B34-185A38AE-2B588922",
+    "x": -196055.92,
+    "y": 166946.86,
+    "z": -2054.7852
+  },
+  {
+    "id": "D_ElementBoost_Ice",
+    "name": "Ice Support Whistle Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "6B02629A-4BAD4FD8-EC1C1887-63737DCC",
+    "x": -47888.246,
+    "y": 224852.0,
+    "z": 2418.1235
+  },
+  {
+    "id": "D_LeafResist",
+    "name": "Ring of Grass Resistance Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "6E59AE55-42523743-24D4B1AF-CBCBAFA2",
+    "x": -277726.06,
+    "y": 296465.88,
+    "z": -582.0089
+  },
+  {
+    "id": "E_EarthResist",
+    "name": "Ring of Ground Resistance Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "A913D3E3-4A36F851-D67C48BC-D9736E18",
+    "x": -77606.38,
+    "y": 393655.2,
+    "z": 575.3603
+  },
+  {
+    "id": "E_SemiAutoShotgun",
+    "name": "Semi-Auto Shotgun Schematic 2",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "500A129A-4CBC297A-210DA793-CB9FAFAB",
+    "x": 202991.36,
+    "y": 336967.03,
+    "z": -48.732437
+  },
+  {
+    "id": "E_HeatColdResist",
+    "name": "Multiclimate Undershirt Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "AABB4F96-42E9CF1C-6D4987A1-74C32670",
+    "x": 15839.171,
+    "y": 435799.3,
+    "z": 9368.694
+  },
+  {
+    "id": "E_Katana",
+    "name": "Applied Transporting Handbook I",
+    "icon": "T_itemicon_WorkSuitability_AddTicket_Transport.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "61080B26-4712981B-B1FBF899-D13A3B1D",
+    "x": 4145.587,
+    "y": 296633.06,
+    "z": 9649.078
+  },
+  {
+    "id": "F_ElementBoost_Fire",
+    "name": "Fire Support Whistle Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "A6E89341-4A0B2D53-A9E9FEAD-1E1EB19E",
+    "x": -379938.56,
+    "y": -44639.45,
+    "z": 8533.775
+  },
+  {
+    "id": "F_FireResist",
+    "name": "Ring of Fire Resistance Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "0FF6EDD7-482B2449-49D4AFB0-21BC4BAA",
+    "x": -320578.1,
+    "y": -122854.016,
+    "z": 18493.775
+  },
+  {
+    "id": "G_DFIce_ElementBoost",
+    "name": "Frostallion's Talisman Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+35 Dog Coin",
+    "instanceId": "90A38481-4FA6BE10-32B1FD84-6ACB7C8A",
+    "x": -42420.195,
+    "y": 112232.31,
+    "z": 22558.568
+  },
+  {
+    "id": "G_DFDark_ElementBoost",
+    "name": "Lyleen Noct's Talisman Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+35 Dog Coin",
+    "instanceId": "C788607A-430E3277-50A39AAC-FD453A7A",
+    "x": 33091.82,
+    "y": 21047.773,
+    "z": 11105.751
+  },
+  {
+    "id": "G_Otomo_Ice",
+    "name": "Cryolinx Ring Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+35 Dog Coin",
+    "instanceId": "D40B827B-46CFF53D-20513883-EFC3D175",
+    "x": 149273.55,
+    "y": 101179.49,
+    "z": 43234.086
+  },
+  {
+    "id": "G_ColdIce",
+    "name": "Wumpo Charm Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+35 Dog Coin",
+    "instanceId": "CCDCF817-4EDDD40C-863C9E8B-E95F7E9E",
+    "x": 91844.34,
+    "y": 52939.81,
+    "z": 17514.295
+  },
+  {
+    "id": "G_WKMC",
+    "name": "Islander's Tool Belt Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+35 Dog Coin",
+    "instanceId": "978102E3-471E5428-E460F39A-A480D0BB",
+    "x": 33674.242,
+    "y": 84211.6,
+    "z": 5307.327
+  },
+  {
+    "id": "A_FurArmor",
+    "name": "Pelt Armor Schematic 3",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "8E071A0E-490C0F90-47B99DB1-D6F3A68A",
+    "x": -387865.66,
+    "y": 196788.61,
+    "z": -1987.8872
+  },
+  {
+    "id": "I_Otomo_Dargon",
+    "name": "Elphidran Ring Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "2C723B4B-4A2CCA8D-2450AE86-2495AC51",
+    "x": -580374.25,
+    "y": -186973.7,
+    "z": 10016.679
+  },
+  {
+    "id": "I_ATElectricity_ElementBoost",
+    "name": "Lord of Lightning's Baton Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "B1BB48D8-41D1E3E8-30C0BD87-7701D0B5",
+    "x": -579016.25,
+    "y": -446038.06,
+    "z": -414.20554
+  },
+  {
+    "id": "I_DFNormal_ElementBoost",
+    "name": "Hartalis's Talisman Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "90E84CDF-4AD5EED6-53EC928E-4194FE68",
+    "x": -665225.6,
+    "y": -409944.03,
+    "z": 8438.596
+  },
+  {
+    "id": "I_ATIce_ElementBoost",
+    "name": "Ice Emperor's Baton Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "85828122-4E9CC37D-D4E612B5-679F2F4C",
+    "x": -598655.06,
+    "y": -282853.53,
+    "z": 16763.127
+  },
+  {
+    "id": "I_PPDF",
+    "name": "Silvegis Emblem Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "36C2AE67-4E7063E2-C2EE5989-E16FE9CB",
+    "x": -649822.9,
+    "y": -317721.03,
+    "z": 20136.795
+  },
+  {
+    "id": "I_ATLeaf_ElementBoost",
+    "name": "Spirit Emperor's Baton Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "3B9C31B0-447703B7-48999CBE-E64959FB",
+    "x": -729751.56,
+    "y": -294426.0,
+    "z": 390.03226
+  },
+  {
+    "id": "I_DFFire_ElementBoost",
+    "name": "Blazamut's Talisman Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "B9865F8D-4C359F79-54A1479A-41B85F29",
+    "x": -732235.3,
+    "y": -397016.0,
+    "z": 10389.316
+  },
+  {
+    "id": "A_FurHelmet",
+    "name": "Feathered Hair Band Schematic 3",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "FE3CBE67-43714E65-8AD0548B-78FA7E78",
+    "x": -392808.66,
+    "y": 235754.34,
+    "z": -2071.7156
+  },
+  {
+    "id": "A_BowGun",
+    "name": "Crossbow Schematic 3",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "FB22DE6E-44C4F83E-1FD0B486-31536D30",
+    "x": -275247.03,
+    "y": 180285.75,
+    "z": 1317.0383
+  },
+  {
+    "id": "A_WorkSpeed",
+    "name": "Pendant of Diligence Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "55A12448-4FA0DF68-7D0EB3B5-19D32725",
+    "x": -348543.8,
+    "y": 124778.555,
+    "z": -339.3909
+  },
+  {
+    "id": "B_ThunderResist",
+    "name": "Ring of Electric Resistance Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "F9A43AE2-4B811E24-36FF0F94-622702FB",
+    "x": -158482.34,
+    "y": 42980.21,
+    "z": -2054.429
+  },
+  {
+    "id": "B_NormalResist",
+    "name": "Ring of Neutral Resistance Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "E46EAD49-4100AA09-16CEB290-75C64E57",
+    "x": -251985.17,
+    "y": 58771.5,
+    "z": 3890.0854
+  },
+  {
+    "id": "B_ElementBoost_Electricity",
+    "name": "Electric Support Whistle Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "46A69950-4B9A1BDD-B34F0A87-1C2D5921",
+    "x": -453711.88,
+    "y": 83883.984,
+    "z": 2360.5342
+  },
+  {
+    "id": "C_ElementBoost_Dark",
+    "name": "Dark Support Whistle Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "1821970E-4ADC8A5B-9BA310BB-2B6E871A",
+    "x": -235856.16,
+    "y": 116640.984,
+    "z": 5973.865
+  },
+  {
+    "id": "C_Sword",
+    "name": "Sword Schematic 3",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "1FBF0E1B-4FD6DCF6-8BF14C9D-EBF10AED",
+    "x": -239825.78,
+    "y": 179007.34,
+    "z": -882.8551
+  },
+  {
+    "id": "C_PalExp",
+    "name": "Growth Acceleration Bell Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "E62596C1-449142AD-1F59F083-6B1BAA0C",
+    "x": -166259.5,
+    "y": 145947.77,
+    "z": 3277.1646
+  },
+  {
+    "id": "D_MaxWeightUp",
+    "name": "Ring of Freight Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "D158F43B-466421BD-29CB4B91-734C07C4",
+    "x": -109917.29,
+    "y": 181024.81,
+    "z": 3801.9084
+  },
+  {
+    "id": "D_MakeshiftShotgun",
+    "name": "Makeshift Shotgun Schematic 2",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "191D1E38-4BDA248E-53E920B1-DF8AF62A",
+    "x": -108088.88,
+    "y": 238804.86,
+    "z": 19046.242
+  },
+  {
+    "id": "D_DragonResist",
+    "name": "Ring of Dragon Resistance Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "53A06655-48DAA4CC-515B88A5-3A1C2946",
+    "x": -219434.92,
+    "y": 398602.4,
+    "z": -1914.3995
+  },
+  {
+    "id": "E_HeatFire",
+    "name": "Reptyro Charm Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "A9367D9D-413D54B4-52070C96-212C5BC2",
+    "x": -31185.455,
+    "y": 335362.88,
+    "z": -829.43134
+  },
+  {
+    "id": "E_AT",
+    "name": "Attack Pendant Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "2ADA7F75-43C7C649-10051D87-80AC932A",
+    "x": 31252.06,
+    "y": 354119.16,
+    "z": -556.7998
+  },
+  {
+    "id": "E_ATEarth_ElementBoost",
+    "name": "Earth Emperor's Baton Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "34FA044C-4808DE3E-F9C8ECAA-3074B320",
+    "x": 29619.922,
+    "y": 238550.42,
+    "z": -1482.5526
+  },
+  {
+    "id": "F_defense",
+    "name": "Defense Pendant Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "FDA9D7CE-4774FE86-877E7D9B-87544A81",
+    "x": -277579.1,
+    "y": -12837.378,
+    "z": -247.58165
+  },
+  {
+    "id": "F_PalConfidence",
+    "name": "Ring of Trust Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "44B4F95F-46451393-81B88B98-67AD01B0",
+    "x": -218704.45,
+    "y": -77287.516,
+    "z": -2132.3955
+  },
+  {
+    "id": "B_MakeshiftHandgun",
+    "name": "Makeshift Handgun Schematic 2",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "A4204434-40A05815-417BDCAB-1EC2F47A",
+    "x": -375552.28,
+    "y": 82706.91,
+    "z": 1715.6029
+  },
+  {
+    "id": "B_HeatResist",
+    "name": "Heat-Resistant Undershirt Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "CCC8C275-4AE8FC43-73113A90-36CE8281",
+    "x": -194633.66,
+    "y": -15881.568,
+    "z": 9581.627
+  },
+  {
+    "id": "B_CopperArmorHeat",
+    "name": "Heat Resistant Metal Armor Schematic 2",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "2DA59E17-42103D87-9D1291B5-FEC4E66A",
+    "x": -170521.27,
+    "y": 111321.734,
+    "z": -56.786694
+  },
+  {
+    "id": "B_CopperHelmet",
+    "name": "Metal Helm Schematic 2",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+20 Dog Coin",
+    "instanceId": "49247B09-473C086B-01A496BC-1530F92F",
+    "x": -212738.89,
+    "y": 68530.33,
+    "z": 3619.852
+  },
+  {
+    "id": "C_HandGun",
+    "name": "Applied Planting Handbook I",
+    "icon": "T_itemicon_WorkSuitability_AddTicket_Seeding.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "68A1D0DE-498FD0A5-08663D93-80AEB468",
+    "x": -224312.73,
+    "y": 135301.62,
+    "z": 6697.1543
+  },
+  {
+    "id": "C_CopperArmorCold",
+    "name": "Cold Resistant Metal Armor Schematic 2",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "DDE83D4E-495E8278-DCF881B3-FE7F6525",
+    "x": -275867.22,
+    "y": 122134.79,
+    "z": 3823.522
+  },
+  {
+    "id": "C_HP",
+    "name": "Life Pendant Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "3A8C2858-4070FF43-DFB8888B-6E164898",
+    "x": -230266.52,
+    "y": 206569.11,
+    "z": 1724.7694
+  },
+  {
+    "id": "D_ElementBoost_Leaf",
+    "name": "Grass Support Whistle Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "A1C5179B-4C666037-62507F8F-6562BB0E",
+    "x": -187651.03,
+    "y": 243315.16,
+    "z": 3838.8745
+  },
+  {
+    "id": "D_IceResist",
+    "name": "Ring of Ice Resistance Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "CB35FF79-43A15817-5C5B9D84-EC0FB10C",
+    "x": -71417.58,
+    "y": 267745.0,
+    "z": 13993.009
+  },
+  {
+    "id": "D_MakeshiftAssaultRifle",
+    "name": "Makeshift Assault Rifle Schematic 2",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "25211EC1-4FB9C2A2-B43A8498-7DA28DF0",
+    "x": -159505.86,
+    "y": 299820.4,
+    "z": -2119.9504
+  },
+  {
+    "id": "D_ElementBoost_Dragon",
+    "name": "Dragon Support Whistle Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+25 Dog Coin",
+    "instanceId": "8733539E-4ABE5F12-D6A71285-54562BB5",
+    "x": -120219.84,
+    "y": 327153.28,
+    "z": -1691.6637
+  },
+  {
+    "id": "E_ElementBoost_Earth",
+    "name": "Ground Support Whistle Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "B5F86F1F-4F44079B-BE85AE89-C05362AB",
+    "x": -56834.13,
+    "y": 418051.97,
+    "z": 16645.04
+  },
+  {
+    "id": "E_AssaultRifle",
+    "name": "Assault Rifle Schematic 2",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "2FE1550D-4511CFA0-C115A182-82592EAB",
+    "x": -36381.25,
+    "y": 504757.4,
+    "z": 1379.9994
+  },
+  {
+    "id": "E_StealHelmet",
+    "name": "Pal Metal Helm Schematic 2",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "ECD38C3A-473F7B64-BAA32DA7-41200B2F",
+    "x": 141228.94,
+    "y": 402829.66,
+    "z": -1753.1472
+  },
+  {
+    "id": "E_StealArmor",
+    "name": "Pal Metal Armor Schematic 2",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "AD713FDC-400BD4F3-04DC6FA8-6A77CA45",
+    "x": 166586.92,
+    "y": 281205.78,
+    "z": 328.5363
+  },
+  {
+    "id": "E_Defense_up",
+    "name": "Defense Support Whistle Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "6F709711-4F650CA1-42B3A9A6-58C0559E",
+    "x": 101608.54,
+    "y": 299111.47,
+    "z": 16799.574
+  },
+  {
+    "id": "F_IronArmor",
+    "name": "Refined Metal Armor Schematic 2",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "F33C73DA-4E79DFEB-ACC722A3-1C734069",
+    "x": -436815.84,
+    "y": -17738.291,
+    "z": -2079.3323
+  },
+  {
+    "id": "F_IronHelmet",
+    "name": "Refined Metal Helm Schematic 2",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "BC8CB736-41026040-8DE3EEB5-4A2ED6AE",
+    "x": -423930.53,
+    "y": -179446.84,
+    "z": 15645.756
+  },
+  {
+    "id": "F_SubmachineGun",
+    "name": "SMG Schematic 2",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "55E5C168-436A427F-6C50CFBB-9B5EFBAB",
+    "x": -306382.25,
+    "y": -228188.23,
+    "z": -1346.3125
+  },
+  {
+    "id": "F_SingleShotRifle",
+    "name": "Single-Shot Rifle Schematic 3",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "79B2BAD9-4DD28D37-ED8278B4-8D7EE38D",
+    "x": -224073.08,
+    "y": -174363.67,
+    "z": -620.9245
+  },
+  {
+    "id": "F_Attack_up",
+    "name": "Attack Support Whistle Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "8489353E-405DF5E6-AAE58FAF-D779F3D7",
+    "x": -356889.47,
+    "y": -72283.53,
+    "z": 18735.26
+  },
+  {
+    "id": "F_CompoundBow",
+    "name": "Metal Bat Schematic 3",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+30 Dog Coin",
+    "instanceId": "A6E41DCD-4B242489-3A07B8A1-77FA60B1",
+    "x": -416615.62,
+    "y": -66259.49,
+    "z": 17173.613
+  },
+  {
+    "id": "G_PlasticArmor",
+    "name": "Applied Cooling Handbook I",
+    "icon": "T_itemicon_WorkSuitability_AddTicket_Cool.png",
+    "bonus": "+35 Dog Coin",
+    "instanceId": "346D2872-4D9BDAC6-E01279A6-3594C0F0",
+    "x": 122774.14,
+    "y": 19185.748,
+    "z": 31414.61
+  },
+  {
+    "id": "G_ATNormal_ElementBoost",
+    "name": "Celestial Emperor's Baton Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+35 Dog Coin",
+    "instanceId": "8E82DE56-4606A610-CE8F1682-03F98AF4",
+    "x": 52556.184,
+    "y": -40642.938,
+    "z": 7702.9473
+  },
+  {
+    "id": "G_PlasticHelmet",
+    "name": "Applied Lumbering Handbook I",
+    "icon": "T_itemicon_WorkSuitability_AddTicket_Deforest.png",
+    "bonus": "+35 Dog Coin",
+    "instanceId": "970EA20C-409F1B6E-F2056183-41798C3B",
+    "x": -39202.16,
+    "y": 44777.992,
+    "z": 87.175514
+  },
+  {
+    "id": "G_GatlingGun",
+    "name": "Applied Gathering Handbook I",
+    "icon": "T_itemicon_WorkSuitability_AddTicket_Collection.png",
+    "bonus": "+35 Dog Coin",
+    "instanceId": "97546E52-42A7E75A-8A2AD995-30BF1219",
+    "x": -15700.959,
+    "y": 178270.02,
+    "z": 14398.448
+  },
+  {
+    "id": "G_Avoid",
+    "name": "Blueprint_Accessory_Avoid_1_fix",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+35 Dog Coin",
+    "instanceId": "10DD9CAE-4CAEE605-64710DBE-6E020B20",
+    "x": 92797.3,
+    "y": 207482.92,
+    "z": 3380.0176
+  },
+  {
+    "id": "H_DFLeaf_ElementBoost",
+    "name": "Lyleen's Talisman Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+40 Dog Coin",
+    "instanceId": "17CF5748-42581C81-AE4402B8-3D01EFF7",
+    "x": -25534.838,
+    "y": -68022.56,
+    "z": 2225.9626
+  },
+  {
+    "id": "H_SFBow",
+    "name": "Applied Handiwork Handbook I",
+    "icon": "T_itemicon_WorkSuitability_AddTicket_Handcraft.png",
+    "bonus": "+40 Dog Coin",
+    "instanceId": "0641DD13-46B813DE-C72CEB8D-2E583E40",
+    "x": 36135.74,
+    "y": -102794.02,
+    "z": -862.14905
+  },
+  {
+    "id": "H_PlasticArmorWeight",
+    "name": "Applied Generating Electricity Handbook I",
+    "icon": "T_itemicon_WorkSuitability_AddTicket_GenerateElectricity.png",
+    "bonus": "+40 Dog Coin",
+    "instanceId": "81BC17C4-47713CEA-F840CB89-94E61E4E",
+    "x": -57912.61,
+    "y": -190303.52,
+    "z": -1367.7786
+  },
+  {
+    "id": "H_DFHP",
+    "name": "Warsect Terra's Belt Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+40 Dog Coin",
+    "instanceId": "9BD0802E-4F65E040-AB04E5B6-D4D2F542",
+    "x": -110283.65,
+    "y": -147448.83,
+    "z": -2046.819
+  },
+  {
+    "id": "I_ATWater_ElementBoost",
+    "name": "Lord of the Sea's Baton Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "5FE57765-46429311-FADD30B5-E5E5C056",
+    "x": -623275.1,
+    "y": -137240.89,
+    "z": -448.78854
+  },
+  {
+    "id": "I_HCMW",
+    "name": "Wandering Merchant Charm Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "C4B65940-40942874-DF910887-668A7B74",
+    "x": -684950.5,
+    "y": -201967.44,
+    "z": 8799.334
+  },
+  {
+    "id": "I_ATDark_ElementBoost",
+    "name": "Lord of the Underworld's Baton Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "F4ABC6AC-467C595A-C0F1259E-11F24D1A",
+    "x": -641151.94,
+    "y": -264290.78,
+    "z": 10875.587
+  },
+  {
+    "id": "I_SFArmor",
+    "name": "Jetragon's Talisman Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "B9D5287F-4EB4D102-F70C8A8F-7ED5AE1F",
+    "x": -504318.03,
+    "y": -386258.53,
+    "z": 2103.6282
+  },
+  {
+    "id": "I_ATFire_ElementBoost",
+    "name": "Flame Emperor's Baton Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "39F74ECE-4B1C3204-1CE4D596-3E30862A",
+    "x": -620359.2,
+    "y": -444953.2,
+    "z": 9054.49
+  },
+  {
+    "id": "I_SFHelmet",
+    "name": "Applied Watering Handbook I",
+    "icon": "T_itemicon_WorkSuitability_AddTicket_Watering.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "BE2A9EF4-47BEA0FE-E4085882-EEDB36E4",
+    "x": -765417.1,
+    "y": -265338.94,
+    "z": 7678.928
+  },
+  {
+    "id": "I_ATDragon_ElementBoost",
+    "name": "Divine Dragon's Baton Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "EE862EFB-489D23D5-9FD8848C-EB6EEF5C",
+    "x": -810892.7,
+    "y": -441755.2,
+    "z": 5901.604
+  },
+  {
+    "id": "I_LaserGatlingGun",
+    "name": "Applied Kindling Handbook I",
+    "icon": "T_itemicon_WorkSuitability_AddTicket_EmitFlame.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "F6CA395D-44390FCA-1AEAEC82-446472CC",
+    "x": -889655.8,
+    "y": -399246.88,
+    "z": 10715.36
+  },
+  {
+    "id": "G_NonkChecker",
+    "name": "Pal Tamer's Glasses Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+35 Dog Coin",
+    "instanceId": "D5E3FFE2-4579FE8A-6BA230BE-BC416494",
+    "x": -68429.5,
+    "y": 161682.06,
+    "z": 11149.059
+  },
+  {
+    "id": "G_DFWater_ElementBoost",
+    "name": "Neptilius's Talisman Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+35 Dog Coin",
+    "instanceId": "0C278793-4F41907A-352385A7-A15D5918",
+    "x": 103369.63,
+    "y": 79980.195,
+    "z": 48401.555
+  },
+  {
+    "id": "G_JumpAir_1",
+    "name": "Air Walker Mk I Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+35 Dog Coin",
+    "instanceId": "6EB1181D-40FA3C37-D69F53AD-A2444692",
+    "x": 100621.71,
+    "y": -40449.86,
+    "z": 26145.031
+  },
+  {
+    "id": "H_JumpAir_2",
+    "name": "Air Walker Mk II Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+40 Dog Coin",
+    "instanceId": "4946672E-4A6B96E5-499AF69B-1C1FE67C",
+    "x": 8989.857,
+    "y": -157312.55,
+    "z": 4800.0176
+  },
+  {
+    "id": "I_DFEarth_ElementBoost",
+    "name": "Anubis's Talisman Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "EFDBBA1C-4D1A36C7-0828C197-E2FBED09",
+    "x": -509002.28,
+    "y": -292992.62,
+    "z": 1913.3712
+  },
+  {
+    "id": "I_DFElectricity_ElementBoost",
+    "name": "Orserk's Talisman Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "A855C3DF-468B9A5C-158F1E8E-2BF342CB",
+    "x": -724016.9,
+    "y": -426770.6,
+    "z": 10488.225
+  },
+  {
+    "id": "I_SuperJumpAir_1",
+    "name": "Air Walker Mk III Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "B5554453-4F93FC14-450020B6-41C02DB0",
+    "x": -823529.2,
+    "y": -393098.62,
+    "z": -1686.2307
+  },
+  {
+    "id": "Island_Otomo_Earth",
+    "name": "Menasting Terra Ring Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "60783C36-4BF7E24A-6BDE2DAD-D00796E3",
+    "x": -66593.36,
+    "y": -253706.95,
+    "z": 7658.438
+  },
+  {
+    "id": "Island_Otomo_Fire",
+    "name": "Blazehowl Ring Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "7479315C-4CDD5BBB-AF3078BF-4F215B73",
+    "x": 70539.69,
+    "y": 505309.22,
+    "z": -2004.6543
+  },
+  {
+    "id": "Island_Otomo_Leaf",
+    "name": "Vaelet Ring Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "106D54AE-435007CC-A4160B9A-789C97E6",
+    "x": -167160.28,
+    "y": 552219.44,
+    "z": -2096.9827
+  },
+  {
+    "id": "Island_Otomo_Water",
+    "name": "Faleris Aqua Ring Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "BF872017-41F408D5-E731ABA4-B0DFE261",
+    "x": -456915.75,
+    "y": 344294.28,
+    "z": 13508.043
+  },
+  {
+    "id": "Island_Otomo_Fire_2",
+    "name": "Faleris Ring Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "9DB0467B-41F6F9E7-88295BB9-E92BD085",
+    "x": -1009674.8,
+    "y": -401739.16,
+    "z": 1320.2817
+  },
+  {
+    "id": "Island_Otomo_Dark",
+    "name": "Katress Ring Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "2F5DC859-402926B1-729F9DB3-651C069D",
+    "x": -578173.6,
+    "y": -636022.06,
+    "z": -2053.7554
+  },
+  {
+    "id": "Island_Otomo_Electricity",
+    "name": "Fenglope Lux Ring Schematic",
+    "icon": "T_itemicon_Blueprint.png",
+    "bonus": "+45 Dog Coin",
+    "instanceId": "35B876E0-4164D3B8-29EFEFA8-FF13AD7D",
+    "x": -387719.25,
+    "y": -429204.16,
+    "z": 4870.3667
+  },
+  {
+    "id": "J_FullStomach_Down",
+    "name": "Disposable Implant: Mastery of Fasting",
+    "icon": "T_itemicon_PalPassiveSkillChange_Consumable.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "83AC5F4E-4D5FFF8F-23DAB695-CD264DAC",
+    "x": -755078.75,
+    "y": -82828.6,
+    "z": 50651.65
+  },
+  {
+    "id": "J_Sanity_Down",
+    "name": "Disposable Implant: Heart of the Immovable King",
+    "icon": "T_itemicon_PalPassiveSkillChange_Consumable.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "EE3165AB-4B4F89F2-63C65793-F67ABC69",
+    "x": -806838.94,
+    "y": 7978.893,
+    "z": 42162.55
+  },
+  {
+    "id": "J_MoveSpeed_up",
+    "name": "Disposable Implant: Swift",
+    "icon": "T_itemicon_PalPassiveSkillChange_Consumable.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "8000F1F6-4A5DFC06-0E118080-D5509518",
+    "x": -781018.56,
+    "y": -96243.19,
+    "z": 39414.117
+  },
+  {
+    "id": "J_SFArmorWeight",
+    "name": "Applied Medicine Production Handbook I",
+    "icon": "T_itemicon_WorkSuitability_AddTicket_ProductMedicine.png",
+    "bonus": "+50 Dog Coin",
+    "instanceId": "AB390A82-48924747-4012BCA3-4BD92361",
+    "x": -828532.1,
+    "y": -55806.562,
+    "z": 39997.117
+  }
+]
