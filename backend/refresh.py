@@ -1,13 +1,13 @@
 import json
 import sys
 import traceback
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from coord import locate
 from parse import build_player_snapshot, load_guild_bases, load_level_world_save_data, load_player_names_and_levels
-from remote import refresh_and_pull
-from rcon import get_online_uids
+from remote import get_server_uptime_seconds, refresh_and_pull
+from rcon import get_online_uids, get_server_version
 
 SAVE_DIR = Path(__file__).resolve().parent.parent / "data" / "saves"
 OUTPUT = Path(__file__).resolve().parent.parent / "data" / "players.json"
@@ -34,9 +34,26 @@ def run() -> list[dict]:
     for p in players:
         p["online"] = p["uid"] in online_uids if online_uids is not None else None
 
+    try:
+        server_version = get_server_version()
+    except Exception:
+        traceback.print_exc()
+        server_version = None
+
+    try:
+        uptime_seconds = get_server_uptime_seconds()
+        server_start_time = (datetime.now(timezone.utc) - timedelta(seconds=uptime_seconds)).isoformat()
+    except Exception:
+        # SSH to the AMP host for this is a nice-to-have same as RCON above —
+        # a transient failure here shouldn't take down player positions.
+        traceback.print_exc()
+        server_start_time = None
+
     payload = {
         "updated_at": datetime.now(timezone.utc).isoformat(),
         "online_known": online_uids is not None,
+        "server_version": server_version,
+        "server_start_time": server_start_time,
         "players": players,
     }
     OUTPUT.write_text(json.dumps(payload, indent=2, default=str))

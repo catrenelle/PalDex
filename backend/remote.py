@@ -150,6 +150,47 @@ def _pull_saves_openssh(local_dir: Path) -> None:
             )
 
 
+# ============ Server uptime (for "Last Started") ============
+# RCON has no uptime/start-time command (its "Info" reply is just version +
+# name), so this shells out the same way the save pull does, reading the
+# actual PalServer-Linux-Shipping process's elapsed time via `ps`. `etimes`
+# (integer seconds) is used rather than `ps -eo lstart` (a locale-dependent
+# formatted date string) specifically to avoid a locale/format parsing
+# footgun — a plain integer is trivial to convert to a UTC timestamp.
+_PS_UPTIME_COMMAND = "ps -o etimes= -p $(pgrep -f PalServer-Linux-Shipping | head -1)"
+
+
+def _parse_etimes(output: str) -> int:
+    line = output.strip().splitlines()[0] if output.strip() else ""
+    return int(line.strip())
+
+
+def _get_server_uptime_seconds_bitvise() -> int:
+    cmd = _bitvise_ssh_args() + [f"-cmd={_PS_UPTIME_COMMAND}"]
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+    _check_sexec_result(result, "server uptime query")
+    return _parse_etimes(result.stdout)
+
+
+def _get_server_uptime_seconds_openssh() -> int:
+    cmd = _ssh_base_args() + [_PS_UPTIME_COMMAND]
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+    if result.returncode != 0:
+        raise RuntimeError(
+            f"server uptime query failed (ssh exit {result.returncode}): "
+            f"{result.stdout}\n{result.stderr}"
+        )
+    return _parse_etimes(result.stdout)
+
+
+def get_server_uptime_seconds() -> int:
+    """Seconds since the Palworld game server process itself last started
+    (i.e. last restart, not last AMP-panel restart)."""
+    if _IS_WINDOWS:
+        return _get_server_uptime_seconds_bitvise()
+    return _get_server_uptime_seconds_openssh()
+
+
 # ============ Dispatch ============
 
 

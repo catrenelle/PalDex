@@ -14,6 +14,7 @@ deployed. A plain `socket.settimeout()` sidesteps the whole thread
 restriction and works identically on both platforms.
 """
 
+import re
 import select
 import socket
 import struct
@@ -64,7 +65,7 @@ def _normalize_uid(raw: str) -> str:
     return raw
 
 
-def get_online_uids() -> set[str]:
+def _rcon_command(command: str) -> str:
     with socket.create_connection((HOST, PORT), timeout=TIMEOUT_SECONDS) as sock:
         sock.settimeout(TIMEOUT_SECONDS)
         _send_packet(sock, 1, SERVERDATA_AUTH, RCON_PASSWORD)
@@ -72,7 +73,7 @@ def get_online_uids() -> set[str]:
         if resp_id == -1:
             raise RconError("RCON authentication failed")
 
-        _send_packet(sock, 2, SERVERDATA_EXECCOMMAND, "ShowPlayers")
+        _send_packet(sock, 2, SERVERDATA_EXECCOMMAND, command)
         # A single command response can span multiple packets — keep reading
         # until nothing more is immediately pending (same approach mcrcon
         # used, just without its signal-based read timeout).
@@ -82,8 +83,11 @@ def get_online_uids() -> set[str]:
             chunks.append(payload.decode("utf8"))
             if not select.select([sock], [], [], 0)[0]:
                 break
-        resp = "".join(chunks)
+        return "".join(chunks)
 
+
+def get_online_uids() -> set[str]:
+    resp = _rcon_command("ShowPlayers")
     uids = set()
     lines = resp.strip().splitlines()
     for line in lines[1:]:  # skip "name,playeruid,steamid" header
@@ -91,3 +95,11 @@ def get_online_uids() -> set[str]:
         if len(parts) >= 2 and parts[1].strip():
             uids.add(_normalize_uid(parts[1]))
     return uids
+
+
+def get_server_version() -> str | None:
+    """RCON's "Info" command replies e.g. "Welcome to Pal Server[v1.0.1.100619]
+    Pallet Town" — no separate version-only command exists."""
+    resp = _rcon_command("Info").strip()
+    match = re.search(r"\[v([\d.]+)\]", resp)
+    return match.group(1) if match else None

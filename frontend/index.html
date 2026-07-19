@@ -14,6 +14,7 @@
     padding: 8px 12px; border-radius: 6px; text-align: right;
   }
   #status { white-space: nowrap; }
+  #server-info { font-size: 11px; color: #9ab; white-space: nowrap; margin-top: 2px; }
   #offline-toggle-row { margin-top: 4px; }
   #offline-toggle-row label { cursor: pointer; user-select: none; }
   .player-label {
@@ -301,6 +302,7 @@
 </div>
 <div id="controls">
   <div id="status">Loading...</div>
+  <div id="server-info"></div>
   <div id="offline-toggle-row">
     <label><input type="checkbox" id="offline-toggle" /> Show offline players</label>
   </div>
@@ -393,10 +395,20 @@
       }
     }
 
+    // toLocaleTimeString()/toLocaleString() with no explicit timeZone use
+    // the browser's own local timezone/locale by default — already correct,
+    // not something that needs a server-side timezone to get right.
     const updated = data.updated_at ? new Date(data.updated_at).toLocaleTimeString() : '—';
     const onlineCount = data.online_known ? data.players.filter(p => p.online).length : data.players.length;
     const rconNote = data.online_known ? '' : ' (RCON unreachable — showing all)';
     document.getElementById('status').textContent = `${onlineCount} online${rconNote} · updated ${updated}`;
+
+    const versionPart = data.server_version ? `v${data.server_version}` : null;
+    const lastStarted = data.server_start_time
+      ? new Date(data.server_start_time).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
+      : null;
+    const startedPart = lastStarted ? `Last Started: ${lastStarted}` : null;
+    document.getElementById('server-info').textContent = [versionPart, startedPart].filter(Boolean).join(' · ');
 
     // Populate the "View As" dropdown once per newly-seen player set.
     const currentUids = new Set(data.players.map(p => p.uid));
