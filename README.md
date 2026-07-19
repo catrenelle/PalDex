@@ -67,11 +67,37 @@ isn't stored as game data) — lives in [`NOTES.md`](NOTES.md).
 
 | | |
 |---|---|
-| Backend | Python 3.13, Flask |
-| Save parsing | `palsav-flex` / `palooz` (Oodle decompression) |
-| Frontend | Leaflet.js, vanilla JS, no build step |
-| Extractor | C#, .NET, CUE4Parse |
+| Backend | Python 3.13, [Flask](https://github.com/pallets/flask) |
+| Save parsing | [`palsav-flex` / `palooz`](https://github.com/deafdudecomputers/PalworldSaveTools) (Oodle decompression) |
+| Frontend | [Leaflet.js](https://github.com/Leaflet/Leaflet), vanilla JS, no build step |
+| Extractor | C#, .NET, [CUE4Parse](https://github.com/FabianFG/CUE4Parse) |
 | Deployment | Docker, Portainer (git-repository stack) |
+
+## Acknowledgments
+
+This project reads game data directly rather than scraping a wiki, which
+wouldn't be possible without these open-source projects:
+
+- **[deafdudecomputers/PalworldSaveTools](https://github.com/deafdudecomputers/PalworldSaveTools)**
+  — save file decoding (`palsav-flex`, `palooz`), including Oodle/`PlM`
+  decompression for the 1.0 game release. Does all the heavy lifting behind
+  every "live" layer on the map.
+- **[FabianFG/CUE4Parse](https://github.com/FabianFG/CUE4Parse)** +
+  **[CUE4Parse-Conversion](https://github.com/FabianFG/CUE4Parse-Conversion)**
+  — reads Unreal Engine assets (`.uasset`/World Partition/DataTables)
+  directly, powering `extractor/PalExtract`'s extraction of every static
+  position, name, icon, and map texture.
+- **[SixLabors.ImageSharp](https://github.com/SixLabors/ImageSharp)** — image
+  resizing for the extracted icon set (a CUE4Parse-Conversion dependency,
+  used directly for downscaling Journal icons).
+- **[PalworldModding/UsefulFiles](https://github.com/PalworldModding/UsefulFiles)**
+  — actively-maintained CUE4Parse mapping files for the current game
+  version.
+- **[palworldlol/palworld-coord](https://github.com/palworldlol/palworld-coord)**
+  — the in-game-HUD-coordinate conversion formula used to validate several
+  extracted positions (see `NOTES.md`).
+- **[Leaflet](https://github.com/Leaflet/Leaflet)** — the map renderer this
+  whole frontend is built on.
 
 ## Running locally
 
@@ -102,3 +128,7 @@ data/                 Static extracted JSON (+ gitignored live-refreshed data)
 deploy/               Docker/Portainer deployment docs and config
 NOTES.md              Full reverse-engineering investigation log
 ```
+
+## License
+
+[MIT](LICENSE)
