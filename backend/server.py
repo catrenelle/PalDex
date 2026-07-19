@@ -8,6 +8,7 @@ from flask import Flask, jsonify, request, send_from_directory
 
 import refresh
 from bosses import load_bosses, load_bounties, load_oilrigs, load_towers
+from dungeons import load_dungeons
 from fasttravel import load_watchtowers, load_waypoints
 from notes import load_notes
 from parse import (
@@ -33,6 +34,7 @@ _relics_cache = load_relics()
 _bosses_cache = load_bosses()
 _bounties_cache = load_bounties()
 _oilrigs_cache = load_oilrigs()
+_dungeons_cache = load_dungeons()
 _towers_cache = load_towers()
 _watchtowers_cache = load_watchtowers()
 _waypoints_cache = load_waypoints()
@@ -282,6 +284,12 @@ def api_oilrigs():
     # No per-player defeated state exists for these (world-shared "cleared"
     # state lives elsewhere — see bosses.load_oilrigs docstring).
     return jsonify({"zones": _oilrigs_cache, "defeat_known": False})
+
+
+@app.route("/api/dungeons")
+def api_dungeons():
+    # No per-player state exists for these — see dungeons.load_dungeons docstring.
+    return jsonify({"entrances": _dungeons_cache})
 
 
 def _refresh_loop():

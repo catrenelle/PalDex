@@ -1,0 +1,1258 @@
+[
+  {
+    "instanceId": "FAD9959F-448611EF-6879F7A7-8476F677",
+    "biome": "Desert",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 139611.05,
+    "y": 324306.53,
+    "z": 3399.4348
+  },
+  {
+    "instanceId": "CA5DCDFF-4AA32135-DEED85A6-2A2A4EA5",
+    "biome": "Desert",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -74916.76,
+    "y": 372458.47,
+    "z": 3272.6772
+  },
+  {
+    "instanceId": "D980E249-450536ED-F498E9A9-0EA0587E",
+    "biome": "Desert",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 21557.568,
+    "y": 309214.78,
+    "z": -916.30365
+  },
+  {
+    "instanceId": "2946E9B7-4399B8F9-D01BBDAA-B79D4F85",
+    "biome": "Desert",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 15729.527,
+    "y": 267188.94,
+    "z": 4439.387
+  },
+  {
+    "instanceId": "FF233483-46BCF659-B1F0918E-A9B35015",
+    "biome": "Desert",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -6205.632,
+    "y": 255610.88,
+    "z": 2361.214
+  },
+  {
+    "instanceId": "B167BE01-4E622F3F-B65A22A3-8F917E52",
+    "biome": "Desert",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 14688.691,
+    "y": 384880.8,
+    "z": 709.48444
+  },
+  {
+    "instanceId": "978717F2-41C2798C-60913CA1-1F527ED0",
+    "biome": "Desert",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 63496.098,
+    "y": 333388.16,
+    "z": 447.20813
+  },
+  {
+    "instanceId": "48470570-4C2421ED-409F9A9C-92B3CE5C",
+    "biome": "Desert",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -36843.145,
+    "y": 454971.78,
+    "z": -30.23479
+  },
+  {
+    "instanceId": "58C4584F-4F061F2B-85065093-DC06BDCB",
+    "biome": "Desert",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 101675.28,
+    "y": 373450.72,
+    "z": 1058.333
+  },
+  {
+    "instanceId": "1998F011-415C6569-70302F9A-19757495",
+    "biome": "Desert",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -22520.576,
+    "y": 313714.28,
+    "z": 1326.15
+  },
+  {
+    "instanceId": "3F407F74-4B02FFEC-50E7F380-0A528BBB",
+    "biome": "Desert",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 61320.0,
+    "y": 418400.0,
+    "z": -1460.0
+  },
+  {
+    "instanceId": "642B3900-47742C05-AC822196-14426A1B",
+    "biome": "Desert",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -4513.043,
+    "y": 424323.72,
+    "z": 10750.938
+  },
+  {
+    "instanceId": "DB23CA1A-48CF2465-C0FD9EAD-B7485725",
+    "biome": "Desert",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -62924.047,
+    "y": 412516.97,
+    "z": 13502.806
+  },
+  {
+    "instanceId": "8A0ABF44-43BEFD4E-8A0550AB-85A17A74",
+    "biome": "Desert",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -26780.0,
+    "y": 354640.0,
+    "z": 170.0
+  },
+  {
+    "instanceId": "36587051-47676022-E9DDD29A-D92B38EB",
+    "biome": "Desert",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 85201.234,
+    "y": 312813.88,
+    "z": 12564.144
+  },
+  {
+    "instanceId": "F0239AC8-40B0D5B2-5ACC25B1-F0FB4FDF",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -257638.36,
+    "y": 141158.6,
+    "z": 541.94257
+  },
+  {
+    "instanceId": "0C75D6AF-42EC7BCD-7F30F989-DD168267",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -265204.06,
+    "y": 131385.12,
+    "z": 2521.925
+  },
+  {
+    "instanceId": "E59CEB24-469A3272-3EA8E688-BD18D02B",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -250341.31,
+    "y": 183436.67,
+    "z": 4307.478
+  },
+  {
+    "instanceId": "2FDEFF7B-42951597-CA6D7097-0E9F33BE",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -251818.6,
+    "y": 164041.66,
+    "z": -1273.3356
+  },
+  {
+    "instanceId": "2BEEDB03-46F05A45-E6EE94A9-569901D9",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -211384.67,
+    "y": 182474.86,
+    "z": -486.09955
+  },
+  {
+    "instanceId": "532F8592-48171F90-B3552A91-34E7716B",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -209589.38,
+    "y": 163211.5,
+    "z": 939.5068
+  },
+  {
+    "instanceId": "15BB601E-45F83300-02CA14AD-62099E2F",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -173408.44,
+    "y": 166837.0,
+    "z": 9412.815
+  },
+  {
+    "instanceId": "7A661AFD-44438BD8-B2DE55B7-2E5D610C",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -180769.03,
+    "y": 163430.77,
+    "z": 5051.6045
+  },
+  {
+    "instanceId": "3AF2DE2B-48ED73C6-98E875A0-16558051",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -219424.83,
+    "y": 165811.12,
+    "z": 57.483902
+  },
+  {
+    "instanceId": "ED825818-4FDE9427-9F7FA4AC-07E07CC2",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -239159.88,
+    "y": 205386.8,
+    "z": 2115.2349
+  },
+  {
+    "instanceId": "BC8BB901-49F24B50-BAF9F7AD-231FAB71",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -230933.7,
+    "y": 152106.48,
+    "z": -555.3244
+  },
+  {
+    "instanceId": "11F9BC46-4E53B661-0B71C5B0-8D33193F",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -250000.34,
+    "y": 120261.4,
+    "z": 5693.605
+  },
+  {
+    "instanceId": "C8D6EE60-42D568BE-735F0683-E4193581",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -196751.97,
+    "y": 176316.2,
+    "z": -607.1887
+  },
+  {
+    "instanceId": "90DE2704-4E96E94C-609AA19F-19EAE9AB",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -164661.72,
+    "y": 153125.2,
+    "z": -1414.7832
+  },
+  {
+    "instanceId": "BB495FD9-46AE0137-AE25BDBE-89D6A386",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -194214.64,
+    "y": 239238.69,
+    "z": -1577.1942
+  },
+  {
+    "instanceId": "67612974-4D53EFA5-CCC8D092-EE9AD285",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -130866.33,
+    "y": 230761.69,
+    "z": 1491.2563
+  },
+  {
+    "instanceId": "54101DFE-447AA851-74C687B2-A7271504",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -84794.05,
+    "y": 286150.22,
+    "z": 9393.375
+  },
+  {
+    "instanceId": "EFDEA9B4-49BBCEAA-24814C99-8AA390C4",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -129471.89,
+    "y": 253439.78,
+    "z": -1537.6279
+  },
+  {
+    "instanceId": "93408415-48BE845A-C96C0FBE-61E46401",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -215213.8,
+    "y": 265367.6,
+    "z": -142.54051
+  },
+  {
+    "instanceId": "2090E9F9-49969007-2F08EB9D-BEAEA05E",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -155066.94,
+    "y": 296284.66,
+    "z": -2102.6155
+  },
+  {
+    "instanceId": "8DCE893B-4872615A-C3CC51A3-BB5E6C80",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -101785.07,
+    "y": 205029.23,
+    "z": 7157.8486
+  },
+  {
+    "instanceId": "26CDE694-4DD68E7F-F2126EB5-D2E10EBE",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -121016.87,
+    "y": 212487.1,
+    "z": 7959.5093
+  },
+  {
+    "instanceId": "73A9D7D6-4B6F157F-3157EBB1-F36F9283",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -61859.875,
+    "y": 204435.4,
+    "z": 626.38434
+  },
+  {
+    "instanceId": "29A81D53-4234E3FE-D27627BE-9E4FC881",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -125215.914,
+    "y": 174427.38,
+    "z": -1460.9713
+  },
+  {
+    "instanceId": "84838A36-4F35C648-FB218AB8-9694D767",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -163447.64,
+    "y": 229313.19,
+    "z": 5276.3564
+  },
+  {
+    "instanceId": "D6D667B0-415E195F-A5D51DBA-108EF6B2",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -220790.0,
+    "y": 234113.03,
+    "z": -1278.6385
+  },
+  {
+    "instanceId": "7B2BEC1C-45F99ECC-E1A6BE8F-57A56E11",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -176948.36,
+    "y": 200393.8,
+    "z": -1723.1431
+  },
+  {
+    "instanceId": "269285A7-4E26444F-C9481781-7127E813",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -186504.7,
+    "y": 268455.56,
+    "z": -885.2433
+  },
+  {
+    "instanceId": "DB2ABCB7-41CA87D9-BD9B408E-C3D579E2",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -57776.305,
+    "y": 228600.25,
+    "z": 2436.3738
+  },
+  {
+    "instanceId": "B0AF31CC-4FBC64C7-9D97E5AE-293A77B7",
+    "biome": "Forest",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -217124.6,
+    "y": 138061.36,
+    "z": 6128.7827
+  },
+  {
+    "instanceId": "6FF6C3CB-457EAB91-6074F394-6C93D317",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -120225.01,
+    "y": 25862.928,
+    "z": -1502.5181
+  },
+  {
+    "instanceId": "F5930C1E-41005A5E-27F244A4-2D0AD9B2",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -134629.19,
+    "y": 6185.443,
+    "z": -1599.2213
+  },
+  {
+    "instanceId": "BBB76698-44DB59C0-72E57FA2-256BDC4B",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -107243.01,
+    "y": 24362.996,
+    "z": -20.915442
+  },
+  {
+    "instanceId": "292B208C-4470DB34-080404B6-DC17825E",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -110032.664,
+    "y": -71996.586,
+    "z": -2102.6155
+  },
+  {
+    "instanceId": "CB862CD5-45848331-F7DC71BA-C6113157",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -124929.0,
+    "y": -79963.57,
+    "z": -2102.6155
+  },
+  {
+    "instanceId": "2DC10859-439B4D5C-9C15E4BC-D7A5D432",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -137086.11,
+    "y": -50427.562,
+    "z": -1429.2216
+  },
+  {
+    "instanceId": "CD39C156-439A6375-1E3B5FB8-C8B67082",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -389335.2,
+    "y": 108597.555,
+    "z": -1944.6674
+  },
+  {
+    "instanceId": "E76CCB31-4FA1C1D0-87AA918F-3B433905",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -383502.84,
+    "y": 99617.95,
+    "z": -453.1848
+  },
+  {
+    "instanceId": "D3C6680D-41344758-7E341CBE-22AB7B53",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -429603.38,
+    "y": 94092.695,
+    "z": -948.3446
+  },
+  {
+    "instanceId": "98302702-4A1BB568-CCB88DA5-9B2D06BA",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -431538.06,
+    "y": 82092.4,
+    "z": 57.4146
+  },
+  {
+    "instanceId": "64D0B12B-4DB5E728-F35DA49C-FD893906",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -404448.4,
+    "y": 64664.34,
+    "z": -1598.903
+  },
+  {
+    "instanceId": "E34E2392-4DD17FEE-BC6EF480-3D1139C1",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -376218.16,
+    "y": 48671.656,
+    "z": -1670.3453
+  },
+  {
+    "instanceId": "A4DE2362-4EAB5CD0-EB4BA4B5-2E648430",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -245011.25,
+    "y": 335769.0,
+    "z": -1610.3833
+  },
+  {
+    "instanceId": "75F04E6D-41384185-529C75AA-085EEF7A",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -267882.53,
+    "y": 327448.2,
+    "z": -1887.1897
+  },
+  {
+    "instanceId": "E1EBFF61-4A938B44-799B468F-420B2548",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -259060.98,
+    "y": 280351.5,
+    "z": -1880.8912
+  },
+  {
+    "instanceId": "5EA7F36E-40F9C8A8-6975E8AC-993EB1B4",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -189599.53,
+    "y": 372690.3,
+    "z": 1620.0
+  },
+  {
+    "instanceId": "541016C8-4AF22B6E-8FE59688-683CEEEF",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -213940.0,
+    "y": 398860.0,
+    "z": -1930.0
+  },
+  {
+    "instanceId": "C1C0F1A3-4C1DFAAC-B69D67B3-54A6A7B1",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -181432.97,
+    "y": 350147.84,
+    "z": 3353.444
+  },
+  {
+    "instanceId": "E2666A75-4684F43F-4B8E53A7-449B8FAE",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -288304.3,
+    "y": 227049.95,
+    "z": 769.3366
+  },
+  {
+    "instanceId": "8AC175F7-40D95350-ED75D99A-5028D452",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -281167.4,
+    "y": 88738.35,
+    "z": 3834.782
+  },
+  {
+    "instanceId": "CC9B08EA-4F1F16F6-2E2FB2AA-D137EB72",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -256755.73,
+    "y": 26900.877,
+    "z": 9510.3125
+  },
+  {
+    "instanceId": "BCCD7DBE-47E9068C-5C0CCD9D-3C5FD46F",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -372024.53,
+    "y": 278564.66,
+    "z": -1994.3835
+  },
+  {
+    "instanceId": "0CDC8505-4296AA45-E0094FBE-34D42D23",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -346468.22,
+    "y": 214850.02,
+    "z": -2023.9846
+  },
+  {
+    "instanceId": "E11ABA86-4BBCA4EC-85B43493-56D4925E",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -301121.12,
+    "y": 179718.17,
+    "z": 319.98132
+  },
+  {
+    "instanceId": "D55BAC81-4D05C7CE-E30AEBAB-556CEB32",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -320588.1,
+    "y": 113800.28,
+    "z": -1457.755
+  },
+  {
+    "instanceId": "E7DA88E9-45E7A7C0-760FC09D-BBCE52E6",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -315807.78,
+    "y": 107247.59,
+    "z": -354.74667
+  },
+  {
+    "instanceId": "77F9F5A8-4404E726-D7F2D989-C5370CDC",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -325692.12,
+    "y": 83869.57,
+    "z": 2548.6453
+  },
+  {
+    "instanceId": "49E11965-4A89F861-B09B4CA1-96333225",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -340404.62,
+    "y": 58438.676,
+    "z": 4618.394
+  },
+  {
+    "instanceId": "A695AD35-4BB3EDFF-59A7A196-3E64E23A",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -337808.62,
+    "y": 30763.018,
+    "z": 4100.7124
+  },
+  {
+    "instanceId": "54B08868-48DE8188-3A5EC7BE-44BF7AC5",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -315044.72,
+    "y": 54365.902,
+    "z": 7854.551
+  },
+  {
+    "instanceId": "CD443EA4-43073615-93B4CEAA-C4809BD3",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -302529.38,
+    "y": 52391.465,
+    "z": 12481.655
+  },
+  {
+    "instanceId": "3D9FA6E4-4A04ECAD-DEA3F092-EF95B6DC",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -203748.6,
+    "y": 90007.32,
+    "z": 17.301937
+  },
+  {
+    "instanceId": "D394C26B-4993988C-A83173B5-FECF4201",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -202257.86,
+    "y": 31403.273,
+    "z": 7325.408
+  },
+  {
+    "instanceId": "C54E3EB9-496CE6C6-A2440187-D8B43C9B",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -225251.94,
+    "y": -13333.923,
+    "z": -912.7775
+  },
+  {
+    "instanceId": "4D74248A-46DFAFA5-6257D598-1682ECFA",
+    "biome": "Grass1",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -221494.6,
+    "y": 27971.861,
+    "z": 14071.279
+  },
+  {
+    "instanceId": "59A19AF4-41B0A075-BAB819B5-4049F5C9",
+    "biome": "Sakura",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -61090.59,
+    "y": -5748.064,
+    "z": -2102.6155
+  },
+  {
+    "instanceId": "E0801D7E-4EB11B53-069B79AC-78CD1305",
+    "biome": "Sakura",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -39021.598,
+    "y": -39231.305,
+    "z": -1814.6726
+  },
+  {
+    "instanceId": "9E50A6DA-4332E0A8-CA410393-C1567EB8",
+    "biome": "Sakura",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -74146.06,
+    "y": -63473.688,
+    "z": -2090.0
+  },
+  {
+    "instanceId": "96E9E42D-4D958092-02086CAD-DC0A001E",
+    "biome": "Sakura",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -2514.634,
+    "y": -106358.336,
+    "z": 1496.4027
+  },
+  {
+    "instanceId": "BAE67869-43A75BFB-798362A6-792D28EB",
+    "biome": "Sakura",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 10312.326,
+    "y": -115227.17,
+    "z": 1137.0659
+  },
+  {
+    "instanceId": "05338927-47FCA0E1-82EA558A-FDA37F2C",
+    "biome": "Sakura",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 936.82764,
+    "y": -128792.5,
+    "z": 1079.7714
+  },
+  {
+    "instanceId": "24F42B66-4697A2EE-6810759E-9F7C66F1",
+    "biome": "Sakura",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -37363.293,
+    "y": -152096.67,
+    "z": 878.66833
+  },
+  {
+    "instanceId": "C363463F-4FFE9A8D-373689AF-A4F4A654",
+    "biome": "Sakura",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 9258.159,
+    "y": -142072.25,
+    "z": 1314.5238
+  },
+  {
+    "instanceId": "94906016-412F1DF3-7A986591-D8C06B47",
+    "biome": "Sakura",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -17730.912,
+    "y": -73667.055,
+    "z": 854.7803
+  },
+  {
+    "instanceId": "7579648B-4FB5122C-FAE30284-CAA82B09",
+    "biome": "Sakura",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -42658.46,
+    "y": -122726.34,
+    "z": 1367.7037
+  },
+  {
+    "instanceId": "C032C4FA-480BBCB8-417AE08F-DD3D6A47",
+    "biome": "Sakura",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -32453.781,
+    "y": -106978.17,
+    "z": 2376.0095
+  },
+  {
+    "instanceId": "861A2683-4377971D-CFF95182-09C1E0B3",
+    "biome": "Sakura",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -13807.568,
+    "y": -152802.98,
+    "z": 2880.0
+  },
+  {
+    "instanceId": "1639BB65-4514784A-EA5B9DA3-D8746B8A",
+    "biome": "Sakura",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -15641.818,
+    "y": -137406.38,
+    "z": 4600.0
+  },
+  {
+    "instanceId": "6ABFFB72-4C641A3F-4B7D42A7-0A300D9F",
+    "biome": "Sakura",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -24131.918,
+    "y": -110237.734,
+    "z": 4410.0
+  },
+  {
+    "instanceId": "E2DC10B1-4FE879F5-E576B3A4-5633F176",
+    "biome": "Sakura",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -57139.156,
+    "y": -86089.53,
+    "z": -2013.2833
+  },
+  {
+    "instanceId": "5BE72354-4A04390E-6B1EB4BD-5F034337",
+    "biome": "Skyland",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -837426.0,
+    "y": -9351.0,
+    "z": 66044.0
+  },
+  {
+    "instanceId": "30701468-4EF6611D-278655A9-347FCA5D",
+    "biome": "Snow",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 135090.5,
+    "y": 64370.324,
+    "z": 28543.797
+  },
+  {
+    "instanceId": "118C58B3-44CED408-8B9C5D9C-199ADD29",
+    "biome": "Snow",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 136262.53,
+    "y": 88305.4,
+    "z": 38681.85
+  },
+  {
+    "instanceId": "435BA422-4C28DBBF-310A5680-C134A56F",
+    "biome": "Snow",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 2547.9534,
+    "y": 172474.5,
+    "z": 7516.839
+  },
+  {
+    "instanceId": "7201E700-488ADFFE-20D845AA-5318FBED",
+    "biome": "Snow",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -58507.242,
+    "y": 157466.9,
+    "z": 12276.954
+  },
+  {
+    "instanceId": "8DAB603B-4AA64681-AF640FB8-B1860B82",
+    "biome": "Snow",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 20555.752,
+    "y": 102617.6,
+    "z": 2350.2148
+  },
+  {
+    "instanceId": "36BDC277-4B02F81D-62C6B2B4-E84B3265",
+    "biome": "Snow",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -3297.4807,
+    "y": 53484.938,
+    "z": 19498.615
+  },
+  {
+    "instanceId": "A49F40B1-4775E800-6A746C9F-47F3C1AD",
+    "biome": "Snow",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 101576.625,
+    "y": 18990.648,
+    "z": 19538.1
+  },
+  {
+    "instanceId": "09795AA7-4FDDAE29-361E258A-61F13041",
+    "biome": "Snow",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -36660.12,
+    "y": 148978.95,
+    "z": 16283.472
+  },
+  {
+    "instanceId": "49DA0673-4EAA8780-7686589E-83687703",
+    "biome": "Snow",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 41444.24,
+    "y": 27335.725,
+    "z": 11078.67
+  },
+  {
+    "instanceId": "D6162726-4473C8A8-687A46AF-D4F56846",
+    "biome": "Snow",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 47436.184,
+    "y": -9661.415,
+    "z": 9924.344
+  },
+  {
+    "instanceId": "FEFA1C18-4CCE8326-1848D281-49F474A9",
+    "biome": "Snow",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -25056.857,
+    "y": 113597.305,
+    "z": 8292.373
+  },
+  {
+    "instanceId": "AC2C19D0-42009C32-1E4599BC-B11225F1",
+    "biome": "Snow",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 26498.53,
+    "y": 75921.09,
+    "z": 24300.943
+  },
+  {
+    "instanceId": "7DA91A86-4B5B1AD1-48373F9C-9441860E",
+    "biome": "Snow",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 42530.336,
+    "y": 203883.6,
+    "z": 8423.112
+  },
+  {
+    "instanceId": "FED843AA-4128E193-7D10A393-F5A0F00D",
+    "biome": "Snow",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 80038.95,
+    "y": 6386.8164,
+    "z": 30360.688
+  },
+  {
+    "instanceId": "68064BB2-48FEE9AF-044A7785-89672A10",
+    "biome": "Snow",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": 143019.12,
+    "y": 9658.513,
+    "z": 18597.22
+  },
+  {
+    "instanceId": "57E74328-480C0305-748AE28E-2B1855AA",
+    "biome": "Viking_B",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -877132.9,
+    "y": -430141.72,
+    "z": 16598.938
+  },
+  {
+    "instanceId": "E9057048-4D91FC41-F3BB6EB8-7EC6D4BE",
+    "biome": "Viking_B",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -778536.75,
+    "y": -381700.44,
+    "z": 3873.2559
+  },
+  {
+    "instanceId": "FC64914E-445F9E1F-10D103A6-FAA840C5",
+    "biome": "Viking_B",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -744310.0,
+    "y": -372750.0,
+    "z": 25450.0
+  },
+  {
+    "instanceId": "E80CCA3C-446C1F32-057D67AC-D7A679E5",
+    "biome": "Viking_B",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -740400.0,
+    "y": -345130.0,
+    "z": 870.0
+  },
+  {
+    "instanceId": "9158500A-4E4CEF6A-09B9DEBC-B2D35485",
+    "biome": "Viking_B",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -817170.0,
+    "y": -461060.0,
+    "z": -600.0
+  },
+  {
+    "instanceId": "71B04C6E-4EDEC41C-CE0D50AB-B1946A4D",
+    "biome": "Viking_B",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -733449.0,
+    "y": -320729.53,
+    "z": 31032.068
+  },
+  {
+    "instanceId": "6D135020-4CA0EB68-CC4F0BAA-60F53335",
+    "biome": "Viking_B",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -843324.4,
+    "y": -404753.84,
+    "z": -2102.6157
+  },
+  {
+    "instanceId": "FAB9065F-4C85FCE7-B903B29C-B5B49ABE",
+    "biome": "Viking_B",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -796816.5,
+    "y": -365816.16,
+    "z": 5647.433
+  },
+  {
+    "instanceId": "6DC3A97A-4C6DD339-D49FCA8C-CE1E1815",
+    "biome": "Viking",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -798439.8,
+    "y": -331101.8,
+    "z": 9432.305
+  },
+  {
+    "instanceId": "990C43BD-40D22F01-0A8AAAAE-08CF11C7",
+    "biome": "Viking",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -800228.8,
+    "y": -286975.7,
+    "z": 1958.2709
+  },
+  {
+    "instanceId": "E490CCD4-4FB0CD1F-EA42B0A0-6EE88574",
+    "biome": "Viking",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -696510.0,
+    "y": -309770.0,
+    "z": 25630.0
+  },
+  {
+    "instanceId": "6ECEEF8E-4821EF65-3431A7AC-D779302E",
+    "biome": "Viking",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -683335.7,
+    "y": -279554.97,
+    "z": 11603.889
+  },
+  {
+    "instanceId": "7B3EF934-4A76CC4D-955036B3-71B5DA58",
+    "biome": "Viking",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -768983.8,
+    "y": -257968.58,
+    "z": 2615.1497
+  },
+  {
+    "instanceId": "BB6BF8C7-4B199850-B353E8BB-6A12E797",
+    "biome": "Viking",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -753200.0,
+    "y": -274400.0,
+    "z": 8591.31
+  },
+  {
+    "instanceId": "57BCA434-4D83D25E-173594B6-A4B3F6E9",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -588020.0,
+    "y": -254710.0,
+    "z": 1050.0
+  },
+  {
+    "instanceId": "F44756C4-4F86606D-2B99BA8F-58749EF5",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -512833.9,
+    "y": -284233.53,
+    "z": 1254.9214
+  },
+  {
+    "instanceId": "A53DD274-4479DA3D-BC8E779F-A9D169EF",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -554303.94,
+    "y": -314140.56,
+    "z": 16585.555
+  },
+  {
+    "instanceId": "C3C4F0BA-47A8140A-89AAF299-03A708D4",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -635848.56,
+    "y": -271258.94,
+    "z": 11034.844
+  },
+  {
+    "instanceId": "7AD15561-42577DE2-81D4DFAC-2C06F17F",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -702808.5,
+    "y": -335070.7,
+    "z": 27588.104
+  },
+  {
+    "instanceId": "EA17F2E1-424B9D6E-C03F8FBF-DFCE6E44",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -613348.6,
+    "y": -320523.06,
+    "z": 21843.979
+  },
+  {
+    "instanceId": "E77C6D1D-439BC16A-B46C1596-6649D675",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -563204.8,
+    "y": -229685.1,
+    "z": -316.51154
+  },
+  {
+    "instanceId": "E4915A61-48F2C6AD-D801A3B1-C4A8DE6C",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -502169.7,
+    "y": -346285.5,
+    "z": -1500.3907
+  },
+  {
+    "instanceId": "20F0B8B5-4608D956-F8A0D1AA-6A374AAB",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -652504.44,
+    "y": -439189.22,
+    "z": 11888.71
+  },
+  {
+    "instanceId": "300DFC04-4CDD5426-83938980-559B597F",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -671787.0,
+    "y": -192539.98,
+    "z": 3095.2158
+  },
+  {
+    "instanceId": "99AF7ED0-46FC6422-1ADA6790-2F9A96FC",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -624781.9,
+    "y": -247472.5,
+    "z": 13299.918
+  },
+  {
+    "instanceId": "6F10A5BF-4C3599C4-09639AA9-A5214635",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -669586.3,
+    "y": -394684.16,
+    "z": 25288.348
+  },
+  {
+    "instanceId": "C49880DA-416B7CDA-CD88AC93-9E962ED0",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -640033.75,
+    "y": -344681.72,
+    "z": 11471.451
+  },
+  {
+    "instanceId": "0682D0D7-48AFBEBA-C824368C-1C5E2930",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -585393.8,
+    "y": -338144.72,
+    "z": 23197.459
+  },
+  {
+    "instanceId": "9293446A-41363D2C-3130CE92-7795F9B9",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -739658.9,
+    "y": -310238.78,
+    "z": 35274.93
+  },
+  {
+    "instanceId": "77B4E541-4D759142-CAA0ACBE-CAD76EFD",
+    "biome": "Viking_C",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -597250.44,
+    "y": -301345.4,
+    "z": 14453.99
+  },
+  {
+    "instanceId": "7086D23B-44D24EE6-1C6E57B7-D6745D77",
+    "biome": "Volcano",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -335586.6,
+    "y": -104884.1,
+    "z": 40441.938
+  },
+  {
+    "instanceId": "1347209B-47B7AA24-A1B50B96-2571E4BB",
+    "biome": "Volcano",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -287925.97,
+    "y": -191141.92,
+    "z": 6661.2534
+  },
+  {
+    "instanceId": "B303AA16-40DEA128-B9C22F84-3C0DF0B8",
+    "biome": "Volcano",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -333902.78,
+    "y": -205767.4,
+    "z": 6942.853
+  },
+  {
+    "instanceId": "A8BDD8BC-4946238B-D8992B96-3D2AEE16",
+    "biome": "Volcano",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -320921.66,
+    "y": -100230.68,
+    "z": 18782.256
+  },
+  {
+    "instanceId": "AE4D23C3-44AF419C-1DD6ADB6-C516223C",
+    "biome": "Volcano",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -268094.03,
+    "y": -53009.18,
+    "z": 3558.5527
+  },
+  {
+    "instanceId": "D68B296A-40D40AEF-D62B689A-37089706",
+    "biome": "Volcano",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -368225.28,
+    "y": -74478.06,
+    "z": 18314.773
+  },
+  {
+    "instanceId": "E5A6640D-42599674-8F376B84-7C7B24CA",
+    "biome": "Volcano",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -238650.75,
+    "y": -121688.11,
+    "z": -247.39284
+  },
+  {
+    "instanceId": "37FE8233-4549E800-DA982E8C-61DB5B33",
+    "biome": "Volcano",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -315091.6,
+    "y": -52063.6,
+    "z": 14675.742
+  },
+  {
+    "instanceId": "95823EC3-43052E41-9C7F60AF-D506329A",
+    "biome": "Volcano",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -374132.75,
+    "y": -89184.65,
+    "z": 30822.107
+  },
+  {
+    "instanceId": "FBCCAAAE-4AB22202-8715899C-56FCD707",
+    "biome": "Volcano",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -392681.62,
+    "y": -208957.25,
+    "z": -32.702103
+  },
+  {
+    "instanceId": "6C82F0C5-476BCFA3-A2A5FD87-911CEBFA",
+    "biome": "Volcano",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -405155.94,
+    "y": -176237.36,
+    "z": 15502.303
+  },
+  {
+    "instanceId": "6799F7B5-4CE40B38-0886C18C-078707B5",
+    "biome": "Volcano",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -386508.1,
+    "y": -12226.478,
+    "z": 4659.4893
+  },
+  {
+    "instanceId": "6620FD98-497A1734-2476BBBE-B4410C13",
+    "biome": "Volcano",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -400575.6,
+    "y": -35335.31,
+    "z": 7001.188
+  },
+  {
+    "instanceId": "3DBFB804-48413A72-A0076793-4C750056",
+    "biome": "Volcano",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -289138.2,
+    "y": -209876.05,
+    "z": 3435.3037
+  },
+  {
+    "instanceId": "E8C1EE35-45555106-D27727A4-70605D11",
+    "biome": "Volcano",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -265755.38,
+    "y": -164168.52,
+    "z": 9003.475
+  },
+  {
+    "instanceId": "19487CF2-47348A59-41790E80-EC7D54A4",
+    "biome": "Yakushima",
+    "icon": "T_icon_compass_dungeon.png",
+    "x": -485315.12,
+    "y": -34972.188,
+    "z": -1469.0168
+  }
+]

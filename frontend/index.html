@@ -199,6 +199,21 @@
     background: rgba(20, 22, 26, 0.95); border: 1px solid #555; color: #eee;
     white-space: normal; width: 220px; box-shadow: 0 2px 6px rgba(0,0,0,0.5);
   }
+  /* Dungeons: unlike every other section, no per-item state exists to check
+     off (see backend/dungeons.py docstring), so this reuses .section-header's
+     layout/hover styling but with no chevron and no expandable list under it
+     — just a checkbox, matching the "all or nothing" UX requested for this
+     section specifically. Wrapping <label> (instead of a plain div, like
+     every other .section-header) makes clicking anywhere in the row toggle
+     the checkbox natively, since there's no expand-click behavior to reserve
+     the row-click for. */
+  .dungeon-marker { display: flex; align-items: center; justify-content: center; }
+  .dungeon-marker .portrait {
+    width: 100% !important; height: 100% !important; object-fit: contain;
+    filter: drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000)
+      drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000)
+      drop-shadow(0 0 3px rgba(0,0,0,0.95));
+  }
   #global-toggle-row {
     padding: 8px 12px; border-top: 1px solid #333; flex-shrink: 0;
     display: flex; gap: 8px;
@@ -264,7 +279,7 @@
   <div id="bosses-header" class="section-header">
     <span class="chevron">&#9656;</span>
     <input type="checkbox" id="bosses-master-toggle" checked title="Show/hide all bosses" />
-    <span class="section-title">Bosses</span>
+    <span class="section-title">Alpha Bosses</span>
     <span id="bosses-total-count" class="rt-count"></span>
   </div>
   <div id="boss-type-list" class="type-list"></div>
@@ -296,6 +311,13 @@
     <span id="oilrigs-total-count" class="rt-count"></span>
   </div>
   <div id="oilrig-type-list" class="type-list"></div>
+  <label id="dungeons-row" class="section-header">
+    <!-- Empty chevron-width spacer (no glyph, not expandable) so the checkbox lines up with every other section's -->
+    <span class="chevron"></span>
+    <input type="checkbox" id="dungeons-master-toggle" checked title="Show/hide all Dungeon entrances" />
+    <span class="section-title">Dungeons</span>
+    <span id="dungeons-total-count" class="rt-count"></span>
+  </label>
   <div id="global-toggle-row">
     <button id="show-all-btn" type="button">Show All</button>
     <button id="hide-all-btn" type="button">Hide All</button>
@@ -470,6 +492,34 @@
       viewAsSelect.value = selected;
     }
   }
+
+  // Player markers move every 10s (setLatLng above, tracking live game
+  // position) — unlike every other marker type on this map, whose lat/lng
+  // is fixed forever. Browsers only fire mouseout on real cursor movement,
+  // not on an element relocating out from under a *stationary* cursor, so
+  // a player walking away while the mouse sits still over their marker
+  // leaves marker._hovering stuck true forever: the rich hover tooltip
+  // (HP/Hunger/Guild) never reverts to the plain nickname label, and each
+  // subsequent 10s refresh (line ~441) just re-applies that stale rich
+  // content — this is the "stuck tooltip" bug. Corrected in real time on
+  // every actual mouse move (not tied to the refresh cycle, so it clears
+  // the instant the cursor visibly isn't over the marker anymore, not up
+  // to 10s later) by checking whether any marker we believe is hovered
+  // still has the cursor within its current on-screen bounds.
+  document.addEventListener('mousemove', (e) => {
+    for (const marker of markers.values()) {
+      if (!marker._hovering) continue;
+      const el = marker.getElement();
+      if (!el) continue;
+      const rect = el.getBoundingClientRect();
+      const stillInside = e.clientX >= rect.left && e.clientX <= rect.right
+        && e.clientY >= rect.top && e.clientY <= rect.bottom;
+      if (!stillInside) {
+        marker._hovering = false;
+        marker.setTooltipContent(marker._plainLabel);
+      }
+    }
+  });
 
   async function refreshPlayers() {
     try {
@@ -922,6 +972,57 @@
 
   loadOilrigs({ rebuildList: true });
 
+  // ---------- Dungeons (open-world Dungeon Portal entrances) ----------
+  // No per-item checklist, unlike every other section — there's no per-
+  // instance name or player-visible collected/cleared state to check off
+  // (see backend/dungeons.py docstring), so this is a single show/hide-all
+  // toggle over one shared cave icon rather than createTypeChecklistSection.
+  const dungeonMasterToggle = document.getElementById('dungeons-master-toggle');
+  const dungeonCountEl = document.getElementById('dungeons-total-count');
+  const dungeonMarkers = new Map(); // entry id -> L.marker
+  let dungeonData = null;
+
+  function renderDungeons() {
+    const seen = new Set();
+    if (dungeonData && dungeonMasterToggle.checked) {
+      for (const entry of dungeonData) {
+        seen.add(entry.id);
+        const latlng = [entry.pixel_y, entry.pixel_x];
+        let marker = dungeonMarkers.get(entry.id);
+        if (!marker) {
+          const html = `<img class="portrait" src="/assets/dungeon_icons/${entry.icon}" />`;
+          marker = L.marker(latlng, {
+            icon: L.divIcon({ className: 'dungeon-marker', html, iconSize: [22, 22] }),
+          }).addTo(map);
+          marker.bindTooltip(`Dungeon (${entry.biome})`, { direction: 'top' });
+          dungeonMarkers.set(entry.id, marker);
+        } else if (!map.hasLayer(marker)) {
+          marker.addTo(map);
+        }
+      }
+    }
+    for (const [id, marker] of dungeonMarkers) {
+      if (!seen.has(id) && map.hasLayer(marker)) map.removeLayer(marker);
+    }
+  }
+
+  dungeonMasterToggle.addEventListener('change', renderDungeons);
+  dungeonMasterToggle.addEventListener('click', (e) => e.stopPropagation());
+
+  async function loadDungeons() {
+    try {
+      const res = await fetch('/api/dungeons', { cache: 'no-store' });
+      const json = await res.json();
+      dungeonData = json.entrances;
+    } catch (e) {
+      return;
+    }
+    dungeonCountEl.textContent = dungeonData.length;
+    renderDungeons();
+  }
+
+  loadDungeons();
+
   // ---------- Watchtowers / Waypoints (fast-travel points) ----------
   // Greyed out until unlocked, full color after (visualStyle: 'grayscale'),
   // unlike the checkmark badge used by Bosses/Bounty/Towers above.
@@ -997,6 +1098,7 @@
     'watchtowers-master-toggle', 'waypoints-master-toggle', 'effigies-master-toggle',
     'journals-master-toggle', 'schematics-master-toggle', 'bosses-master-toggle',
     'bounty-master-toggle', 'towers-master-toggle', 'bases-master-toggle', 'oilrigs-master-toggle',
+    'dungeons-master-toggle',
   ];
   function setAllSections(checked) {
     for (const id of ALL_MASTER_TOGGLE_IDS) {

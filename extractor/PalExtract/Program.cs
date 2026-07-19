@@ -535,6 +535,67 @@ Console.WriteLine($"Total waypoints: {waypointResult.Count}");
 File.WriteAllText(@"C:\Projects\PalworldMap\data\waypoints_static.json", waypointResult.ToString(Formatting.Indented));
 Console.WriteLine("Wrote data/waypoints_static.json");
 
+// ============ Dungeons (open-world "Dungeon" entrances, e.g. Grassland/Desert) ============
+// Random-feeling small loot/battle dungeons scattered across the map -
+// distinct from the 8 fixed Challenge Towers above (which have no placed
+// entrance actor at all, see the Towers section notes). Placed actor class
+// is BP_DungeonPortalMarker_<Biome>_C (11 biome variants found: Desert,
+// Forest, Grass1, Sakura, Skyland, Snow, Viking/Viking_B/Viking_C, Volcano,
+// Yakushima - "Viking" = Sakurajima/Darkisland's snow-viking biome, matched
+// by a prefix scan rather than hardcoding each variant name so a new biome
+// variant wouldn't silently get dropped). All 157 live in the persistent
+// level (no expensive World Partition scan needed, same as Watchtowers/
+// Waypoints/Bosses). Each instance has a LevelObjectInstanceId but no
+// DataTable row/name reference - unlike every other category here, there's
+// no per-instance display name, only the biome baked into the class name.
+// No per-player "unlocked"/"cleared" state exists for these (this is a
+// distinct concept from the per-instance RespawnProbability override seen
+// on some instances' EditSpawnParameter - that's spawn-table tuning, not a
+// player-visible flag) - matches the user's own description ("we don't know
+// exactly when they activate"), so unlike every other section this ships as
+// a single show/hide-all toggle with one shared icon, no per-item checklist.
+// Icon: the game's own compass icon for these, T_icon_compass_dungeon -
+// confirmed to exist by name among all T_icon_compass_* textures (same
+// "prefer the game's real icon" rule as Towers/Watchtowers/Waypoints/Bases).
+var dungeonIconOutDir = @"C:\Projects\PalworldMap\frontend\assets\dungeon_icons";
+Directory.CreateDirectory(dungeonIconOutDir);
+const string dungeonIconFile = "T_icon_compass_dungeon.png";
+{
+    var exports = provider.LoadPackageObjects("Pal/Content/Pal/Texture/UI/InGame/T_icon_compass_dungeon").ToList();
+    var tex = exports.OfType<UTexture2D>().First();
+    var decoded = tex.Decode()!;
+    var bytes = TextureEncoder.Encode(decoded, ETextureFormat.Png, false, out _);
+    File.WriteAllBytes(Path.Combine(dungeonIconOutDir, dungeonIconFile), bytes);
+}
+
+var dungeonResult = new JArray();
+foreach (var exp in persistentLevelExports)
+{
+    var cn = exp.Class?.Name.ToString() ?? "";
+    if (!cn.StartsWith("BP_DungeonPortalMarker_", StringComparison.Ordinal)) continue;
+    var biome = cn["BP_DungeonPortalMarker_".Length..];
+    if (biome.EndsWith("_C", StringComparison.Ordinal)) biome = biome[..^2];
+    var j = JObject.Parse(JsonConvert.SerializeObject(exp));
+    var props = j["Properties"] as JObject;
+    var instanceId = props?["LevelObjectInstanceId"]?.ToString();
+    if (instanceId == null) continue;
+    var rootObj = ResolveExportRef(persistentLevelExports, props?["RootComponent"]);
+    var loc = (rootObj?["Properties"] as JObject)?["RelativeLocation"];
+    if (loc == null) continue;
+    dungeonResult.Add(new JObject
+    {
+        ["instanceId"] = instanceId,
+        ["biome"] = biome,
+        ["icon"] = dungeonIconFile,
+        ["x"] = loc["X"],
+        ["y"] = loc["Y"],
+        ["z"] = loc["Z"],
+    });
+}
+Console.WriteLine($"Total dungeon entrances: {dungeonResult.Count}");
+File.WriteAllText(@"C:\Projects\PalworldMap\data\dungeons_static.json", dungeonResult.ToString(Formatting.Indented));
+Console.WriteLine("Wrote data/dungeons_static.json");
+
 // ============ Journals (internally "Notes") ============
 // Collectible lore pickups, shown to the user as "Journals" - internally the
 // game calls these "Notes" (Blueprint BP_LevelObject_Note_C, DataTables

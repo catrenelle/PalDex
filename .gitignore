@@ -13,3 +13,5 @@ node_modules/
 extractor/PalExtract/bin/
 extractor/PalExtract/obj/
 server_run.log
+server_run.err.log
+.tooltip_repro.mjs
