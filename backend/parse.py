@@ -147,6 +147,58 @@ def load_guild_bases(
     return bases, guilds
 
 
+def load_dungeon_marker_state(world_save_data: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    """Live per-marker active/inactive state for open-world Dungeon
+    entrances, world-shared like Guild Bases (unlike the static positions in
+    dungeons_static.json, this must be re-read from Level.sav each refresh).
+
+    worldSaveData.DungeonPointMarkerSaveData has one row per marker
+    (MarkerPointId, ConnectedDungeonInstanceId, NextRespawnGameTime.Ticks).
+    A marker is currently active (dungeon spawned/enterable) when
+    ConnectedDungeonInstanceId is non-zero; that id cross-references into
+    worldSaveData.DungeonSaveData (InstanceId -> DungeonType/BossState/
+    DisappearTimeAt.Ticks) for extra detail. Confirmed against a real save
+    (2026-07-19): all 157 statically-extracted dungeon markers match 157 of
+    170 MarkerPointId rows here (dashes-stripped/uppercase, same convention
+    as everywhere else in this project) — the other 13 are presumably
+    Sealed Realm/other marker types sharing this same system, not open-world
+    Dungeons. Ticks are in the same GameDateTimeTicks units as
+    load_game_time_ticks, which advances in lockstep with real time (see
+    gametime.py), so a caller can convert next_respawn_ticks/disappear_ticks
+    to a real ETA by diffing against a `now_ticks` captured at the same
+    refresh.
+
+    Returns marker_id (dashes-stripped, uppercase) -> {active, dungeon_type,
+    boss_state, disappear_ticks} when active, or {active, next_respawn_ticks}
+    when not.
+    """
+    zero_uuid = "00000000-0000-0000-0000-000000000000"
+
+    def norm(uuid_field: dict[str, Any]) -> str:
+        return str(uuid_field["value"]).replace("-", "").upper()
+
+    instances = {}
+    for d in world_save_data["DungeonSaveData"]["value"]["values"]:
+        instances[norm(d["InstanceId"])] = {
+            "dungeon_type": d["DungeonType"]["value"]["value"].split("::")[-1],
+            "boss_state": d["BossState"]["value"]["value"].split("::")[-1],
+            "disappear_ticks": d["DisappearTimeAt"]["value"]["Ticks"]["value"] or None,
+        }
+
+    result = {}
+    for m in world_save_data["DungeonPointMarkerSaveData"]["value"]["values"]:
+        marker_id = norm(m["MarkerPointId"])
+        connected_raw = str(m["ConnectedDungeonInstanceId"]["value"])
+        active = connected_raw.lower() != zero_uuid
+        entry: dict[str, Any] = {"active": active}
+        if active:
+            entry.update(instances.get(connected_raw.replace("-", "").upper(), {}))
+        else:
+            entry["next_respawn_ticks"] = m["NextRespawnGameTime"]["value"]["Ticks"]["value"] or None
+        result[marker_id] = entry
+    return result
+
+
 def _dotnet_ticks_to_iso(ticks: int | None) -> str | None:
     """Standard .NET DateTime.Ticks (100ns units since 0001-01-01) — unlike
     GameTimeSaveData.GameDateTimeTicks (a much smaller in-game-clock

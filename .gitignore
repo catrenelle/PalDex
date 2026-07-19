@@ -3,6 +3,7 @@ data/saves/
 data/extracted/
 data/players.json
 data/bases.json
+data/dungeons_state.json
 __pycache__/
 *.pyc
 backend/secrets.py

@@ -5,9 +5,10 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from coord import locate
-from gametime import decode_game_time
+from gametime import TICKS_PER_SECOND, decode_game_time
 from parse import (
     build_player_snapshot,
+    load_dungeon_marker_state,
     load_game_time_ticks,
     load_guild_bases,
     load_level_world_save_data,
@@ -19,6 +20,7 @@ from rcon import get_online_uids, get_server_version
 SAVE_DIR = Path(__file__).resolve().parent.parent / "data" / "saves"
 OUTPUT = Path(__file__).resolve().parent.parent / "data" / "players.json"
 BASES_OUTPUT = Path(__file__).resolve().parent.parent / "data" / "bases.json"
+DUNGEONS_STATE_OUTPUT = Path(__file__).resolve().parent.parent / "data" / "dungeons_state.json"
 
 
 def run() -> list[dict]:
@@ -64,9 +66,11 @@ def run() -> list[dict]:
         server_start_time = None
 
     try:
-        game_time = decode_game_time(load_game_time_ticks(world_save_data))
+        now_ticks = load_game_time_ticks(world_save_data)
+        game_time = decode_game_time(now_ticks)
     except Exception:
         traceback.print_exc()
+        now_ticks = None
         game_time = None
 
     payload = {
@@ -87,6 +91,31 @@ def run() -> list[dict]:
         "guilds": guilds,
     }
     BASES_OUTPUT.write_text(json.dumps(bases_payload, indent=2, default=str))
+
+    try:
+        marker_state = load_dungeon_marker_state(world_save_data)
+        # Convert raw GameDateTimeTicks (see gametime.py) to a plain seconds
+        # ETA here, server-side, same as every other tick/coord conversion
+        # in this project — the frontend never sees raw ticks.
+        if now_ticks is not None:
+            for entry in marker_state.values():
+                if not entry["active"] and entry.get("next_respawn_ticks") is not None:
+                    entry["respawn_in_seconds"] = max(
+                        0, round((entry.pop("next_respawn_ticks") - now_ticks) / TICKS_PER_SECOND)
+                    )
+                elif entry["active"] and entry.get("disappear_ticks") is not None:
+                    entry["disappear_in_seconds"] = max(
+                        0, round((entry.pop("disappear_ticks") - now_ticks) / TICKS_PER_SECOND)
+                    )
+    except Exception:
+        traceback.print_exc()
+        marker_state = {}
+
+    dungeons_state_payload = {
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "markers": marker_state,
+    }
+    DUNGEONS_STATE_OUTPUT.write_text(json.dumps(dungeons_state_payload, indent=2, default=str))
 
     return players
 

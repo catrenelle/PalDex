@@ -676,7 +676,7 @@
   }
 
   function reloadCollectionState() {
-    loadRelics(); loadBosses(); loadBounties(); loadTowers(); loadJournals(); loadSchematics(); loadWatchtowers(); loadWaypoints(); loadBases();
+    loadRelics(); loadBosses(); loadBounties(); loadTowers(); loadJournals(); loadSchematics(); loadWatchtowers(); loadWaypoints(); loadBases(); loadDungeons();
   }
   viewAsSelect.addEventListener('change', reloadCollectionState);
 
@@ -975,29 +975,50 @@
   // ---------- Dungeons (open-world Dungeon Portal entrances) ----------
   // No per-item checklist, unlike every other section — there's no per-
   // instance name or player-visible collected/cleared state to check off
-  // (see backend/dungeons.py docstring), so this is a single show/hide-all
-  // toggle over one shared cave icon rather than createTypeChecklistSection.
+  // (see backend/dungeons.py docstring). Instead of showing all 157 with an
+  // active/inactive indicator, only the currently-active ones are shown at
+  // all (backend-provided `active` live state) — still a single show/hide-
+  // all toggle rather than createTypeChecklistSection, just over a filtered
+  // set. Falls back to showing everything if the backend doesn't know the
+  // live state yet (state_known: false, e.g. right after a server restart
+  // before the first refresh cycle) rather than showing nothing.
   const dungeonMasterToggle = document.getElementById('dungeons-master-toggle');
   const dungeonCountEl = document.getElementById('dungeons-total-count');
   const dungeonMarkers = new Map(); // entry id -> L.marker
   let dungeonData = null;
+  let dungeonStateKnown = false;
+
+  function formatDuration(seconds) {
+    if (seconds == null) return null;
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    return h > 0 ? `${h}h ${m}m` : `${m}m`;
+  }
+
+  function dungeonTooltipHtml(entry) {
+    const eta = formatDuration(entry.disappear_in_seconds);
+    return `Dungeon (${entry.biome})${eta ? ` — despawns in ${eta}` : ''}`;
+  }
 
   function renderDungeons() {
     const seen = new Set();
     if (dungeonData && dungeonMasterToggle.checked) {
-      for (const entry of dungeonData) {
+      const visible = dungeonStateKnown ? dungeonData.filter((e) => e.active) : dungeonData;
+      for (const entry of visible) {
         seen.add(entry.id);
         const latlng = [entry.pixel_y, entry.pixel_x];
+        const tooltip = dungeonTooltipHtml(entry);
         let marker = dungeonMarkers.get(entry.id);
         if (!marker) {
           const html = `<img class="portrait" src="/assets/dungeon_icons/${entry.icon}" />`;
           marker = L.marker(latlng, {
             icon: L.divIcon({ className: 'dungeon-marker', html, iconSize: [22, 22] }),
           }).addTo(map);
-          marker.bindTooltip(`Dungeon (${entry.biome})`, { direction: 'top' });
+          marker.bindTooltip(tooltip, { direction: 'top' });
           dungeonMarkers.set(entry.id, marker);
-        } else if (!map.hasLayer(marker)) {
-          marker.addTo(map);
+        } else {
+          if (!map.hasLayer(marker)) marker.addTo(map);
+          marker.setTooltipContent(tooltip);
         }
       }
     }
@@ -1014,10 +1035,12 @@
       const res = await fetch('/api/dungeons', { cache: 'no-store' });
       const json = await res.json();
       dungeonData = json.entrances;
+      dungeonStateKnown = json.state_known;
     } catch (e) {
       return;
     }
-    dungeonCountEl.textContent = dungeonData.length;
+    const activeCount = dungeonData.filter((e) => e.active).length;
+    dungeonCountEl.textContent = dungeonStateKnown ? `${activeCount} / ${dungeonData.length}` : `${dungeonData.length}`;
     renderDungeons();
   }
 

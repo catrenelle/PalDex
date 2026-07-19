@@ -288,8 +288,21 @@ def api_oilrigs():
 
 @app.route("/api/dungeons")
 def api_dungeons():
-    # No per-player state exists for these — see dungeons.load_dungeons docstring.
-    return jsonify({"entrances": _dungeons_cache})
+    # Positions are static (_dungeons_cache), but active/inactive state is
+    # live world-shared state re-read from Level.sav each refresh — see
+    # dungeons.py docstring and refresh.load_dungeon_marker_state.
+    marker_state = {}
+    if refresh.DUNGEONS_STATE_OUTPUT.exists():
+        try:
+            marker_state = json.loads(refresh.DUNGEONS_STATE_OUTPUT.read_text())["markers"]
+        except Exception:
+            traceback.print_exc()
+
+    entrances = [
+        {**e, **marker_state.get(e["id"].replace("-", "").upper(), {"active": None})}
+        for e in _dungeons_cache
+    ]
+    return jsonify({"entrances": entrances, "state_known": bool(marker_state)})
 
 
 def _refresh_loop():
