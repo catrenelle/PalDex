@@ -30,6 +30,13 @@ def run() -> list[dict]:
     names = load_player_names_and_levels(world_save_data)
     players = build_player_snapshot(SAVE_DIR, names)
 
+    # Computed here (not just below for BASES_OUTPUT) so each player's own
+    # guild name can be attached before the players.json payload is built.
+    bases, guilds = load_guild_bases(world_save_data, names)
+    guild_by_uid = {uid: g["name"] for g in guilds.values() for uid in g["player_uids"]}
+    for p in players:
+        p["guild"] = guild_by_uid.get(p["uid"].lower())
+
     try:
         online_uids = get_online_uids()
     except Exception:
@@ -72,7 +79,6 @@ def run() -> list[dict]:
     }
     OUTPUT.write_text(json.dumps(payload, indent=2, default=str))
 
-    bases, guilds = load_guild_bases(world_save_data, names)
     for b in bases:
         b["map"], b["pixel_x"], b["pixel_y"] = locate(b["x"], b["y"])
     bases_payload = {

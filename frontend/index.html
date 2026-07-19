@@ -32,7 +32,7 @@
   }
   #app-title {
     font-size: 16px; font-weight: 700; color: #eee; margin: 0;
-    padding: 12px 12px 0; letter-spacing: 0.02em;
+    padding: 12px 12px 0; letter-spacing: 0.02em; text-align: center;
   }
   #app-title span { color: #6fa8dc; }
   #legend h2 {
@@ -219,7 +219,7 @@
 <body>
 <div id="legend">
   <div id="app-title">Pal<span>Dex</span></div>
-  <h2>View</h2>
+  <h2>View As...</h2>
   <div id="view-as-row">
     <select id="view-as-player">
       <option value="">All players (no filter)</option>
@@ -350,6 +350,30 @@
   let lastPlayerData = null;
   let knownPlayerUids = new Set();
 
+  // Coarse "Xm/Xh/Xd ago" for the hover tooltip's Last Online line — no
+  // need for anything more precise than that at a glance.
+  function relativeTimeAgo(isoString) {
+    const diffMs = Date.now() - new Date(isoString).getTime();
+    const mins = Math.floor(diffMs / 60000);
+    if (mins < 1) return 'just now';
+    if (mins < 60) return `${mins}m ago`;
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return `${hours}h ago`;
+    return `${Math.floor(hours / 24)}d ago`;
+  }
+
+  // Richer hover-only content, swapped in over the permanent name label via
+  // mouseover/mouseout (Leaflet only supports one bound tooltip per layer,
+  // so this reuses the same tooltip rather than adding a second one).
+  function buildRichPlayerLabel(p, isOffline) {
+    const lines = [`${p.nickname}${p.level != null ? ' (Lv ' + p.level + ')' : ''}${isOffline ? ' (offline)' : ''}`];
+    if (p.hp != null) lines.push(`HP: ${Math.round(p.hp)}`);
+    if (p.hunger != null) lines.push(`Hunger: ${Math.round(p.hunger)}%`);
+    if (p.guild) lines.push(`Guild: ${p.guild}`);
+    if (isOffline && p.last_online) lines.push(`Last Online: ${relativeTimeAgo(p.last_online)}`);
+    return lines.join('<br>');
+  }
+
   function renderPlayers() {
     const data = lastPlayerData;
     if (!data) return;
@@ -370,6 +394,7 @@
       // [row, col] directly, matching image pixel space with no extra flip.
       const latlng = [p.pixel_y, p.pixel_x];
       const label = `${p.nickname}${p.level != null ? ' (Lv ' + p.level + ')' : ''}${isOffline ? ' (offline)' : ''}`;
+      const richLabel = buildRichPlayerLabel(p, isOffline);
       const opacity = isOffline ? 0.5 : 1;
       let marker = markers.get(p.uid);
       const iconHtml = `<div style="width:14px;height:14px;border-radius:50%;background:${colorForUid(p.uid)};border:2px solid #fff;box-shadow:0 0 6px rgba(0,0,0,0.8);opacity:${opacity};"></div>`;
@@ -381,14 +406,22 @@
           permanent: true, direction: 'right',
           className: 'player-label' + (isOffline ? ' offline' : ''), offset: [8, 0],
         });
+        // Referencing marker._plainLabel/_richLabel (kept fresh every
+        // render below) rather than closing over label/richLabel directly —
+        // these listeners are only attached once, at marker creation, but
+        // must reflect whatever the latest poll's data was.
+        marker.on('mouseover', () => { marker._hovering = true; marker.setTooltipContent(marker._richLabel); });
+        marker.on('mouseout', () => { marker._hovering = false; marker.setTooltipContent(marker._plainLabel); });
         markers.set(p.uid, marker);
       } else {
         marker.setLatLng(latlng);
         marker.setIcon(L.divIcon({ className: '', html: iconHtml, iconSize: [14, 14] }));
-        marker.setTooltipContent(label);
+        marker.setTooltipContent(marker._hovering ? richLabel : label);
         const tooltipEl = marker.getTooltip()?.getElement();
         if (tooltipEl) tooltipEl.classList.toggle('offline', isOffline);
       }
+      marker._plainLabel = label;
+      marker._richLabel = richLabel;
     }
     for (const [uid, marker] of markers) {
       if (!seen.has(uid)) {
@@ -592,9 +625,25 @@
     renderRelics();
   }
 
-  viewAsSelect.addEventListener('change', () => {
+  function reloadCollectionState() {
     loadRelics(); loadBosses(); loadBounties(); loadTowers(); loadJournals(); loadSchematics(); loadWatchtowers(); loadWaypoints(); loadBases();
+  }
+  viewAsSelect.addEventListener('change', reloadCollectionState);
+
+  // Selecting a specific player pans/zooms the map to their current
+  // position (one-time jump on selection, not continuous re-centering on
+  // every 10s position poll) — a zoom short of maxZoom (2) so there's still
+  // some surrounding context, not a tight crop. Selecting "All players (no
+  // filter)" (empty value) leaves the current view untouched.
+  const VIEW_AS_ZOOM = 1;
+  viewAsSelect.addEventListener('change', () => {
+    const uid = viewAsSelect.value;
+    if (!uid) return;
+    const player = lastPlayerData?.players.find(p => p.uid === uid);
+    if (!player) return;
+    map.setView([player.pixel_y, player.pixel_x], VIEW_AS_ZOOM);
   });
+
   loadRelics({ rebuildLegend: true });
 
   // ---------- Shared: collapsible "Bosses"/"Bounty"-style checklist section ----------
@@ -926,6 +975,17 @@
   }
 
   loadBases({ rebuildList: true });
+
+  // Periodically re-fetch collected/defeated state for every trackable
+  // section (Effigies/Watchtowers/Waypoints/Journals/Schematics/Bosses/
+  // Bounty/Towers/Bases) so a viewed player's live pickups disappear from
+  // the map on their own as the backend's 30s save refresh picks them up —
+  // matches the player-position poll cadence. rebuildList/rebuildLegend
+  // both default false here, so this only updates marker visibility/
+  // checkmarks + counts (createTypeChecklistSection's render() already
+  // diffs markers rather than wiping and rebuilding), not the legend list
+  // or the whole map.
+  setInterval(reloadCollectionState, 10000);
 
   // ---------- Global "Show All" / "Hide All" ----------
   // Every section (Effigies' bespoke checkbox + every createTypeChecklistSection

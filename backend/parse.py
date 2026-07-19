@@ -1,5 +1,6 @@
 """Extracts live player positions + names/levels from pulled save data."""
 
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -34,9 +35,19 @@ def load_game_time_ticks(world_save_data: dict[str, Any]) -> int:
     return world_save_data["GameTimeSaveData"]["value"]["GameDateTimeTicks"]["value"]
 
 
+def _fixed_point64(field: dict[str, Any] | None) -> float | None:
+    """Palworld's FixedPoint64 struct (used for Hp/ShieldHP/etc.) stores an
+    integer raw value scaled by 1000 — confirmed against a real player's Hp
+    (raw 7875000 -> 7875)."""
+    if not field:
+        return None
+    raw = field.get("value", {}).get("Value", {}).get("value")
+    return raw / 1000 if raw is not None else None
+
+
 def load_player_names_and_levels(world_save_data: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    """PlayerUId (lowercase str) -> {nickname, level}, from Level.sav's
-    CharacterSaveParameterMap. Pals share the sentinel UID
+    """PlayerUId (lowercase str) -> {nickname, level, hp, hunger}, from
+    Level.sav's CharacterSaveParameterMap. Pals share the sentinel UID
     00000000-0000-0000-0000-000000000001 and are skipped by the caller,
     which only looks up UIDs it already knows are players."""
     entries = world_save_data["CharacterSaveParameterMap"]["value"]
@@ -51,6 +62,8 @@ def load_player_names_and_levels(world_save_data: dict[str, Any]) -> dict[str, d
         result[player_uid] = {
             "nickname": nickname,
             "level": level.get("value") if isinstance(level, dict) else None,
+            "hp": _fixed_point64(save_param.get("Hp")),
+            "hunger": save_param.get("FullStomach", {}).get("value"),
         }
     return result
 
@@ -134,6 +147,17 @@ def load_guild_bases(
     return bases, guilds
 
 
+def _dotnet_ticks_to_iso(ticks: int | None) -> str | None:
+    """Standard .NET DateTime.Ticks (100ns units since 0001-01-01) — unlike
+    GameTimeSaveData.GameDateTimeTicks (a much smaller in-game-clock
+    counter, see gametime.py), LastOnlineDateTime really is ticks-since-
+    year-1: confirmed a real player's raw value decodes to a sane recent
+    real-world timestamp."""
+    if ticks is None:
+        return None
+    return (datetime(1, 1, 1) + timedelta(microseconds=ticks / 10)).replace(tzinfo=timezone.utc).isoformat()
+
+
 def load_player_position(player_sav: Path) -> dict[str, Any]:
     d = _read_gvas(player_sav)
     save_data = d["properties"]["SaveData"]["value"]
@@ -141,7 +165,7 @@ def load_player_position(player_sav: Path) -> dict[str, Any]:
     translation = save_data["LastTransform"]["value"]["Translation"]["value"]
     raw_x, raw_y, raw_z = translation["x"], translation["y"], translation["z"]
     map_name, pixel_x, pixel_y = locate(raw_x, raw_y)
-    last_online = save_data.get("LastOnlineDateTime", {}).get("value")
+    last_online = _dotnet_ticks_to_iso(save_data.get("LastOnlineDateTime", {}).get("value"))
     return {
         "uid": player_uid,
         "raw_x": raw_x,
@@ -250,6 +274,8 @@ def build_player_snapshot(save_dir: Path, names: dict[str, dict[str, Any]]) -> l
                 **pos,
                 "nickname": meta.get("nickname") or pos["uid"][:8],
                 "level": meta.get("level"),
+                "hp": meta.get("hp"),
+                "hunger": meta.get("hunger"),
             }
         )
     return players
