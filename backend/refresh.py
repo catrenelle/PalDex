@@ -5,7 +5,14 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from coord import locate
-from parse import build_player_snapshot, load_guild_bases, load_level_world_save_data, load_player_names_and_levels
+from gametime import decode_game_time
+from parse import (
+    build_player_snapshot,
+    load_game_time_ticks,
+    load_guild_bases,
+    load_level_world_save_data,
+    load_player_names_and_levels,
+)
 from remote import get_server_uptime_seconds, refresh_and_pull
 from rcon import get_online_uids, get_server_version
 
@@ -49,11 +56,18 @@ def run() -> list[dict]:
         traceback.print_exc()
         server_start_time = None
 
+    try:
+        game_time = decode_game_time(load_game_time_ticks(world_save_data))
+    except Exception:
+        traceback.print_exc()
+        game_time = None
+
     payload = {
         "updated_at": datetime.now(timezone.utc).isoformat(),
         "online_known": online_uids is not None,
         "server_version": server_version,
         "server_start_time": server_start_time,
+        "game_time": game_time,
         "players": players,
     }
     OUTPUT.write_text(json.dumps(payload, indent=2, default=str))

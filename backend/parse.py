@@ -27,6 +27,13 @@ def load_level_world_save_data(level_sav: Path) -> dict[str, Any]:
     return d["properties"]["worldSaveData"]["value"]
 
 
+def load_game_time_ticks(world_save_data: dict[str, Any]) -> int:
+    """worldSaveData.GameTimeSaveData.GameDateTimeTicks — the live in-game
+    clock, in .NET-tick units (10,000,000 ticks/second). See
+    backend/gametime.py for the decode."""
+    return world_save_data["GameTimeSaveData"]["value"]["GameDateTimeTicks"]["value"]
+
+
 def load_player_names_and_levels(world_save_data: dict[str, Any]) -> dict[str, dict[str, Any]]:
     """PlayerUId (lowercase str) -> {nickname, level}, from Level.sav's
     CharacterSaveParameterMap. Pals share the sentinel UID

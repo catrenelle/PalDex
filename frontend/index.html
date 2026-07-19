@@ -15,6 +15,7 @@
   }
   #status { white-space: nowrap; }
   #server-info { font-size: 11px; color: #9ab; white-space: nowrap; margin-bottom: 2px; }
+  #game-time-info { font-size: 11px; color: #9ab; white-space: nowrap; margin-bottom: 2px; }
   #offline-toggle-row { margin-top: 4px; }
   #offline-toggle-row label { cursor: pointer; user-select: none; }
   .player-label {
@@ -302,6 +303,7 @@
 </div>
 <div id="controls">
   <div id="server-info"></div>
+  <div id="game-time-info"></div>
   <div id="status">Loading...</div>
   <div id="offline-toggle-row">
     <label><input type="checkbox" id="offline-toggle" /> Show offline players</label>
@@ -409,6 +411,14 @@
       : null;
     const startedPart = lastStarted ? `Last Started: ${lastStarted}` : null;
     document.getElementById('server-info').textContent = [versionPart, startedPart].filter(Boolean).join(' · ');
+
+    // Decoded from Level.sav's own in-game clock (backend/gametime.py) —
+    // the (Day)/(Night) boundary hours are an unverified placeholder
+    // pending real production observation, unlike the numeric clock itself.
+    const gt = data.game_time;
+    document.getElementById('game-time-info').textContent = gt
+      ? `Time: ${String(gt.hour).padStart(2, '0')}:${String(gt.minute).padStart(2, '0')} (${gt.is_night ? 'Night' : 'Day'})`
+      : '';
 
     // Populate the "View As" dropdown once per newly-seen player set.
     const currentUids = new Set(data.players.map(p => p.uid));
