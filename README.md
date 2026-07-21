@@ -19,8 +19,18 @@ own save files and the game's own assets (not scraped from a wiki).
 | **Watchtowers / Waypoints** | 22 climbable watchtowers + 152 fast-travel points | ✅ per-player unlocked |
 | **Journals** | 64 lore pickups (Castaway's Journal + NPC Diaries) | ✅ per-player read |
 | **Schematics** | 106 blueprint pickups | ✅ per-player collected |
+| **NPCs** | 104 named NPCs (General/Wandering Merchant/Pal Dealer/Black Market/Dog Coin), with a shop-inventory modal (items or capturable Pals, live price/pool where the game exposes one) | — |
+| **Quests** | 87 quests with a map location (28 Main, 59 Sub), split into Active/Not Started | ✅ per-player, shown only once a player is selected |
 | **Guild Bases** | Player-built bases, grouped by guild | live, world-shared |
 | **Dungeons** | Open-world dungeon entrances — **only the ones currently spawned/enterable are shown**, with a live `active / total` count and a despawn ETA | live, world-shared |
+
+The sidebar groups everything above into four collapsible categories —
+Points of Interest, Collectibles, Combat, and Quests (the last one only
+shows content once a player is picked, since quest progress is inherently
+per-player) — and remembers which sections/checkboxes you had
+expanded/checked, plus your **View As** pick, across a page refresh
+(`localStorage`, client-side only — nothing server-side is saved per
+visitor).
 
 Selecting a player from **View As...** filters every checklist to what *that*
 player has actually collected/defeated/unlocked, and pans the map to their
@@ -74,7 +84,7 @@ isn't stored as game data) — lives in [`NOTES.md`](NOTES.md).
 | Save parsing | [`palsav-flex` / `palooz`](https://github.com/deafdudecomputers/PalworldSaveTools) (Oodle decompression) |
 | Frontend | [Leaflet.js](https://github.com/Leaflet/Leaflet), vanilla JS, no build step |
 | Extractor | C#, .NET, [CUE4Parse](https://github.com/FabianFG/CUE4Parse) |
-| Deployment | Docker, Portainer (git-repository stack) |
+| Deployment | Docker/Portainer (git-repository stack), or bare Linux (systemd) |
 
 ## Acknowledgments
 
@@ -116,8 +126,10 @@ that it's not just a `pip install` away.
 cd backend
 python -m venv ../.venv
 ../.venv/Scripts/pip install -r requirements.txt
-# provide RCON_PASSWORD / AMP_HOST / AMP_USER / AMP_SAVE_ROOT / AMP_WORLD_GUID
-# via env vars, or a local backend/secrets.py (gitignored)
+cp secrets.py.example secrets.py
+# edit secrets.py and fill in RCON_PASSWORD / AMP_HOST / AMP_USER /
+# AMP_SAVE_ROOT / AMP_WORLD_GUID (or set them as env vars instead --
+# those take priority if both are set)
 python server.py
 ```
 
@@ -153,7 +165,8 @@ backend/            Flask app, save-file parsing, live refresh loop
 frontend/            Leaflet map (index.html + assets/)
 extractor/PalExtract  One-off CUE4Parse extractor for static game data
 data/                 Static extracted JSON (+ gitignored live-refreshed data)
-deploy/               Docker/Portainer deployment docs and config
+deploy/               Docker/Portainer + bare-metal deployment docs and config
+docs/                 README screenshots
 NOTES.md              Full reverse-engineering investigation log
 ```
 
