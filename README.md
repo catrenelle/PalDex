@@ -1,8 +1,10 @@
 # PalDex
 
 A live, self-hosted map for a Palworld dedicated server — player positions,
-collectibles, bosses, and world state, all read straight from the server's
-own save files and the game's own assets (not scraped from a wiki).
+collectibles, bosses, and world state, almost all read straight from the
+server's own save files and the game's own assets. A small handful of values
+that aren't stored anywhere in the game's own data are cross-checked against
+public wikis instead — see below for exactly which ones.
 
 ![Map overview](docs/screenshots/map-overview.png)
 
@@ -71,10 +73,26 @@ current position.
 Nothing here is guessed: every mechanic (effigy collection flags, boss
 kill-tracking keys, dungeon active-state, coordinate transforms, etc.) was
 reverse-engineered directly from a real save file or the game's own data
-tables, with dead ends recorded so they don't get re-attempted. The full
-investigation log — including the handful of things that *are* cross-checked
-against public wikis (e.g. the elemental type-effectiveness chart, which
-isn't stored as game data) — lives in [`NOTES.md`](NOTES.md).
+tables, with dead ends recorded so they don't get re-attempted. A short list
+of values simply don't exist anywhere in the game's own files, and for those
+we cross-check public wikis instead:
+
+- **Elemental type-effectiveness chart** — baked into UI Blueprint logic
+  (`WBP_MainMenu_Pal_ElementMatchup`), not a `DataTable`, so it can't be
+  extracted. Sourced from the publicly documented chart, cross-checked
+  against [game8.co](https://game8.co) and
+  [dexerto.com](https://www.dexerto.com) for agreement, then sanity-checked
+  against a real Pal's known matchups.
+- **Challenge Tower HUD coordinates and recommended levels** — no
+  data-mined "recommended level" or reliable overworld position exists for
+  towers in the game's own tables. Sourced from real in-game HUD
+  coordinates read off the map, independently cross-checked against
+  [palworld.fandom.com](https://palworld.fandom.com)'s Tower page for
+  agreement.
+
+The full investigation log — including how each of these was verified, and
+a wiki-sourced typo that was caught and corrected along the way — lives in
+[`NOTES.md`](NOTES.md).
 
 ## Tech stack
 
@@ -88,8 +106,10 @@ isn't stored as game data) — lives in [`NOTES.md`](NOTES.md).
 
 ## Acknowledgments
 
-This project reads game data directly rather than scraping a wiki, which
-wouldn't be possible without these open-source projects:
+This project reads almost all of its data directly from the game itself
+rather than scraping a wiki (see "How it works" above for the handful of
+wiki-sourced exceptions), which wouldn't be possible without these
+open-source projects:
 
 - **[deafdudecomputers/PalworldSaveTools](https://github.com/deafdudecomputers/PalworldSaveTools)**
   — save file decoding (`palsav-flex`, `palooz`), including Oodle/`PlM`
