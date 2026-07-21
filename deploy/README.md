@@ -10,6 +10,15 @@ directly on a Linux LXC/VM instead — same config below applies, but a couple
 of these variables behave differently (or need setting explicitly) once
 there's no container providing their defaults.
 
+**Despite the `AMP_` prefix, none of this actually requires AMP.** The tool
+only needs SSH access to whatever host is running the Palworld dedicated
+server process, plus a sudo-scoped `rsync` against wherever that process
+writes `Level.sav`/`Players/*.sav`. AMP happens to be how the reference
+deployment runs its server, so that's what the variable names and examples
+below reflect, but a bare `PalServer` install (systemd/screen, no panel at
+all), Pterodactyl, or anything else works identically — just point
+`AMP_SAVE_ROOT` at wherever *your* save files actually live.
+
 ## Required config
 
 All of these are read env-var-first, falling back to `backend/secrets.py`
@@ -18,9 +27,9 @@ All of these are read env-var-first, falling back to `backend/secrets.py`
 | Variable | What it is |
 |---|---|
 | `RCON_PASSWORD` | Palworld server's RCON `AdminPassword` (from `PalWorldSettings.ini`) |
-| `AMP_HOST` | IP/hostname of the AMP game server |
-| `AMP_USER` | SSH account on the AMP host with the scoped sudo rsync rule below |
-| `AMP_SAVE_ROOT` | Full path to the AMP instance's SaveGames dir, e.g. `/home/<amp-user>/.ampdata/instances/<instance>/palworld/<steam-app-id>/Pal/Saved/SaveGames/` |
+| `AMP_HOST` | IP/hostname of the game server host (AMP or otherwise) |
+| `AMP_USER` | SSH account on that host with the scoped sudo rsync rule below |
+| `AMP_SAVE_ROOT` | Full path to the `SaveGames` dir wherever the dedicated server process writes it. AMP example: `/home/<amp-user>/.ampdata/instances/<instance>/palworld/<steam-app-id>/Pal/Saved/SaveGames/`. A bare (non-AMP) `PalServer` install typically uses `/home/<user>/Steam/steamapps/common/PalServer/Pal/Saved/SaveGames/` instead — check your own install for the real path. |
 | `AMP_WORLD_GUID` | The live world's save GUID (subdirectory under SaveGames) |
 | `PALDEX_SSH_KEY` | *(Container-internal, usually left unset)* Path `backend/remote.py` reads the SSH private key from — defaults to `/run/secrets/paldex_ssh_key`, the Docker-secrets mount path `docker-compose.yml` already wires up via `PALDEX_SSH_KEY_HOST_PATH` below. You only need to set this directly if you're running outside that compose setup. |
 
@@ -73,8 +82,8 @@ exists for the non-Docker case where nothing does that mount for you.
    quietly disables NOPASSWD rather than erroring, and there's normally only
    one fixed instance path to cover anyway. See
    [`deploy/bare-metal.md`](bare-metal.md) for a related gotcha: this same
-   rsync mirror has no `--delete`, so `/tmp/palworld-saves/` on the AMP host
-   grows forever unless you separately cron-prune it.
+   rsync mirror has no `--delete`, so `/tmp/palworld-saves/` on the game
+   server host grows forever unless you separately cron-prune it.
 
 2. **Copy the private key onto the Docker host**, e.g. into the same
    directory as `docker-compose.yml` at `deploy/paldex_deploy_key`. Keep

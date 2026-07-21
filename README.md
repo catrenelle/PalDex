@@ -34,8 +34,11 @@ current position.
 ## How it works
 
 - **`backend/remote.py`** pulls `Level.sav` and every player's `.sav` from
-  the AMP game server over SSH (sudo-scoped `rsync`/SFTP), on a 30-second
-  refresh loop.
+  the dedicated server host over SSH (sudo-scoped `rsync`/SFTP), on a
+  30-second refresh loop. This project runs against AMP, but nothing about
+  it actually depends on AMP — see [`deploy/README.md`](deploy/README.md)/
+  [`deploy/bare-metal.md`](deploy/bare-metal.md) for pointing it at a bare
+  `PalServer` install instead.
 - **`backend/parse.py`** decodes the save files using
   [`deafdudecomputers/PalworldSaveTools`](https://github.com/deafdudecomputers/PalworldSaveTools)
   (the PyPI `palworld-save-tools` package doesn't support the 1.0 release's
@@ -101,9 +104,10 @@ wouldn't be possible without these open-source projects:
 
 ## Running locally
 
-This is the Windows dev-box flow (uses the Bitvise SSH Client for the AMP
-pull — see `backend/remote.py`). For Linux, including a bare LXC/VM with no
-Docker, use [`deploy/bare-metal.md`](deploy/bare-metal.md) instead — the
+This is the Windows dev-box flow (uses the Bitvise SSH Client for the
+save-file pull — see `backend/remote.py`). For Linux, including a bare
+LXC/VM with no Docker, use [`deploy/bare-metal.md`](deploy/bare-metal.md)
+instead — the
 setup differs enough (OpenSSH key provisioning, an env var with no default
 outside a container, a Python import gotcha in how you invoke `server.py`)
 that it's not just a `pip install` away.

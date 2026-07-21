@@ -72,12 +72,19 @@ python3 -m venv .venv
 Same as the Docker path — env vars first, falling back to `backend/secrets.py`
 (gitignored, see `backend/config.py`):
 
+**Despite the `AMP_` prefix, none of this actually requires AMP.** You just
+need SSH access to whatever host runs the Palworld dedicated server process,
+plus a sudo-scoped `rsync` against wherever it writes `Level.sav`/
+`Players/*.sav` — a bare `PalServer` binary run under systemd/screen with no
+panel at all works exactly the same way. AMP is just what the reference
+setup and the examples below happen to use.
+
 | Variable | What it is |
 |---|---|
 | `RCON_PASSWORD` | Palworld server's RCON `AdminPassword` (from `PalWorldSettings.ini`) |
-| `AMP_HOST` | IP/hostname of the AMP game server |
-| `AMP_USER` | SSH account on the AMP host with the scoped sudo rsync rule below |
-| `AMP_SAVE_ROOT` | Full path to the AMP instance's SaveGames dir, **trailing slash matters** (rsync source semantics) — e.g. `/home/<amp-user>/.ampdata/instances/<instance>/palworld/<steam-app-id>/Pal/Saved/SaveGames/` |
+| `AMP_HOST` | IP/hostname of the game server host (AMP or otherwise) |
+| `AMP_USER` | SSH account on that host with the scoped sudo rsync rule below |
+| `AMP_SAVE_ROOT` | Full path to the `SaveGames` dir wherever the dedicated server process writes it, **trailing slash matters** (rsync source semantics). AMP example: `/home/<amp-user>/.ampdata/instances/<instance>/palworld/<steam-app-id>/Pal/Saved/SaveGames/`. A bare (non-AMP) install typically uses `/home/<user>/Steam/steamapps/common/PalServer/Pal/Saved/SaveGames/` instead — check your own install. |
 | `AMP_WORLD_GUID` | The live world's save GUID (subdirectory under SaveGames) |
 | `PALDEX_SSH_KEY` | **Not optional outside Docker.** Absolute path to the private key from the step below. |
 
@@ -88,14 +95,14 @@ Either `export` these (e.g. in the systemd unit's `Environment=`/
 filesystem path, not a secret value, and `backend/secrets.py`'s fallback
 exists for local dev convenience, not deployment.
 
-## One-time setup on the AMP host
+## One-time setup on the game server host
 
 1. **Generate a dedicated keypair** (don't reuse a personal one):
    ```
    ssh-keygen -t ed25519 -f ./paldex_deploy_key -N ""
    ```
-2. **Add the public key** to `<AMP_USER>`'s `~/.ssh/authorized_keys` on the
-   AMP host.
+2. **Add the public key** to `<AMP_USER>`'s `~/.ssh/authorized_keys` on that
+   host (AMP or otherwise).
 3. **Add a scoped NOPASSWD sudoers rule.** `remote.py` only ever runs one
    sudo command — `rsync -a <AMP_SAVE_ROOT> /tmp/palworld-saves/` — so that's
    all the rule needs to allow. Write it with your **literal, concrete**
@@ -116,16 +123,17 @@ exists for local dev convenience, not deployment.
 4. **Copy the private key** onto the machine running PalDex, `chmod 600` it,
    and point `PALDEX_SSH_KEY` at its path.
 
-## Known gotcha: `/tmp/palworld-saves/` grows forever on the AMP host
+## Known gotcha: `/tmp/palworld-saves/` grows forever on the game server host
 
 The rsync in `remote.py` is a one-way mirror **without `--delete`** (on
 purpose — deleting requires a wider sudoers grant, see the code comment in
 `remote.py`). That means every save-backup snapshot the game itself has ever
 written gets copied into `/tmp/palworld-saves/` and never removed, even after
-the AMP-side game rotates its own backups out. Left alone for months, this
-can fill the AMP host's root disk (this happened for real — tens of GB
-accumulated silently). **Add a cron job on the AMP host** to prune it
-independently of the app:
+the game's own server-side rotation clears its backups out (AMP or not — this
+is the dedicated server's own autosave-backup behavior, unrelated to any
+panel). Left alone for months, this can fill that host's root disk (this
+happened for real — tens of GB accumulated silently). **Add a cron job on
+the game server host** to prune it independently of the app:
 
 ```
 # /etc/cron.d/paldex-saves-cleanup
