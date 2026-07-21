@@ -82,6 +82,35 @@
     filter: drop-shadow(0 0 3px rgba(0,0,0,0.9));
   }
 
+  /* Category: one level above .section-header, purely a grouping/collapse
+     layer over the pre-existing sections (see the legend HTML's own
+     comment). Collapsed by default like every .type-list already is - the
+     legend's default view is now ~4 rows instead of the 14 flat section
+     headers this replaced. */
+  .category-header {
+    display: flex; align-items: center; gap: 8px; padding: 10px 12px;
+    cursor: pointer; user-select: none; border-top: 1px solid #333;
+  }
+  .category-header:hover { background: rgba(255,255,255,0.05); }
+  .category-header .chevron {
+    font-size: 10px; color: #9ab; transition: transform 0.15s; width: 10px;
+  }
+  .category-header.expanded .chevron { transform: rotate(90deg); }
+  .category-header .category-title {
+    flex: 1; font-size: 13px; font-weight: 600; color: #eee;
+  }
+  .category-body {
+    display: none; overflow-y: auto; max-height: 320px;
+  }
+  .category-body.expanded { display: block; }
+  /* Nested section headers/lists keep their own border-top rule, so the
+     first one inside an expanded category would otherwise double up
+     against .category-header's bottom edge with no body background
+     between them - drop just that first border. */
+  .category-body > .section-header:first-child,
+  .category-body > #effigies-header:first-child,
+  .category-body > #main-quests-section:first-child .section-header { border-top: none; }
+
   /* Shared collapsible section header + checklist, reused by Bosses/Bounty. */
   .section-header {
     display: flex; align-items: center; gap: 8px; padding: 10px 12px;
@@ -110,7 +139,39 @@
   .type-row .rt-label { flex: 1; }
   .type-row .rt-count { color: #9ab; font-size: 11px; }
 
-  .boss-marker, .bounty-marker, .oilrig-marker, .tower-marker, .journal-marker, .schematic-marker { display: flex; align-items: center; justify-content: center; }
+  /* Quests: hidden by default (JS shows them once a player is selected AND
+     that section has entries) so there's no flash of an empty section
+     before the first /api/quests response comes back. #cat-quests is the
+     whole category (header + body) - there's nothing meaningful to show
+     with no player selected at all (no blended all-players view, see
+     backend/server.py's api_quests docstring), so the category itself
+     disappears rather than sitting there collapsed and empty. The two
+     inner sections stay separately gated on top of that for the
+     has-entries check once a player *is* selected. */
+  #cat-quests { display: none; }
+  #main-quests-section, #sub-quests-section { display: none; }
+  .quest-subgroup-label {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: #9ab;
+    padding: 6px 6px 2px;
+  }
+  /* The game's own in-game compass quest icons (extractor/PalExtract's
+     Quests section), not a CSS-drawn shape - see that section's comment for
+     which variant is which and why. */
+  .quest-marker { display: flex; align-items: center; justify-content: center; }
+  .quest-marker .quest-icon {
+    width: 22px !important; height: 22px !important; /* !important: see the boss-marker .portrait note above */
+    border-radius: 0; border: none; background: transparent; object-fit: contain;
+    /* filter: drop-shadow, NOT box-shadow (like every square-icon marker
+       above uses) - box-shadow follows the element's rectangular box
+       regardless of the PNG's own transparency, which drew a visible
+       square around this diamond-shaped, mostly-transparent-cornered icon.
+       drop-shadow follows the actual non-transparent pixels instead -
+       same fix the Effigy markers already use (.relic-marker img), just
+       scoped to .quest-icon only so no other marker class is touched. */
+    filter: drop-shadow(0 0 3px rgba(0,0,0,0.9));
+  }
+
+  .npc-marker, .boss-marker, .bounty-marker, .oilrig-marker, .tower-marker, .journal-marker, .schematic-marker { display: flex; align-items: center; justify-content: center; }
   .boss-marker .portrait, .bounty-marker .portrait, .oilrig-marker .portrait, .tower-marker .portrait, .journal-marker .portrait, .schematic-marker .portrait {
     /* !important: Leaflet's own CSS (.leaflet-marker-pane img { width: auto })
        outranks a plain ".foo-marker .portrait" selector on specificity (an
@@ -124,6 +185,31 @@
   }
   .bounty-marker .portrait { border-color: #c0392b; }
   .oilrig-marker .portrait { border-color: #4a90d9; object-fit: contain; }
+  /* NPCs: category is distinguished by border color, same trick as
+     Bounty's red border above. Reuses .boss-marker .portrait's sizing
+     (30px) via its own selector since .npc-marker isn't in that shared
+     list. Wandering/PalDealer are real distinct portraits (red/blue coat,
+     confirmed in-game per NOTES.md - see backend/npcs.py's own docstring
+     for why they live in this same NPCs system, not a separate one)
+     rather than a shared fallback look like BlackMarket/DogCoin/General. */
+  .npc-marker .portrait {
+    width: 28px !important; height: 28px !important; border-radius: 50%; border: 2px solid #fff;
+    box-shadow: 0 0 6px rgba(0,0,0,0.85); object-fit: cover; background: #222;
+  }
+  .npc-marker-blackmarket .portrait { border-color: #8e44ad; }
+  .npc-marker-dogcoin .portrait { border-color: #f1c40f; }
+  .npc-marker-general .portrait { border-color: #95a5a6; }
+  .npc-marker-wandering .portrait { border-color: #e74c3c; }
+  .npc-marker-paldealer .portrait { border-color: #3498db; }
+  /* .npc-portrait-wrap, not .npc-marker-<category>, since the level-badge
+     look needs to be identical across all 4 categories (unlike .portrait's
+     border color) - one shared selector instead of 4 near-duplicate ones. */
+  .npc-portrait-wrap .level-badge {
+    position: absolute; top: -4px; left: -4px; min-width: 15px; height: 15px;
+    padding: 0 2px; border-radius: 8px; background: #1a1d22; border: 1.5px solid #fff;
+    display: flex; align-items: center; justify-content: center;
+    font: 700 9px system-ui, sans-serif; color: #fff;
+  }
   .tower-marker .portrait, .journal-marker .portrait, .schematic-marker .portrait {
     border-radius: 0; border: none; background: transparent; object-fit: contain;
     box-shadow: 0 0 4px rgba(0,0,0,0.9);
@@ -229,6 +315,97 @@
   .leaflet-tooltip-bottom:before { border-bottom-color: rgba(20, 22, 26, 0.95); }
   .leaflet-tooltip-left:before { border-left-color: rgba(20, 22, 26, 0.95); }
   .leaflet-tooltip-right:before { border-right-color: rgba(20, 22, 26, 0.95); }
+
+  /* Shop modal - styled after the game's own "Item List" shop panel (dark
+     grey header bar over a near-black grid of icon-tile cards). Opened by
+     clicking a Wandering Merchant/Pal Dealer/Dog Coin/Black Market marker
+     (see the "Shop modal" JS section). */
+  #shop-modal-backdrop {
+    display: none; position: fixed; inset: 0; z-index: 3000;
+    background: rgba(0,0,0,0.6);
+    align-items: center; justify-content: center;
+  }
+  #shop-modal-backdrop.open { display: flex; }
+  #shop-modal {
+    width: min(720px, 92vw); max-height: 82vh;
+    background: rgba(13,17,23,0.97); border: 1px solid #444; border-radius: 6px;
+    display: flex; flex-direction: column; overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    font: 13px system-ui, sans-serif; color: #ddd;
+  }
+  #shop-modal-header {
+    background: #454b54; color: #f0f0f0; padding: 10px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 14px; font-weight: 600; flex-shrink: 0;
+  }
+  #shop-modal-close {
+    background: none; border: none; color: #ccc; font-size: 20px; line-height: 1;
+    cursor: pointer; padding: 0 2px;
+  }
+  #shop-modal-close:hover { color: #fff; }
+  #shop-modal-pool-note {
+    display: none; padding: 8px 16px; font-size: 12px; color: #f2b56b;
+    border-bottom: 1px solid #333; flex-shrink: 0;
+  }
+  #shop-modal-pool-note.visible { display: block; }
+  /* Two elements, not one, for the scroll region - #shop-modal-grid is
+     ONLY a flex item + scroll container (no grid layout of its own);
+     #shop-modal-grid-inner is ONLY the grid layout (no flex/max-height of
+     its own). Making a single element simultaneously a flex item, a grid
+     container, AND height-capped turned out to make browsers compress
+     row heights instead of scrolling past them (confirmed via screenshot:
+     icons got squished/clipped rather than the list scrolling) - some
+     interaction between the flex sizing pass and the grid track-sizing
+     pass fighting over the same box's available height. Splitting the two
+     concerns onto separate elements avoids that entirely. */
+  #shop-modal-grid {
+    padding: 16px; overflow-y: auto;
+    flex: 1; min-height: 0; max-height: 60vh;
+  }
+  #shop-modal-grid-inner {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 14px;
+  }
+  .shop-card {
+    background: #1a1d22; border: 1px solid #3a4048; border-radius: 3px;
+    display: flex; flex-direction: column;
+    /* min-width: 0 - a flex/grid item's default min-width is "auto" (its
+       content's own intrinsic size), which can override an explicit
+       percentage width on a descendant image and blow out the grid - the
+       exact "images don't fit, name gets pushed off" bug this project has
+       hit before with Leaflet markers (see the boss-marker .portrait note
+       elsewhere) - explicit min-width:0 removes that floor. */
+    min-width: 0; overflow: hidden;
+  }
+  .shop-card-icon {
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    background-color: #0d1117;
+    background-image:
+      linear-gradient(rgba(110,190,230,0.10) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(110,190,230,0.10) 1px, transparent 1px);
+    background-size: 12px 12px;
+    overflow: hidden;
+  }
+  /* Fixed px + !important, not a percentage - matches every other marker
+     icon in this codebase (.boss-marker .portrait etc.) for the same
+     documented reason: a plain percentage width on a flex-item <img> can
+     lose to the image's own intrinsic size (its flex "auto" min-width
+     floor), so source textures larger than the card (confirmed: item/
+     currency icons export at 256x256) render at native size instead of
+     shrinking - breaking the grid and pushing the name/price out of view.
+     84px leaves clear padding inside a ~110-140px grid column. */
+  .shop-card-icon img {
+    width: 84px !important; height: 84px !important; object-fit: contain;
+  }
+  .shop-card-icon.round img { border-radius: 50%; }
+  .shop-card-name {
+    padding: 6px 6px 4px; text-align: center; font-size: 12px; color: #eee;
+    line-height: 1.25; flex: 1;
+  }
+  .shop-card-price {
+    border-top: 1px solid #30353c; padding: 4px 8px; display: flex;
+    align-items: center; gap: 5px; font-size: 12px; color: #f4c95d; font-weight: 600;
+  }
+  .shop-card-price img { width: 14px !important; height: 14px !important; object-fit: contain; }
 </style>
 </head>
 <body>
@@ -241,83 +418,152 @@
     </select>
     <div id="collection-note">Couldn't load this player's save data (not found/parse error) — showing everything.</div>
   </div>
-  <div id="watchtowers-header" class="section-header">
-    <span class="chevron">&#9656;</span>
-    <input type="checkbox" id="watchtowers-master-toggle" checked title="Show/hide all Watchtowers" />
-    <span class="section-title">Watchtowers</span>
-    <span id="watchtowers-total-count" class="rt-count"></span>
+  <!-- Categories: purely a UI grouping layer above the pre-existing per-section
+       headers/checklists below - every id inside a .category-body is untouched
+       so all the JS wiring (createTypeChecklistSection, setAllSections, the
+       screenshot-mode cb.parentElement walk, etc.) still works unmodified.
+       All collapsed by default, same convention as the inner .type-list rows. -->
+  <div class="category">
+    <div id="cat-poi-header" class="category-header">
+      <span class="chevron">&#9656;</span>
+      <span class="category-title">Points of Interest</span>
+    </div>
+    <div id="cat-poi-body" class="category-body">
+      <div id="watchtowers-header" class="section-header">
+        <span class="chevron">&#9656;</span>
+        <input type="checkbox" id="watchtowers-master-toggle" checked title="Show/hide all Watchtowers" />
+        <span class="section-title">Watchtowers</span>
+        <span id="watchtowers-total-count" class="rt-count"></span>
+      </div>
+      <div id="watchtower-type-list" class="type-list"></div>
+      <div id="waypoints-header" class="section-header">
+        <span class="chevron">&#9656;</span>
+        <input type="checkbox" id="waypoints-master-toggle" checked title="Show/hide all Waypoints" />
+        <span class="section-title">Waypoints</span>
+        <span id="waypoints-total-count" class="rt-count"></span>
+      </div>
+      <div id="waypoint-type-list" class="type-list"></div>
+      <div id="bases-header" class="section-header">
+        <span class="chevron">&#9656;</span>
+        <input type="checkbox" id="bases-master-toggle" checked title="Show/hide guild bases" />
+        <span class="section-title">Bases</span>
+        <span id="bases-total-count" class="rt-count"></span>
+      </div>
+      <div id="base-type-list" class="type-list"></div>
+      <div id="oilrigs-header" class="section-header">
+        <span class="chevron">&#9656;</span>
+        <input type="checkbox" id="oilrigs-master-toggle" checked title="Show/hide oil rig raid zones" />
+        <span class="section-title">Oil Rigs</span>
+        <span id="oilrigs-total-count" class="rt-count"></span>
+      </div>
+      <div id="oilrig-type-list" class="type-list"></div>
+      <div id="npcs-header" class="section-header">
+        <span class="chevron">&#9656;</span>
+        <input type="checkbox" id="npcs-master-toggle" checked title="Show/hide all NPCs" />
+        <span class="section-title">NPCs</span>
+        <span id="npcs-total-count" class="rt-count"></span>
+      </div>
+      <div id="npc-type-list" class="type-list"></div>
+      <label id="dungeons-row" class="section-header">
+        <!-- Empty chevron-width spacer (no glyph, not expandable) so the checkbox lines up with every other section's -->
+        <span class="chevron"></span>
+        <input type="checkbox" id="dungeons-master-toggle" checked title="Show/hide all Dungeon entrances" />
+        <span class="section-title">Dungeons</span>
+        <span id="dungeons-total-count" class="rt-count"></span>
+      </label>
+    </div>
   </div>
-  <div id="watchtower-type-list" class="type-list"></div>
-  <div id="waypoints-header" class="section-header">
-    <span class="chevron">&#9656;</span>
-    <input type="checkbox" id="waypoints-master-toggle" checked title="Show/hide all Waypoints" />
-    <span class="section-title">Waypoints</span>
-    <span id="waypoints-total-count" class="rt-count"></span>
+  <div class="category">
+    <div id="cat-collectibles-header" class="category-header">
+      <span class="chevron">&#9656;</span>
+      <span class="category-title">Collectibles</span>
+    </div>
+    <div id="cat-collectibles-body" class="category-body">
+      <div id="effigies-header">
+        <span class="chevron">&#9656;</span>
+        <input type="checkbox" id="effigies-master-toggle" checked title="Show/hide all effigies" />
+        <span class="section-title">Effigies</span>
+        <span id="effigies-total-count" class="rt-count"></span>
+      </div>
+      <div id="relic-type-list"></div>
+      <div id="journals-header" class="section-header">
+        <span class="chevron">&#9656;</span>
+        <input type="checkbox" id="journals-master-toggle" checked title="Show/hide all Journals" />
+        <span class="section-title">Journals</span>
+        <span id="journals-total-count" class="rt-count"></span>
+      </div>
+      <div id="journal-type-list" class="type-list"></div>
+      <div id="schematics-header" class="section-header">
+        <span class="chevron">&#9656;</span>
+        <input type="checkbox" id="schematics-master-toggle" checked title="Show/hide all Schematics" />
+        <span class="section-title">Schematics</span>
+        <span id="schematics-total-count" class="rt-count"></span>
+      </div>
+      <div id="schematic-type-list" class="type-list"></div>
+    </div>
   </div>
-  <div id="waypoint-type-list" class="type-list"></div>
-  <div id="effigies-header">
-    <span class="chevron">&#9656;</span>
-    <input type="checkbox" id="effigies-master-toggle" checked title="Show/hide all effigies" />
-    <span class="section-title">Effigies</span>
-    <span id="effigies-total-count" class="rt-count"></span>
+  <div class="category">
+    <div id="cat-combat-header" class="category-header">
+      <span class="chevron">&#9656;</span>
+      <span class="category-title">Combat</span>
+    </div>
+    <div id="cat-combat-body" class="category-body">
+      <div id="bosses-header" class="section-header">
+        <span class="chevron">&#9656;</span>
+        <input type="checkbox" id="bosses-master-toggle" checked title="Show/hide all bosses" />
+        <span class="section-title">Alpha Bosses</span>
+        <span id="bosses-total-count" class="rt-count"></span>
+      </div>
+      <div id="boss-type-list" class="type-list"></div>
+      <div id="bounty-header" class="section-header">
+        <span class="chevron">&#9656;</span>
+        <input type="checkbox" id="bounty-master-toggle" checked title="Show/hide all bounty targets" />
+        <span class="section-title">Bounty</span>
+        <span id="bounty-total-count" class="rt-count"></span>
+      </div>
+      <div id="bounty-type-list" class="type-list"></div>
+      <div id="towers-header" class="section-header">
+        <span class="chevron">&#9656;</span>
+        <input type="checkbox" id="towers-master-toggle" checked title="Show/hide all Challenge Towers" />
+        <span class="section-title">Towers</span>
+        <span id="towers-total-count" class="rt-count"></span>
+      </div>
+      <div id="tower-type-list" class="type-list"></div>
+    </div>
   </div>
-  <div id="relic-type-list"></div>
-  <div id="journals-header" class="section-header">
-    <span class="chevron">&#9656;</span>
-    <input type="checkbox" id="journals-master-toggle" checked title="Show/hide all Journals" />
-    <span class="section-title">Journals</span>
-    <span id="journals-total-count" class="rt-count"></span>
+  <div class="category" id="cat-quests">
+    <div id="cat-quests-header" class="category-header">
+      <span class="chevron">&#9656;</span>
+      <span class="category-title">Quests</span>
+    </div>
+    <!-- Quests: unlike every other section, active/not-started is inherently
+         per-player, so these two sections stay hidden entirely (see
+         backend/server.py's api_quests + loadQuests below) until a specific
+         player is selected in "View As", and even then only if that section
+         has at least one entry to show - expanding this category before
+         then just shows an empty body, same "no explanation" convention the
+         View As dropdown already relies on. -->
+    <div id="cat-quests-body" class="category-body">
+      <div id="main-quests-section">
+        <div id="main-quests-header" class="section-header">
+          <span class="chevron">&#9656;</span>
+          <input type="checkbox" id="main-quests-master-toggle" checked title="Show/hide all Main Quest markers" />
+          <span class="section-title">Main Quests</span>
+          <span id="main-quests-total-count" class="rt-count"></span>
+        </div>
+        <div id="main-quest-list" class="type-list"></div>
+      </div>
+      <div id="sub-quests-section">
+        <div id="sub-quests-header" class="section-header">
+          <span class="chevron">&#9656;</span>
+          <input type="checkbox" id="sub-quests-master-toggle" checked title="Show/hide all Sub Quest markers" />
+          <span class="section-title">Sub Quests</span>
+          <span id="sub-quests-total-count" class="rt-count"></span>
+        </div>
+        <div id="sub-quest-list" class="type-list"></div>
+      </div>
+    </div>
   </div>
-  <div id="journal-type-list" class="type-list"></div>
-  <div id="schematics-header" class="section-header">
-    <span class="chevron">&#9656;</span>
-    <input type="checkbox" id="schematics-master-toggle" checked title="Show/hide all Schematics" />
-    <span class="section-title">Schematics</span>
-    <span id="schematics-total-count" class="rt-count"></span>
-  </div>
-  <div id="schematic-type-list" class="type-list"></div>
-  <div id="bosses-header" class="section-header">
-    <span class="chevron">&#9656;</span>
-    <input type="checkbox" id="bosses-master-toggle" checked title="Show/hide all bosses" />
-    <span class="section-title">Alpha Bosses</span>
-    <span id="bosses-total-count" class="rt-count"></span>
-  </div>
-  <div id="boss-type-list" class="type-list"></div>
-  <div id="bounty-header" class="section-header">
-    <span class="chevron">&#9656;</span>
-    <input type="checkbox" id="bounty-master-toggle" checked title="Show/hide all bounty targets" />
-    <span class="section-title">Bounty</span>
-    <span id="bounty-total-count" class="rt-count"></span>
-  </div>
-  <div id="bounty-type-list" class="type-list"></div>
-  <div id="towers-header" class="section-header">
-    <span class="chevron">&#9656;</span>
-    <input type="checkbox" id="towers-master-toggle" checked title="Show/hide all Challenge Towers" />
-    <span class="section-title">Towers</span>
-    <span id="towers-total-count" class="rt-count"></span>
-  </div>
-  <div id="tower-type-list" class="type-list"></div>
-  <div id="bases-header" class="section-header">
-    <span class="chevron">&#9656;</span>
-    <input type="checkbox" id="bases-master-toggle" checked title="Show/hide guild bases" />
-    <span class="section-title">Bases</span>
-    <span id="bases-total-count" class="rt-count"></span>
-  </div>
-  <div id="base-type-list" class="type-list"></div>
-  <div id="oilrigs-header" class="section-header">
-    <span class="chevron">&#9656;</span>
-    <input type="checkbox" id="oilrigs-master-toggle" checked title="Show/hide oil rig raid zones" />
-    <span class="section-title">Oil Rigs</span>
-    <span id="oilrigs-total-count" class="rt-count"></span>
-  </div>
-  <div id="oilrig-type-list" class="type-list"></div>
-  <label id="dungeons-row" class="section-header">
-    <!-- Empty chevron-width spacer (no glyph, not expandable) so the checkbox lines up with every other section's -->
-    <span class="chevron"></span>
-    <input type="checkbox" id="dungeons-master-toggle" checked title="Show/hide all Dungeon entrances" />
-    <span class="section-title">Dungeons</span>
-    <span id="dungeons-total-count" class="rt-count"></span>
-  </label>
   <div id="global-toggle-row">
     <button id="show-all-btn" type="button">Show All</button>
     <button id="hide-all-btn" type="button">Hide All</button>
@@ -332,6 +578,23 @@
   </div>
 </div>
 <div id="map"></div>
+<!-- Shop modal: styled after the game's own "Item List" shop panel
+     (dark grey header bar, grid of icon-tile cards) - opened by clicking a
+     Wandering Merchant/Pal Dealer/Dog Coin/Black Market marker. See the
+     "Shop modal" JS section below for what data drives it and why Pal
+     cards never show a price. -->
+<div id="shop-modal-backdrop">
+  <div id="shop-modal">
+    <div id="shop-modal-header">
+      <span id="shop-modal-title">Item List</span>
+      <button id="shop-modal-close" type="button" aria-label="Close">&times;</button>
+    </div>
+    <div id="shop-modal-pool-note"></div>
+    <div id="shop-modal-grid">
+      <div id="shop-modal-grid-inner"></div>
+    </div>
+  </div>
+</div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
   // Must match backend/coord.py exactly. Leaflet renders a *higher* row
@@ -365,12 +628,43 @@
     return `hsl(${hash % 360}, 80%, 65%)`;
   }
 
+  // ---------- Persisted UI state (localStorage) ----------
+  // Every checklist selection, the View As pick, and the offline-players
+  // toggle survive a page refresh via one small JSON blob. Per-section
+  // checklists store only the *unchecked* type/quest/category keys (not
+  // the full checked set) so a freshly-added entry (a new quest, a new
+  // relic type after a data change) defaults to visible rather than
+  // silently vanishing because it's absent from an old "checked" list.
+  const UI_STATE_KEY = 'palworldmap-ui-state-v1';
+  let uiState = {};
+  try { uiState = JSON.parse(localStorage.getItem(UI_STATE_KEY)) || {}; } catch (e) { uiState = {}; }
+  function saveUiState() {
+    try { localStorage.setItem(UI_STATE_KEY, JSON.stringify(uiState)); } catch (e) { /* storage disabled/full - state just won't persist */ }
+  }
+  function sectionUnchecked(key) {
+    return new Set(uiState.sections?.[key]?.unchecked || []);
+  }
+  // Reads current checkbox state directly from the DOM rather than being
+  // handed a set — one call site works whether rows key off data-type,
+  // data-quest, or data-cat.
+  function saveSectionUnchecked(key, listEl) {
+    uiState.sections = uiState.sections || {};
+    uiState.sections[key] = {
+      unchecked: [...listEl.querySelectorAll('input[type=checkbox]')]
+        .filter(cb => !cb.checked)
+        .map(cb => cb.dataset.type ?? cb.dataset.quest ?? cb.dataset.cat),
+    };
+    saveUiState();
+  }
+
   // ---------- Players ----------
   const markers = new Map(); // uid -> L.marker
   const offlineToggle = document.getElementById('offline-toggle');
+  offlineToggle.checked = !!uiState.offline;
   const viewAsSelect = document.getElementById('view-as-player');
   let lastPlayerData = null;
   let knownPlayerUids = new Set();
+  let viewAsRestored = false;
 
   // Coarse "Xm/Xh/Xd ago" for the hover tooltip's Last Online line — no
   // need for anything more precise than that at a glance.
@@ -481,7 +775,15 @@
     if (!changed) for (const u of currentUids) if (!knownPlayerUids.has(u)) { changed = true; break; }
     if (changed) {
       knownPlayerUids = currentUids;
-      const selected = viewAsSelect.value;
+      let selected = viewAsSelect.value;
+      // First time the dropdown is ever populated (page just loaded), prefer
+      // whatever was saved last session over the current (still-default "")
+      // value - every later call keeps tracking the live selection instead.
+      let restoring = false;
+      if (!viewAsRestored) {
+        viewAsRestored = true;
+        if (uiState.viewAs) { selected = uiState.viewAs; restoring = true; }
+      }
       viewAsSelect.innerHTML = '<option value="">All players (no filter)</option>';
       for (const p of [...data.players].sort((a, b) => a.nickname.localeCompare(b.nickname))) {
         const opt = document.createElement('option');
@@ -490,6 +792,12 @@
         viewAsSelect.appendChild(opt);
       }
       viewAsSelect.value = selected;
+      // Only fires when the restore actually landed on a real option (the
+      // saved player might have left the server since) - mirrors how a real
+      // user selection drives every per-player section reload + map pan.
+      if (restoring && viewAsSelect.value === selected) {
+        viewAsSelect.dispatchEvent(new Event('change'));
+      }
     }
   }
 
@@ -532,7 +840,15 @@
     renderPlayers();
   }
 
-  offlineToggle.addEventListener('change', renderPlayers);
+  offlineToggle.addEventListener('change', () => {
+    uiState.offline = offlineToggle.checked;
+    saveUiState();
+    renderPlayers();
+  });
+  viewAsSelect.addEventListener('change', () => {
+    uiState.viewAs = viewAsSelect.value;
+    saveUiState();
+  });
   refreshPlayers();
   setInterval(refreshPlayers, 10000);
 
@@ -579,6 +895,22 @@
     }
   }
 
+  // ---------- Legend categories (Points of Interest / Collectibles / Combat
+  // / Quests) - a pure collapse layer above the pre-existing section headers
+  // below, same click-to-toggle pattern as every .section-header. All
+  // collapsed by default. ----------
+  for (const catId of ['cat-poi', 'cat-collectibles', 'cat-combat', 'cat-quests']) {
+    const header = document.getElementById(`${catId}-header`);
+    const body = document.getElementById(`${catId}-body`);
+    const setExpanded = (expanded) => {
+      header.classList.toggle('expanded', expanded);
+      body.classList.toggle('expanded', expanded);
+      header.querySelector('.chevron').innerHTML = expanded ? '&#9662;' : '&#9656;';
+    };
+    header.addEventListener('click', () => setExpanded(!body.classList.contains('expanded')));
+    setExpanded(false);
+  }
+
   const countEls = new Map(); // type key -> .rt-count span
   const effigiesHeader = document.getElementById('effigies-header');
   const relicTypeList = document.getElementById('relic-type-list');
@@ -612,6 +944,7 @@
       else visibleTypes.delete(cb.dataset.type);
     }
     renderRelics();
+    saveSectionUnchecked('effigies', relicTypeList);
   });
 
   function buildLegend() {
@@ -619,12 +952,14 @@
     list.innerHTML = '';
     countEls.clear();
 
+    const savedUnchecked = sectionUnchecked('effigies');
     for (const [typeKey, meta] of Object.entries(relicData.types)) {
-      visibleTypes.add(typeKey);
+      const isChecked = !savedUnchecked.has(typeKey);
+      if (isChecked) visibleTypes.add(typeKey);
       const row = document.createElement('label');
       row.className = 'relic-type-row';
       row.innerHTML = `
-        <input type="checkbox" checked data-type="${typeKey}" />
+        <input type="checkbox" ${isChecked ? 'checked' : ''} data-type="${typeKey}" />
         <img src="/assets/relic_icons/${meta.icon}" />
         <span class="rt-label">${meta.label}</span>
         <span class="rt-count"></span>
@@ -634,6 +969,7 @@
         else visibleTypes.delete(typeKey);
         updateMasterToggle();
         renderRelics();
+        saveSectionUnchecked('effigies', relicTypeList);
       });
       list.appendChild(row);
       countEls.set(typeKey, row.querySelector('.rt-count'));
@@ -675,10 +1011,21 @@
     renderRelics();
   }
 
-  function reloadCollectionState() {
-    loadRelics(); loadBosses(); loadBounties(); loadTowers(); loadJournals(); loadSchematics(); loadWatchtowers(); loadWaypoints(); loadBases(); loadDungeons();
+  // isPlayerSwitch: every other section here only ever refreshes per-player
+  // *collection state* on top of an unchanging type list (Bosses' species
+  // roster, for instance, doesn't depend on who's selected), so calling
+  // them with no args (data-only refresh, list/checkbox state untouched)
+  // is correct whether this run came from the 10s poll or a real player
+  // switch. Quests is the one exception - its actual quest_id set is
+  // genuinely per-player - so only loadQuests needs to know which case
+  // this is: rebuild (fresh "everything checked") on a real switch, or
+  // preserve the user's Hide All/per-quest choices on a same-player poll.
+  function reloadCollectionState(isPlayerSwitch) {
+    loadRelics(); loadBosses(); loadBounties(); loadTowers();
+    loadQuests({ rebuildList: !!isPlayerSwitch });
+    loadJournals(); loadSchematics(); loadWatchtowers(); loadWaypoints(); loadBases(); loadDungeons();
   }
-  viewAsSelect.addEventListener('change', reloadCollectionState);
+  viewAsSelect.addEventListener('change', () => reloadCollectionState(true));
 
   // Selecting a specific player pans/zooms the map to their current
   // position (one-time jump on selection, not continuous re-centering on
@@ -702,7 +1049,7 @@
   function createTypeChecklistSection({
     headerId, listId, masterToggleId, countId, markerClass, iconSize, sortByLevel, squareIcon,
     iconDir = 'boss_icons', collectedField = 'defeated', knownFlagKey = 'defeat_known', visualStyle = 'checkmark',
-    collectedWord,
+    collectedWord, storageKey,
   }) {
     const header = document.getElementById(headerId);
     const list = document.getElementById(listId);
@@ -793,6 +1140,7 @@
       list.innerHTML = '';
       countEls.clear();
       visibleTypes.clear();
+      const savedUnchecked = storageKey ? sectionUnchecked(storageKey) : new Set();
 
       const byType = new Map(); // type_key -> {icon, name, level, entries: []}
       for (const entry of entries) {
@@ -809,13 +1157,14 @@
         : [...byType.entries()].sort((a, b) => a[1].name.localeCompare(b[1].name));
 
       for (const [typeKey, group] of sortedGroups) {
-        visibleTypes.add(typeKey);
+        const isChecked = !savedUnchecked.has(typeKey);
+        if (isChecked) visibleTypes.add(typeKey);
         const noLocation = group.entries.every(e => e.has_position === false);
         const levelPrefix = sortByLevel && group.level != null ? `Lv ${group.level} ` : '';
         const row = document.createElement('label');
         row.className = 'type-row' + (squareIcon ? ' icon-square' : '');
         row.innerHTML = `
-          <input type="checkbox" checked data-type="${typeKey}" />
+          <input type="checkbox" ${isChecked ? 'checked' : ''} data-type="${typeKey}" />
           <img src="/assets/${iconDir}/${group.icon}" />
           <span class="rt-label">${levelPrefix}${group.name}${noLocation ? ' (no map location)' : ''}</span>
           <span class="rt-count"></span>
@@ -825,6 +1174,7 @@
           else visibleTypes.delete(typeKey);
           updateMasterToggle(byType.size);
           render(data.entries);
+          if (storageKey) saveSectionUnchecked(storageKey, list);
         });
         list.appendChild(row);
         countEls.set(typeKey, row.querySelector('.rt-count'));
@@ -861,6 +1211,7 @@
         else visibleTypes.delete(cb.dataset.type);
       }
       if (data) render(data.entries);
+      if (storageKey) saveSectionUnchecked(storageKey, list);
     });
 
     return {
@@ -883,6 +1234,7 @@
   const bossSection = createTypeChecklistSection({
     headerId: 'bosses-header', listId: 'boss-type-list', masterToggleId: 'bosses-master-toggle',
     countId: 'bosses-total-count', markerClass: 'boss-marker', iconSize: 30, sortByLevel: true,
+    storageKey: 'bosses',
   });
 
   async function loadBosses({ rebuildList } = {}) {
@@ -897,6 +1249,7 @@
   const bountySection = createTypeChecklistSection({
     headerId: 'bounty-header', listId: 'bounty-type-list', masterToggleId: 'bounty-master-toggle',
     countId: 'bounty-total-count', markerClass: 'bounty-marker', iconSize: 30, sortByLevel: true,
+    storageKey: 'bounty',
   });
 
   async function loadBounties({ rebuildList } = {}) {
@@ -911,7 +1264,7 @@
   const towerSection = createTypeChecklistSection({
     headerId: 'towers-header', listId: 'tower-type-list', masterToggleId: 'towers-master-toggle',
     countId: 'towers-total-count', markerClass: 'tower-marker', iconSize: 30,
-    sortByLevel: true, squareIcon: true,
+    sortByLevel: true, squareIcon: true, storageKey: 'towers',
   });
 
   async function loadTowers({ rebuildList } = {}) {
@@ -922,12 +1275,258 @@
 
   loadTowers({ rebuildList: true });
 
+  // ---------- Quests (Main / Sub, grouped Active vs Not Started) ----------
+  // Doesn't fit createTypeChecklistSection's flat type_key grouping - each
+  // quest is its own instance (not a "species" with many spawns), and the
+  // Active/Not Started split is a second nesting level on top of the
+  // Main/Sub section split. See backend/server.py's api_quests +
+  // backend/quests.py docstrings for how these are derived: a quest's
+  // "target" is wherever its current step's LocationSettingData points -
+  // its own block's real FixedLocationPointArray, not a naming-convention
+  // guess - so a not-started quest and an active one for the same NPC often
+  // land on genuinely different pins as the player progresses (e.g. Zoe's
+  // 5-quest chain moves around as she does).
+  function createQuestSection({ sectionId, headerId, listId, masterToggleId, countId, storageKey }) {
+    const section = document.getElementById(sectionId);
+    const header = document.getElementById(headerId);
+    const list = document.getElementById(listId);
+    const masterToggle = document.getElementById(masterToggleId);
+    const totalCountEl = document.getElementById(countId);
+    const visibleQuestIds = new Set();
+    const markers = new Map(); // marker entry id -> L.marker
+    let entries = [];
+
+    function setExpanded(expanded) {
+      header.classList.toggle('expanded', expanded);
+      list.classList.toggle('expanded', expanded);
+      header.querySelector('.chevron').innerHTML = expanded ? '&#9662;' : '&#9656;';
+    }
+    header.addEventListener('click', (e) => {
+      if (e.target === masterToggle) return;
+      setExpanded(!list.classList.contains('expanded'));
+    });
+    setExpanded(false);
+    masterToggle.addEventListener('click', (e) => e.stopPropagation());
+
+    function questTooltip(e) {
+      const stepPart = e.total_steps > 1 ? ` — step ${e.step_index + 1}/${e.total_steps}` : '';
+      const statusWord = e.status === 'active' ? 'Active' : 'Not started';
+      return `<div class="boss-tooltip"><div class="bt-name">${e.title}${stepPart}</div><div class="bt-line">${statusWord}</div></div>`;
+    }
+
+    // The game's own compass quest icons (see extractor/PalExtract's Quests
+    // section for which variant is which, visually confirmed): the gold "!"
+    // is the standard "NPC has a quest for you" prompt (Not Started), the
+    // plain blue diamond is the standard current-objective tracking marker
+    // (Active) - not an arbitrary color choice.
+    function markerHtml(e) {
+      const icon = e.status === 'active' ? 'T_icon_Compass_Quest_1.png' : 'T_icon_Compass_Quest_0.png';
+      return `<img class="quest-icon" src="/assets/quest_icons/${icon}" />`;
+    }
+
+    function render() {
+      const seen = new Set();
+      for (const e of entries) {
+        if (!visibleQuestIds.has(e.quest_id)) continue;
+        seen.add(e.id);
+        const latlng = [e.pixel_y, e.pixel_x];
+        let marker = markers.get(e.id);
+        if (!marker) {
+          marker = L.marker(latlng, {
+            icon: L.divIcon({ className: 'quest-marker', html: markerHtml(e), iconSize: [22, 22] }),
+          }).addTo(map);
+          marker.bindTooltip(questTooltip(e), { direction: 'top' });
+          markers.set(e.id, marker);
+        } else if (!map.hasLayer(marker)) {
+          marker.addTo(map);
+        }
+      }
+      for (const [id, marker] of markers) {
+        if (!seen.has(id) && map.hasLayer(marker)) map.removeLayer(marker);
+      }
+    }
+
+    function updateMasterToggle() {
+      const totalQuests = new Set(entries.map(e => e.quest_id)).size;
+      const visibleCount = visibleQuestIds.size;
+      masterToggle.checked = visibleCount === totalQuests && totalQuests > 0;
+      masterToggle.indeterminate = visibleCount > 0 && visibleCount < totalQuests;
+    }
+
+    // A subgroup (Active / Not Started) that has zero entries for this
+    // player simply isn't appended at all - "won't appear if there are no
+    // entries", per spec, not shown-but-empty.
+    //
+    // previousEntryIds/previousVisibleIds (both null on a real rebuild,
+    // e.g. switching players) let a periodic refresh preserve whatever the
+    // user chose (Hide All, or unchecking one quest) instead of defaulting
+    // every quest back to checked - see buildList's own comment for why
+    // this one section needed it when nothing else did.
+    function buildSubgroup(statusKey, label, previousEntryIds, previousVisibleIds) {
+      const groupEntries = entries.filter(e => e.status === statusKey);
+      if (!groupEntries.length) return null;
+
+      const byQuest = new Map();
+      for (const e of groupEntries) {
+        if (!byQuest.has(e.quest_id)) byQuest.set(e.quest_id, []);
+        byQuest.get(e.quest_id).push(e);
+      }
+
+      const wrap = document.createElement('div');
+      wrap.className = 'quest-subgroup';
+      wrap.innerHTML = `<div class="quest-subgroup-label">${label} (${byQuest.size})</div>`;
+
+      const savedUnchecked = sectionUnchecked(storageKey);
+      const sortedQuests = [...byQuest.entries()].sort((a, b) => a[1][0].title.localeCompare(b[1][0].title));
+      for (const [questId, group] of sortedQuests) {
+        const first = group[0];
+        // Known before this refresh -> keep whatever the user last set it to
+        // (checked or not). Never seen before (a fresh rebuild, or a quest
+        // that just became active) -> fall back to the saved localStorage
+        // choice for this quest id, so a page refresh doesn't pop everything
+        // back to checked - same default-checked-unless-hidden convention
+        // every other section uses.
+        const wasKnown = previousEntryIds ? previousEntryIds.has(questId) : false;
+        const checked = wasKnown ? previousVisibleIds.has(questId) : !savedUnchecked.has(questId);
+        if (checked) visibleQuestIds.add(questId);
+        const stepPart = first.total_steps > 1 ? ` (step ${first.step_index + 1}/${first.total_steps})` : '';
+        const row = document.createElement('label');
+        row.className = 'type-row';
+        row.innerHTML = `
+          <input type="checkbox" ${checked ? 'checked' : ''} data-quest="${questId}" />
+          <span class="rt-label">${first.title}${stepPart}</span>
+        `;
+        row.querySelector('input').addEventListener('change', (ev) => {
+          if (ev.target.checked) visibleQuestIds.add(questId);
+          else visibleQuestIds.delete(questId);
+          updateMasterToggle();
+          render();
+          saveSectionUnchecked(storageKey, list);
+        });
+        wrap.appendChild(row);
+      }
+      return wrap;
+    }
+
+    masterToggle.addEventListener('change', () => {
+      const checked = masterToggle.checked;
+      masterToggle.indeterminate = false;
+      visibleQuestIds.clear();
+      if (checked) for (const e of entries) visibleQuestIds.add(e.quest_id);
+      for (const cb of list.querySelectorAll('input[type=checkbox]')) cb.checked = checked;
+      render();
+      saveSectionUnchecked(storageKey, list);
+    });
+
+    // previousEntryIds/previousVisibleIds: null on a real rebuild (fresh
+    // "everything checked" state, e.g. switching players in View As).
+    // Non-null on a periodic same-player refresh, so Hide All (or
+    // unchecking one quest) survives the 10s poll instead of every quest
+    // popping back to visible each time loadQuests() re-runs - this was a
+    // real bug (Quests was the one section with no rebuildList guard at
+    // all, unlike every createTypeChecklistSection-based section), not a
+    // hypothetical: confirmed via a user report that quests kept
+    // reappearing after Hide All.
+    function buildList(previousEntryIds, previousVisibleIds) {
+      list.innerHTML = '';
+      visibleQuestIds.clear();
+      const active = buildSubgroup('active', 'Active', previousEntryIds, previousVisibleIds);
+      const notStarted = buildSubgroup('not_started', 'Not Started', previousEntryIds, previousVisibleIds);
+      if (active) list.appendChild(active);
+      if (notStarted) list.appendChild(notStarted);
+      updateMasterToggle();
+      const totalQuests = new Set(entries.map(e => e.quest_id)).size;
+      totalCountEl.textContent = `${totalQuests}`;
+      // Whole section hidden entirely when it has nothing to show for this
+      // player - not shown-but-empty, per spec.
+      // 'block', not '' - an empty inline value just removes the inline
+      // override and falls back to the stylesheet's #main/sub-quests-section
+      // { display: none } default (added to avoid an empty-section flash
+      // before the first /api/quests response), which would leave this
+      // permanently invisible even once there's real content to show.
+      section.style.display = totalQuests > 0 ? 'block' : 'none';
+    }
+
+    function hide() {
+      section.style.display = 'none';
+      for (const [, marker] of markers) {
+        if (map.hasLayer(marker)) map.removeLayer(marker);
+      }
+    }
+
+    return {
+      setEntries(newEntries, { rebuildList } = {}) {
+        const previousEntryIds = rebuildList ? null : new Set(entries.map(e => e.quest_id));
+        const previousVisibleIds = rebuildList ? null : new Set(visibleQuestIds);
+        entries = newEntries;
+        buildList(previousEntryIds, previousVisibleIds);
+        render();
+      },
+      hide,
+    };
+  }
+
+  const mainQuestSection = createQuestSection({
+    sectionId: 'main-quests-section', headerId: 'main-quests-header', listId: 'main-quest-list',
+    masterToggleId: 'main-quests-master-toggle', countId: 'main-quests-total-count',
+    storageKey: 'main-quests',
+  });
+  const subQuestSection = createQuestSection({
+    sectionId: 'sub-quests-section', headerId: 'sub-quests-header', listId: 'sub-quest-list',
+    masterToggleId: 'sub-quests-master-toggle', countId: 'sub-quests-total-count',
+    storageKey: 'sub-quests',
+  });
+
+  // Set via the ?only=active|not_started URL param (screenshot/automation
+  // helper, see the bootstrap block at the very end of this script) - not
+  // exposed anywhere in the normal UI, since the Active/Not Started split
+  // is otherwise just two subgroups within the same section.
+  let screenshotQuestStatusFilter = null;
+
+  const catQuests = document.getElementById('cat-quests');
+
+  async function loadQuests({ rebuildList } = {}) {
+    const playerUid = viewAsSelect.value;
+    // No player selected -> no meaningful "active/not-started" to show at
+    // all (see backend/server.py's api_quests docstring) - both sections
+    // hidden entirely rather than showing some blended all-players view,
+    // and the whole Quests category along with them (see #cat-quests'
+    // own CSS comment) rather than leaving an empty collapsed row sitting
+    // there with nothing to expand into.
+    if (!playerUid) {
+      catQuests.style.display = 'none';
+      mainQuestSection.hide();
+      subQuestSection.hide();
+      return;
+    }
+    let data;
+    try {
+      const res = await fetch(`/api/quests?view_as=${encodeURIComponent(playerUid)}`, { cache: 'no-store' });
+      data = await res.json();
+    } catch (e) {
+      return;
+    }
+    if (!data.player_known) {
+      catQuests.style.display = 'none';
+      mainQuestSection.hide();
+      subQuestSection.hide();
+      return;
+    }
+    catQuests.style.display = 'block';
+    let quests = data.quests;
+    if (screenshotQuestStatusFilter) quests = quests.filter(e => e.status === screenshotQuestStatusFilter);
+    mainQuestSection.setEntries(quests.filter(e => e.type === 'Main'), { rebuildList });
+    subQuestSection.setEntries(quests.filter(e => e.type === 'Sub'), { rebuildList });
+  }
+
+  loadQuests({ rebuildList: true });
+
   // ---------- Journals (collectible lore Notes, e.g. "Castaway's Journal") ----------
   const journalSection = createTypeChecklistSection({
     headerId: 'journals-header', listId: 'journal-type-list', masterToggleId: 'journals-master-toggle',
     countId: 'journals-total-count', markerClass: 'journal-marker', iconSize: 26, squareIcon: true,
     iconDir: 'note_icons', collectedField: 'collected', knownFlagKey: 'collection_known',
-    collectedWord: 'Read',
+    collectedWord: 'Read', storageKey: 'journals',
   });
 
   async function loadJournals({ rebuildList } = {}) {
@@ -949,7 +1548,7 @@
     headerId: 'schematics-header', listId: 'schematic-type-list', masterToggleId: 'schematics-master-toggle',
     countId: 'schematics-total-count', markerClass: 'schematic-marker', iconSize: 26, squareIcon: true,
     iconDir: 'schematic_icons', collectedField: 'collected', knownFlagKey: 'collection_known',
-    collectedWord: 'Collected',
+    collectedWord: 'Collected', storageKey: 'schematics',
   });
 
   async function loadSchematics({ rebuildList } = {}) {
@@ -963,7 +1562,7 @@
   // ---------- Oil Rigs (raid zones, not bosses — no per-player state) ----------
   const oilrigSection = createTypeChecklistSection({
     headerId: 'oilrigs-header', listId: 'oilrig-type-list', masterToggleId: 'oilrigs-master-toggle',
-    countId: 'oilrigs-total-count', markerClass: 'oilrig-marker', iconSize: 30,
+    countId: 'oilrigs-total-count', markerClass: 'oilrig-marker', iconSize: 30, storageKey: 'oilrigs',
   });
 
   async function loadOilrigs({ rebuildList } = {}) {
@@ -971,6 +1570,294 @@
   }
 
   loadOilrigs({ rebuildList: true });
+
+  // Shared by every NPC shop category's tooltip (Medal/Bounty/Arena/
+  // Wandering Merchant/Pal Dealer/Black Market) - capped so a longer item
+  // shop doesn't turn a tooltip into an unreadable wall of text, same
+  // "quick glance" goal every other tooltip in this UI follows. The full,
+  // uncapped list is what the shop modal (below) is for.
+  const TRADER_LIST_CAP = 10;
+  function cappedListHtml(names) {
+    const shown = names.slice(0, TRADER_LIST_CAP).join(', ');
+    const rest = names.length - TRADER_LIST_CAP;
+    return rest > 0 ? `${shown}, +${rest} more` : shown;
+  }
+
+  // ---------- Shop modal ----------
+  // Full "what do they have for sale" detail view, styled after the game's
+  // own Item List shop panel - opened by clicking a Wandering Merchant/
+  // Pal Dealer/Dog Coin/Black Market marker (per an explicit user request;
+  // Bounty/Arena keep tooltip-only, they weren't asked for and stay
+  // consistent with how General-category NPCs behave elsewhere).
+  //
+  // Same real-vs-pool distinction as the tooltip, just with the full list
+  // instead of a capped one: "items" (Wandering Merchant/Dog Coin/Black
+  // Market... wait, Black Market sells Pals, not items - see below) is a
+  // real, complete, always-available inventory with real prices. Pal
+  // Dealer/Black Market's "pal_pool" is a pool, not a guaranteed current
+  // stock, and deliberately has NO price shown - a Pal's real price
+  // depends on its randomly-rolled level/stats, which this static
+  // extraction can't know (an explicit user call, not an oversight).
+  const shopModalBackdrop = document.getElementById('shop-modal-backdrop');
+  const shopModalTitle = document.getElementById('shop-modal-title');
+  const shopModalPoolNote = document.getElementById('shop-modal-pool-note');
+  const shopModalScroll = document.getElementById('shop-modal-grid');
+  const shopModalGrid = document.getElementById('shop-modal-grid-inner');
+
+  function closeShopModal() {
+    shopModalBackdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  shopModalBackdrop.addEventListener('click', (e) => {
+    if (e.target === shopModalBackdrop) closeShopModal();
+  });
+  document.getElementById('shop-modal-close').addEventListener('click', closeShopModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && shopModalBackdrop.classList.contains('open')) closeShopModal();
+  });
+
+  function shopCardHtml({ iconSrc, round, name, price, currencyIcon }) {
+    const priceHtml = price != null
+      ? `<div class="shop-card-price"><img src="${currencyIcon}" />${price.toLocaleString()}</div>`
+      : '';
+    return `
+      <div class="shop-card">
+        <div class="shop-card-icon${round ? ' round' : ''}"><img src="${iconSrc}" /></div>
+        <div class="shop-card-name">${name}</div>
+        ${priceHtml}
+      </div>
+    `;
+  }
+
+  function openShopModal(e) {
+    shopModalTitle.textContent = `${e.name} — Item List`;
+    shopModalGrid.innerHTML = '';
+    shopModalScroll.scrollTop = 0;
+    if (e.items?.length) {
+      shopModalPoolNote.classList.remove('visible');
+      const currencyIcon = `/assets/schematic_icons/${e.currency_icon}`;
+      shopModalGrid.innerHTML = e.items.map(i => shopCardHtml({
+        iconSrc: `/assets/schematic_icons/${i.icon}`,
+        round: false,
+        name: i.name,
+        price: i.price,
+        currencyIcon,
+      })).join('');
+    } else if (e.pal_pool?.poolSpecies?.length) {
+      const lvl = (e.pal_pool.levelMin != null && e.pal_pool.levelMax != null)
+        ? ` (Lv ${e.pal_pool.levelMin}-${e.pal_pool.levelMax})` : '';
+      shopModalPoolNote.textContent = `Pal pool${lvl} — only ${e.pal_pool.offeredCount ?? 'a few'} of these are actually offered at once, rotating on restock. Prices aren't shown: they depend on each Pal's randomly-rolled level and stats.`;
+      shopModalPoolNote.classList.add('visible');
+      shopModalGrid.innerHTML = e.pal_pool.poolSpecies.map(s => shopCardHtml({
+        iconSrc: `/assets/boss_icons/${s.icon}`,
+        round: true,
+        name: s.name,
+        price: null,
+      })).join('');
+    } else {
+      shopModalPoolNote.classList.remove('visible');
+      shopModalGrid.innerHTML = '<div style="padding:8px;color:#9ab;">No inventory data available.</div>';
+    }
+    shopModalBackdrop.classList.add('open');
+    // Belt-and-suspenders alongside the flex min-height:0 fix above - keeps
+    // the page itself from ever scrolling behind the modal, even if some
+    // future change reintroduces an unbounded-height flex child.
+    document.body.style.overflow = 'hidden';
+  }
+
+  // ---------- NPCs (Black Market / Dog Coin / Wandering Merchant / Pal
+  // Dealer / General) ----------
+  // No per-player state at all (see backend/server.py's api_npcs docstring)
+  // - loaded once, never re-fetched on view-as change or the 10s poll.
+  // Doesn't fit createTypeChecklistSection: that factory's type_key groups
+  // are "species" sharing one display name/icon (e.g. every Penking marker
+  // is named "Penking"), but here each category contains many differently-
+  // named individual NPCs sharing only a category, not an identity - so
+  // this builds one checklist row per *category* while each marker keeps
+  // its own real name (and, where real data exists, its own shop
+  // inventory) in its tooltip, via a small bespoke section instead.
+  //
+  // Wandering/PalDealer were originally a separate standalone "Traders"
+  // section - folded back in here since they're really the same "NPC with
+  // a shop" concept as Black Market/Dog Coin, just sourced from an
+  // external site (palpedia.ru) instead of this project's own spawner
+  // scan. No "Trader (none found)" placeholder either - that used to mark
+  // a category this project's own extraction genuinely couldn't populate,
+  // which is no longer true (real positions exist now, just from a
+  // different source) - see backend/npcs.py's docstring for the full
+  // story.
+  const NPC_CATEGORY_LABELS = { BlackMarket: 'Black Market', DogCoin: 'Dog Coin', Wandering: 'Wandering Merchant', PalDealer: 'Pal Dealer', General: 'General NPC' };
+  const NPC_CATEGORY_ORDER = ['BlackMarket', 'DogCoin', 'Wandering', 'PalDealer', 'General'];
+  // Which categories get the full click-to-open shop modal (see the "Shop
+  // modal" JS section above) - exactly the 4 the user asked for. Bounty/
+  // Arena (General category) keep tooltip-only, same as every other
+  // General NPC - not requested, and General has no single per-marker
+  // shop identity to open a modal for anyway.
+  const NPC_SHOP_MODAL_CATEGORIES = new Set(['Wandering', 'PalDealer', 'DogCoin', 'BlackMarket']);
+  // Representative icon per category for the sidebar row only (each map
+  // marker uses its own per-individual icon instead - see markerHtml
+  // below). DogCoin uses DarkTrader02 because MedalTrader's own Blueprint
+  // literally reuses that skeletal mesh - her real look, not a stand-in
+  // (see extractor/PalExtract's NPCs section + NOTES.md). Wandering/
+  // PalDealer use their own real red-coat/blue-coat portraits, also
+  // confirmed in-game. General has no single representative look (its ~82
+  // individuals span many distinct archetypes), so it falls through to the
+  // generic MobuCitizen default below.
+  const NPC_CATEGORY_SIDEBAR_ICON = {
+    BlackMarket: 'T_Male_DarkTrader01_icon_normal.png',
+    DogCoin: 'T_Male_DarkTrader02_icon_normal.png',
+    Wandering: 'T_SalesPerson_icon_normal.png',
+    PalDealer: 'T_PalDealer_icon_normal.png',
+  };
+
+  function createNpcSection() {
+    const header = document.getElementById('npcs-header');
+    const list = document.getElementById('npc-type-list');
+    const masterToggle = document.getElementById('npcs-master-toggle');
+    const totalCountEl = document.getElementById('npcs-total-count');
+    const visibleCategories = new Set(NPC_CATEGORY_ORDER);
+    const markers = new Map();
+    let entries = [];
+
+    function setExpanded(expanded) {
+      header.classList.toggle('expanded', expanded);
+      list.classList.toggle('expanded', expanded);
+      header.querySelector('.chevron').innerHTML = expanded ? '&#9662;' : '&#9656;';
+    }
+    header.addEventListener('click', (e) => {
+      if (e.target === masterToggle) return;
+      setExpanded(!list.classList.contains('expanded'));
+    });
+    setExpanded(false);
+    masterToggle.addEventListener('click', (e) => e.stopPropagation());
+
+    function tooltipHtml(e) {
+      const levelPart = e.level != null ? ` (Lv ${e.level})` : '';
+      const catLabel = NPC_CATEGORY_LABELS[e.category] || e.category;
+      // Only MedalTrader/BountyTrader/ArenaShop/Wandering Merchant carry
+      // real "items" (see backend/npcs.py's own docstring for why) - a
+      // real, complete, always-available inventory, confirmed not a
+      // lottery draw. Pal Dealer's "pal_pool" is different and must say so
+      // - DT_PalShopCreateData's own offeredCount field confirms only a
+      // random subset of poolSpecies is actually offered at once, rotating
+      // on restock, per an explicit user caution.
+      const currencyLine = e.currency ? `<div class="bt-line">Currency: ${e.currency}</div>` : '';
+      let stockLine = '';
+      if (e.items?.length) {
+        stockLine = `<div class="bt-line">Sells: ${cappedListHtml(e.items.map(i => i.name))}</div>`;
+      } else if (e.pal_pool?.poolSpecies?.length) {
+        const lvl = (e.pal_pool.levelMin != null && e.pal_pool.levelMax != null)
+          ? ` (Lv ${e.pal_pool.levelMin}-${e.pal_pool.levelMax})` : '';
+        stockLine = `<div class="bt-line">Pal pool${lvl}: ${cappedListHtml(e.pal_pool.poolSpecies.map(s => s.name))}</div>`
+          + `<div class="bt-weak">Only ${e.pal_pool.offeredCount ?? 'a few'} of these are actually offered at once — rotates on restock, not guaranteed.</div>`;
+      }
+      const clickHint = NPC_SHOP_MODAL_CATEGORIES.has(e.category) && (e.items?.length || e.pal_pool?.poolSpecies?.length)
+        ? '<div class="bt-line" style="color:#6fa8dc;">Click for full item list</div>' : '';
+      return `<div class="boss-tooltip"><div class="bt-name">${e.name}${levelPart}</div><div class="bt-line">${catLabel}</div>${currencyLine}${stockLine}${clickHint}</div>`;
+    }
+
+    function markerHtml(e) {
+      const cls = 'npc-marker-' + e.category.toLowerCase();
+      const levelHtml = e.level != null ? `<div class="level-badge">${e.level}</div>` : '';
+      const clickableStyle = NPC_SHOP_MODAL_CATEGORIES.has(e.category) ? ' cursor:pointer;' : '';
+      return `<div style="position:relative;${clickableStyle}" class="npc-portrait-wrap ${cls}"><img class="portrait" src="/assets/npc_icons/${e.icon}" />${levelHtml}</div>`;
+    }
+
+    function render() {
+      const seen = new Set();
+      for (const e of entries) {
+        if (!visibleCategories.has(e.category)) continue;
+        seen.add(e.id);
+        const latlng = [e.pixel_y, e.pixel_x];
+        let marker = markers.get(e.id);
+        if (!marker) {
+          marker = L.marker(latlng, {
+            icon: L.divIcon({ className: 'npc-marker', html: markerHtml(e), iconSize: [28, 28] }),
+          }).addTo(map);
+          marker.bindTooltip(tooltipHtml(e), { direction: 'top' });
+          if (NPC_SHOP_MODAL_CATEGORIES.has(e.category)) marker.on('click', () => openShopModal(e));
+          markers.set(e.id, marker);
+        } else if (!map.hasLayer(marker)) {
+          marker.addTo(map);
+        }
+      }
+      for (const [id, marker] of markers) {
+        if (!seen.has(id) && map.hasLayer(marker)) map.removeLayer(marker);
+      }
+    }
+
+    function updateMasterToggle() {
+      masterToggle.checked = visibleCategories.size === NPC_CATEGORY_ORDER.length;
+      masterToggle.indeterminate = visibleCategories.size > 0 && visibleCategories.size < NPC_CATEGORY_ORDER.length;
+    }
+
+    function buildList() {
+      list.innerHTML = '';
+      const counts = new Map();
+      for (const e of entries) counts.set(e.category, (counts.get(e.category) || 0) + 1);
+
+      const savedUnchecked = sectionUnchecked('npcs');
+      for (const cat of savedUnchecked) visibleCategories.delete(cat);
+
+      for (const cat of NPC_CATEGORY_ORDER) {
+        const count = counts.get(cat) || 0;
+        // "Trader" (general store NPCs like the classic shopkeeper Bobby)
+        // has zero confirmed positions - see extractor/PalExtract's NPCs
+        // section for why. Shown disabled with a note rather than hidden,
+        // so it's clear the category was considered, not forgotten.
+        // This is the sidebar row's own icon, separate from each marker's
+        // per-individual icon (markerHtml below) - a representative look
+        // per category, not tied to any specific NPC's real portrait.
+        const iconSrc = '/assets/npc_icons/' + (NPC_CATEGORY_SIDEBAR_ICON[cat] || 'T_MobuCitizen_Male_icon_normal.png');
+        const isChecked = visibleCategories.has(cat);
+        const row = document.createElement('label');
+        row.className = 'type-row';
+        row.innerHTML = `
+          <input type="checkbox" ${isChecked ? 'checked' : ''} data-cat="${cat}" ${count === 0 ? 'disabled' : ''} />
+          <img src="${iconSrc}" />
+          <span class="rt-label">${NPC_CATEGORY_LABELS[cat]}${count === 0 ? ' (none found)' : ''}</span>
+          <span class="rt-count">${count}</span>
+        `;
+        row.querySelector('input').addEventListener('change', (ev) => {
+          if (ev.target.checked) visibleCategories.add(cat);
+          else visibleCategories.delete(cat);
+          updateMasterToggle();
+          render();
+          saveSectionUnchecked('npcs', list);
+        });
+        list.appendChild(row);
+      }
+      updateMasterToggle();
+      totalCountEl.textContent = `${entries.length}`;
+    }
+
+    masterToggle.addEventListener('change', () => {
+      const checked = masterToggle.checked;
+      masterToggle.indeterminate = false;
+      visibleCategories.clear();
+      if (checked) for (const cat of NPC_CATEGORY_ORDER) visibleCategories.add(cat);
+      for (const cb of list.querySelectorAll('input[type=checkbox]')) cb.checked = checked;
+      render();
+      saveSectionUnchecked('npcs', list);
+    });
+
+    return {
+      async load() {
+        try {
+          const res = await fetch('/api/npcs', { cache: 'no-store' });
+          const data = await res.json();
+          entries = data.npcs;
+        } catch (e) {
+          return;
+        }
+        buildList();
+        render();
+      },
+    };
+  }
+
+  const npcSection = createNpcSection();
+  npcSection.load();
 
   // ---------- Dungeons (open-world Dungeon Portal entrances) ----------
   // No per-item checklist, unlike every other section — there's no per-
@@ -983,6 +1870,7 @@
   // live state yet (state_known: false, e.g. right after a server restart
   // before the first refresh cycle) rather than showing nothing.
   const dungeonMasterToggle = document.getElementById('dungeons-master-toggle');
+  if (uiState.dungeonsVisible === false) dungeonMasterToggle.checked = false;
   const dungeonCountEl = document.getElementById('dungeons-total-count');
   const dungeonMarkers = new Map(); // entry id -> L.marker
   let dungeonData = null;
@@ -1027,7 +1915,11 @@
     }
   }
 
-  dungeonMasterToggle.addEventListener('change', renderDungeons);
+  dungeonMasterToggle.addEventListener('change', () => {
+    uiState.dungeonsVisible = dungeonMasterToggle.checked;
+    saveUiState();
+    renderDungeons();
+  });
   dungeonMasterToggle.addEventListener('click', (e) => e.stopPropagation());
 
   async function loadDungeons() {
@@ -1053,7 +1945,7 @@
     headerId: 'watchtowers-header', listId: 'watchtower-type-list', masterToggleId: 'watchtowers-master-toggle',
     countId: 'watchtowers-total-count', markerClass: 'watchtower-marker', iconSize: 36,
     iconDir: 'fasttravel_icons', collectedField: 'collected', knownFlagKey: 'collection_known',
-    visualStyle: 'grayscale',
+    visualStyle: 'grayscale', storageKey: 'watchtowers',
   });
 
   async function loadWatchtowers({ rebuildList } = {}) {
@@ -1068,7 +1960,7 @@
     headerId: 'waypoints-header', listId: 'waypoint-type-list', masterToggleId: 'waypoints-master-toggle',
     countId: 'waypoints-total-count', markerClass: 'waypoint-marker', iconSize: 30,
     iconDir: 'fasttravel_icons', collectedField: 'collected', knownFlagKey: 'collection_known',
-    visualStyle: 'grayscale',
+    visualStyle: 'grayscale', storageKey: 'waypoints',
   });
 
   async function loadWaypoints({ rebuildList } = {}) {
@@ -1089,7 +1981,7 @@
     headerId: 'bases-header', listId: 'base-type-list', masterToggleId: 'bases-master-toggle',
     countId: 'bases-total-count', markerClass: 'base-marker', iconSize: 32,
     iconDir: 'base_icons', collectedField: 'own_guild', knownFlagKey: 'guild_known',
-    visualStyle: 'grayscale', squareIcon: true, collectedWord: 'Your Guild',
+    visualStyle: 'grayscale', squareIcon: true, collectedWord: 'Your Guild', storageKey: 'bases',
   });
 
   async function loadBases({ rebuildList } = {}) {
@@ -1121,7 +2013,8 @@
     'watchtowers-master-toggle', 'waypoints-master-toggle', 'effigies-master-toggle',
     'journals-master-toggle', 'schematics-master-toggle', 'bosses-master-toggle',
     'bounty-master-toggle', 'towers-master-toggle', 'bases-master-toggle', 'oilrigs-master-toggle',
-    'dungeons-master-toggle',
+    'dungeons-master-toggle', 'main-quests-master-toggle', 'sub-quests-master-toggle',
+    'npcs-master-toggle',
   ];
   function setAllSections(checked) {
     for (const id of ALL_MASTER_TOGGLE_IDS) {
@@ -1134,6 +2027,107 @@
   }
   document.getElementById('show-all-btn').addEventListener('click', () => setAllSections(true));
   document.getElementById('hide-all-btn').addEventListener('click', () => setAllSections(false));
+
+  // ---------- Screenshot/automation bootstrap (URL params, not linked from any UI) ----------
+  // ?view_as=<uid>&only=active|not_started - selects a player and hides
+  // every section except the requested Quest status, for headless
+  // screenshotting. No effect when view_as is absent.
+  (function setupScreenshotMode() {
+    const params = new URLSearchParams(window.location.search);
+    const uid = params.get('view_as');
+    const only = params.get('only');
+    if (!uid) return;
+
+    // Hides every section except Quests. Called more than once (see below)
+    // because each section's *initial* rebuildList:true load (kicked off at
+    // page-load time, same moment as the players fetch that populates the
+    // "View As" dropdown this function waits on) races this call - if it
+    // resolves after we've already unchecked a master toggle, buildList()
+    // repopulates that section's visibleTypes with everything and flips the
+    // master toggle back on. Re-running this after those initial loads have
+    // long since settled is simpler and more robust than trying to await
+    // every section's first load() promise individually.
+    function hideNonQuestSections() {
+      for (const id of ALL_MASTER_TOGGLE_IDS) {
+        if (id === 'main-quests-master-toggle' || id === 'sub-quests-master-toggle') continue;
+        const cb = document.getElementById(id);
+        if (!cb) continue;
+        if (cb.checked) { cb.checked = false; cb.dispatchEvent(new Event('change')); }
+        // "only those selected" - remove the row (and its checklist, if any)
+        // from the sidebar entirely, not just uncheck it, so a screenshot
+        // isn't cluttered with a long list of empty/irrelevant sections.
+        // cb.parentElement (not .closest('.section-header')) because
+        // Effigies' header div is the one exception without that class -
+        // every section's master checkbox is a direct child of its own
+        // header row regardless, so this covers all of them uniformly.
+        const header = cb.parentElement;
+        if (header) {
+          header.style.display = 'none';
+          const next = header.nextElementSibling;
+          if (next && next.classList.contains('type-list')) next.style.display = 'none';
+        }
+      }
+      // The categories added on top of these sections (see #legend's own
+      // comment) aren't covered by the per-section walk above - hide the
+      // three non-Quests ones outright so their now-empty headers don't
+      // clutter the screenshot either.
+      for (const catId of ['cat-poi', 'cat-collectibles', 'cat-combat']) {
+        const header = document.getElementById(`${catId}-header`);
+        if (header) header.style.display = 'none';
+      }
+    }
+
+    function apply() {
+      if (![...viewAsSelect.options].some(o => o.value === uid)) {
+        setTimeout(apply, 200);
+        return;
+      }
+      viewAsSelect.value = uid;
+      viewAsSelect.dispatchEvent(new Event('change'));
+
+      if (only === 'active' || only === 'not_started') {
+        screenshotQuestStatusFilter = only;
+        hideNonQuestSections();
+        setTimeout(hideNonQuestSections, 1000);
+        setTimeout(hideNonQuestSections, 2000);
+      }
+
+      setTimeout(async () => {
+        await loadQuests({ rebuildList: true });
+        try {
+          const res = await fetch(`/api/quests?view_as=${encodeURIComponent(uid)}`, { cache: 'no-store' });
+          const qdata = await res.json();
+          const filtered = only ? qdata.quests.filter(e => e.status === only) : qdata.quests;
+          const pts = filtered.map(e => [e.pixel_y, e.pixel_x]);
+          const player = lastPlayerData?.players.find(p => p.uid === uid);
+          if (player) pts.push([player.pixel_y, player.pixel_x]);
+          if (pts.length > 1) map.fitBounds(pts, { padding: [60, 60] });
+        } catch (e) { /* leave default view-as pan/zoom in place */ }
+        document.title = 'SCREENSHOT_READY';
+      }, 2500);
+    }
+    apply();
+  })();
+
+  // ?isolate=<master-toggle-id> - uncheck every OTHER section's master
+  // toggle. Verification helper, not linked from any UI (same spirit as
+  // the ?view_as/&only bootstrap above, but for sections with no
+  // per-player state, e.g. NPCs, that bootstrap doesn't cover).
+  (function setupIsolateMode() {
+    const params = new URLSearchParams(window.location.search);
+    const keepId = params.get('isolate');
+    if (!keepId) return;
+    function apply() {
+      for (const id of ALL_MASTER_TOGGLE_IDS) {
+        if (id === keepId) continue;
+        const cb = document.getElementById(id);
+        if (cb && cb.checked) { cb.checked = false; cb.dispatchEvent(new Event('change')); }
+      }
+    }
+    apply();
+    setTimeout(apply, 1000);
+    setTimeout(apply, 2000);
+  })();
 </script>
 </body>
 </html>

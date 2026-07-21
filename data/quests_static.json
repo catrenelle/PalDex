@@ -1,0 +1,2460 @@
+[
+  {
+    "id": "Main_UnlockFastTravel",
+    "type": "Main",
+    "title": "Activate Great Eagle Statue",
+    "titleMsgId": "QUEST_MAIN_TITLE_UNLOCK_FASTTRAVEL",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_UnlockFastTravel",
+            "x": -358785.0,
+            "y": 267940.0,
+            "z": 8500.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_DefeatWildBoss",
+    "type": "Main",
+    "title": "First Boss Battle",
+    "titleMsgId": "QUEST_MAIN_TITLE_CAPTURE_BOSS",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_DefeatWildBoss",
+            "x": -316071.7,
+            "y": 237782.42,
+            "z": 2600.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_DefeatDungeonBoss",
+    "type": "Main",
+    "title": "Sealed Pals",
+    "titleMsgId": "QUEST_MAIN_TITLE_CAPTURE_BOSS_WITH_PLACE",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_DefeatDungeonBoss",
+            "x": -285331.3,
+            "y": 210162.69,
+            "z": 1000.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_DefeatGrassBoss",
+    "type": "Main",
+    "title": "The Girl and the Tower",
+    "titleMsgId": "QUEST_MAIN_TITLE_BOSS_ZOE",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_DefeatGrassBoss",
+            "x": -321360.0,
+            "y": 208989.0,
+            "z": 150.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_CaptureDeerGround",
+    "type": "Main",
+    "title": "Wildlife Sanctuaries",
+    "titleMsgId": "QUEST_MAIN_TITLE_REGION_PRESERVE1",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_CaptureDeerGround",
+            "x": -456797.8,
+            "y": 197837.9,
+            "z": -800.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_DefeatForestBoss",
+    "type": "Main",
+    "title": "Thou Shalt Not Harm Pals",
+    "titleMsgId": "QUEST_MAIN_TITLE_BOSS_LILY",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_ForestBoss_Order",
+            "x": -187239.92,
+            "y": 55564.676,
+            "z": 1339.6652
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_ForestBoss_Investigate",
+            "x": -231421.89,
+            "y": 68246.59,
+            "z": 2672.3965
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_ForestBoss_Report",
+            "x": -187239.92,
+            "y": 55564.676,
+            "z": 1339.6652
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_ForestBoss_Investigate_LilyHouse",
+            "x": -237100.86,
+            "y": 101704.914,
+            "z": -1941.5906
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_ForestBoss_Report_2",
+            "x": -187239.92,
+            "y": 55564.676,
+            "z": 1339.6652
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Main_DefeatForestBoss",
+            "x": -266303.22,
+            "y": 174422.67,
+            "z": 6132.834
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_ForestBoss_Complete",
+            "x": -187239.92,
+            "y": 55564.676,
+            "z": 1339.6652
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_DefeatVolcanoBoss",
+    "type": "Main",
+    "title": "Flawless Victory Fixation",
+    "titleMsgId": "QUEST_MAIN_TITLE_BOSS_AXEL",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_VolcanoBoss_Order",
+            "x": -468146.7,
+            "y": -64293.4,
+            "z": -1640.3163
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_VolcanoBoss_TalkVillager",
+            "x": -467899.97,
+            "y": -60219.848,
+            "z": -1380.9744
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_VolcanoBoss_TalkCarrier",
+            "x": -432882.38,
+            "y": -89394.59,
+            "z": 14553.789
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_VolcanoBoss_Report",
+            "x": -468146.7,
+            "y": -64293.4,
+            "z": -1640.3163
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Main_DefeatVolcanoBoss",
+            "x": -361827.38,
+            "y": -112236.9,
+            "z": 61411.742
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_VolcanoBoss_Report_2",
+            "x": -468146.7,
+            "y": -64293.4,
+            "z": -1640.3163
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_DefeatDesertBoss",
+    "type": "Main",
+    "title": "Ruler of the Sands",
+    "titleMsgId": "QUEST_MAIN_TITLE_BOSS_MARCUS",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DesertBoss_Order",
+            "x": 36777.44,
+            "y": 318631.9,
+            "z": 1497.2125
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Main_DesertBoss_TalkResidents_DesertVillage002",
+            "x": 40630.008,
+            "y": 315086.62,
+            "z": 1717.1989
+          },
+          {
+            "rowName": "Main_DesertBoss_TalkResidents_DesertVillage003",
+            "x": 38166.19,
+            "y": 316564.6,
+            "z": 1717.584
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DesertBoss_Report",
+            "x": 36777.44,
+            "y": 318631.9,
+            "z": 1497.2125
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DesertBoss_Investigate_Enter",
+            "x": 33973.043,
+            "y": 386763.78,
+            "z": 1490.4777
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DesertBoss_Investigate",
+            "x": 28601.053,
+            "y": 400697.34,
+            "z": -787.4456
+          }
+        ]
+      },
+      {
+        "locations": []
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DesertBoss_Investigate2",
+            "x": 63641.508,
+            "y": 315444.44,
+            "z": 2352.6143
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DesertBoss_Report2",
+            "x": 36777.44,
+            "y": 318631.9,
+            "z": 1497.2125
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Main_DefeatDesertBoss",
+            "x": 29984.934,
+            "y": 413567.44,
+            "z": 15776.714
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DesertBoss_Report3",
+            "x": 36777.44,
+            "y": 318631.9,
+            "z": 1497.2125
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_DefeatSnowyMountainBoss",
+    "type": "Main",
+    "title": "Interspecies Experiments",
+    "titleMsgId": "QUEST_MAIN_TITLE_BOSS_VICTOR",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SnowBoss_Order",
+            "x": 15387.158,
+            "y": 112280.53,
+            "z": 2585.2578
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SnowBoss_KillEnemy",
+            "x": 5476.0894,
+            "y": 95852.836,
+            "z": 5069.774
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SnowBoss_SearchSphere",
+            "x": 5458.7173,
+            "y": 95994.05,
+            "z": 5035.305
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SnowBoss_ReturnSphere",
+            "x": 15387.158,
+            "y": 112280.53,
+            "z": 2585.2578
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SnowBoss_Investigate",
+            "x": -47800.883,
+            "y": 109078.22,
+            "z": 8960.125
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SnowBoss_Report",
+            "x": 15387.158,
+            "y": 112280.53,
+            "z": 2585.2578
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SnowBoss_SearchResearcher",
+            "x": 14462.134,
+            "y": 32685.293,
+            "z": 15800.209
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SnowBoss_Report2",
+            "x": 15387.158,
+            "y": 112280.53,
+            "z": 2585.2578
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Main_DefeatSnowyMountainBoss",
+            "x": 81363.0,
+            "y": 90183.0,
+            "z": 64048.504
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SnowBoss_Report3",
+            "x": 15387.158,
+            "y": 112280.53,
+            "z": 2585.2578
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_DefeatSakurajimaBoss",
+    "type": "Main",
+    "title": "A Fine Night for a Drink",
+    "titleMsgId": "QUEST_MAIN_TITLE_BOSS_SAYA",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SakurajimaBoss_Order",
+            "x": -16798.604,
+            "y": -122092.83,
+            "z": 6075.181
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SakurajimaBoss_KillEnemy",
+            "x": -8859.001,
+            "y": -138378.98,
+            "z": 4260.32
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SakurajimaBoss_SearchKatana",
+            "x": -8862.824,
+            "y": -138553.14,
+            "z": 4078.0645
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SakurajimaBoss_ReturnKatana",
+            "x": -16798.604,
+            "y": -122092.83,
+            "z": 6075.181
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SakurajimaBoss_Investigate",
+            "x": -20864.63,
+            "y": -132642.42,
+            "z": 5939.5205
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SakurajimaBoss_Report",
+            "x": -16798.604,
+            "y": -122092.83,
+            "z": 6075.181
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Main_DefeatSakurajimaBoss",
+            "x": -29427.572,
+            "y": -115900.055,
+            "z": 6225.5356
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SakurajimaBoss_Report2",
+            "x": -16798.604,
+            "y": -122092.83,
+            "z": 6075.181
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_DefeatVikingBoss",
+    "type": "Main",
+    "title": "Bearer of All Burdens",
+    "titleMsgId": "QUEST_MAIN_TITLE_BOSS_BJORN",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_VikingBoss_Order",
+            "x": -550559.0,
+            "y": -311612.7,
+            "z": 10441.998
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_VikingBoss_Investigate",
+            "x": -702079.4,
+            "y": -316679.3,
+            "z": 21403.506
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_VikingBoss_Report",
+            "x": -550559.0,
+            "y": -311612.7,
+            "z": 10441.998
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_VikingBoss_Investigate2",
+            "x": -729249.06,
+            "y": -337032.12,
+            "z": 15653.566
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_VikingBoss_Report2",
+            "x": -550559.0,
+            "y": -311612.7,
+            "z": 10441.998
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Main_DefeatVikingBoss",
+            "x": -889805.2,
+            "y": -435828.0,
+            "z": 19038.922
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_VikingBoss_Report3",
+            "x": -550559.0,
+            "y": -311612.7,
+            "z": 10441.998
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Farmer01",
+    "type": "Sub",
+    "title": "Pal's Blessing",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_FARMER1",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Farmer01",
+            "x": -346423.0,
+            "y": 197007.0,
+            "z": 1029.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Farmer02",
+    "type": "Sub",
+    "title": "Hungry for Recruits",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_FARMER2",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Farmer02",
+            "x": -329082.0,
+            "y": 163717.0,
+            "z": -1311.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Farmer03",
+    "type": "Sub",
+    "title": "A Special Dish",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_FARMER3",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Farmer03_Target",
+            "x": -347065.78,
+            "y": 194612.25,
+            "z": 1115.0
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Farmer03",
+            "x": -337585.0,
+            "y": 230200.0,
+            "z": -1656.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Farmer04",
+    "type": "Sub",
+    "title": "Medical Bills",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_FARMER4",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Farmer04",
+            "x": -291046.0,
+            "y": 203720.0,
+            "z": -993.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Scholar01",
+    "type": "Sub",
+    "title": "Prove the Legend!",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_SCHOLAR1",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Scholar01",
+            "x": -272761.97,
+            "y": 185543.62,
+            "z": 480.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Scholar02",
+    "type": "Sub",
+    "title": "Lock In",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_SCHOLAR2",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Scholar02",
+            "x": -83350.34,
+            "y": 137191.16,
+            "z": 8023.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Scholar03",
+    "type": "Sub",
+    "title": "Give a Fuack",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_SCHOLAR3",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Scholar03",
+            "x": -272547.06,
+            "y": 264756.25,
+            "z": -1464.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Scholar04",
+    "type": "Sub",
+    "title": "Metal on Your Mind",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_SCHOLAR4",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Scholar04",
+            "x": -606867.0,
+            "y": -482761.84,
+            "z": 6967.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Breeder01",
+    "type": "Sub",
+    "title": "Breeding Basics",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_BREEDER1",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Breeder01",
+            "x": -340952.0,
+            "y": 107575.0,
+            "z": -1115.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Breeder02",
+    "type": "Sub",
+    "title": "Farewell Under the Sakura Tree",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_BREEDER2",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Breeder02",
+            "x": -14110.0,
+            "y": -135560.0,
+            "z": 4790.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Breeder03",
+    "type": "Sub",
+    "title": "No Mercy for Pal Thieves",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_BREEDER3",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Breeder03_Target",
+            "x": -27124.027,
+            "y": 293726.7,
+            "z": 9749.0
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Breeder03",
+            "x": -48296.0,
+            "y": 288135.0,
+            "z": 673.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Breeder04",
+    "type": "Sub",
+    "title": "Operation: Splatterina Spree",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_BREEDER4",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Breeder04",
+            "x": -697180.75,
+            "y": -322452.22,
+            "z": 15741.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Ranger01",
+    "type": "Sub",
+    "title": "Hunting Essentials",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_RANGER1",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Ranger01",
+            "x": 29076.0,
+            "y": 406040.0,
+            "z": 15773.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Ranger02",
+    "type": "Sub",
+    "title": "The Fugitive",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_RANGER2",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Ranger02_Target",
+            "x": -371361.0,
+            "y": -61118.0,
+            "z": 18954.0
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Ranger02",
+            "x": -350489.75,
+            "y": -6617.2056,
+            "z": 1747.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Ranger03",
+    "type": "Sub",
+    "title": "Formidable Faleris Aqua",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_RANGER3",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Ranger03_Target",
+            "x": -867560.9,
+            "y": -441338.22,
+            "z": 18840.152
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Ranger03",
+            "x": -852833.56,
+            "y": -413666.56,
+            "z": 7089.509
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Ranger04",
+    "type": "Sub",
+    "title": "A Sweet Deal",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_RANGER4",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Ranger04",
+            "x": -181690.0,
+            "y": 237584.0,
+            "z": -1597.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Nomad01",
+    "type": "Sub",
+    "title": "A True Ascent Ends in Descent",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_NOMAD1",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Nomad01",
+            "x": 89040.0,
+            "y": 94145.67,
+            "z": 67399.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Nomad02",
+    "type": "Sub",
+    "title": "Sparkly and Smooth",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_NOMAD2",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Nomad02",
+            "x": -511240.0,
+            "y": -221020.0,
+            "z": 176.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Nomad03",
+    "type": "Sub",
+    "title": "Dungeon Hunt",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_NOMAD3",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Nomad03",
+            "x": -368051.2,
+            "y": 223406.34,
+            "z": 578.1756
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Nomad04",
+    "type": "Sub",
+    "title": "Easygoing Adventures",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_NOMAD4",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Nomad04",
+            "x": -20307.0,
+            "y": -131533.0,
+            "z": 5981.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Zoe01",
+    "type": "Sub",
+    "title": "Don't Get Cocky",
+    "titleMsgId": "QUEST_BOSS_QUESTNAME_ZOE1",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Zoe",
+            "x": -312772.03,
+            "y": 187810.4,
+            "z": 3468.0
+          },
+          {
+            "rowName": "Main_CaptureDeerGround",
+            "x": -456797.8,
+            "y": 197837.9,
+            "z": -800.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Zoe02",
+    "type": "Sub",
+    "title": "I Still Don't Trust You",
+    "titleMsgId": "QUEST_BOSS_QUESTNAME_ZOE2",
+    "steps": [
+      {
+        "locations": []
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Zoe",
+            "x": -312772.03,
+            "y": 187810.4,
+            "z": 3468.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Zoe03",
+    "type": "Sub",
+    "title": "A Warm Memory",
+    "titleMsgId": "QUEST_BOSS_QUESTNAME_ZOE3",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Zoe_ItemSearchArea",
+            "x": -298590.34,
+            "y": 242941.06,
+            "z": -1775.0
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Zoe",
+            "x": -312772.03,
+            "y": 187810.4,
+            "z": 3468.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Angler01",
+    "type": "Sub",
+    "title": "A Fine Day for Fishing",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_ANGLER1",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Angler01",
+            "x": -331671.0,
+            "y": 335454.0,
+            "z": -1903.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_PalDisplay_A_01",
+    "type": "Sub",
+    "title": "Pal Display A 01",
+    "titleMsgId": null,
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_PalDispA",
+            "x": -346305.6,
+            "y": 191641.64,
+            "z": -108.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_PalDisplay_B_01",
+    "type": "Sub",
+    "title": "Pal Display B 01",
+    "titleMsgId": null,
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_PalDispB",
+            "x": -318564.22,
+            "y": 126650.75,
+            "z": -2046.638
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_PalDisplay_C_01",
+    "type": "Sub",
+    "title": "Pal Display C 01",
+    "titleMsgId": null,
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_PalDispC",
+            "x": -236349.0,
+            "y": 190469.89,
+            "z": 3857.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_PalDisplay_D_01",
+    "type": "Sub",
+    "title": "Pal Display D 01",
+    "titleMsgId": null,
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_PalDispD",
+            "x": -219882.45,
+            "y": 226270.0,
+            "z": -1785.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_PalDisplay_E_01",
+    "type": "Sub",
+    "title": "Pal Display E 01",
+    "titleMsgId": null,
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_PalDispE",
+            "x": 32165.47,
+            "y": 323071.12,
+            "z": -286.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_PalDisplay_F_01",
+    "type": "Sub",
+    "title": "Pal Display F 01",
+    "titleMsgId": null,
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_PalDispF",
+            "x": -416565.1,
+            "y": -89154.97,
+            "z": 23489.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_PalDisplay_G_01",
+    "type": "Sub",
+    "title": "Pal Display G 01",
+    "titleMsgId": null,
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_PalDispG",
+            "x": -118635.71,
+            "y": 138001.8,
+            "z": -957.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_PalDisplay_H_01",
+    "type": "Sub",
+    "title": "Pal Display H 01",
+    "titleMsgId": null,
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_PalDispH",
+            "x": -63106.17,
+            "y": -54686.895,
+            "z": -1467.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_PalDisplay_I_01",
+    "type": "Sub",
+    "title": "Pal Display I 01",
+    "titleMsgId": null,
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_PalDispI",
+            "x": -589501.5,
+            "y": -254102.72,
+            "z": 1109.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_PalCaptureCountReward",
+    "type": "Sub",
+    "title": "Request from a Wise Hunter",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_PalCaptureCount",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_CaptureCount",
+            "x": -468269.0,
+            "y": -61422.785,
+            "z": -1360.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_BossDefeatReward",
+    "type": "Sub",
+    "title": "Request from a Veteran Hunter",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_BossDefeat",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_BossDefeat",
+            "x": -341803.0,
+            "y": 194394.58,
+            "z": -704.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_PaldexReward",
+    "type": "Sub",
+    "title": "Request from a Pal Ecological Researcher",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_Paldex",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_PalDex",
+            "x": -345081.28,
+            "y": 193384.17,
+            "z": 19.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_FoodReward",
+    "type": "Sub",
+    "title": "Request from an Arrogant Foodie",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_Food",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Food",
+            "x": 44605.547,
+            "y": 315538.9,
+            "z": 2301.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Kigurumi01",
+    "type": "Sub",
+    "title": "That's That Me, Depresso!",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_KIGURUMI1",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Kigurumi01",
+            "x": -229596.77,
+            "y": 167702.84,
+            "z": -1751.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Zoe04",
+    "type": "Sub",
+    "title": "Zoe's Sphere",
+    "titleMsgId": "QUEST_BOSS_QUESTNAME_ZOE4",
+    "steps": [
+      {
+        "locations": []
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Zoe",
+            "x": -312772.03,
+            "y": 187810.4,
+            "z": 3468.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Zoe_Halloween",
+    "type": "Sub",
+    "title": "Happy Halloween!",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_ZOE5",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Zoe",
+            "x": -312772.03,
+            "y": 187810.4,
+            "z": 3468.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_Kigurumi01_Replay",
+    "type": "Sub",
+    "title": "That's That Me, Depresso! (Repeat)",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_KIGURUMI1",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_Kigurumi01",
+            "x": -229596.77,
+            "y": 167702.84,
+            "z": -1751.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_StrongOldMan01",
+    "type": "Sub",
+    "title": "Captured Adventurer",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_StrongOldMan_01",
+    "steps": [
+      {
+        "locations": []
+      },
+      {
+        "locations": []
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Sub_StrongOldMan01_KillEnemy",
+            "x": -344344.78,
+            "y": 149804.31,
+            "z": 10102.82
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Sub_StrongOldMan01_Return",
+            "x": -343431.56,
+            "y": 150790.31,
+            "z": 10314.826
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_StrongOldMan02",
+    "type": "Sub",
+    "title": "Taking Down a Bounty",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_StrongOldMan_02",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_StrongOldMan02_KillEnemy",
+            "x": 14750.0,
+            "y": -4230.0,
+            "z": 6810.0
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Sub_StrongOldMan02_Return",
+            "x": 16770.0,
+            "y": -4890.0,
+            "z": 6709.674
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_StrongOldMan03",
+    "type": "Sub",
+    "title": "The Proxy",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_StrongOldMan_03",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_StrongOldMan03_KillEnemy",
+            "x": -826820.0,
+            "y": 37410.0,
+            "z": 48770.723
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Sub_StrongOldMan03_Return",
+            "x": -818965.25,
+            "y": 32377.395,
+            "z": 48570.8
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_StrongOldMan04",
+    "type": "Sub",
+    "title": "The Past",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_StrongOldMan_04",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_StrongOldMan05_Return",
+            "x": 20270.0,
+            "y": -152410.0,
+            "z": -2060.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_StrongOldMan05",
+    "type": "Sub",
+    "title": "The Knight's Last Stand",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_StrongOldMan_05",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Sub_StrongOldMan05_KillEnemy",
+            "x": 18840.0,
+            "y": -151550.0,
+            "z": -1774.8003
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Sub_StrongOldMan05_Return",
+            "x": 20270.0,
+            "y": -152410.0,
+            "z": -2060.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_TutorialStart",
+    "type": "Main",
+    "title": "The First Islander",
+    "titleMsgId": "Quest_Main_Title_TutorialStart",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_TutorialStart",
+            "x": -357517.66,
+            "y": 268655.16,
+            "z": 7966.269
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_BeginAdventure",
+    "type": "Main",
+    "title": "The Adventure Begins",
+    "titleMsgId": "Quest_Main_Title_BeginAdventure",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_TutorialStart",
+            "x": -357517.66,
+            "y": 268655.16,
+            "z": 7966.269
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_SmallVillage",
+    "type": "Main",
+    "title": "Small Settlement",
+    "titleMsgId": "Quest_Main_Title_SmallVillage",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_SmallVillage",
+            "x": -342504.97,
+            "y": 192853.36,
+            "z": -892.88947
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_CraftPalGear",
+    "type": "Main",
+    "title": "Crafting Pal Gear",
+    "titleMsgId": "Quest_Main_Title_CraftPalGear",
+    "steps": [
+      {
+        "locations": []
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Main_SmallVillage",
+            "x": -342504.97,
+            "y": 192853.36,
+            "z": -892.88947
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_RayneSyndicate",
+    "type": "Main",
+    "title": "The Rayne Syndicate",
+    "titleMsgId": "Quest_Main_Title_RayneSyndicate",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_DefeatGrassBoss",
+            "x": -321360.0,
+            "y": 208989.0,
+            "z": 150.0
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Main_DefeatGrassBoss",
+            "x": -321360.0,
+            "y": 208989.0,
+            "z": 150.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_ReturnSmallVillage",
+    "type": "Main",
+    "title": "The Key Sphere",
+    "titleMsgId": "Quest_Main_Title_ReturnSmallVillage",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_SmallVillage",
+            "x": -342504.97,
+            "y": 192853.36,
+            "z": -892.88947
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_TalkGrassBoss",
+    "type": "Main",
+    "title": "Zoe Rayne",
+    "titleMsgId": "Quest_Main_Title_TalkGrassBoss",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_TalkGrassBoss",
+            "x": -320250.0,
+            "y": 209420.0,
+            "z": 86.539345
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_TalkSkyBoss",
+    "type": "Main",
+    "title": "The Sunreacher",
+    "titleMsgId": "Quest_Main_Title_TalkSkyBoss",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_TalkSkyBoss",
+            "x": -780340.0,
+            "y": -37160.0,
+            "z": 61820.41
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_TalkSkyBossAgain",
+    "type": "Main",
+    "title": "The Calamity",
+    "titleMsgId": "Quest_Main_Title_TalkSkyBossAgain",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_TalkSkyBossAgain",
+            "x": -780340.0,
+            "y": -37160.0,
+            "z": 61820.41
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_DefeatKingWhale",
+    "type": "Main",
+    "title": "Panthalus",
+    "titleMsgId": "Quest_Main_Title_DefeatKingWhale",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DefeatKingWhale_Order",
+            "x": -108082.18,
+            "y": 77959.26,
+            "z": 834.9688
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DefeatKingWhale_Talk",
+            "x": -108321.49,
+            "y": 78553.266,
+            "z": 601.2017
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DefeatKingWhale_CollectBones_1",
+            "x": -364630.0,
+            "y": 214880.0,
+            "z": 379.8737
+          },
+          {
+            "rowName": "MainQuestBlock_DefeatKingWhale_CollectBones_2",
+            "x": -174350.0,
+            "y": 321130.0,
+            "z": -2082.3086
+          },
+          {
+            "rowName": "MainQuestBlock_DefeatKingWhale_CollectBones_3",
+            "x": -375800.0,
+            "y": -78780.0,
+            "z": 21137.588
+          },
+          {
+            "rowName": "MainQuestBlock_DefeatKingWhale_CollectBones_4",
+            "x": 98970.0,
+            "y": 37750.0,
+            "z": 18051.012
+          }
+        ]
+      },
+      {
+        "locations": []
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DefeatKingWhale_Report",
+            "x": -108321.49,
+            "y": 78553.266,
+            "z": 601.2017
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DefeatKingWhale_Investigate",
+            "x": -108082.18,
+            "y": 77959.26,
+            "z": 834.9688
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DefeatKingWhale_Defeat",
+            "x": -108082.18,
+            "y": 77959.26,
+            "z": 834.9688
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DefeatKingWhale_Report2",
+            "x": -108321.49,
+            "y": 78553.266,
+            "z": 601.2017
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_ReachWorldTree",
+    "type": "Main",
+    "title": "To the World Tree",
+    "titleMsgId": "Quest_Main_Title_ReachWorldTree",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_ReachWorldTree",
+            "x": 202647.22,
+            "y": -225509.84,
+            "z": 9206.756
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_TalkWorldTreeNPC",
+    "type": "Main",
+    "title": "Sin",
+    "titleMsgId": "Quest_Main_Title_TalkWorldTreeNPC",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_TalkWorldTreeNPC",
+            "x": 504140.0,
+            "y": -546170.0,
+            "z": 33212.77
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_WorldTreeAbyss",
+    "type": "Main",
+    "title": "The Sealed Calamity",
+    "titleMsgId": "Quest_Main_Title_WorldTreeAbyss",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_WorldTreeAbyss_Reach",
+            "x": 500842.0,
+            "y": -750639.7,
+            "z": 41618.85
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DefeatWorldTreeMiddleBoss_Note",
+            "x": 502837.4,
+            "y": -751467.4,
+            "z": 41630.04
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DefeatWorldTreeMiddleBoss_Defeat_1",
+            "x": 608449.44,
+            "y": -621984.75,
+            "z": 24569.434
+          },
+          {
+            "rowName": "MainQuestBlock_DefeatWorldTreeMiddleBoss_Defeat_3",
+            "x": 622417.1,
+            "y": -735542.7,
+            "z": 24535.496
+          },
+          {
+            "rowName": "MainQuestBlock_DefeatWorldTreeMiddleBoss_Defeat_1_2",
+            "x": 630703.1,
+            "y": -612728.6,
+            "z": 28595.0
+          },
+          {
+            "rowName": "MainQuestBlock_DefeatWorldTreeMiddleBoss_Defeat_2",
+            "x": 405135.0,
+            "y": -730345.0,
+            "z": 22995.0
+          },
+          {
+            "rowName": "MainQuestBlock_DefeatWorldTreeMiddleBoss_Defeat_3_2",
+            "x": 622547.5,
+            "y": -759171.06,
+            "z": 21355.781
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DefeatWorldTreeMiddleBoss_Return",
+            "x": 500623.5,
+            "y": -750888.56,
+            "z": 41637.363
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Main_WorldTreeAbyss_Reach_2",
+            "x": 496990.0,
+            "y": -755180.0,
+            "z": 42010.0
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Main_WorldTreeAbyss_Unseal",
+            "x": 495610.0,
+            "y": -756851.44,
+            "z": 42600.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_DefeatWorldTreeDragon",
+    "type": "Main",
+    "title": "Awakening",
+    "titleMsgId": "Quest_Main_Title_DefeatWorldTreeDragon",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Main_DefeatWorldTreeDragon",
+            "x": 495610.0,
+            "y": -756851.44,
+            "z": 42600.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Test_UnlockAreaBarriers",
+    "type": "Main",
+    "title": "Test Unlock Area Barriers",
+    "titleMsgId": null,
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "Test_UnlockAreaBarrier",
+            "x": 30066.314,
+            "y": 30641.648,
+            "z": 19.999977
+          },
+          {
+            "rowName": "Test_UnlockAreaBarrier2",
+            "x": 30806.799,
+            "y": 30653.578,
+            "z": 20.000004
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_DefeatSkyIslandBoss",
+    "type": "Main",
+    "title": "Hope Springs Eternal",
+    "titleMsgId": "QUEST_MAIN_TITLE_BOSS_AURI",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SkyIslandBoss_Order",
+            "x": -797140.6,
+            "y": 27788.91,
+            "z": 53439.973
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SkyIslandBoss_Barrier_1",
+            "x": -765677.5,
+            "y": 38957.93,
+            "z": 42077.47
+          },
+          {
+            "rowName": "MainQuestBlock_SkyIslandBoss_Barrier_2",
+            "x": -797914.25,
+            "y": 52119.68,
+            "z": 51389.2
+          },
+          {
+            "rowName": "MainQuestBlock_SkyIslandBoss_Barrier_3",
+            "x": -812685.8,
+            "y": -107511.37,
+            "z": 56751.9
+          },
+          {
+            "rowName": "MainQuestBlock_SkyIslandBoss_Barrier_4",
+            "x": -822680.56,
+            "y": -42634.39,
+            "z": 40896.3
+          },
+          {
+            "rowName": "MainQuestBlock_SkyIslandBoss_Barrier_5",
+            "x": -742232.06,
+            "y": -59805.137,
+            "z": 32701.643
+          },
+          {
+            "rowName": "MainQuestBlock_SkyIslandBoss_Barrier_6",
+            "x": -728915.3,
+            "y": -94041.21,
+            "z": 48009.926
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SkyIslandBoss_Report",
+            "x": -797140.6,
+            "y": 27788.91,
+            "z": 53439.973
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SkyIslandBoss_DefeatBoss",
+            "x": -778215.9,
+            "y": -36025.996,
+            "z": 60895.82
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_SkyIslandBoss_Report2",
+            "x": -797140.6,
+            "y": 27788.91,
+            "z": 53439.973
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Main_DefeatWorldTreeMiddleBoss",
+    "type": "Main",
+    "title": "Path to the Abyss",
+    "titleMsgId": "QUEST_SUB_Title_WorldTreeAreaBoss",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DefeatWorldTreeMiddleBoss_Note",
+            "x": 502837.4,
+            "y": -751467.4,
+            "z": 41630.04
+          }
+        ]
+      },
+      {
+        "locations": []
+      },
+      {
+        "locations": [
+          {
+            "rowName": "MainQuestBlock_DefeatWorldTreeMiddleBoss_Return",
+            "x": 500623.5,
+            "y": -750888.56,
+            "z": 41637.363
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_RookieExpeditionTeam01",
+    "type": "Sub",
+    "title": "The Rookie Expedition Team",
+    "titleMsgId": "QUEST_SUB_TITLE_RookieExpeditionTeam",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "RookieExpeditionTeam01_DefeatPal",
+            "x": -327129.62,
+            "y": 97129.58,
+            "z": -437.56454
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "RookieExpeditionTeam01_Talk",
+            "x": -328241.6,
+            "y": 98265.28,
+            "z": -295.56418
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_RookieExpeditionTeam02",
+    "type": "Sub",
+    "title": "Budding",
+    "titleMsgId": "QUEST_SUB_TITLE_RookieExpeditionTeam_030",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "RookieExpeditionTeam02_DefeatPal",
+            "x": -448276.62,
+            "y": -142760.44,
+            "z": 6608.0317
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "RookieExpeditionTeam02_Search",
+            "x": -444289.3,
+            "y": -137778.7,
+            "z": 7480.4634
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "RookieExpeditionTeam02_Talk",
+            "x": -464947.03,
+            "y": -147226.86,
+            "z": -1429.4865
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_RookieExpeditionTeam03",
+    "type": "Sub",
+    "title": "Growth",
+    "titleMsgId": "QUEST_SUB_TITLE_RookieExpeditionTeam_060",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "RookieExpeditionTeam03_Medicine",
+            "x": 37686.98,
+            "y": 315628.34,
+            "z": 1716.6296
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_RookieExpeditionTeam04",
+    "type": "Sub",
+    "title": "A Sterile Flower",
+    "titleMsgId": "QUEST_SUB_TITLE_RookieExpeditionTeam_070",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "RookieExpeditionTeam04_Defeat",
+            "x": -61097.773,
+            "y": -150289.14,
+            "z": 1887.7485
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_LoneWolf01",
+    "type": "Sub",
+    "title": "The Sable Loner",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_LoneWolf_01",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "LoneWolf01_Cure",
+            "x": -18010.982,
+            "y": -130340.57,
+            "z": 5974.2256
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "LoneWolf01_Feed",
+            "x": -18010.982,
+            "y": -130340.57,
+            "z": 5974.2256
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "LoneWolf01_CheckBag",
+            "x": -18148.396,
+            "y": -130343.96,
+            "z": 5824.2256
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_LoneWolf02",
+    "type": "Sub",
+    "title": "Reminiscent Wandering",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_LoneWolf_02",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "LoneWolf02_Investigate",
+            "x": -544429.2,
+            "y": -227035.42,
+            "z": 6480.8193
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "LoneWolf02_Defeat",
+            "x": -544613.5,
+            "y": -230970.56,
+            "z": 6445.3164
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "LoneWolf03_Investigate",
+            "x": -544450.0,
+            "y": -227420.0,
+            "z": 6500.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_LoneWolf03",
+    "type": "Sub",
+    "title": "The Unsheathed Katana",
+    "titleMsgId": "QUEST_SUB_QUESTNAME_LoneWolf_03",
+    "steps": [
+      {
+        "locations": [
+          {
+            "rowName": "LoneWolf03_Investigate",
+            "x": -544450.0,
+            "y": -227420.0,
+            "z": 6500.0
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "LoneWolf03_Defeat",
+            "x": -544450.0,
+            "y": -227420.0,
+            "z": 6500.0
+          }
+        ]
+      },
+      {
+        "locations": [
+          {
+            "rowName": "LoneWolf03_Report",
+            "x": -554528.0,
+            "y": -316703.75,
+            "z": 9784.172
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_DeliverySulfur",
+    "type": "Sub",
+    "title": "Stockpiling Sulfur",
+    "titleMsgId": "QUEST_SUB_TITLE_CollectSulfur",
+    "steps": [
+      {
+        "locations": []
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Sulfur_Deliver",
+            "x": -466489.44,
+            "y": -61781.918,
+            "z": -1378.1243
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_DeliveryWood_Fine",
+    "type": "Sub",
+    "title": "Stockpiling Hardwood",
+    "titleMsgId": "QUEST_SUB_TITLE_CollectWoodFine",
+    "steps": [
+      {
+        "locations": []
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Wood_Fine_Deliver",
+            "x": -467705.16,
+            "y": -59369.582,
+            "z": -1435.4758
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_DeliveryQuartz",
+    "type": "Sub",
+    "title": "Stockpiling Pure Quartz",
+    "titleMsgId": "QUEST_SUB_TITLE_CollectQuartz",
+    "steps": [
+      {
+        "locations": []
+      },
+      {
+        "locations": [
+          {
+            "rowName": "Quartz_Deliver",
+            "x": 15587.085,
+            "y": 112232.96,
+            "z": 2585.324
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_DeliveryRainbowCrystal",
+    "type": "Sub",
+    "title": "Stockpiling Hexolite Quartz",
+    "titleMsgId": "QUEST_SUB_TITLE_CollectRainbowCrystal",
+    "steps": [
+      {
+        "locations": []
+      },
+      {
+        "locations": [
+          {
+            "rowName": "RainbowCrystal_Deliver",
+            "x": -552401.9,
+            "y": -315405.62,
+            "z": 8901.053
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_DeliverySkyIslandOre",
+    "type": "Sub",
+    "title": "Stockpiling Soralite",
+    "titleMsgId": "QUEST_SUB_TITLE_CollectSkyIslandOre",
+    "steps": [
+      {
+        "locations": []
+      },
+      {
+        "locations": [
+          {
+            "rowName": "SkyIslandOre_Deliver",
+            "x": -761836.1,
+            "y": 2829.9126,
+            "z": 43273.562
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Sub_HowSurviveWorldTree",
+    "type": "Sub",
+    "title": "Surviving the World Tree",
+    "titleMsgId": "QUEST_SUB_TITLE_HowSurviveWorldTree",
+    "steps": [
+      {
+        "locations": []
+      },
+      {
+        "locations": [
+          {
+            "rowName": "HowSurviveWorldTree_Report",
+            "x": 513231.66,
+            "y": -511084.22,
+            "z": 43678.9
+          }
+        ]
+      }
+    ]
+  }
+]

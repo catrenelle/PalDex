@@ -314,6 +314,37 @@ def load_read_note_ids(player_sav: Path) -> set[str]:
     return {e["key"] for e in entries if e.get("value")}
 
 
+def load_active_quests(player_sav: Path) -> dict[str, int]:
+    """Currently in-progress quest IDs -> current step index, from
+    SaveData.OrderedQuestArray_FullRelease — NOT under RecordData, unlike
+    every other per-player flag above (a flat array of {QuestName,
+    BlockIndex} structs, not a NameProperty->Bool map). BlockIndex indexes
+    directly into that quest's own QuestBlockGroupList (quests_static.json's
+    "steps") — confirmed against a real player: Main_RayneSyndicate sat at
+    BlockIndex 1, its own 2nd block group ("DefeatBoss"), matching where a
+    Rayne-Syndicate-in-progress player would actually be."""
+    d = _read_gvas(player_sav)
+    save_data = d["properties"]["SaveData"]["value"]
+    entries = save_data.get("OrderedQuestArray_FullRelease", {}).get("value", {}).get("values", [])
+    result = {}
+    for entry in entries:
+        name = entry.get("QuestName", {}).get("value")
+        block_index = entry.get("BlockIndex", {}).get("value")
+        if name is not None and block_index is not None:
+            result[name] = block_index
+    return result
+
+
+def load_completed_quests(player_sav: Path) -> set[str]:
+    """Finished quest IDs, from SaveData.CompletedQuestArray_FullRelease — a
+    flat NameProperty array (not a NameProperty->Bool map like every other
+    per-player flag above), confirmed against a real player's save."""
+    d = _read_gvas(player_sav)
+    save_data = d["properties"]["SaveData"]["value"]
+    entries = save_data.get("CompletedQuestArray_FullRelease", {}).get("value", {}).get("values", [])
+    return set(entries)
+
+
 def build_player_snapshot(save_dir: Path, names: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
     players = []
     for player_sav in sorted((save_dir / "Players").glob("*.sav")):

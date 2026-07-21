@@ -1,0 +1,5126 @@
+[
+  {
+    "id": "U_Male_SorajimaPeople01:-761836:2830",
+    "uniqueName": "U_Male_SorajimaPeople01",
+    "name": "Sunreach Citizen",
+    "category": "General",
+    "icon": "T_Male_SorajimaPeople01_icon_normal.png",
+    "level": 74,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -761836.1,
+    "y": 2829.9126,
+    "z": 43073.562
+  },
+  {
+    "id": "DarkTrader:-209317:23344",
+    "uniqueName": "DarkTrader",
+    "name": "Black Marketeer",
+    "category": "BlackMarket",
+    "icon": "T_Male_DarkTrader01_icon_normal.png",
+    "level": 47,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": {
+      "poolSpecies": [
+        {
+          "name": "Wispaw",
+          "icon": "Pal_GhostBlackCat.png"
+        },
+        {
+          "name": "Dumud",
+          "icon": "Pal_LazyCatfish.png"
+        },
+        {
+          "name": "Tombat",
+          "icon": "Pal_CatBat.png"
+        },
+        {
+          "name": "Beegarde",
+          "icon": "Pal_SoldierBee.png"
+        },
+        {
+          "name": "Mossanda",
+          "icon": "Pal_GrassPanda.png"
+        },
+        {
+          "name": "Elgrove",
+          "icon": "Pal_GrassMinotaur.png"
+        },
+        {
+          "name": "Katress",
+          "icon": "Pal_CatMage.png"
+        },
+        {
+          "name": "Robinquill",
+          "icon": "Pal_RobinHood.png"
+        },
+        {
+          "name": "Helzephyr",
+          "icon": "Pal_HadesBird.png"
+        },
+        {
+          "name": "Mammorest",
+          "icon": "Pal_GrassMammoth.png"
+        },
+        {
+          "name": "Warsect",
+          "icon": "Pal_HerculesBeetle.png"
+        }
+      ],
+      "offeredCount": 5,
+      "levelMin": 20,
+      "levelMax": 30
+    },
+    "x": -209317.05,
+    "y": 23344.367,
+    "z": -1935.6077
+  },
+  {
+    "id": "PvPVillage006:-87359:-3938",
+    "uniqueName": "PvPVillage006",
+    "name": "Resigned Islander",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 11,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -87358.555,
+    "y": -3937.724,
+    "z": -1845.4574
+  },
+  {
+    "id": "U_Male_SnowPeople01:15587:112233",
+    "uniqueName": "U_Male_SnowPeople01",
+    "name": "Snowbound Villager",
+    "category": "General",
+    "icon": "T_Male_SnowPeople01_icon_normal.png",
+    "level": 52,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": 15587.085,
+    "y": 112232.96,
+    "z": 2435.324
+  },
+  {
+    "id": "U_Female_SnowPeople01:15387:112281",
+    "uniqueName": "U_Female_SnowPeople01",
+    "name": "Snowbound Villager",
+    "category": "General",
+    "icon": "T_Female_SnowPeople01_icon_normal.png",
+    "level": 44,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": 15387.158,
+    "y": 112280.53,
+    "z": 2435.2578
+  },
+  {
+    "id": "U_Male_SakurajimaPeople01:-16799:-122093",
+    "uniqueName": "U_Male_SakurajimaPeople01",
+    "name": "Sakurajima Inhabitant",
+    "category": "General",
+    "icon": "T_Male_SakurajimaPeople01_icon_normal.png",
+    "level": 68,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -16798.604,
+    "y": -122092.83,
+    "z": 5875.181
+  },
+  {
+    "id": "U_Female_SakurajimaPeople01:-15340:-120630",
+    "uniqueName": "U_Female_SakurajimaPeople01",
+    "name": "Sakurajima Inhabitant",
+    "category": "General",
+    "icon": "T_Female_SakurajimaPeople01_icon_normal.png",
+    "level": 60,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -15340.335,
+    "y": -120630.16,
+    "z": 6012.0337
+  },
+  {
+    "id": "U_Male_Breeder01_v02:-14110:-135560",
+    "uniqueName": "U_Male_Breeder01_v02",
+    "name": "Loyal-Hearted Breeder",
+    "category": "General",
+    "icon": "T_Male_Breeder01_v02_icon_normal.png",
+    "level": 66,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -14110.0,
+    "y": -135560.0,
+    "z": 4590.0
+  },
+  {
+    "id": "U_Female_Ranger01_v02:-350490:-6617",
+    "uniqueName": "U_Female_Ranger01_v02",
+    "name": "Righteous Hunter",
+    "category": "General",
+    "icon": "T_Female_Ranger01_v02_icon_normal.png",
+    "level": 37,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -350489.75,
+    "y": -6617.2056,
+    "z": 1547.612
+  },
+  {
+    "id": "U_Female_Nomad01_v04:-20307:-131533",
+    "uniqueName": "U_Female_Nomad01_v04",
+    "name": "Restless Wanderer",
+    "category": "General",
+    "icon": "T_Female_Nomad01_v04_icon_normal.png",
+    "level": 59,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -20307.0,
+    "y": -131533.0,
+    "z": 5781.1763
+  },
+  {
+    "id": "Head_of_Village:-342525:192873",
+    "uniqueName": "Head_of_Village",
+    "name": "Village Chief",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 20,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -342524.97,
+    "y": 192873.36,
+    "z": -992.88947
+  },
+  {
+    "id": "BountyNavigator_H:-63157:-54893",
+    "uniqueName": "BountyNavigator_H",
+    "name": "Bounty Intel Dealer",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 57,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -63157.305,
+    "y": -54893.26,
+    "z": -1639.2373
+  },
+  {
+    "id": "U_Male_Scholar01_v03:-272547:264756",
+    "uniqueName": "U_Male_Scholar01_v03",
+    "name": "Fuack Fanatic Researcher",
+    "category": "General",
+    "icon": "T_Male_Scholar01_v03_icon_normal.png",
+    "level": 21,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -272547.06,
+    "y": 264756.25,
+    "z": -1664.0651
+  },
+  {
+    "id": "PvPVillage004:-282690:353046",
+    "uniqueName": "PvPVillage004",
+    "name": "Cowardly Victim",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 8,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -282689.72,
+    "y": 353045.94,
+    "z": -2097.5793
+  },
+  {
+    "id": "MedalTrader:-249170:341850",
+    "uniqueName": "MedalTrader",
+    "name": "Medal Merchant",
+    "category": "DogCoin",
+    "icon": "T_Male_DarkTrader02_icon_normal.png",
+    "level": 50,
+    "items": [
+      {
+        "itemId": "UnlockEquipmentSlot_Accessory_01",
+        "name": "Mysterious Accessory Box",
+        "icon": "T_itemicon_UnlockEquipmentSlot_Accessory.png",
+        "price": 50
+      },
+      {
+        "itemId": "UnlockEquipmentSlot_Accessory_02",
+        "name": "Mystic Accessory Box",
+        "icon": "T_itemicon_UnlockEquipmentSlot_Accessory_1.png",
+        "price": 300
+      },
+      {
+        "itemId": "HeadEquip033",
+        "name": "Cattiva Hat",
+        "icon": "T_itemicon_HeadEquip033.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip029",
+        "name": "Lamball Helm",
+        "icon": "T_itemicon_HeadEquip029.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip056",
+        "name": "Chikipi Cap",
+        "icon": "T_itemicon_HeadEquip056.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip027",
+        "name": "Cawgnito Hat",
+        "icon": "T_itemicon_HeadEquip027.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip030",
+        "name": "Dumud Helm",
+        "icon": "T_itemicon_HeadEquip030.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip024",
+        "name": "Sibelyx Hat",
+        "icon": "T_itemicon_HeadEquip024.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip023",
+        "name": "Lyleen Accessory",
+        "icon": "T_itemicon_HeadEquip023.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip052",
+        "name": "Gloopie Hat",
+        "icon": "T_itemicon_HeadEquip052.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip053",
+        "name": "Jelliette Hat",
+        "icon": "T_itemicon_HeadEquip053.png",
+        "price": 25
+      },
+      {
+        "itemId": "Fruit_hp_01",
+        "name": "Life Fruit",
+        "icon": "T_itemicon_Fruit_hp_01.png",
+        "price": 200
+      },
+      {
+        "itemId": "Fruit_attack_01",
+        "name": "Power Fruit",
+        "icon": "T_itemicon_Fruit_attack_01.png",
+        "price": 200
+      },
+      {
+        "itemId": "Fruit__defense_01",
+        "name": "Stout Fruit",
+        "icon": "T_itemicon_Fruit__defense_01.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_hp_02",
+        "name": "Vital Elixir",
+        "icon": "T_itemicon_Elixir_hp_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_stamina_02",
+        "name": "Stamina Elixir",
+        "icon": "T_itemicon_Elixir_stamina_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_attack_02",
+        "name": "Might Elixir",
+        "icon": "T_itemicon_Elixir_attack_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_workspeed_02",
+        "name": "Speed Elixir",
+        "icon": "T_itemicon_Elixir_workspeed_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_weight_02",
+        "name": "Burden Elixir",
+        "icon": "T_itemicon_Elixir_weight_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Rankup_1",
+        "name": "Starfruit ☆1",
+        "icon": "T_itemicon_Rankup_1.png",
+        "price": 50
+      },
+      {
+        "itemId": "Rankup_2",
+        "name": "Starfruit ☆2",
+        "icon": "T_itemicon_Rankup_2.png",
+        "price": 100
+      },
+      {
+        "itemId": "Rankup_3",
+        "name": "Starfruit ☆3",
+        "icon": "T_itemicon_Rankup_3.png",
+        "price": 200
+      },
+      {
+        "itemId": "Rankup_4",
+        "name": "Starfruit ☆4",
+        "icon": "T_itemicon_Rankup_4.png",
+        "price": 400
+      },
+      {
+        "itemId": "Blueprint_Spear_ForestBoss_5",
+        "name": "Lily's Spear Schematic 4",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 600
+      },
+      {
+        "itemId": "Blueprint_Spear_ForestBoss2_5",
+        "name": "Enhanced Lily's Spear Schematic 4",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 840
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_EmitFlame",
+        "name": "Applied Kindling Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_EmitFlame.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Watering",
+        "name": "Applied Watering Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Watering.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Seeding",
+        "name": "Applied Planting Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Seeding.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_GenerateElectricity",
+        "name": "Applied Generating Electricity Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_GenerateElectricity.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Handcraft",
+        "name": "Applied Handiwork Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Handcraft.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Collection",
+        "name": "Applied Gathering Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Collection.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Deforest",
+        "name": "Applied Lumbering Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Deforest.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Mining",
+        "name": "Applied Mining Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Mining.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_ProductMedicine",
+        "name": "Applied Medicine Production Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_ProductMedicine.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Cool",
+        "name": "Applied Cooling Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Cool.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Transport",
+        "name": "Applied Transporting Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Transport.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_MonsterFarm",
+        "name": "Applied Ranching Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_MonsterFarm.png",
+        "price": 300
+      }
+    ],
+    "currency": "Dog Coin",
+    "currencyIcon": "T_itemicon_DogCoin.png",
+    "palPool": null,
+    "x": -249170.0,
+    "y": 341850.0,
+    "z": 2400.0
+  },
+  {
+    "id": "U_Female_Farmer01_v02:-329082:163717",
+    "uniqueName": "U_Female_Farmer01_v02",
+    "name": "Foodie Farmer",
+    "category": "General",
+    "icon": "T_Female_Farmer01_v02_icon_normal.png",
+    "level": 16,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -329082.0,
+    "y": 163717.0,
+    "z": -1511.0
+  },
+  {
+    "id": "MedalTrader:-368790:128980",
+    "uniqueName": "MedalTrader",
+    "name": "Medal Merchant",
+    "category": "DogCoin",
+    "icon": "T_Male_DarkTrader02_icon_normal.png",
+    "level": 50,
+    "items": [
+      {
+        "itemId": "UnlockEquipmentSlot_Accessory_01",
+        "name": "Mysterious Accessory Box",
+        "icon": "T_itemicon_UnlockEquipmentSlot_Accessory.png",
+        "price": 50
+      },
+      {
+        "itemId": "UnlockEquipmentSlot_Accessory_02",
+        "name": "Mystic Accessory Box",
+        "icon": "T_itemicon_UnlockEquipmentSlot_Accessory_1.png",
+        "price": 300
+      },
+      {
+        "itemId": "HeadEquip033",
+        "name": "Cattiva Hat",
+        "icon": "T_itemicon_HeadEquip033.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip029",
+        "name": "Lamball Helm",
+        "icon": "T_itemicon_HeadEquip029.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip056",
+        "name": "Chikipi Cap",
+        "icon": "T_itemicon_HeadEquip056.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip027",
+        "name": "Cawgnito Hat",
+        "icon": "T_itemicon_HeadEquip027.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip030",
+        "name": "Dumud Helm",
+        "icon": "T_itemicon_HeadEquip030.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip024",
+        "name": "Sibelyx Hat",
+        "icon": "T_itemicon_HeadEquip024.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip023",
+        "name": "Lyleen Accessory",
+        "icon": "T_itemicon_HeadEquip023.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip052",
+        "name": "Gloopie Hat",
+        "icon": "T_itemicon_HeadEquip052.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip053",
+        "name": "Jelliette Hat",
+        "icon": "T_itemicon_HeadEquip053.png",
+        "price": 25
+      },
+      {
+        "itemId": "Fruit_hp_01",
+        "name": "Life Fruit",
+        "icon": "T_itemicon_Fruit_hp_01.png",
+        "price": 200
+      },
+      {
+        "itemId": "Fruit_attack_01",
+        "name": "Power Fruit",
+        "icon": "T_itemicon_Fruit_attack_01.png",
+        "price": 200
+      },
+      {
+        "itemId": "Fruit__defense_01",
+        "name": "Stout Fruit",
+        "icon": "T_itemicon_Fruit__defense_01.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_hp_02",
+        "name": "Vital Elixir",
+        "icon": "T_itemicon_Elixir_hp_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_stamina_02",
+        "name": "Stamina Elixir",
+        "icon": "T_itemicon_Elixir_stamina_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_attack_02",
+        "name": "Might Elixir",
+        "icon": "T_itemicon_Elixir_attack_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_workspeed_02",
+        "name": "Speed Elixir",
+        "icon": "T_itemicon_Elixir_workspeed_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_weight_02",
+        "name": "Burden Elixir",
+        "icon": "T_itemicon_Elixir_weight_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Rankup_1",
+        "name": "Starfruit ☆1",
+        "icon": "T_itemicon_Rankup_1.png",
+        "price": 50
+      },
+      {
+        "itemId": "Rankup_2",
+        "name": "Starfruit ☆2",
+        "icon": "T_itemicon_Rankup_2.png",
+        "price": 100
+      },
+      {
+        "itemId": "Rankup_3",
+        "name": "Starfruit ☆3",
+        "icon": "T_itemicon_Rankup_3.png",
+        "price": 200
+      },
+      {
+        "itemId": "Rankup_4",
+        "name": "Starfruit ☆4",
+        "icon": "T_itemicon_Rankup_4.png",
+        "price": 400
+      },
+      {
+        "itemId": "Blueprint_Spear_ForestBoss_5",
+        "name": "Lily's Spear Schematic 4",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 600
+      },
+      {
+        "itemId": "Blueprint_Spear_ForestBoss2_5",
+        "name": "Enhanced Lily's Spear Schematic 4",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 840
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_EmitFlame",
+        "name": "Applied Kindling Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_EmitFlame.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Watering",
+        "name": "Applied Watering Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Watering.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Seeding",
+        "name": "Applied Planting Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Seeding.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_GenerateElectricity",
+        "name": "Applied Generating Electricity Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_GenerateElectricity.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Handcraft",
+        "name": "Applied Handiwork Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Handcraft.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Collection",
+        "name": "Applied Gathering Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Collection.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Deforest",
+        "name": "Applied Lumbering Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Deforest.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Mining",
+        "name": "Applied Mining Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Mining.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_ProductMedicine",
+        "name": "Applied Medicine Production Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_ProductMedicine.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Cool",
+        "name": "Applied Cooling Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Cool.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Transport",
+        "name": "Applied Transporting Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Transport.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_MonsterFarm",
+        "name": "Applied Ranching Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_MonsterFarm.png",
+        "price": 300
+      }
+    ],
+    "currency": "Dog Coin",
+    "currencyIcon": "T_itemicon_DogCoin.png",
+    "palPool": null,
+    "x": -368790.0,
+    "y": 128980.0,
+    "z": 2610.0
+  },
+  {
+    "id": "NOVICEPALTIMER:-357518:268655",
+    "uniqueName": "NOVICEPALTIMER",
+    "name": "Scouting Party Survivor",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 22,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -357517.66,
+    "y": 268655.16,
+    "z": 7866.269
+  },
+  {
+    "id": "SKILLED_PALTAMIER:-337721:230371",
+    "uniqueName": "SKILLED_PALTAMIER",
+    "name": "Skilled Islander",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 9,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -337721.16,
+    "y": 230370.62,
+    "z": -1866.2589
+  },
+  {
+    "id": "BountyNavigator_F:-466893:-60918",
+    "uniqueName": "BountyNavigator_F",
+    "name": "Bounty Intel Dealer",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 34,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -466893.25,
+    "y": -60918.47,
+    "z": -1578.1244
+  },
+  {
+    "id": "BountyTrader:-467341:-61736",
+    "uniqueName": "BountyTrader",
+    "name": "PIDF Bounty Officer",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 39,
+    "items": [
+      {
+        "itemId": "Money",
+        "name": "Gold Coin",
+        "icon": "T_itemicon_Money.png",
+        "price": 1
+      },
+      {
+        "itemId": "TechnologyBook_G1",
+        "name": "Advanced Technical Manual",
+        "icon": "T_itemicon_TechnologyBook_G1.png",
+        "price": 5
+      },
+      {
+        "itemId": "PalGenderReverse",
+        "name": "Pal Reverser",
+        "icon": "T_itemicon_PalGenderReverse.png",
+        "price": 7
+      },
+      {
+        "itemId": "HeadEquip055",
+        "name": "Croajiro Cap",
+        "icon": "T_itemicon_HeadEquip055.png",
+        "price": 5
+      },
+      {
+        "itemId": "HeadEquip050",
+        "name": "Herbil Headband",
+        "icon": "T_itemicon_HeadEquip050.png",
+        "price": 5
+      },
+      {
+        "itemId": "HeadEquip054",
+        "name": "Turtacle Cap",
+        "icon": "T_itemicon_HeadEquip054.png",
+        "price": 5
+      },
+      {
+        "itemId": "AffectionFruit_01",
+        "name": "Kinship Peach",
+        "icon": "T_itemicon_AffectionFruit_01.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_Noukin",
+        "name": "Implant: Musclehead",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_Deffence_up2",
+        "name": "Implant: Burly Body",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_CraftSpeed_up2",
+        "name": "Implant: Artisan",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_TrainerATK_UP_1",
+        "name": "Implant: Vanguard",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_TrainerDEF_UP_1",
+        "name": "Implant: Stronghold Strategist",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_TrainerWorkSpeed_UP_1",
+        "name": "Implant: Motivational Leader",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_PlayerSP_DecreaseRate_Passive",
+        "name": "Implant: Wellness Watcher",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "Fruit_hp_01",
+        "name": "Life Fruit",
+        "icon": "T_itemicon_Fruit_hp_01.png",
+        "price": 25
+      },
+      {
+        "itemId": "Fruit_attack_01",
+        "name": "Power Fruit",
+        "icon": "T_itemicon_Fruit_attack_01.png",
+        "price": 25
+      },
+      {
+        "itemId": "Fruit__defense_01",
+        "name": "Stout Fruit",
+        "icon": "T_itemicon_Fruit__defense_01.png",
+        "price": 25
+      },
+      {
+        "itemId": "Rankup_Arbitrary",
+        "name": "Ripe Starfruit",
+        "icon": "T_itemicon_Rankup_Arbitrary.png",
+        "price": 50
+      }
+    ],
+    "currency": "Successful Bounty Token",
+    "currencyIcon": "T_itemicon_BountyProof_1.png",
+    "palPool": null,
+    "x": -467341.03,
+    "y": -61736.22,
+    "z": -1585.1244
+  },
+  {
+    "id": "VolcanoVillage001:-471047:-65371",
+    "uniqueName": "VolcanoVillage001",
+    "name": "Fish-Loving Villager",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 26,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -471046.66,
+    "y": -65371.336,
+    "z": -1838.9708
+  },
+  {
+    "id": "VolcanoVillage002:-469431:-61033",
+    "uniqueName": "VolcanoVillage002",
+    "name": "Over-Caring Villager",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 26,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -469430.7,
+    "y": -61033.12,
+    "z": -1836.5632
+  },
+  {
+    "id": "VolcanoVillage003:-467900:-60220",
+    "uniqueName": "VolcanoVillage003",
+    "name": "Star-Loving Villager",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 29,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -467899.97,
+    "y": -60219.848,
+    "z": -1480.9744
+  },
+  {
+    "id": "VolcanoVillage004:-467705:-59370",
+    "uniqueName": "VolcanoVillage004",
+    "name": "Flame-Worshipping Villager",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 26,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -467705.16,
+    "y": -59369.582,
+    "z": -1585.4758
+  },
+  {
+    "id": "VolcanoPolice001:-466489:-61782",
+    "uniqueName": "VolcanoPolice001",
+    "name": "PIDF Slacker",
+    "category": "General",
+    "icon": "T_Police_icon_normal.png",
+    "level": 41,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -466489.44,
+    "y": -61781.918,
+    "z": -1578.1243
+  },
+  {
+    "id": "VolcanoPolice002:-468147:-64293",
+    "uniqueName": "VolcanoPolice002",
+    "name": "Sensitive-Nosed PIDF Officer",
+    "category": "General",
+    "icon": "T_Police_icon_normal.png",
+    "level": 45,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -468146.7,
+    "y": -64293.4,
+    "z": -1840.3163
+  },
+  {
+    "id": "U_Yamishima_guide4:-556221:-150472",
+    "uniqueName": "U_Yamishima_guide4",
+    "name": "Hopeless Supplier",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 60,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -556220.56,
+    "y": -150472.25,
+    "z": 10377.228
+  },
+  {
+    "id": "U_SorajimaTowerGuide:-755000:-34610",
+    "uniqueName": "U_SorajimaTowerGuide",
+    "name": "Sunreach Citizen",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 75,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -755000.0,
+    "y": -34610.0,
+    "z": 59460.81
+  },
+  {
+    "id": "BountyNavigator_Yamijima_2:-760864:-354785",
+    "uniqueName": "BountyNavigator_Yamijima_2",
+    "name": "Bounty Intel Dealer",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 62,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -760864.44,
+    "y": -354785.2,
+    "z": 4284.695
+  },
+  {
+    "id": "PvPVillage002:-131421:-92608",
+    "uniqueName": "PvPVillage002",
+    "name": "Vagrant Challenger",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 9,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -131421.19,
+    "y": -92608.164,
+    "z": -2052.2686
+  },
+  {
+    "id": "MedalTrader:-129550:-50420",
+    "uniqueName": "MedalTrader",
+    "name": "Medal Merchant",
+    "category": "DogCoin",
+    "icon": "T_Male_DarkTrader02_icon_normal.png",
+    "level": 50,
+    "items": [
+      {
+        "itemId": "UnlockEquipmentSlot_Accessory_01",
+        "name": "Mysterious Accessory Box",
+        "icon": "T_itemicon_UnlockEquipmentSlot_Accessory.png",
+        "price": 50
+      },
+      {
+        "itemId": "UnlockEquipmentSlot_Accessory_02",
+        "name": "Mystic Accessory Box",
+        "icon": "T_itemicon_UnlockEquipmentSlot_Accessory_1.png",
+        "price": 300
+      },
+      {
+        "itemId": "HeadEquip033",
+        "name": "Cattiva Hat",
+        "icon": "T_itemicon_HeadEquip033.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip029",
+        "name": "Lamball Helm",
+        "icon": "T_itemicon_HeadEquip029.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip056",
+        "name": "Chikipi Cap",
+        "icon": "T_itemicon_HeadEquip056.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip027",
+        "name": "Cawgnito Hat",
+        "icon": "T_itemicon_HeadEquip027.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip030",
+        "name": "Dumud Helm",
+        "icon": "T_itemicon_HeadEquip030.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip024",
+        "name": "Sibelyx Hat",
+        "icon": "T_itemicon_HeadEquip024.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip023",
+        "name": "Lyleen Accessory",
+        "icon": "T_itemicon_HeadEquip023.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip052",
+        "name": "Gloopie Hat",
+        "icon": "T_itemicon_HeadEquip052.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip053",
+        "name": "Jelliette Hat",
+        "icon": "T_itemicon_HeadEquip053.png",
+        "price": 25
+      },
+      {
+        "itemId": "Fruit_hp_01",
+        "name": "Life Fruit",
+        "icon": "T_itemicon_Fruit_hp_01.png",
+        "price": 200
+      },
+      {
+        "itemId": "Fruit_attack_01",
+        "name": "Power Fruit",
+        "icon": "T_itemicon_Fruit_attack_01.png",
+        "price": 200
+      },
+      {
+        "itemId": "Fruit__defense_01",
+        "name": "Stout Fruit",
+        "icon": "T_itemicon_Fruit__defense_01.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_hp_02",
+        "name": "Vital Elixir",
+        "icon": "T_itemicon_Elixir_hp_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_stamina_02",
+        "name": "Stamina Elixir",
+        "icon": "T_itemicon_Elixir_stamina_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_attack_02",
+        "name": "Might Elixir",
+        "icon": "T_itemicon_Elixir_attack_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_workspeed_02",
+        "name": "Speed Elixir",
+        "icon": "T_itemicon_Elixir_workspeed_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_weight_02",
+        "name": "Burden Elixir",
+        "icon": "T_itemicon_Elixir_weight_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Rankup_1",
+        "name": "Starfruit ☆1",
+        "icon": "T_itemicon_Rankup_1.png",
+        "price": 50
+      },
+      {
+        "itemId": "Rankup_2",
+        "name": "Starfruit ☆2",
+        "icon": "T_itemicon_Rankup_2.png",
+        "price": 100
+      },
+      {
+        "itemId": "Rankup_3",
+        "name": "Starfruit ☆3",
+        "icon": "T_itemicon_Rankup_3.png",
+        "price": 200
+      },
+      {
+        "itemId": "Rankup_4",
+        "name": "Starfruit ☆4",
+        "icon": "T_itemicon_Rankup_4.png",
+        "price": 400
+      },
+      {
+        "itemId": "Blueprint_Spear_ForestBoss_5",
+        "name": "Lily's Spear Schematic 4",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 600
+      },
+      {
+        "itemId": "Blueprint_Spear_ForestBoss2_5",
+        "name": "Enhanced Lily's Spear Schematic 4",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 840
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_EmitFlame",
+        "name": "Applied Kindling Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_EmitFlame.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Watering",
+        "name": "Applied Watering Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Watering.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Seeding",
+        "name": "Applied Planting Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Seeding.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_GenerateElectricity",
+        "name": "Applied Generating Electricity Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_GenerateElectricity.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Handcraft",
+        "name": "Applied Handiwork Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Handcraft.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Collection",
+        "name": "Applied Gathering Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Collection.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Deforest",
+        "name": "Applied Lumbering Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Deforest.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Mining",
+        "name": "Applied Mining Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Mining.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_ProductMedicine",
+        "name": "Applied Medicine Production Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_ProductMedicine.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Cool",
+        "name": "Applied Cooling Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Cool.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Transport",
+        "name": "Applied Transporting Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Transport.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_MonsterFarm",
+        "name": "Applied Ranching Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_MonsterFarm.png",
+        "price": 300
+      }
+    ],
+    "currency": "Dog Coin",
+    "currencyIcon": "T_itemicon_DogCoin.png",
+    "palPool": null,
+    "x": -129550.0,
+    "y": -50420.0,
+    "z": 1720.0
+  },
+  {
+    "id": "U_Female_Nomad01_v05:-108321:78553",
+    "uniqueName": "U_Female_Nomad01_v05",
+    "name": "Ancient Civilization Researcher",
+    "category": "General",
+    "icon": "T_Female_Nomad01_v05_icon_normal.png",
+    "level": 25,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -108321.49,
+    "y": 78553.266,
+    "z": 401.20172
+  },
+  {
+    "id": "BountyNavigator_G:-118720:137684",
+    "uniqueName": "BountyNavigator_G",
+    "name": "Bounty Intel Dealer",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 41,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -118719.77,
+    "y": 137683.89,
+    "z": -1155.2751
+  },
+  {
+    "id": "U_Male_Scholar01_v02:-83350:137191",
+    "uniqueName": "U_Male_Scholar01_v02",
+    "name": "Archaeological Society Researcher",
+    "category": "General",
+    "icon": "T_Male_Scholar01_v02_Icon_normal.png",
+    "level": 46,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -83350.34,
+    "y": 137191.16,
+    "z": 7823.7295
+  },
+  {
+    "id": "U_Male_Breeder01_v03:-48296:288135",
+    "uniqueName": "U_Male_Breeder01_v03",
+    "name": "Vertigo-Stricken Breeder",
+    "category": "General",
+    "icon": "T_Male_Breeder01_v03_icon_normal.png",
+    "level": 46,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -48296.0,
+    "y": 288135.0,
+    "z": 473.73245
+  },
+  {
+    "id": "ArenaShop:-116538:447653",
+    "uniqueName": "ArenaShop",
+    "name": "Arena Merchant",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 46,
+    "items": [
+      {
+        "itemId": "Blueprint_OctaviaRevolver_5",
+        "name": "Marksman Revolver Schematic 4",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 1300
+      },
+      {
+        "itemId": "Blueprint_OctaviaShotgun_5",
+        "name": "Core Eject Shotgun Schematic 4",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 1300
+      },
+      {
+        "itemId": "Blueprint_Octavia001_Armor_5",
+        "name": "V1 Armor Schematic 4",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 1000
+      },
+      {
+        "itemId": "Blueprint_Octavia002_Armor_5",
+        "name": "V2 Armor Schematic 4",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 1000
+      },
+      {
+        "itemId": "Blueprint_EnergyShotgun_5",
+        "name": "Energy Shotgun Schematic 4",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 1500
+      },
+      {
+        "itemId": "Blueprint_ChargeLaserRifle_5",
+        "name": "Charge Rifle Schematic 4",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 1500
+      },
+      {
+        "itemId": "Blueprint_OverheatRifle_5",
+        "name": "Overheat Rifle Schematic 4",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 1500
+      },
+      {
+        "itemId": "Blueprint_EnergyShotgun_4",
+        "name": "Energy Shotgun Schematic 3",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 600
+      },
+      {
+        "itemId": "Blueprint_ChargeLaserRifle_4",
+        "name": "Charge Rifle Schematic 3",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 600
+      },
+      {
+        "itemId": "Blueprint_OverheatRifle_4",
+        "name": "Overheat Rifle Schematic 3",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 600
+      },
+      {
+        "itemId": "HeadEquip051",
+        "name": "Kingpaca Headband",
+        "icon": "T_itemicon_HeadEquip051.png",
+        "price": 80
+      },
+      {
+        "itemId": "HeadEquip062",
+        "name": "Tarantriss Hat",
+        "icon": "T_itemicon_HeadEquip062.png",
+        "price": 80
+      },
+      {
+        "itemId": "HeadEquip059",
+        "name": "Ghangler Accessory",
+        "icon": "T_itemicon_HeadEquip059.png",
+        "price": 80
+      },
+      {
+        "itemId": "HeadEquip060",
+        "name": "Icelyn Hat",
+        "icon": "T_itemicon_HeadEquip060.png",
+        "price": 80
+      },
+      {
+        "itemId": "HeadEquip058",
+        "name": "Shroomer Hat",
+        "icon": "T_itemicon_HeadEquip058.png",
+        "price": 80
+      },
+      {
+        "itemId": "HeadEquip061",
+        "name": "Splatterina Hat",
+        "icon": "T_itemicon_HeadEquip061.png",
+        "price": 80
+      },
+      {
+        "itemId": "HeadEquip057",
+        "name": "Dandilord Hat",
+        "icon": "T_itemicon_HeadEquip057.png",
+        "price": 100
+      },
+      {
+        "itemId": "PalPassiveSkillChange_CoolTimeReduction_Up_1",
+        "name": "Implant: Serenity",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 50
+      },
+      {
+        "itemId": "PalPassiveSkillChange_Stamina_Up_1",
+        "name": "Implant: Infinite Stamina",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 50
+      },
+      {
+        "itemId": "PalPassiveSkillChange_MoveSpeed_up_2",
+        "name": "Implant: Runner",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 50
+      },
+      {
+        "itemId": "PalPassiveSkillChange_SwimSpeed_up_2",
+        "name": "Implant: Ace Swimmer",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 50
+      },
+      {
+        "itemId": "PalPassiveSkillChange_SalePrice_Up_1",
+        "name": "Implant: Noble",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 50
+      },
+      {
+        "itemId": "PalPassiveSkillChange_AutoHPRegeneRate_Passive",
+        "name": "Implant: Healing Coach",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 50
+      },
+      {
+        "itemId": "PalPassiveSkillChange_ReloadSpeedUp_Passive",
+        "name": "Implant: Reload Master",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 50
+      },
+      {
+        "itemId": "PalGenderReverse",
+        "name": "Pal Reverser",
+        "icon": "T_itemicon_PalGenderReverse.png",
+        "price": 35
+      },
+      {
+        "itemId": "LvUP_01",
+        "name": "Training Crystal",
+        "icon": "T_itemicon_LvUP_01.png",
+        "price": 50
+      },
+      {
+        "itemId": "Fruit_hp_01",
+        "name": "Life Fruit",
+        "icon": "T_itemicon_Fruit_hp_01.png",
+        "price": 100
+      },
+      {
+        "itemId": "Fruit_attack_01",
+        "name": "Power Fruit",
+        "icon": "T_itemicon_Fruit_attack_01.png",
+        "price": 100
+      },
+      {
+        "itemId": "Fruit__defense_01",
+        "name": "Stout Fruit",
+        "icon": "T_itemicon_Fruit__defense_01.png",
+        "price": 100
+      },
+      {
+        "itemId": "SkillCard_HolyBlast",
+        "name": "Skill Fruit: Holy Burst",
+        "icon": "T_itemicon_SkillCard_Neutral.png",
+        "price": 45
+      },
+      {
+        "itemId": "SkillCard_SelfDestruct",
+        "name": "Skill Fruit: Implode",
+        "icon": "T_itemicon_SkillCard_Neutral.png",
+        "price": 30
+      },
+      {
+        "itemId": "SkillCard_AirBlade",
+        "name": "Skill Fruit: Air Blade",
+        "icon": "T_itemicon_SkillCard_Neutral.png",
+        "price": 30
+      },
+      {
+        "itemId": "SkillCard_DarkLegion",
+        "name": "Dark Skill Fruit: Dark Whisp",
+        "icon": "T_itemicon_SkillCard_Dark.png",
+        "price": 45
+      },
+      {
+        "itemId": "SkillCard_Apocalypse",
+        "name": "Dark Skill Fruit: Apocalypse",
+        "icon": "T_itemicon_SkillCard_Dark.png",
+        "price": 30
+      },
+      {
+        "itemId": "SkillCard_BubbleShower",
+        "name": "Dark Skill Fruit: Poison Shower",
+        "icon": "T_itemicon_SkillCard_Dark.png",
+        "price": 30
+      },
+      {
+        "itemId": "SkillCard_DragonMeteor",
+        "name": "Dragon Skill Fruit: Dragon Meteor",
+        "icon": "T_itemicon_SkillCard_Dragon.png",
+        "price": 45
+      },
+      {
+        "itemId": "SkillCard_ChargeCanon",
+        "name": "Dragon Skill Fruit: Charge Cannon",
+        "icon": "T_itemicon_SkillCard_Dragon.png",
+        "price": 30
+      },
+      {
+        "itemId": "SkillCard_BeamSlicer",
+        "name": "Dragon Skill Fruit: Beam Slicer",
+        "icon": "T_itemicon_SkillCard_Dragon.png",
+        "price": 30
+      },
+      {
+        "itemId": "SkillCard_IceAge",
+        "name": "Ice Skill Fruit: Absolute Frost",
+        "icon": "T_itemicon_SkillCard_Frost.png",
+        "price": 45
+      },
+      {
+        "itemId": "SkillCard_IciclePierce",
+        "name": "Ice Skill Fruit: Icicle Bullet",
+        "icon": "T_itemicon_SkillCard_Frost.png",
+        "price": 30
+      },
+      {
+        "itemId": "SkillCard_IceWall",
+        "name": "Ice Skill Fruit: Freeze Wall",
+        "icon": "T_itemicon_SkillCard_Frost.png",
+        "price": 30
+      },
+      {
+        "itemId": "SkillCard_FireBall",
+        "name": "Fire Skill Fruit: Fire Ball",
+        "icon": "T_itemicon_SkillCard_Flame.png",
+        "price": 45
+      },
+      {
+        "itemId": "SkillCard_Eruption",
+        "name": "Fire Skill Fruit: Volcanic Rain",
+        "icon": "T_itemicon_SkillCard_Flame.png",
+        "price": 30
+      },
+      {
+        "itemId": "SkillCard_FlameFunnel",
+        "name": "Fire Skill Fruit: Flame Funnel",
+        "icon": "T_itemicon_SkillCard_Flame.png",
+        "price": 30
+      },
+      {
+        "itemId": "SkillCard_SeaGush",
+        "name": "Water Skill Fruit: Geyser Gush",
+        "icon": "T_itemicon_SkillCard_Water.png",
+        "price": 45
+      },
+      {
+        "itemId": "SkillCard_RipTide",
+        "name": "Water Skill Fruit: Aqua Surge",
+        "icon": "T_itemicon_SkillCard_Water.png",
+        "price": 45
+      },
+      {
+        "itemId": "SkillCard_HydroSlicer",
+        "name": "Water Skill Fruit: Hydro Slicer",
+        "icon": "T_itemicon_SkillCard_Water.png",
+        "price": 30
+      },
+      {
+        "itemId": "SkillCard_ThunderStorm",
+        "name": "Electric Skill Fruit: Thunderstorm",
+        "icon": "T_itemicon_SkillCard_Electric.png",
+        "price": 45
+      },
+      {
+        "itemId": "SkillCard_RangeThunder",
+        "name": "Thunder Skill Fruit: All Range Thunder",
+        "icon": "T_itemicon_SkillCard_Electric.png",
+        "price": 30
+      },
+      {
+        "itemId": "SkillCard_ThunderRain",
+        "name": "Electric Skill Fruit: Thunder Rain",
+        "icon": "T_itemicon_SkillCard_Electric.png",
+        "price": 30
+      },
+      {
+        "itemId": "SkillCard_RockBeat",
+        "name": "Ground Skill Fruit: Rocky Impact",
+        "icon": "T_itemicon_SkillCard_Earth.png",
+        "price": 45
+      },
+      {
+        "itemId": "SkillCard_SandTwister",
+        "name": "Ground Skill Fruit: Sand Twister",
+        "icon": "T_itemicon_SkillCard_Earth.png",
+        "price": 30
+      },
+      {
+        "itemId": "SkillCard_Tremor",
+        "name": "Ground Skill Fruit: Rockburst",
+        "icon": "T_itemicon_SkillCard_Earth.png",
+        "price": 30
+      },
+      {
+        "itemId": "SkillCard_WindBurst",
+        "name": "Grass Skill Fruit: Wind Blast",
+        "icon": "T_itemicon_SkillCard_Grass.png",
+        "price": 45
+      },
+      {
+        "itemId": "SkillCard_CrossWind",
+        "name": "Grass Skill Fruit: Crosswind",
+        "icon": "T_itemicon_SkillCard_Grass.png",
+        "price": 45
+      },
+      {
+        "itemId": "SkillCard_ReflectiveShuriken",
+        "name": "Grass Skill Fruit: Reflect Leaf",
+        "icon": "T_itemicon_SkillCard_Grass.png",
+        "price": 30
+      }
+    ],
+    "currency": "Battle Ticket",
+    "currencyIcon": "T_itemicon_BattleTicket.png",
+    "palPool": null,
+    "x": -116537.92,
+    "y": 447653.47,
+    "z": -1588.1652
+  },
+  {
+    "id": "BountyNavigator_B:-318449:126861",
+    "uniqueName": "BountyNavigator_B",
+    "name": "Bounty Intel Dealer",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 16,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -318448.56,
+    "y": 126861.05,
+    "z": -2048.6946
+  },
+  {
+    "id": "BountyNavigator_C:-293789:151231",
+    "uniqueName": "BountyNavigator_C",
+    "name": "Bounty Intel Dealer",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 15,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -293788.6,
+    "y": 151231.0,
+    "z": 282.2303
+  },
+  {
+    "id": "U_Male_Breeder01_v01:-340952:107575",
+    "uniqueName": "U_Male_Breeder01_v01",
+    "name": "Rookie Pal Breeder",
+    "category": "General",
+    "icon": "T_Male_Breeder01_v01_icon_normal.png",
+    "level": 26,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -340952.0,
+    "y": 107575.0,
+    "z": -1315.0908
+  },
+  {
+    "id": "Police_WarningOilrig:-282946:356649",
+    "uniqueName": "Police_WarningOilrig",
+    "name": "Cautious PIDF Officer",
+    "category": "General",
+    "icon": "T_Police_icon_normal.png",
+    "level": 13,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -282946.4,
+    "y": 356649.28,
+    "z": -2090.753
+  },
+  {
+    "id": "U_Male_Angler01_v01:-331671:335454",
+    "uniqueName": "U_Male_Angler01_v01",
+    "name": "Laid-Back Angler",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 12,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -331671.0,
+    "y": 335454.0,
+    "z": -2103.0
+  },
+  {
+    "id": "U_Female_TenrakuPeople01:-552402:-315406",
+    "uniqueName": "U_Female_TenrakuPeople01",
+    "name": "Feybreak Researcher",
+    "category": "General",
+    "icon": "T_Female_TenrakuPeople01_icon_normal.png",
+    "level": 64,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -552401.9,
+    "y": -315405.62,
+    "z": 8701.053
+  },
+  {
+    "id": "U_Male_TenrakuPeople01:-550559:-311613",
+    "uniqueName": "U_Male_TenrakuPeople01",
+    "name": "Feybreak Researcher",
+    "category": "General",
+    "icon": "T_Male_TenrakuPeople01_icon_normal.png",
+    "level": 64,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -550559.0,
+    "y": -311612.7,
+    "z": 10241.998
+  },
+  {
+    "id": "PvPVillage003:-450274:108616",
+    "uniqueName": "PvPVillage003",
+    "name": "Mercenary With a Wounded Knee",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 8,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -450274.34,
+    "y": 108616.07,
+    "z": -2043.346
+  },
+  {
+    "id": "Presenter001:-747110:-322958",
+    "uniqueName": "Presenter001",
+    "name": "Friendly Pal Tamer",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 61,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -747110.0,
+    "y": -322958.22,
+    "z": 7624.256
+  },
+  {
+    "id": "U_Male_Breeder01_v04:-697181:-322452",
+    "uniqueName": "U_Male_Breeder01_v04",
+    "name": "Passionate Pal Breeder",
+    "category": "General",
+    "icon": "T_Male_Breeder01_v04_icon_normal.png",
+    "level": 66,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -697180.75,
+    "y": -322452.22,
+    "z": 15541.422
+  },
+  {
+    "id": "U_Yamishima_guide1:-714722:-339278",
+    "uniqueName": "U_Yamishima_guide1",
+    "name": "Wise Geologist",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 61,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -714722.0,
+    "y": -339277.88,
+    "z": 3091.9724
+  },
+  {
+    "id": "U_Yamishima_guide3:-778990:-329917",
+    "uniqueName": "U_Yamishima_guide3",
+    "name": "Cheerful Ore Researcher",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 64,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -778990.25,
+    "y": -329916.9,
+    "z": 34602.49
+  },
+  {
+    "id": "U_Female_Nomad01_v01:89040:94146",
+    "uniqueName": "U_Female_Nomad01_v01",
+    "name": "One-Way Wanderer",
+    "category": "General",
+    "icon": "T_Female_Nomad01_v01_icon_normal.png",
+    "level": 51,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": 89040.0,
+    "y": 94145.67,
+    "z": 67199.26
+  },
+  {
+    "id": "DesertVillage004:36777:318632",
+    "uniqueName": "DesertVillage004",
+    "name": "Reticent Desert Inhabitant",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 44,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": 36777.44,
+    "y": 318631.9,
+    "z": 1297.2125
+  },
+  {
+    "id": "BountyNavigator_E:41331:316908",
+    "uniqueName": "BountyNavigator_E",
+    "name": "Bounty Intel Dealer",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 44,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": 41331.336,
+    "y": 316908.38,
+    "z": 1524.7115
+  },
+  {
+    "id": "BountyTrader:41937:316554",
+    "uniqueName": "BountyTrader",
+    "name": "PIDF Bounty Officer",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 45,
+    "items": [
+      {
+        "itemId": "Money",
+        "name": "Gold Coin",
+        "icon": "T_itemicon_Money.png",
+        "price": 1
+      },
+      {
+        "itemId": "TechnologyBook_G1",
+        "name": "Advanced Technical Manual",
+        "icon": "T_itemicon_TechnologyBook_G1.png",
+        "price": 5
+      },
+      {
+        "itemId": "PalGenderReverse",
+        "name": "Pal Reverser",
+        "icon": "T_itemicon_PalGenderReverse.png",
+        "price": 7
+      },
+      {
+        "itemId": "HeadEquip055",
+        "name": "Croajiro Cap",
+        "icon": "T_itemicon_HeadEquip055.png",
+        "price": 5
+      },
+      {
+        "itemId": "HeadEquip050",
+        "name": "Herbil Headband",
+        "icon": "T_itemicon_HeadEquip050.png",
+        "price": 5
+      },
+      {
+        "itemId": "HeadEquip054",
+        "name": "Turtacle Cap",
+        "icon": "T_itemicon_HeadEquip054.png",
+        "price": 5
+      },
+      {
+        "itemId": "AffectionFruit_01",
+        "name": "Kinship Peach",
+        "icon": "T_itemicon_AffectionFruit_01.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_Noukin",
+        "name": "Implant: Musclehead",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_Deffence_up2",
+        "name": "Implant: Burly Body",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_CraftSpeed_up2",
+        "name": "Implant: Artisan",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_TrainerATK_UP_1",
+        "name": "Implant: Vanguard",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_TrainerDEF_UP_1",
+        "name": "Implant: Stronghold Strategist",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_TrainerWorkSpeed_UP_1",
+        "name": "Implant: Motivational Leader",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_PlayerSP_DecreaseRate_Passive",
+        "name": "Implant: Wellness Watcher",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "Fruit_hp_01",
+        "name": "Life Fruit",
+        "icon": "T_itemicon_Fruit_hp_01.png",
+        "price": 25
+      },
+      {
+        "itemId": "Fruit_attack_01",
+        "name": "Power Fruit",
+        "icon": "T_itemicon_Fruit_attack_01.png",
+        "price": 25
+      },
+      {
+        "itemId": "Fruit__defense_01",
+        "name": "Stout Fruit",
+        "icon": "T_itemicon_Fruit__defense_01.png",
+        "price": 25
+      },
+      {
+        "itemId": "Rankup_Arbitrary",
+        "name": "Ripe Starfruit",
+        "icon": "T_itemicon_Rankup_Arbitrary.png",
+        "price": 50
+      }
+    ],
+    "currency": "Successful Bounty Token",
+    "currencyIcon": "T_itemicon_BountyProof_1.png",
+    "palPool": null,
+    "x": 41936.793,
+    "y": 316554.28,
+    "z": 1524.7115
+  },
+  {
+    "id": "DesertVillage001:41954:315105",
+    "uniqueName": "DesertVillage001",
+    "name": "Chilly Desert Inhabitant",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 42,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": 41954.402,
+    "y": 315105.4,
+    "z": 1546.1003
+  },
+  {
+    "id": "DesertVillage003:38166:316565",
+    "uniqueName": "DesertVillage003",
+    "name": "Timid Desert Inhabitant",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 47,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": 38166.19,
+    "y": 316564.6,
+    "z": 1517.584
+  },
+  {
+    "id": "DesertVillage002:40630:315087",
+    "uniqueName": "DesertVillage002",
+    "name": "Kind Desert Inhabitant",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 44,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": 40630.008,
+    "y": 315086.62,
+    "z": 1517.1989
+  },
+  {
+    "id": "DesertPolice001:40288:317236",
+    "uniqueName": "DesertPolice001",
+    "name": "PIDF Grunt",
+    "category": "General",
+    "icon": "T_Police_icon_normal.png",
+    "level": 49,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": 40287.543,
+    "y": 317236.28,
+    "z": 1478.852
+  },
+  {
+    "id": "DesertPolice002:40291:316782",
+    "uniqueName": "DesertPolice002",
+    "name": "PIDF Goody Two-Shoes",
+    "category": "General",
+    "icon": "T_Police_icon_normal.png",
+    "level": 53,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": 40290.57,
+    "y": 316781.72,
+    "z": 1477.2944
+  },
+  {
+    "id": "DesertPolice003:32072:322846",
+    "uniqueName": "DesertPolice003",
+    "name": "PIDF Bonfire-Lover",
+    "category": "General",
+    "icon": "T_Police_icon_normal.png",
+    "level": 53,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": 32071.719,
+    "y": 322845.9,
+    "z": -470.7964
+  },
+  {
+    "id": "U_Female_WorldTreePeople01:513232:-511084",
+    "uniqueName": "U_Female_WorldTreePeople01",
+    "name": "World Tree Guardian",
+    "category": "General",
+    "icon": "T_Female_WorldTreePeople01_icon_normal.png",
+    "level": 77,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": 513231.66,
+    "y": -511084.22,
+    "z": 43478.9
+  },
+  {
+    "id": "BountyNavigator_A:-342636:191916",
+    "uniqueName": "BountyNavigator_A",
+    "name": "Bounty Intel Dealer",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 10,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -342636.06,
+    "y": 191915.72,
+    "z": -986.8639
+  },
+  {
+    "id": "BountyTrader:-342916:192128",
+    "uniqueName": "BountyTrader",
+    "name": "PIDF Bounty Officer",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 13,
+    "items": [
+      {
+        "itemId": "Money",
+        "name": "Gold Coin",
+        "icon": "T_itemicon_Money.png",
+        "price": 1
+      },
+      {
+        "itemId": "TechnologyBook_G1",
+        "name": "Advanced Technical Manual",
+        "icon": "T_itemicon_TechnologyBook_G1.png",
+        "price": 5
+      },
+      {
+        "itemId": "PalGenderReverse",
+        "name": "Pal Reverser",
+        "icon": "T_itemicon_PalGenderReverse.png",
+        "price": 7
+      },
+      {
+        "itemId": "HeadEquip055",
+        "name": "Croajiro Cap",
+        "icon": "T_itemicon_HeadEquip055.png",
+        "price": 5
+      },
+      {
+        "itemId": "HeadEquip050",
+        "name": "Herbil Headband",
+        "icon": "T_itemicon_HeadEquip050.png",
+        "price": 5
+      },
+      {
+        "itemId": "HeadEquip054",
+        "name": "Turtacle Cap",
+        "icon": "T_itemicon_HeadEquip054.png",
+        "price": 5
+      },
+      {
+        "itemId": "AffectionFruit_01",
+        "name": "Kinship Peach",
+        "icon": "T_itemicon_AffectionFruit_01.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_Noukin",
+        "name": "Implant: Musclehead",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_Deffence_up2",
+        "name": "Implant: Burly Body",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_CraftSpeed_up2",
+        "name": "Implant: Artisan",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_TrainerATK_UP_1",
+        "name": "Implant: Vanguard",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_TrainerDEF_UP_1",
+        "name": "Implant: Stronghold Strategist",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_TrainerWorkSpeed_UP_1",
+        "name": "Implant: Motivational Leader",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "PalPassiveSkillChange_PlayerSP_DecreaseRate_Passive",
+        "name": "Implant: Wellness Watcher",
+        "icon": "T_itemicon_PalPassiveSkillChange.png",
+        "price": 15
+      },
+      {
+        "itemId": "Fruit_hp_01",
+        "name": "Life Fruit",
+        "icon": "T_itemicon_Fruit_hp_01.png",
+        "price": 25
+      },
+      {
+        "itemId": "Fruit_attack_01",
+        "name": "Power Fruit",
+        "icon": "T_itemicon_Fruit_attack_01.png",
+        "price": 25
+      },
+      {
+        "itemId": "Fruit__defense_01",
+        "name": "Stout Fruit",
+        "icon": "T_itemicon_Fruit__defense_01.png",
+        "price": 25
+      },
+      {
+        "itemId": "Rankup_Arbitrary",
+        "name": "Ripe Starfruit",
+        "icon": "T_itemicon_Rankup_Arbitrary.png",
+        "price": 50
+      }
+    ],
+    "currency": "Successful Bounty Token",
+    "currencyIcon": "T_itemicon_BountyProof_1.png",
+    "palPool": null,
+    "x": -342915.8,
+    "y": 192127.77,
+    "z": -1058.685
+  },
+  {
+    "id": "BountyNavigator_D:-219763:226081",
+    "uniqueName": "BountyNavigator_D",
+    "name": "Bounty Intel Dealer",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 35,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -219763.12,
+    "y": 226081.31,
+    "z": -1952.8962
+  },
+  {
+    "id": "DarkTrader:-181097:369182",
+    "uniqueName": "DarkTrader",
+    "name": "Black Marketeer",
+    "category": "BlackMarket",
+    "icon": "T_Male_DarkTrader01_icon_normal.png",
+    "level": 45,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": {
+      "poolSpecies": [
+        {
+          "name": "Wispaw",
+          "icon": "Pal_GhostBlackCat.png"
+        },
+        {
+          "name": "Dumud",
+          "icon": "Pal_LazyCatfish.png"
+        },
+        {
+          "name": "Tombat",
+          "icon": "Pal_CatBat.png"
+        },
+        {
+          "name": "Beegarde",
+          "icon": "Pal_SoldierBee.png"
+        },
+        {
+          "name": "Mossanda",
+          "icon": "Pal_GrassPanda.png"
+        },
+        {
+          "name": "Elgrove",
+          "icon": "Pal_GrassMinotaur.png"
+        },
+        {
+          "name": "Katress",
+          "icon": "Pal_CatMage.png"
+        },
+        {
+          "name": "Robinquill",
+          "icon": "Pal_RobinHood.png"
+        },
+        {
+          "name": "Helzephyr",
+          "icon": "Pal_HadesBird.png"
+        },
+        {
+          "name": "Mammorest",
+          "icon": "Pal_GrassMammoth.png"
+        },
+        {
+          "name": "Warsect",
+          "icon": "Pal_HerculesBeetle.png"
+        }
+      ],
+      "offeredCount": 5,
+      "levelMin": 20,
+      "levelMax": 30
+    },
+    "x": -181096.94,
+    "y": 369181.94,
+    "z": 890.54193
+  },
+  {
+    "id": "Police_WarningOilrig:-271883:219725",
+    "uniqueName": "Police_WarningOilrig",
+    "name": "Cautious PIDF Officer",
+    "category": "General",
+    "icon": "T_Police_icon_normal.png",
+    "level": 16,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -271883.03,
+    "y": 219725.4,
+    "z": -2093.4304
+  },
+  {
+    "id": "DarkTrader:-309056:176861",
+    "uniqueName": "DarkTrader",
+    "name": "Black Marketeer",
+    "category": "BlackMarket",
+    "icon": "T_Male_DarkTrader01_icon_normal.png",
+    "level": 43,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": {
+      "poolSpecies": [
+        {
+          "name": "Wispaw",
+          "icon": "Pal_GhostBlackCat.png"
+        },
+        {
+          "name": "Dumud",
+          "icon": "Pal_LazyCatfish.png"
+        },
+        {
+          "name": "Tombat",
+          "icon": "Pal_CatBat.png"
+        },
+        {
+          "name": "Beegarde",
+          "icon": "Pal_SoldierBee.png"
+        },
+        {
+          "name": "Mossanda",
+          "icon": "Pal_GrassPanda.png"
+        },
+        {
+          "name": "Elgrove",
+          "icon": "Pal_GrassMinotaur.png"
+        },
+        {
+          "name": "Katress",
+          "icon": "Pal_CatMage.png"
+        },
+        {
+          "name": "Robinquill",
+          "icon": "Pal_RobinHood.png"
+        },
+        {
+          "name": "Helzephyr",
+          "icon": "Pal_HadesBird.png"
+        },
+        {
+          "name": "Mammorest",
+          "icon": "Pal_GrassMammoth.png"
+        },
+        {
+          "name": "Warsect",
+          "icon": "Pal_HerculesBeetle.png"
+        }
+      ],
+      "offeredCount": 5,
+      "levelMin": 20,
+      "levelMax": 30
+    },
+    "x": -309056.0,
+    "y": 176861.03,
+    "z": -2090.9534
+  },
+  {
+    "id": "U_Female_Farmer01_v01:-346423:197007",
+    "uniqueName": "U_Female_Farmer01_v01",
+    "name": "Desperate Farmer",
+    "category": "General",
+    "icon": "T_Female_Farmer01_v01_icon_normal.png",
+    "level": 11,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -346423.0,
+    "y": 197007.0,
+    "z": 829.5119
+  },
+  {
+    "id": "U_Female_Farmer01_v03:-337585:230200",
+    "uniqueName": "U_Female_Farmer01_v03",
+    "name": "Worrywart Farmer",
+    "category": "General",
+    "icon": "T_Female_Farmer01_v03_icon_normal.png",
+    "level": 6,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -337585.0,
+    "y": 230200.0,
+    "z": -1856.3027
+  },
+  {
+    "id": "U_Female_Farmer01_v04:-291046:203720",
+    "uniqueName": "U_Female_Farmer01_v04",
+    "name": "Pal-Loving Farmer",
+    "category": "General",
+    "icon": "T_Female_Farmer01_v04_icon_normal.png",
+    "level": 18,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -291046.0,
+    "y": 203720.0,
+    "z": -1193.7516
+  },
+  {
+    "id": "U_Male_Scholar01_v01:-272780:185586",
+    "uniqueName": "U_Male_Scholar01_v01",
+    "name": "Legend-Loving Researcher",
+    "category": "General",
+    "icon": "T_Male_Scholar01_v01_icon_normal.png",
+    "level": 21,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -272780.16,
+    "y": 185585.67,
+    "z": 291.96408
+  },
+  {
+    "id": "U_Male_DTairikuPeople01_v01:-187287:55582",
+    "uniqueName": "U_Male_DTairikuPeople01_v01",
+    "name": "Bamboo Grove Inhabitant",
+    "category": "General",
+    "icon": "T_Male_DTairikuPeople01_v01_icon_normal.png",
+    "level": 26,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -187287.0,
+    "y": 55581.52,
+    "z": 1209.6652
+  },
+  {
+    "id": "U_Female_DTairikuPeople01_v01:-185946:56870",
+    "uniqueName": "U_Female_DTairikuPeople01_v01",
+    "name": "Bamboo Grove Inhabitant",
+    "category": "General",
+    "icon": "T_Female_DTairikuPeople01_v01_icon_normal.png",
+    "level": 21,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -185946.44,
+    "y": 56870.15,
+    "z": 869.5291
+  },
+  {
+    "id": "GrassBoss:-312772:187810",
+    "uniqueName": "GrassBoss",
+    "name": "Zoe",
+    "category": "General",
+    "icon": "T_Human_GrassBoss_icon_normal.png",
+    "level": 15,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -312772.03,
+    "y": 187810.4,
+    "z": 3268.4941
+  },
+  {
+    "id": "U_Female_Ranger01_v04:-181690:237584",
+    "uniqueName": "U_Female_Ranger01_v04",
+    "name": "Sweet-Smelling Hunter",
+    "category": "General",
+    "icon": "T_Female_Ranger01_v04_icon_normal.png",
+    "level": 28,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -181690.0,
+    "y": 237584.0,
+    "z": -1797.3752
+  },
+  {
+    "id": "U_Female_Nomad01_v03:-368051:223406",
+    "uniqueName": "U_Female_Nomad01_v03",
+    "name": "Journey-Junkie Wanderer",
+    "category": "General",
+    "icon": "T_Female_Nomad01_v03_icon_normal.png",
+    "level": 8,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -368051.2,
+    "y": 223406.34,
+    "z": 378.1756
+  },
+  {
+    "id": "U_Male_Kigurumi01_v01:-229597:167703",
+    "uniqueName": "U_Male_Kigurumi01_v01",
+    "name": "Wannabe Depresso Islander",
+    "category": "General",
+    "icon": "T_Male_Kigurumi01_v01_icon_normal.png",
+    "level": 26,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -229596.77,
+    "y": 167702.84,
+    "z": -1951.3269
+  },
+  {
+    "id": "Police_dependable:-347066:194612",
+    "uniqueName": "Police_dependable",
+    "name": "Reliable PIDF Officer",
+    "category": "General",
+    "icon": "T_Police_icon_normal.png",
+    "level": 26,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -347065.78,
+    "y": 194612.25,
+    "z": 915.8081
+  },
+  {
+    "id": "MedalTrader:-313140:187140",
+    "uniqueName": "MedalTrader",
+    "name": "Medal Merchant",
+    "category": "DogCoin",
+    "icon": "T_Male_DarkTrader02_icon_normal.png",
+    "level": 50,
+    "items": [
+      {
+        "itemId": "UnlockEquipmentSlot_Accessory_01",
+        "name": "Mysterious Accessory Box",
+        "icon": "T_itemicon_UnlockEquipmentSlot_Accessory.png",
+        "price": 50
+      },
+      {
+        "itemId": "UnlockEquipmentSlot_Accessory_02",
+        "name": "Mystic Accessory Box",
+        "icon": "T_itemicon_UnlockEquipmentSlot_Accessory_1.png",
+        "price": 300
+      },
+      {
+        "itemId": "HeadEquip033",
+        "name": "Cattiva Hat",
+        "icon": "T_itemicon_HeadEquip033.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip029",
+        "name": "Lamball Helm",
+        "icon": "T_itemicon_HeadEquip029.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip056",
+        "name": "Chikipi Cap",
+        "icon": "T_itemicon_HeadEquip056.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip027",
+        "name": "Cawgnito Hat",
+        "icon": "T_itemicon_HeadEquip027.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip030",
+        "name": "Dumud Helm",
+        "icon": "T_itemicon_HeadEquip030.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip024",
+        "name": "Sibelyx Hat",
+        "icon": "T_itemicon_HeadEquip024.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip023",
+        "name": "Lyleen Accessory",
+        "icon": "T_itemicon_HeadEquip023.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip052",
+        "name": "Gloopie Hat",
+        "icon": "T_itemicon_HeadEquip052.png",
+        "price": 25
+      },
+      {
+        "itemId": "HeadEquip053",
+        "name": "Jelliette Hat",
+        "icon": "T_itemicon_HeadEquip053.png",
+        "price": 25
+      },
+      {
+        "itemId": "Fruit_hp_01",
+        "name": "Life Fruit",
+        "icon": "T_itemicon_Fruit_hp_01.png",
+        "price": 200
+      },
+      {
+        "itemId": "Fruit_attack_01",
+        "name": "Power Fruit",
+        "icon": "T_itemicon_Fruit_attack_01.png",
+        "price": 200
+      },
+      {
+        "itemId": "Fruit__defense_01",
+        "name": "Stout Fruit",
+        "icon": "T_itemicon_Fruit__defense_01.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_hp_02",
+        "name": "Vital Elixir",
+        "icon": "T_itemicon_Elixir_hp_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_stamina_02",
+        "name": "Stamina Elixir",
+        "icon": "T_itemicon_Elixir_stamina_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_attack_02",
+        "name": "Might Elixir",
+        "icon": "T_itemicon_Elixir_attack_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_workspeed_02",
+        "name": "Speed Elixir",
+        "icon": "T_itemicon_Elixir_workspeed_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Elixir_weight_02",
+        "name": "Burden Elixir",
+        "icon": "T_itemicon_Elixir_weight_02.png",
+        "price": 200
+      },
+      {
+        "itemId": "Rankup_1",
+        "name": "Starfruit ☆1",
+        "icon": "T_itemicon_Rankup_1.png",
+        "price": 50
+      },
+      {
+        "itemId": "Rankup_2",
+        "name": "Starfruit ☆2",
+        "icon": "T_itemicon_Rankup_2.png",
+        "price": 100
+      },
+      {
+        "itemId": "Rankup_3",
+        "name": "Starfruit ☆3",
+        "icon": "T_itemicon_Rankup_3.png",
+        "price": 200
+      },
+      {
+        "itemId": "Rankup_4",
+        "name": "Starfruit ☆4",
+        "icon": "T_itemicon_Rankup_4.png",
+        "price": 400
+      },
+      {
+        "itemId": "Blueprint_Spear_ForestBoss_5",
+        "name": "Lily's Spear Schematic 4",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 600
+      },
+      {
+        "itemId": "Blueprint_Spear_ForestBoss2_5",
+        "name": "Enhanced Lily's Spear Schematic 4",
+        "icon": "T_itemicon_Blueprint.png",
+        "price": 840
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_EmitFlame",
+        "name": "Applied Kindling Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_EmitFlame.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Watering",
+        "name": "Applied Watering Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Watering.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Seeding",
+        "name": "Applied Planting Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Seeding.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_GenerateElectricity",
+        "name": "Applied Generating Electricity Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_GenerateElectricity.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Handcraft",
+        "name": "Applied Handiwork Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Handcraft.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Collection",
+        "name": "Applied Gathering Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Collection.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Deforest",
+        "name": "Applied Lumbering Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Deforest.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Mining",
+        "name": "Applied Mining Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Mining.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_ProductMedicine",
+        "name": "Applied Medicine Production Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_ProductMedicine.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Cool",
+        "name": "Applied Cooling Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Cool.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_Transport",
+        "name": "Applied Transporting Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_Transport.png",
+        "price": 300
+      },
+      {
+        "itemId": "WorkSuitability_AddTicket_MonsterFarm",
+        "name": "Applied Ranching Handbook I",
+        "icon": "T_itemicon_WorkSuitability_AddTicket_MonsterFarm.png",
+        "price": 300
+      }
+    ],
+    "currency": "Dog Coin",
+    "currencyIcon": "T_itemicon_DogCoin.png",
+    "palPool": null,
+    "x": -313140.0,
+    "y": 187140.0,
+    "z": 3270.0
+  },
+  {
+    "id": "BountyNavigator_Yamijima_1:-589631:-254272",
+    "uniqueName": "BountyNavigator_Yamijima_1",
+    "name": "Bounty Intel Dealer",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 61,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -589630.56,
+    "y": -254272.25,
+    "z": 939.7072
+  },
+  {
+    "id": "U_Female_Nomad01_v02:-511240:-221020",
+    "uniqueName": "U_Female_Nomad01_v02",
+    "name": "Sparkle-Seeking Wanderer",
+    "category": "General",
+    "icon": "T_Female_Nomad01_v02_icon_normal.png",
+    "level": 60,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -511240.0,
+    "y": -221020.0,
+    "z": -24.573687
+  },
+  {
+    "id": "U_Yamishima_guide5:-615262:-196600",
+    "uniqueName": "U_Yamishima_guide5",
+    "name": "Feybreak Deserter",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 63,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -615261.8,
+    "y": -196599.84,
+    "z": -230.39276
+  },
+  {
+    "id": "U_Male_Scholar01_v04:-606847:-482720",
+    "uniqueName": "U_Male_Scholar01_v04",
+    "name": "Rock-Obsessed Researcher",
+    "category": "General",
+    "icon": "T_Male_Scholar01_v04_icon_normal.png",
+    "level": 69,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -606847.3,
+    "y": -482720.16,
+    "z": 6767.95
+  },
+  {
+    "id": "PvPVillage001:-176696:409055",
+    "uniqueName": "PvPVillage001",
+    "name": "Desert Runaway",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 11,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -176696.0,
+    "y": 409055.47,
+    "z": 3435.5674
+  },
+  {
+    "id": "PvPVillage005:-401159:131336",
+    "uniqueName": "PvPVillage005",
+    "name": "Cowardly Islander",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 9,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -401158.97,
+    "y": 131335.77,
+    "z": -1913.7908
+  },
+  {
+    "id": "U_WildlifeSanctuary_guide:-402540:214670",
+    "uniqueName": "U_WildlifeSanctuary_guide",
+    "name": "Newbie Pal Tamer",
+    "category": "General",
+    "icon": "T_MobuCitizen_Male_icon_normal.png",
+    "level": 14,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -402540.0,
+    "y": 214670.0,
+    "z": -2071.8457
+  },
+  {
+    "id": "U_Female_Ranger01_v03:-852861:-413674",
+    "uniqueName": "U_Female_Ranger01_v03",
+    "name": "Big Game Hunter",
+    "category": "General",
+    "icon": "T_Female_Ranger01_v03_icon_normal.png",
+    "level": 66,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -852861.06,
+    "y": -413673.53,
+    "z": 6896.2344
+  },
+  {
+    "id": "DarkTrader03:28816:398925",
+    "uniqueName": "DarkTrader03",
+    "name": "Black Marketeer",
+    "category": "BlackMarket",
+    "icon": "T_Male_DarkTrader01_icon_normal.png",
+    "level": 54,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": {
+      "poolSpecies": [
+        {
+          "name": "Gorirat Terra",
+          "icon": "Pal_Gorilla_Ground.png"
+        },
+        {
+          "name": "Gildra",
+          "icon": "Pal_MummyPal.png"
+        },
+        {
+          "name": "Menasting",
+          "icon": "Pal_DarkScorpion.png"
+        },
+        {
+          "name": "Relaxaurus Lux",
+          "icon": "Pal_LazyDragon_Electric.png"
+        },
+        {
+          "name": "Beakon",
+          "icon": "Pal_ThunderBird.png"
+        },
+        {
+          "name": "Palumba",
+          "icon": "Pal_TropicalOstrich.png"
+        },
+        {
+          "name": "Sekhmet",
+          "icon": "Pal_Sekhmet.png"
+        },
+        {
+          "name": "Lovander",
+          "icon": "Pal_PinkLizard.png"
+        }
+      ],
+      "offeredCount": 5,
+      "levelMin": 42,
+      "levelMax": 48
+    },
+    "x": 28815.848,
+    "y": 398925.34,
+    "z": -879.7978
+  },
+  {
+    "id": "U_Female_Ranger01_v01:29076:406040",
+    "uniqueName": "U_Female_Ranger01_v01",
+    "name": "Ever-Eager Hunter",
+    "category": "General",
+    "icon": "T_Female_Ranger01_v01_icon_normal.png",
+    "level": 48,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": 29076.0,
+    "y": 406040.0,
+    "z": 15573.231
+  },
+  {
+    "id": "Police_WarningOilrig:-800856:-500724",
+    "uniqueName": "Police_WarningOilrig",
+    "name": "Cautious PIDF Officer",
+    "category": "General",
+    "icon": "T_Police_icon_normal.png",
+    "level": 67,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -800856.4,
+    "y": -500724.2,
+    "z": -1900.0157
+  },
+  {
+    "id": "U_Female_SorajimaPeople01:-797141:27789",
+    "uniqueName": "U_Female_SorajimaPeople01",
+    "name": "Sunreach Citizen",
+    "category": "General",
+    "icon": "T_Female_SorajimaPeople01_icon_normal.png",
+    "level": 73,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": null,
+    "x": -797140.6,
+    "y": 27788.91,
+    "z": 53239.973
+  },
+  {
+    "id": "PalDealer:-248788:356707",
+    "uniqueName": "PalDealer",
+    "name": "Pal Dealer",
+    "category": "PalDealer",
+    "icon": "T_PalDealer_icon_normal.png",
+    "level": 13,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": {
+      "poolSpecies": [
+        {
+          "name": "Chikipi",
+          "icon": "Pal_ChickenPal.png"
+        },
+        {
+          "name": "Cattiva",
+          "icon": "Pal_PinkCat.png"
+        },
+        {
+          "name": "Lamball",
+          "icon": "Pal_SheepBall.png"
+        },
+        {
+          "name": "Foxparks",
+          "icon": "Pal_Kitsunebi.png"
+        },
+        {
+          "name": "Pengullet",
+          "icon": "Pal_Penguin.png"
+        },
+        {
+          "name": "Lifmunk",
+          "icon": "Pal_Carbunclo.png"
+        },
+        {
+          "name": "Herbil",
+          "icon": "Pal_LeafMomonga.png"
+        },
+        {
+          "name": "Nitewing",
+          "icon": "Pal_HawkBird.png"
+        },
+        {
+          "name": "Direhowl",
+          "icon": "Pal_Garm.png"
+        },
+        {
+          "name": "Eikthyrdeer",
+          "icon": "Pal_Deer.png"
+        }
+      ],
+      "offeredCount": 5,
+      "levelMin": 10,
+      "levelMax": 15
+    },
+    "x": -248788.0,
+    "y": 356707.0,
+    "z": null
+  },
+  {
+    "id": "SalesPerson_Wander:-248285:356691",
+    "uniqueName": "SalesPerson_Wander",
+    "name": "Wandering Merchant",
+    "category": "Wandering",
+    "icon": "T_SalesPerson_icon_normal.png",
+    "level": 15,
+    "items": [
+      {
+        "itemId": "Pal_crystal_S",
+        "name": "Paldium Fragment",
+        "icon": "T_itemicon_Pal_crystal_S.png",
+        "price": 70
+      },
+      {
+        "itemId": "SkillCard_SelfDestruct",
+        "name": "Skill Fruit: Implode",
+        "icon": "T_itemicon_SkillCard_Neutral.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_AcidRain",
+        "name": "Water Skill Fruit: Acid Rain",
+        "icon": "T_itemicon_SkillCard_Water.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_LockonLaser",
+        "name": "Electric Skill Fruit: Lock-on Laser",
+        "icon": "T_itemicon_SkillCard_Electric.png",
+        "price": 3000
+      },
+      {
+        "itemId": "Egg",
+        "name": "Egg",
+        "icon": "T_itemicon_Egg.png",
+        "price": 200
+      },
+      {
+        "itemId": "Milk",
+        "name": "Milk",
+        "icon": "T_itemicon_Milk.png",
+        "price": 200
+      },
+      {
+        "itemId": "Berries",
+        "name": "Red Berries",
+        "icon": "T_itemicon_Berries.png",
+        "price": 50
+      },
+      {
+        "itemId": "Wheat",
+        "name": "Wheat",
+        "icon": "T_itemicon_Wheat.png",
+        "price": 70
+      },
+      {
+        "itemId": "Herbs",
+        "name": "Low Grade Medical Supplies",
+        "icon": "T_itemicon_Herbs.png",
+        "price": 780
+      },
+      {
+        "itemId": "Medicines",
+        "name": "Medical Supplies",
+        "icon": "T_itemicon_Medicines.png",
+        "price": 1820
+      },
+      {
+        "itemId": "LuxuryMedicines",
+        "name": "High Grade Medical Supplies",
+        "icon": "T_itemicon_LuxuryMedicines.png",
+        "price": 3120
+      },
+      {
+        "itemId": "Wool",
+        "name": "Wool",
+        "icon": "T_itemicon_Wool.png",
+        "price": 200
+      },
+      {
+        "itemId": "Leather",
+        "name": "Leather",
+        "icon": "T_itemicon_Leather.png",
+        "price": 200
+      },
+      {
+        "itemId": "Bone",
+        "name": "Bone",
+        "icon": "T_itemicon_Bone.png",
+        "price": 200
+      },
+      {
+        "itemId": "Horn",
+        "name": "Horn",
+        "icon": "T_itemicon_Horn.png",
+        "price": 200
+      },
+      {
+        "itemId": "PalFluid",
+        "name": "Aquatic Pal Fluids",
+        "icon": "T_itemicon_PalFluid.png",
+        "price": 300
+      },
+      {
+        "itemId": "PalOil",
+        "name": "High Quality Pal Oil",
+        "icon": "T_itemicon_PalOil.png",
+        "price": 300
+      },
+      {
+        "itemId": "FishingBait_1",
+        "name": "Simple Bait",
+        "icon": "T_itemicon_FishingBait_1.png",
+        "price": 160
+      },
+      {
+        "itemId": "RoughBullet",
+        "name": "Coarse Ammo",
+        "icon": "T_itemicon_RoughBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "HandgunBullet",
+        "name": "Handgun Ammo",
+        "icon": "T_itemicon_HandgunBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "RifleBullet",
+        "name": "Rifle Ammo",
+        "icon": "T_itemicon_RifleBullet.png",
+        "price": 280
+      },
+      {
+        "itemId": "ShotgunBullet",
+        "name": "Shotgun Shell",
+        "icon": "T_itemicon_ShotgunBullet.png",
+        "price": 330
+      },
+      {
+        "itemId": "AssaultRifleBullet",
+        "name": "Assault Rifle Ammo",
+        "icon": "T_itemicon_AssaultRifleBullet.png",
+        "price": 90
+      },
+      {
+        "itemId": "Ruby",
+        "name": "Ruby",
+        "icon": "T_itemicon_Ruby.png",
+        "price": 20000
+      },
+      {
+        "itemId": "Sapphire",
+        "name": "Sapphire",
+        "icon": "T_itemicon_Sapphire.png",
+        "price": 30000
+      },
+      {
+        "itemId": "Eemerald",
+        "name": "Emerald",
+        "icon": "T_itemicon_Eemerald.png",
+        "price": 40000
+      },
+      {
+        "itemId": "Diamond",
+        "name": "Diamond",
+        "icon": "T_itemicon_Diamond.png",
+        "price": 50000
+      },
+      {
+        "itemId": "PalItem_ToSell_01",
+        "name": "Precious Dragon Stone",
+        "icon": "T_itemicon_PalItem_ToSell_01.png",
+        "price": 15000
+      },
+      {
+        "itemId": "PalItem_ToSell_02",
+        "name": "Precious Plume",
+        "icon": "T_itemicon_PalItem_ToSell_02.png",
+        "price": 10000
+      },
+      {
+        "itemId": "PalItem_ToSell_03",
+        "name": "Precious Entrails",
+        "icon": "T_itemicon_PalItem_ToSell_03.png",
+        "price": 12500
+      },
+      {
+        "itemId": "PalItem_ToSell_04",
+        "name": "Precious Claw",
+        "icon": "T_itemicon_PalItem_ToSell_04.png",
+        "price": 7500
+      },
+      {
+        "itemId": "PalItem_ToSell_05",
+        "name": "Precious Pelt",
+        "icon": "T_itemicon_PalItem_ToSell_05.png",
+        "price": 5000
+      }
+    ],
+    "currency": "Gold Coin",
+    "currencyIcon": "T_itemicon_Money.png",
+    "palPool": null,
+    "x": -248285.0,
+    "y": 356691.0,
+    "z": null
+  },
+  {
+    "id": "SalesPerson_Wander:-467186:-60985",
+    "uniqueName": "SalesPerson_Wander",
+    "name": "Wandering Merchant",
+    "category": "Wandering",
+    "icon": "T_SalesPerson_icon_normal.png",
+    "level": 30,
+    "items": [
+      {
+        "itemId": "Pal_crystal_S",
+        "name": "Paldium Fragment",
+        "icon": "T_itemicon_Pal_crystal_S.png",
+        "price": 70
+      },
+      {
+        "itemId": "SkillCard_SelfDestruct",
+        "name": "Skill Fruit: Implode",
+        "icon": "T_itemicon_SkillCard_Neutral.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_AcidRain",
+        "name": "Water Skill Fruit: Acid Rain",
+        "icon": "T_itemicon_SkillCard_Water.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_LockonLaser",
+        "name": "Electric Skill Fruit: Lock-on Laser",
+        "icon": "T_itemicon_SkillCard_Electric.png",
+        "price": 3000
+      },
+      {
+        "itemId": "Egg",
+        "name": "Egg",
+        "icon": "T_itemicon_Egg.png",
+        "price": 200
+      },
+      {
+        "itemId": "Milk",
+        "name": "Milk",
+        "icon": "T_itemicon_Milk.png",
+        "price": 200
+      },
+      {
+        "itemId": "Berries",
+        "name": "Red Berries",
+        "icon": "T_itemicon_Berries.png",
+        "price": 50
+      },
+      {
+        "itemId": "Wheat",
+        "name": "Wheat",
+        "icon": "T_itemicon_Wheat.png",
+        "price": 70
+      },
+      {
+        "itemId": "Herbs",
+        "name": "Low Grade Medical Supplies",
+        "icon": "T_itemicon_Herbs.png",
+        "price": 780
+      },
+      {
+        "itemId": "Medicines",
+        "name": "Medical Supplies",
+        "icon": "T_itemicon_Medicines.png",
+        "price": 1820
+      },
+      {
+        "itemId": "LuxuryMedicines",
+        "name": "High Grade Medical Supplies",
+        "icon": "T_itemicon_LuxuryMedicines.png",
+        "price": 3120
+      },
+      {
+        "itemId": "Wool",
+        "name": "Wool",
+        "icon": "T_itemicon_Wool.png",
+        "price": 200
+      },
+      {
+        "itemId": "Leather",
+        "name": "Leather",
+        "icon": "T_itemicon_Leather.png",
+        "price": 200
+      },
+      {
+        "itemId": "Bone",
+        "name": "Bone",
+        "icon": "T_itemicon_Bone.png",
+        "price": 200
+      },
+      {
+        "itemId": "Horn",
+        "name": "Horn",
+        "icon": "T_itemicon_Horn.png",
+        "price": 200
+      },
+      {
+        "itemId": "PalFluid",
+        "name": "Aquatic Pal Fluids",
+        "icon": "T_itemicon_PalFluid.png",
+        "price": 300
+      },
+      {
+        "itemId": "PalOil",
+        "name": "High Quality Pal Oil",
+        "icon": "T_itemicon_PalOil.png",
+        "price": 300
+      },
+      {
+        "itemId": "FishingBait_1",
+        "name": "Simple Bait",
+        "icon": "T_itemicon_FishingBait_1.png",
+        "price": 160
+      },
+      {
+        "itemId": "RoughBullet",
+        "name": "Coarse Ammo",
+        "icon": "T_itemicon_RoughBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "HandgunBullet",
+        "name": "Handgun Ammo",
+        "icon": "T_itemicon_HandgunBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "RifleBullet",
+        "name": "Rifle Ammo",
+        "icon": "T_itemicon_RifleBullet.png",
+        "price": 280
+      },
+      {
+        "itemId": "ShotgunBullet",
+        "name": "Shotgun Shell",
+        "icon": "T_itemicon_ShotgunBullet.png",
+        "price": 330
+      },
+      {
+        "itemId": "AssaultRifleBullet",
+        "name": "Assault Rifle Ammo",
+        "icon": "T_itemicon_AssaultRifleBullet.png",
+        "price": 90
+      },
+      {
+        "itemId": "Ruby",
+        "name": "Ruby",
+        "icon": "T_itemicon_Ruby.png",
+        "price": 20000
+      },
+      {
+        "itemId": "Sapphire",
+        "name": "Sapphire",
+        "icon": "T_itemicon_Sapphire.png",
+        "price": 30000
+      },
+      {
+        "itemId": "Eemerald",
+        "name": "Emerald",
+        "icon": "T_itemicon_Eemerald.png",
+        "price": 40000
+      },
+      {
+        "itemId": "Diamond",
+        "name": "Diamond",
+        "icon": "T_itemicon_Diamond.png",
+        "price": 50000
+      },
+      {
+        "itemId": "PalItem_ToSell_01",
+        "name": "Precious Dragon Stone",
+        "icon": "T_itemicon_PalItem_ToSell_01.png",
+        "price": 15000
+      },
+      {
+        "itemId": "PalItem_ToSell_02",
+        "name": "Precious Plume",
+        "icon": "T_itemicon_PalItem_ToSell_02.png",
+        "price": 10000
+      },
+      {
+        "itemId": "PalItem_ToSell_03",
+        "name": "Precious Entrails",
+        "icon": "T_itemicon_PalItem_ToSell_03.png",
+        "price": 12500
+      },
+      {
+        "itemId": "PalItem_ToSell_04",
+        "name": "Precious Claw",
+        "icon": "T_itemicon_PalItem_ToSell_04.png",
+        "price": 7500
+      },
+      {
+        "itemId": "PalItem_ToSell_05",
+        "name": "Precious Pelt",
+        "icon": "T_itemicon_PalItem_ToSell_05.png",
+        "price": 5000
+      }
+    ],
+    "currency": "Gold Coin",
+    "currencyIcon": "T_itemicon_Money.png",
+    "palPool": null,
+    "x": -467186.0,
+    "y": -60985.0,
+    "z": null
+  },
+  {
+    "id": "PalDealer:-469164:-60831",
+    "uniqueName": "PalDealer",
+    "name": "Pal Dealer",
+    "category": "PalDealer",
+    "icon": "T_PalDealer_icon_normal.png",
+    "level": 27,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": {
+      "poolSpecies": [
+        {
+          "name": "Chikipi",
+          "icon": "Pal_ChickenPal.png"
+        },
+        {
+          "name": "Cattiva",
+          "icon": "Pal_PinkCat.png"
+        },
+        {
+          "name": "Lamball",
+          "icon": "Pal_SheepBall.png"
+        },
+        {
+          "name": "Foxparks",
+          "icon": "Pal_Kitsunebi.png"
+        },
+        {
+          "name": "Pengullet",
+          "icon": "Pal_Penguin.png"
+        },
+        {
+          "name": "Lifmunk",
+          "icon": "Pal_Carbunclo.png"
+        },
+        {
+          "name": "Herbil",
+          "icon": "Pal_LeafMomonga.png"
+        },
+        {
+          "name": "Nitewing",
+          "icon": "Pal_HawkBird.png"
+        },
+        {
+          "name": "Direhowl",
+          "icon": "Pal_Garm.png"
+        },
+        {
+          "name": "Eikthyrdeer",
+          "icon": "Pal_Deer.png"
+        }
+      ],
+      "offeredCount": 5,
+      "levelMin": 10,
+      "levelMax": 15
+    },
+    "x": -469164.0,
+    "y": -60831.0,
+    "z": null
+  },
+  {
+    "id": "SalesPerson_Wander:-467854:-61656",
+    "uniqueName": "SalesPerson_Wander",
+    "name": "Wandering Merchant",
+    "category": "Wandering",
+    "icon": "T_SalesPerson_icon_normal.png",
+    "level": 28,
+    "items": [
+      {
+        "itemId": "Pal_crystal_S",
+        "name": "Paldium Fragment",
+        "icon": "T_itemicon_Pal_crystal_S.png",
+        "price": 70
+      },
+      {
+        "itemId": "SkillCard_SelfDestruct",
+        "name": "Skill Fruit: Implode",
+        "icon": "T_itemicon_SkillCard_Neutral.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_AcidRain",
+        "name": "Water Skill Fruit: Acid Rain",
+        "icon": "T_itemicon_SkillCard_Water.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_LockonLaser",
+        "name": "Electric Skill Fruit: Lock-on Laser",
+        "icon": "T_itemicon_SkillCard_Electric.png",
+        "price": 3000
+      },
+      {
+        "itemId": "Egg",
+        "name": "Egg",
+        "icon": "T_itemicon_Egg.png",
+        "price": 200
+      },
+      {
+        "itemId": "Milk",
+        "name": "Milk",
+        "icon": "T_itemicon_Milk.png",
+        "price": 200
+      },
+      {
+        "itemId": "Berries",
+        "name": "Red Berries",
+        "icon": "T_itemicon_Berries.png",
+        "price": 50
+      },
+      {
+        "itemId": "Wheat",
+        "name": "Wheat",
+        "icon": "T_itemicon_Wheat.png",
+        "price": 70
+      },
+      {
+        "itemId": "Herbs",
+        "name": "Low Grade Medical Supplies",
+        "icon": "T_itemicon_Herbs.png",
+        "price": 780
+      },
+      {
+        "itemId": "Medicines",
+        "name": "Medical Supplies",
+        "icon": "T_itemicon_Medicines.png",
+        "price": 1820
+      },
+      {
+        "itemId": "LuxuryMedicines",
+        "name": "High Grade Medical Supplies",
+        "icon": "T_itemicon_LuxuryMedicines.png",
+        "price": 3120
+      },
+      {
+        "itemId": "Wool",
+        "name": "Wool",
+        "icon": "T_itemicon_Wool.png",
+        "price": 200
+      },
+      {
+        "itemId": "Leather",
+        "name": "Leather",
+        "icon": "T_itemicon_Leather.png",
+        "price": 200
+      },
+      {
+        "itemId": "Bone",
+        "name": "Bone",
+        "icon": "T_itemicon_Bone.png",
+        "price": 200
+      },
+      {
+        "itemId": "Horn",
+        "name": "Horn",
+        "icon": "T_itemicon_Horn.png",
+        "price": 200
+      },
+      {
+        "itemId": "PalFluid",
+        "name": "Aquatic Pal Fluids",
+        "icon": "T_itemicon_PalFluid.png",
+        "price": 300
+      },
+      {
+        "itemId": "PalOil",
+        "name": "High Quality Pal Oil",
+        "icon": "T_itemicon_PalOil.png",
+        "price": 300
+      },
+      {
+        "itemId": "FishingBait_1",
+        "name": "Simple Bait",
+        "icon": "T_itemicon_FishingBait_1.png",
+        "price": 160
+      },
+      {
+        "itemId": "RoughBullet",
+        "name": "Coarse Ammo",
+        "icon": "T_itemicon_RoughBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "HandgunBullet",
+        "name": "Handgun Ammo",
+        "icon": "T_itemicon_HandgunBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "RifleBullet",
+        "name": "Rifle Ammo",
+        "icon": "T_itemicon_RifleBullet.png",
+        "price": 280
+      },
+      {
+        "itemId": "ShotgunBullet",
+        "name": "Shotgun Shell",
+        "icon": "T_itemicon_ShotgunBullet.png",
+        "price": 330
+      },
+      {
+        "itemId": "AssaultRifleBullet",
+        "name": "Assault Rifle Ammo",
+        "icon": "T_itemicon_AssaultRifleBullet.png",
+        "price": 90
+      },
+      {
+        "itemId": "Ruby",
+        "name": "Ruby",
+        "icon": "T_itemicon_Ruby.png",
+        "price": 20000
+      },
+      {
+        "itemId": "Sapphire",
+        "name": "Sapphire",
+        "icon": "T_itemicon_Sapphire.png",
+        "price": 30000
+      },
+      {
+        "itemId": "Eemerald",
+        "name": "Emerald",
+        "icon": "T_itemicon_Eemerald.png",
+        "price": 40000
+      },
+      {
+        "itemId": "Diamond",
+        "name": "Diamond",
+        "icon": "T_itemicon_Diamond.png",
+        "price": 50000
+      },
+      {
+        "itemId": "PalItem_ToSell_01",
+        "name": "Precious Dragon Stone",
+        "icon": "T_itemicon_PalItem_ToSell_01.png",
+        "price": 15000
+      },
+      {
+        "itemId": "PalItem_ToSell_02",
+        "name": "Precious Plume",
+        "icon": "T_itemicon_PalItem_ToSell_02.png",
+        "price": 10000
+      },
+      {
+        "itemId": "PalItem_ToSell_03",
+        "name": "Precious Entrails",
+        "icon": "T_itemicon_PalItem_ToSell_03.png",
+        "price": 12500
+      },
+      {
+        "itemId": "PalItem_ToSell_04",
+        "name": "Precious Claw",
+        "icon": "T_itemicon_PalItem_ToSell_04.png",
+        "price": 7500
+      },
+      {
+        "itemId": "PalItem_ToSell_05",
+        "name": "Precious Pelt",
+        "icon": "T_itemicon_PalItem_ToSell_05.png",
+        "price": 5000
+      }
+    ],
+    "currency": "Gold Coin",
+    "currencyIcon": "T_itemicon_Money.png",
+    "palPool": null,
+    "x": -467854.0,
+    "y": -61656.0,
+    "z": null
+  },
+  {
+    "id": "SalesPerson_Wander:-115720:-24042",
+    "uniqueName": "SalesPerson_Wander",
+    "name": "Wandering Merchant",
+    "category": "Wandering",
+    "icon": "T_SalesPerson_icon_normal.png",
+    "level": 14,
+    "items": [
+      {
+        "itemId": "Pal_crystal_S",
+        "name": "Paldium Fragment",
+        "icon": "T_itemicon_Pal_crystal_S.png",
+        "price": 70
+      },
+      {
+        "itemId": "SkillCard_SelfDestruct",
+        "name": "Skill Fruit: Implode",
+        "icon": "T_itemicon_SkillCard_Neutral.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_AcidRain",
+        "name": "Water Skill Fruit: Acid Rain",
+        "icon": "T_itemicon_SkillCard_Water.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_LockonLaser",
+        "name": "Electric Skill Fruit: Lock-on Laser",
+        "icon": "T_itemicon_SkillCard_Electric.png",
+        "price": 3000
+      },
+      {
+        "itemId": "Egg",
+        "name": "Egg",
+        "icon": "T_itemicon_Egg.png",
+        "price": 200
+      },
+      {
+        "itemId": "Milk",
+        "name": "Milk",
+        "icon": "T_itemicon_Milk.png",
+        "price": 200
+      },
+      {
+        "itemId": "Berries",
+        "name": "Red Berries",
+        "icon": "T_itemicon_Berries.png",
+        "price": 50
+      },
+      {
+        "itemId": "Wheat",
+        "name": "Wheat",
+        "icon": "T_itemicon_Wheat.png",
+        "price": 70
+      },
+      {
+        "itemId": "Herbs",
+        "name": "Low Grade Medical Supplies",
+        "icon": "T_itemicon_Herbs.png",
+        "price": 780
+      },
+      {
+        "itemId": "Medicines",
+        "name": "Medical Supplies",
+        "icon": "T_itemicon_Medicines.png",
+        "price": 1820
+      },
+      {
+        "itemId": "LuxuryMedicines",
+        "name": "High Grade Medical Supplies",
+        "icon": "T_itemicon_LuxuryMedicines.png",
+        "price": 3120
+      },
+      {
+        "itemId": "Wool",
+        "name": "Wool",
+        "icon": "T_itemicon_Wool.png",
+        "price": 200
+      },
+      {
+        "itemId": "Leather",
+        "name": "Leather",
+        "icon": "T_itemicon_Leather.png",
+        "price": 200
+      },
+      {
+        "itemId": "Bone",
+        "name": "Bone",
+        "icon": "T_itemicon_Bone.png",
+        "price": 200
+      },
+      {
+        "itemId": "Horn",
+        "name": "Horn",
+        "icon": "T_itemicon_Horn.png",
+        "price": 200
+      },
+      {
+        "itemId": "PalFluid",
+        "name": "Aquatic Pal Fluids",
+        "icon": "T_itemicon_PalFluid.png",
+        "price": 300
+      },
+      {
+        "itemId": "PalOil",
+        "name": "High Quality Pal Oil",
+        "icon": "T_itemicon_PalOil.png",
+        "price": 300
+      },
+      {
+        "itemId": "FishingBait_1",
+        "name": "Simple Bait",
+        "icon": "T_itemicon_FishingBait_1.png",
+        "price": 160
+      },
+      {
+        "itemId": "RoughBullet",
+        "name": "Coarse Ammo",
+        "icon": "T_itemicon_RoughBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "HandgunBullet",
+        "name": "Handgun Ammo",
+        "icon": "T_itemicon_HandgunBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "RifleBullet",
+        "name": "Rifle Ammo",
+        "icon": "T_itemicon_RifleBullet.png",
+        "price": 280
+      },
+      {
+        "itemId": "ShotgunBullet",
+        "name": "Shotgun Shell",
+        "icon": "T_itemicon_ShotgunBullet.png",
+        "price": 330
+      },
+      {
+        "itemId": "AssaultRifleBullet",
+        "name": "Assault Rifle Ammo",
+        "icon": "T_itemicon_AssaultRifleBullet.png",
+        "price": 90
+      },
+      {
+        "itemId": "Ruby",
+        "name": "Ruby",
+        "icon": "T_itemicon_Ruby.png",
+        "price": 20000
+      },
+      {
+        "itemId": "Sapphire",
+        "name": "Sapphire",
+        "icon": "T_itemicon_Sapphire.png",
+        "price": 30000
+      },
+      {
+        "itemId": "Eemerald",
+        "name": "Emerald",
+        "icon": "T_itemicon_Eemerald.png",
+        "price": 40000
+      },
+      {
+        "itemId": "Diamond",
+        "name": "Diamond",
+        "icon": "T_itemicon_Diamond.png",
+        "price": 50000
+      },
+      {
+        "itemId": "PalItem_ToSell_01",
+        "name": "Precious Dragon Stone",
+        "icon": "T_itemicon_PalItem_ToSell_01.png",
+        "price": 15000
+      },
+      {
+        "itemId": "PalItem_ToSell_02",
+        "name": "Precious Plume",
+        "icon": "T_itemicon_PalItem_ToSell_02.png",
+        "price": 10000
+      },
+      {
+        "itemId": "PalItem_ToSell_03",
+        "name": "Precious Entrails",
+        "icon": "T_itemicon_PalItem_ToSell_03.png",
+        "price": 12500
+      },
+      {
+        "itemId": "PalItem_ToSell_04",
+        "name": "Precious Claw",
+        "icon": "T_itemicon_PalItem_ToSell_04.png",
+        "price": 7500
+      },
+      {
+        "itemId": "PalItem_ToSell_05",
+        "name": "Precious Pelt",
+        "icon": "T_itemicon_PalItem_ToSell_05.png",
+        "price": 5000
+      }
+    ],
+    "currency": "Gold Coin",
+    "currencyIcon": "T_itemicon_Money.png",
+    "palPool": null,
+    "x": -115720.0,
+    "y": -24042.0,
+    "z": null
+  },
+  {
+    "id": "PalDealer:-116506:-23892",
+    "uniqueName": "PalDealer",
+    "name": "Pal Dealer",
+    "category": "PalDealer",
+    "icon": "T_PalDealer_icon_normal.png",
+    "level": 11,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": {
+      "poolSpecies": [
+        {
+          "name": "Chikipi",
+          "icon": "Pal_ChickenPal.png"
+        },
+        {
+          "name": "Cattiva",
+          "icon": "Pal_PinkCat.png"
+        },
+        {
+          "name": "Lamball",
+          "icon": "Pal_SheepBall.png"
+        },
+        {
+          "name": "Foxparks",
+          "icon": "Pal_Kitsunebi.png"
+        },
+        {
+          "name": "Pengullet",
+          "icon": "Pal_Penguin.png"
+        },
+        {
+          "name": "Lifmunk",
+          "icon": "Pal_Carbunclo.png"
+        },
+        {
+          "name": "Herbil",
+          "icon": "Pal_LeafMomonga.png"
+        },
+        {
+          "name": "Nitewing",
+          "icon": "Pal_HawkBird.png"
+        },
+        {
+          "name": "Direhowl",
+          "icon": "Pal_Garm.png"
+        },
+        {
+          "name": "Eikthyrdeer",
+          "icon": "Pal_Deer.png"
+        }
+      ],
+      "offeredCount": 5,
+      "levelMin": 10,
+      "levelMax": 15
+    },
+    "x": -116506.0,
+    "y": -23892.0,
+    "z": null
+  },
+  {
+    "id": "SalesPerson_Wander:42175:315392",
+    "uniqueName": "SalesPerson_Wander",
+    "name": "Wandering Merchant",
+    "category": "Wandering",
+    "icon": "T_SalesPerson_icon_normal.png",
+    "level": 43,
+    "items": [
+      {
+        "itemId": "Pal_crystal_S",
+        "name": "Paldium Fragment",
+        "icon": "T_itemicon_Pal_crystal_S.png",
+        "price": 70
+      },
+      {
+        "itemId": "SkillCard_SelfDestruct",
+        "name": "Skill Fruit: Implode",
+        "icon": "T_itemicon_SkillCard_Neutral.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_AcidRain",
+        "name": "Water Skill Fruit: Acid Rain",
+        "icon": "T_itemicon_SkillCard_Water.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_LockonLaser",
+        "name": "Electric Skill Fruit: Lock-on Laser",
+        "icon": "T_itemicon_SkillCard_Electric.png",
+        "price": 3000
+      },
+      {
+        "itemId": "Egg",
+        "name": "Egg",
+        "icon": "T_itemicon_Egg.png",
+        "price": 200
+      },
+      {
+        "itemId": "Milk",
+        "name": "Milk",
+        "icon": "T_itemicon_Milk.png",
+        "price": 200
+      },
+      {
+        "itemId": "Berries",
+        "name": "Red Berries",
+        "icon": "T_itemicon_Berries.png",
+        "price": 50
+      },
+      {
+        "itemId": "Wheat",
+        "name": "Wheat",
+        "icon": "T_itemicon_Wheat.png",
+        "price": 70
+      },
+      {
+        "itemId": "Herbs",
+        "name": "Low Grade Medical Supplies",
+        "icon": "T_itemicon_Herbs.png",
+        "price": 780
+      },
+      {
+        "itemId": "Medicines",
+        "name": "Medical Supplies",
+        "icon": "T_itemicon_Medicines.png",
+        "price": 1820
+      },
+      {
+        "itemId": "LuxuryMedicines",
+        "name": "High Grade Medical Supplies",
+        "icon": "T_itemicon_LuxuryMedicines.png",
+        "price": 3120
+      },
+      {
+        "itemId": "Wool",
+        "name": "Wool",
+        "icon": "T_itemicon_Wool.png",
+        "price": 200
+      },
+      {
+        "itemId": "Leather",
+        "name": "Leather",
+        "icon": "T_itemicon_Leather.png",
+        "price": 200
+      },
+      {
+        "itemId": "Bone",
+        "name": "Bone",
+        "icon": "T_itemicon_Bone.png",
+        "price": 200
+      },
+      {
+        "itemId": "Horn",
+        "name": "Horn",
+        "icon": "T_itemicon_Horn.png",
+        "price": 200
+      },
+      {
+        "itemId": "PalFluid",
+        "name": "Aquatic Pal Fluids",
+        "icon": "T_itemicon_PalFluid.png",
+        "price": 300
+      },
+      {
+        "itemId": "PalOil",
+        "name": "High Quality Pal Oil",
+        "icon": "T_itemicon_PalOil.png",
+        "price": 300
+      },
+      {
+        "itemId": "FishingBait_1",
+        "name": "Simple Bait",
+        "icon": "T_itemicon_FishingBait_1.png",
+        "price": 160
+      },
+      {
+        "itemId": "RoughBullet",
+        "name": "Coarse Ammo",
+        "icon": "T_itemicon_RoughBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "HandgunBullet",
+        "name": "Handgun Ammo",
+        "icon": "T_itemicon_HandgunBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "RifleBullet",
+        "name": "Rifle Ammo",
+        "icon": "T_itemicon_RifleBullet.png",
+        "price": 280
+      },
+      {
+        "itemId": "ShotgunBullet",
+        "name": "Shotgun Shell",
+        "icon": "T_itemicon_ShotgunBullet.png",
+        "price": 330
+      },
+      {
+        "itemId": "AssaultRifleBullet",
+        "name": "Assault Rifle Ammo",
+        "icon": "T_itemicon_AssaultRifleBullet.png",
+        "price": 90
+      },
+      {
+        "itemId": "Ruby",
+        "name": "Ruby",
+        "icon": "T_itemicon_Ruby.png",
+        "price": 20000
+      },
+      {
+        "itemId": "Sapphire",
+        "name": "Sapphire",
+        "icon": "T_itemicon_Sapphire.png",
+        "price": 30000
+      },
+      {
+        "itemId": "Eemerald",
+        "name": "Emerald",
+        "icon": "T_itemicon_Eemerald.png",
+        "price": 40000
+      },
+      {
+        "itemId": "Diamond",
+        "name": "Diamond",
+        "icon": "T_itemicon_Diamond.png",
+        "price": 50000
+      },
+      {
+        "itemId": "PalItem_ToSell_01",
+        "name": "Precious Dragon Stone",
+        "icon": "T_itemicon_PalItem_ToSell_01.png",
+        "price": 15000
+      },
+      {
+        "itemId": "PalItem_ToSell_02",
+        "name": "Precious Plume",
+        "icon": "T_itemicon_PalItem_ToSell_02.png",
+        "price": 10000
+      },
+      {
+        "itemId": "PalItem_ToSell_03",
+        "name": "Precious Entrails",
+        "icon": "T_itemicon_PalItem_ToSell_03.png",
+        "price": 12500
+      },
+      {
+        "itemId": "PalItem_ToSell_04",
+        "name": "Precious Claw",
+        "icon": "T_itemicon_PalItem_ToSell_04.png",
+        "price": 7500
+      },
+      {
+        "itemId": "PalItem_ToSell_05",
+        "name": "Precious Pelt",
+        "icon": "T_itemicon_PalItem_ToSell_05.png",
+        "price": 5000
+      }
+    ],
+    "currency": "Gold Coin",
+    "currencyIcon": "T_itemicon_Money.png",
+    "palPool": null,
+    "x": 42175.0,
+    "y": 315392.0,
+    "z": null
+  },
+  {
+    "id": "PalDealer:40444:314941",
+    "uniqueName": "PalDealer",
+    "name": "Pal Dealer",
+    "category": "PalDealer",
+    "icon": "T_PalDealer_icon_normal.png",
+    "level": 43,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": {
+      "poolSpecies": [
+        {
+          "name": "Chikipi",
+          "icon": "Pal_ChickenPal.png"
+        },
+        {
+          "name": "Cattiva",
+          "icon": "Pal_PinkCat.png"
+        },
+        {
+          "name": "Lamball",
+          "icon": "Pal_SheepBall.png"
+        },
+        {
+          "name": "Foxparks",
+          "icon": "Pal_Kitsunebi.png"
+        },
+        {
+          "name": "Pengullet",
+          "icon": "Pal_Penguin.png"
+        },
+        {
+          "name": "Lifmunk",
+          "icon": "Pal_Carbunclo.png"
+        },
+        {
+          "name": "Herbil",
+          "icon": "Pal_LeafMomonga.png"
+        },
+        {
+          "name": "Nitewing",
+          "icon": "Pal_HawkBird.png"
+        },
+        {
+          "name": "Direhowl",
+          "icon": "Pal_Garm.png"
+        },
+        {
+          "name": "Eikthyrdeer",
+          "icon": "Pal_Deer.png"
+        }
+      ],
+      "offeredCount": 5,
+      "levelMin": 10,
+      "levelMax": 15
+    },
+    "x": 40444.0,
+    "y": 314941.0,
+    "z": null
+  },
+  {
+    "id": "SalesPerson_Wander:42236:314931",
+    "uniqueName": "SalesPerson_Wander",
+    "name": "Wandering Merchant",
+    "category": "Wandering",
+    "icon": "T_SalesPerson_icon_normal.png",
+    "level": 45,
+    "items": [
+      {
+        "itemId": "Pal_crystal_S",
+        "name": "Paldium Fragment",
+        "icon": "T_itemicon_Pal_crystal_S.png",
+        "price": 70
+      },
+      {
+        "itemId": "SkillCard_SelfDestruct",
+        "name": "Skill Fruit: Implode",
+        "icon": "T_itemicon_SkillCard_Neutral.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_AcidRain",
+        "name": "Water Skill Fruit: Acid Rain",
+        "icon": "T_itemicon_SkillCard_Water.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_LockonLaser",
+        "name": "Electric Skill Fruit: Lock-on Laser",
+        "icon": "T_itemicon_SkillCard_Electric.png",
+        "price": 3000
+      },
+      {
+        "itemId": "Egg",
+        "name": "Egg",
+        "icon": "T_itemicon_Egg.png",
+        "price": 200
+      },
+      {
+        "itemId": "Milk",
+        "name": "Milk",
+        "icon": "T_itemicon_Milk.png",
+        "price": 200
+      },
+      {
+        "itemId": "Berries",
+        "name": "Red Berries",
+        "icon": "T_itemicon_Berries.png",
+        "price": 50
+      },
+      {
+        "itemId": "Wheat",
+        "name": "Wheat",
+        "icon": "T_itemicon_Wheat.png",
+        "price": 70
+      },
+      {
+        "itemId": "Herbs",
+        "name": "Low Grade Medical Supplies",
+        "icon": "T_itemicon_Herbs.png",
+        "price": 780
+      },
+      {
+        "itemId": "Medicines",
+        "name": "Medical Supplies",
+        "icon": "T_itemicon_Medicines.png",
+        "price": 1820
+      },
+      {
+        "itemId": "LuxuryMedicines",
+        "name": "High Grade Medical Supplies",
+        "icon": "T_itemicon_LuxuryMedicines.png",
+        "price": 3120
+      },
+      {
+        "itemId": "Wool",
+        "name": "Wool",
+        "icon": "T_itemicon_Wool.png",
+        "price": 200
+      },
+      {
+        "itemId": "Leather",
+        "name": "Leather",
+        "icon": "T_itemicon_Leather.png",
+        "price": 200
+      },
+      {
+        "itemId": "Bone",
+        "name": "Bone",
+        "icon": "T_itemicon_Bone.png",
+        "price": 200
+      },
+      {
+        "itemId": "Horn",
+        "name": "Horn",
+        "icon": "T_itemicon_Horn.png",
+        "price": 200
+      },
+      {
+        "itemId": "PalFluid",
+        "name": "Aquatic Pal Fluids",
+        "icon": "T_itemicon_PalFluid.png",
+        "price": 300
+      },
+      {
+        "itemId": "PalOil",
+        "name": "High Quality Pal Oil",
+        "icon": "T_itemicon_PalOil.png",
+        "price": 300
+      },
+      {
+        "itemId": "FishingBait_1",
+        "name": "Simple Bait",
+        "icon": "T_itemicon_FishingBait_1.png",
+        "price": 160
+      },
+      {
+        "itemId": "RoughBullet",
+        "name": "Coarse Ammo",
+        "icon": "T_itemicon_RoughBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "HandgunBullet",
+        "name": "Handgun Ammo",
+        "icon": "T_itemicon_HandgunBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "RifleBullet",
+        "name": "Rifle Ammo",
+        "icon": "T_itemicon_RifleBullet.png",
+        "price": 280
+      },
+      {
+        "itemId": "ShotgunBullet",
+        "name": "Shotgun Shell",
+        "icon": "T_itemicon_ShotgunBullet.png",
+        "price": 330
+      },
+      {
+        "itemId": "AssaultRifleBullet",
+        "name": "Assault Rifle Ammo",
+        "icon": "T_itemicon_AssaultRifleBullet.png",
+        "price": 90
+      },
+      {
+        "itemId": "Ruby",
+        "name": "Ruby",
+        "icon": "T_itemicon_Ruby.png",
+        "price": 20000
+      },
+      {
+        "itemId": "Sapphire",
+        "name": "Sapphire",
+        "icon": "T_itemicon_Sapphire.png",
+        "price": 30000
+      },
+      {
+        "itemId": "Eemerald",
+        "name": "Emerald",
+        "icon": "T_itemicon_Eemerald.png",
+        "price": 40000
+      },
+      {
+        "itemId": "Diamond",
+        "name": "Diamond",
+        "icon": "T_itemicon_Diamond.png",
+        "price": 50000
+      },
+      {
+        "itemId": "PalItem_ToSell_01",
+        "name": "Precious Dragon Stone",
+        "icon": "T_itemicon_PalItem_ToSell_01.png",
+        "price": 15000
+      },
+      {
+        "itemId": "PalItem_ToSell_02",
+        "name": "Precious Plume",
+        "icon": "T_itemicon_PalItem_ToSell_02.png",
+        "price": 10000
+      },
+      {
+        "itemId": "PalItem_ToSell_03",
+        "name": "Precious Entrails",
+        "icon": "T_itemicon_PalItem_ToSell_03.png",
+        "price": 12500
+      },
+      {
+        "itemId": "PalItem_ToSell_04",
+        "name": "Precious Claw",
+        "icon": "T_itemicon_PalItem_ToSell_04.png",
+        "price": 7500
+      },
+      {
+        "itemId": "PalItem_ToSell_05",
+        "name": "Precious Pelt",
+        "icon": "T_itemicon_PalItem_ToSell_05.png",
+        "price": 5000
+      }
+    ],
+    "currency": "Gold Coin",
+    "currencyIcon": "T_itemicon_Money.png",
+    "palPool": null,
+    "x": 42236.0,
+    "y": 314931.0,
+    "z": null
+  },
+  {
+    "id": "PalDealer:-344289:193934",
+    "uniqueName": "PalDealer",
+    "name": "Pal Dealer",
+    "category": "PalDealer",
+    "icon": "T_PalDealer_icon_normal.png",
+    "level": 12,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": {
+      "poolSpecies": [
+        {
+          "name": "Chikipi",
+          "icon": "Pal_ChickenPal.png"
+        },
+        {
+          "name": "Cattiva",
+          "icon": "Pal_PinkCat.png"
+        },
+        {
+          "name": "Lamball",
+          "icon": "Pal_SheepBall.png"
+        },
+        {
+          "name": "Foxparks",
+          "icon": "Pal_Kitsunebi.png"
+        },
+        {
+          "name": "Pengullet",
+          "icon": "Pal_Penguin.png"
+        },
+        {
+          "name": "Lifmunk",
+          "icon": "Pal_Carbunclo.png"
+        },
+        {
+          "name": "Herbil",
+          "icon": "Pal_LeafMomonga.png"
+        },
+        {
+          "name": "Nitewing",
+          "icon": "Pal_HawkBird.png"
+        },
+        {
+          "name": "Direhowl",
+          "icon": "Pal_Garm.png"
+        },
+        {
+          "name": "Eikthyrdeer",
+          "icon": "Pal_Deer.png"
+        }
+      ],
+      "offeredCount": 5,
+      "levelMin": 10,
+      "levelMax": 15
+    },
+    "x": -344289.0,
+    "y": 193934.0,
+    "z": null
+  },
+  {
+    "id": "SalesPerson_Wander:-341414:192849",
+    "uniqueName": "SalesPerson_Wander",
+    "name": "Wandering Merchant",
+    "category": "Wandering",
+    "icon": "T_SalesPerson_icon_normal.png",
+    "level": 12,
+    "items": [
+      {
+        "itemId": "Pal_crystal_S",
+        "name": "Paldium Fragment",
+        "icon": "T_itemicon_Pal_crystal_S.png",
+        "price": 70
+      },
+      {
+        "itemId": "SkillCard_SelfDestruct",
+        "name": "Skill Fruit: Implode",
+        "icon": "T_itemicon_SkillCard_Neutral.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_AcidRain",
+        "name": "Water Skill Fruit: Acid Rain",
+        "icon": "T_itemicon_SkillCard_Water.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_LockonLaser",
+        "name": "Electric Skill Fruit: Lock-on Laser",
+        "icon": "T_itemicon_SkillCard_Electric.png",
+        "price": 3000
+      },
+      {
+        "itemId": "Egg",
+        "name": "Egg",
+        "icon": "T_itemicon_Egg.png",
+        "price": 200
+      },
+      {
+        "itemId": "Milk",
+        "name": "Milk",
+        "icon": "T_itemicon_Milk.png",
+        "price": 200
+      },
+      {
+        "itemId": "Berries",
+        "name": "Red Berries",
+        "icon": "T_itemicon_Berries.png",
+        "price": 50
+      },
+      {
+        "itemId": "Wheat",
+        "name": "Wheat",
+        "icon": "T_itemicon_Wheat.png",
+        "price": 70
+      },
+      {
+        "itemId": "Herbs",
+        "name": "Low Grade Medical Supplies",
+        "icon": "T_itemicon_Herbs.png",
+        "price": 780
+      },
+      {
+        "itemId": "Medicines",
+        "name": "Medical Supplies",
+        "icon": "T_itemicon_Medicines.png",
+        "price": 1820
+      },
+      {
+        "itemId": "LuxuryMedicines",
+        "name": "High Grade Medical Supplies",
+        "icon": "T_itemicon_LuxuryMedicines.png",
+        "price": 3120
+      },
+      {
+        "itemId": "Wool",
+        "name": "Wool",
+        "icon": "T_itemicon_Wool.png",
+        "price": 200
+      },
+      {
+        "itemId": "Leather",
+        "name": "Leather",
+        "icon": "T_itemicon_Leather.png",
+        "price": 200
+      },
+      {
+        "itemId": "Bone",
+        "name": "Bone",
+        "icon": "T_itemicon_Bone.png",
+        "price": 200
+      },
+      {
+        "itemId": "Horn",
+        "name": "Horn",
+        "icon": "T_itemicon_Horn.png",
+        "price": 200
+      },
+      {
+        "itemId": "PalFluid",
+        "name": "Aquatic Pal Fluids",
+        "icon": "T_itemicon_PalFluid.png",
+        "price": 300
+      },
+      {
+        "itemId": "PalOil",
+        "name": "High Quality Pal Oil",
+        "icon": "T_itemicon_PalOil.png",
+        "price": 300
+      },
+      {
+        "itemId": "FishingBait_1",
+        "name": "Simple Bait",
+        "icon": "T_itemicon_FishingBait_1.png",
+        "price": 160
+      },
+      {
+        "itemId": "RoughBullet",
+        "name": "Coarse Ammo",
+        "icon": "T_itemicon_RoughBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "HandgunBullet",
+        "name": "Handgun Ammo",
+        "icon": "T_itemicon_HandgunBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "RifleBullet",
+        "name": "Rifle Ammo",
+        "icon": "T_itemicon_RifleBullet.png",
+        "price": 280
+      },
+      {
+        "itemId": "ShotgunBullet",
+        "name": "Shotgun Shell",
+        "icon": "T_itemicon_ShotgunBullet.png",
+        "price": 330
+      },
+      {
+        "itemId": "AssaultRifleBullet",
+        "name": "Assault Rifle Ammo",
+        "icon": "T_itemicon_AssaultRifleBullet.png",
+        "price": 90
+      },
+      {
+        "itemId": "Ruby",
+        "name": "Ruby",
+        "icon": "T_itemicon_Ruby.png",
+        "price": 20000
+      },
+      {
+        "itemId": "Sapphire",
+        "name": "Sapphire",
+        "icon": "T_itemicon_Sapphire.png",
+        "price": 30000
+      },
+      {
+        "itemId": "Eemerald",
+        "name": "Emerald",
+        "icon": "T_itemicon_Eemerald.png",
+        "price": 40000
+      },
+      {
+        "itemId": "Diamond",
+        "name": "Diamond",
+        "icon": "T_itemicon_Diamond.png",
+        "price": 50000
+      },
+      {
+        "itemId": "PalItem_ToSell_01",
+        "name": "Precious Dragon Stone",
+        "icon": "T_itemicon_PalItem_ToSell_01.png",
+        "price": 15000
+      },
+      {
+        "itemId": "PalItem_ToSell_02",
+        "name": "Precious Plume",
+        "icon": "T_itemicon_PalItem_ToSell_02.png",
+        "price": 10000
+      },
+      {
+        "itemId": "PalItem_ToSell_03",
+        "name": "Precious Entrails",
+        "icon": "T_itemicon_PalItem_ToSell_03.png",
+        "price": 12500
+      },
+      {
+        "itemId": "PalItem_ToSell_04",
+        "name": "Precious Claw",
+        "icon": "T_itemicon_PalItem_ToSell_04.png",
+        "price": 7500
+      },
+      {
+        "itemId": "PalItem_ToSell_05",
+        "name": "Precious Pelt",
+        "icon": "T_itemicon_PalItem_ToSell_05.png",
+        "price": 5000
+      }
+    ],
+    "currency": "Gold Coin",
+    "currencyIcon": "T_itemicon_Money.png",
+    "palPool": null,
+    "x": -341414.0,
+    "y": 192849.0,
+    "z": null
+  },
+  {
+    "id": "SalesPerson_Wander:-399694:71535",
+    "uniqueName": "SalesPerson_Wander",
+    "name": "Wandering Merchant",
+    "category": "Wandering",
+    "icon": "T_SalesPerson_icon_normal.png",
+    "level": 22,
+    "items": [
+      {
+        "itemId": "Pal_crystal_S",
+        "name": "Paldium Fragment",
+        "icon": "T_itemicon_Pal_crystal_S.png",
+        "price": 70
+      },
+      {
+        "itemId": "SkillCard_SelfDestruct",
+        "name": "Skill Fruit: Implode",
+        "icon": "T_itemicon_SkillCard_Neutral.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_AcidRain",
+        "name": "Water Skill Fruit: Acid Rain",
+        "icon": "T_itemicon_SkillCard_Water.png",
+        "price": 3000
+      },
+      {
+        "itemId": "SkillCard_LockonLaser",
+        "name": "Electric Skill Fruit: Lock-on Laser",
+        "icon": "T_itemicon_SkillCard_Electric.png",
+        "price": 3000
+      },
+      {
+        "itemId": "Egg",
+        "name": "Egg",
+        "icon": "T_itemicon_Egg.png",
+        "price": 200
+      },
+      {
+        "itemId": "Milk",
+        "name": "Milk",
+        "icon": "T_itemicon_Milk.png",
+        "price": 200
+      },
+      {
+        "itemId": "Berries",
+        "name": "Red Berries",
+        "icon": "T_itemicon_Berries.png",
+        "price": 50
+      },
+      {
+        "itemId": "Wheat",
+        "name": "Wheat",
+        "icon": "T_itemicon_Wheat.png",
+        "price": 70
+      },
+      {
+        "itemId": "Herbs",
+        "name": "Low Grade Medical Supplies",
+        "icon": "T_itemicon_Herbs.png",
+        "price": 780
+      },
+      {
+        "itemId": "Medicines",
+        "name": "Medical Supplies",
+        "icon": "T_itemicon_Medicines.png",
+        "price": 1820
+      },
+      {
+        "itemId": "LuxuryMedicines",
+        "name": "High Grade Medical Supplies",
+        "icon": "T_itemicon_LuxuryMedicines.png",
+        "price": 3120
+      },
+      {
+        "itemId": "Wool",
+        "name": "Wool",
+        "icon": "T_itemicon_Wool.png",
+        "price": 200
+      },
+      {
+        "itemId": "Leather",
+        "name": "Leather",
+        "icon": "T_itemicon_Leather.png",
+        "price": 200
+      },
+      {
+        "itemId": "Bone",
+        "name": "Bone",
+        "icon": "T_itemicon_Bone.png",
+        "price": 200
+      },
+      {
+        "itemId": "Horn",
+        "name": "Horn",
+        "icon": "T_itemicon_Horn.png",
+        "price": 200
+      },
+      {
+        "itemId": "PalFluid",
+        "name": "Aquatic Pal Fluids",
+        "icon": "T_itemicon_PalFluid.png",
+        "price": 300
+      },
+      {
+        "itemId": "PalOil",
+        "name": "High Quality Pal Oil",
+        "icon": "T_itemicon_PalOil.png",
+        "price": 300
+      },
+      {
+        "itemId": "FishingBait_1",
+        "name": "Simple Bait",
+        "icon": "T_itemicon_FishingBait_1.png",
+        "price": 160
+      },
+      {
+        "itemId": "RoughBullet",
+        "name": "Coarse Ammo",
+        "icon": "T_itemicon_RoughBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "HandgunBullet",
+        "name": "Handgun Ammo",
+        "icon": "T_itemicon_HandgunBullet.png",
+        "price": 40
+      },
+      {
+        "itemId": "RifleBullet",
+        "name": "Rifle Ammo",
+        "icon": "T_itemicon_RifleBullet.png",
+        "price": 280
+      },
+      {
+        "itemId": "ShotgunBullet",
+        "name": "Shotgun Shell",
+        "icon": "T_itemicon_ShotgunBullet.png",
+        "price": 330
+      },
+      {
+        "itemId": "AssaultRifleBullet",
+        "name": "Assault Rifle Ammo",
+        "icon": "T_itemicon_AssaultRifleBullet.png",
+        "price": 90
+      },
+      {
+        "itemId": "Ruby",
+        "name": "Ruby",
+        "icon": "T_itemicon_Ruby.png",
+        "price": 20000
+      },
+      {
+        "itemId": "Sapphire",
+        "name": "Sapphire",
+        "icon": "T_itemicon_Sapphire.png",
+        "price": 30000
+      },
+      {
+        "itemId": "Eemerald",
+        "name": "Emerald",
+        "icon": "T_itemicon_Eemerald.png",
+        "price": 40000
+      },
+      {
+        "itemId": "Diamond",
+        "name": "Diamond",
+        "icon": "T_itemicon_Diamond.png",
+        "price": 50000
+      },
+      {
+        "itemId": "PalItem_ToSell_01",
+        "name": "Precious Dragon Stone",
+        "icon": "T_itemicon_PalItem_ToSell_01.png",
+        "price": 15000
+      },
+      {
+        "itemId": "PalItem_ToSell_02",
+        "name": "Precious Plume",
+        "icon": "T_itemicon_PalItem_ToSell_02.png",
+        "price": 10000
+      },
+      {
+        "itemId": "PalItem_ToSell_03",
+        "name": "Precious Entrails",
+        "icon": "T_itemicon_PalItem_ToSell_03.png",
+        "price": 12500
+      },
+      {
+        "itemId": "PalItem_ToSell_04",
+        "name": "Precious Claw",
+        "icon": "T_itemicon_PalItem_ToSell_04.png",
+        "price": 7500
+      },
+      {
+        "itemId": "PalItem_ToSell_05",
+        "name": "Precious Pelt",
+        "icon": "T_itemicon_PalItem_ToSell_05.png",
+        "price": 5000
+      }
+    ],
+    "currency": "Gold Coin",
+    "currencyIcon": "T_itemicon_Money.png",
+    "palPool": null,
+    "x": -399694.0,
+    "y": 71535.0,
+    "z": null
+  },
+  {
+    "id": "PalDealer:-408341:75076",
+    "uniqueName": "PalDealer",
+    "name": "Pal Dealer",
+    "category": "PalDealer",
+    "icon": "T_PalDealer_icon_normal.png",
+    "level": 14,
+    "items": null,
+    "currency": null,
+    "currencyIcon": null,
+    "palPool": {
+      "poolSpecies": [
+        {
+          "name": "Chikipi",
+          "icon": "Pal_ChickenPal.png"
+        },
+        {
+          "name": "Cattiva",
+          "icon": "Pal_PinkCat.png"
+        },
+        {
+          "name": "Lamball",
+          "icon": "Pal_SheepBall.png"
+        },
+        {
+          "name": "Foxparks",
+          "icon": "Pal_Kitsunebi.png"
+        },
+        {
+          "name": "Pengullet",
+          "icon": "Pal_Penguin.png"
+        },
+        {
+          "name": "Lifmunk",
+          "icon": "Pal_Carbunclo.png"
+        },
+        {
+          "name": "Herbil",
+          "icon": "Pal_LeafMomonga.png"
+        },
+        {
+          "name": "Nitewing",
+          "icon": "Pal_HawkBird.png"
+        },
+        {
+          "name": "Direhowl",
+          "icon": "Pal_Garm.png"
+        },
+        {
+          "name": "Eikthyrdeer",
+          "icon": "Pal_Deer.png"
+        }
+      ],
+      "offeredCount": 5,
+      "levelMin": 10,
+      "levelMax": 15
+    },
+    "x": -408341.0,
+    "y": 75076.0,
+    "z": null
+  }
+]

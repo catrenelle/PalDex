@@ -806,3 +806,312 @@ nondeterministically hit whichever process the OS happens to route to. If
 the code is wrong — kill the stale one (check `Get-Process -Id <pid> |
 Select StartTime` to tell old from new) rather than the one you just started
 by mistake.
+
+## Quests (Main / Sub, map-marker-bearing only)
+
+Frontend: two sections, "Main Quests" and "Sub Quests", each split into
+"Active" / "Not Started" subgroups — genuinely per-player state, so (unlike
+every other section) both stay hidden entirely with no player selected in
+"View As", and an empty subgroup isn't shown-but-empty, it's just absent.
+Investigated after the user asked whether quests map 1:1 to NPCs (for an
+earlier, since-descoped idea of a checkbox-per-NPC "Quest NPC" category) —
+they don't, in two different ways confirmed against real game data:
+
+- **One NPC, multiple quests**: Zoe (`DT_UniqueNPC` row key is actually
+  `"GrassBoss"`, not "Zoe" — her display name is a separate text lookup) is
+  5 separate quest rows (`Sub_Zoe01`..`04` + `Sub_Zoe_Halloween`) at one
+  spot — a real chain.
+- **Numbered suffix that looks like a chain but isn't**: `Sub_Farmer01`..`04`
+  resolve to 4 physically distinct map locations (confirmed via
+  `DT_PalQuestLocationData`) — four different farmers, one quest each, not
+  one farmer's 4-step chain. Same naming shape, opposite meaning. No
+  explicit "chain group" field exists anywhere in the data to tell these
+  apart generically.
+
+The mechanism that sidesteps needing to tell those apart, and that this
+whole feature is built on: every quest (`DT_PalQuestData`, 120 rows: 58
+Main / 59 Sub / 3 Hidden) is its own Blueprint (`QuestData.AssetPathName`)
+with an ordered `QuestBlockGroupList` — each group ("step") has a
+`BlockList` (usually 1 block, sometimes several running in parallel).
+**Each block optionally carries `LocationSettingData.FixedLocationPointArray`
+— a real, explicit foreign key** (`{DataTable: DT_PalQuestLocationData,
+RowName}`), not a naming-convention guess — confirmed directly against
+Zoe's first block (`BP_SubQuestBlock_Zoe01_DisplayElecpanda`), which points
+at row `"Sub_Zoe"` (plus `"Main_CaptureDeerGround"`, a second marker on the
+same step). `extractor/PalExtract/Program.cs`'s Quests section walks every
+Main/Sub quest's blocks, resolves this join, and drops the quest entirely if
+none of its steps have a location anywhere — an explicit user scoping call
+("if there's no map marker, we don't care about it"). 87 of 117 Main+Sub
+quests survive that filter (28 Main, 59 Sub — every Sub quest happens to
+have a marker somewhere; Main's mostly-tutorial rows without one, e.g.
+`Main_CraftTools`/`Main_EatFood`, are correctly dropped). Hidden-type quests
+(3 rows, background triggers like "you changed your weapon's ammo type")
+are dropped outright, not evaluated.
+
+**Live per-player join** (`backend/parse.py` + `backend/quests.py` +
+`server.py`'s `/api/quests`, no extraction involved):
+`SaveData.OrderedQuestArray_FullRelease` (NOT under `RecordData`, unlike
+every other per-player flag in this project) is a flat array of
+`{QuestName, BlockIndex}` structs for every currently in-progress quest.
+**`BlockIndex` indexes directly into that quest's own
+`QuestBlockGroupList`** — confirmed against a real player: their
+`Main_RayneSyndicate` sat at `BlockIndex 1`, its own 2nd block group (the
+"DefeatBoss" step), matching where a Rayne-Syndicate-in-progress player
+would actually be. `SaveData.CompletedQuestArray_FullRelease` is a flat
+`NameProperty` array (not a bool map) of finished quest IDs. A quest not in
+either array is "not started" — its target is step 0 (wherever you'd go to
+begin it). **This is applied per-status, not just per-quest**: a couple of
+Zoe's quests (`Sub_Zoe02`/`04`) have a location-less first block (a pure
+"talk" trigger — the real marker only appears once the quest is active), so
+they correctly produce no "not started" pin even though the quest overall
+does have a marker once active. Verified end-to-end against 11 real players'
+saves via the Flask test client before wiring up the frontend — found real
+active chains at every stage (e.g. one player's `Main_DefeatForestBoss` at
+6/7, another's `Main_WorldTreeAbyss` at 2/6).
+
+**Quest title text is not real extracted display text.** `QuestTitleMsgId`
+(e.g. `"QUEST_MAIN_TITLE_BOSS_AURI"`) does not resolve through any
+DataTable — an exhaustive DataTable/L10N path keyword search
+(QuestText/QuestName/QuestTitle/QuestDesc) came back with zero hits, so it's
+presumably a StringTable (a different UE asset type CUE4Parse handles
+differently) rather than the DataTable-based `L10N/en` convention every
+other name/text lookup in this pipeline uses. Not chased further — `title`
+in `quests_static.json` is a readable label mechanically derived from the
+quest's own row name (`Main_RayneSyndicate` -> "Rayne Syndicate"), not real
+game text. Revisit if real quest title text turns out to be worth it.
+
+**Known clutter, left in deliberately, flagged for a follow-up call**: 14 of
+the 59 Sub quests kept are reward/trigger stubs reusing the quest system for
+non-NPC bookkeeping (`Sub_PalDisplay_A_01`..`I_01`, `Sub_PalCaptureCountReward`,
+`Sub_BossDefeatReward`, `Sub_PaldexReward`, `Sub_FoodReward`,
+`Sub_Kigurumi01_Replay`) — they do have real map markers so the "no marker,
+don't care" rule doesn't drop them, but they aren't NPC-driven quests in any
+meaningful sense. Not filtered out without an explicit call on it.
+
+## NPCs (Trader / Black Market / Dog Coin / General)
+
+Picked back up after the Quests feature shipped (Quests split off precisely
+*because* "Quest NPC" as a checkbox-per-NPC category didn't work - see the
+Quests section above). This is the general/shop/flavor NPC pass: is a named
+`DT_UniqueNPC` row a Trader, Black Market dealer, the Dog Coin exchange NPC,
+or just a General villager, and where is it actually standing?
+
+**Mid-investigation mistake, for the record**: a `git checkout --
+extractor/PalExtract/Program.cs` run to discard a scratch block also wiped
+the *permanent*, already-working Quests extraction section, since it was
+uncommitted in the same file. Recovered by re-adding the exact code from
+conversation history and re-verifying the rebuilt `quests_static.json`
+matched byte-for-byte (same 87-quest count, same title text). Lesson: check
+`git diff` for what a checkout would actually discard before running it on
+a file with real uncommitted work mixed into scratch edits, not just on
+files believed to be scratch-only.
+
+**Placement mechanism** (the blocker that shelved this the first time):
+NPCs are NOT hand-placed as their own character Blueprint the way
+Effigies/Watchtowers/Notes are. They're runtime-spawned by a
+`BP_MonoNPCSpawner`-family actor (persistent level + streamed World
+Partition - same two-place split as Notes/Schematics, folded into that same
+scan pass rather than paying for a third ~4-6 min walk). Confirmed by
+inspecting real placed instances: each spawner's `Properties.UniqueName.Key`
+is a real, exact foreign key into `DT_UniqueNPC`'s row names (e.g.
+`"DarkTrader"`, `"U_Male_SorajimaPeople01"`) - not a naming-convention
+guess. This also explains the earlier `CharacterSaveParameterMap` sighting
+of `"BOSS_Male_Trader01"`/`"BOSS_Male_Trader03"` from the very first Quests
+investigation - those were spawned instances of a *different* spawner
+family (`Spawner/HumanNPCBoss/*`, the human Bounty targets bosses.py
+already covers), sharing the same underlying spawn concept.
+
+Three spawner classes needed, found by trial: the plain base
+`BP_MonoNPCSpawner_C`, `BP_MonoNPCSpawner_Unique_C` (a bare subclass, no own
+properties, safe to treat identically), and
+`BP_MonoNPCSpawner_MedalTrader_C` (in its own dedicated
+`Spawner/UniqueNPC/` subfolder) - the first full scan came back with
+`MedalTrader` (the sole Dog Coin NPC) completely missing, which is what
+surfaced this third class. Unlike the first two, it bakes
+`UniqueName`/`Level` as its own class defaults (`"MedalTrader"`/`50`) rather
+than a per-instance override - `npcClassDefaultUniqueName`/
+`npcClassDefaultLevel` in Program.cs are the fallback for that one case.
+
+**Deliberately excluded** two other spawner families found in the same
+search, both real but out of scope here: `_Quest`-suffixed /
+`BP_QuestTargetNPCSpawner_*` variants (key off `HumanName` + a
+`SpawnerRuleClass` gated on quest state, e.g.
+`BP_MonoNPCSpawner_StrongOldMan02_C` derives from `BP_MonoNPCSpawner_Quest_C`
+and links `QuestId.RowName: "Sub_StrongOldMan02"` - functionally the same
+"go here" concept the Quests feature already covers, so including them
+would just duplicate that), and `Spawner/HumanNPCBoss/*` (the human Bounty
+target spawners, already covered by `bosses.py`/`DT_BossSpawnerLoactionData`
+- confirmed by finding `BP_MonoNPCSpawnerBossBase_BOSS_DarkTrader` in that
+folder, a *boss-tier* DarkTrader encounter distinct from the regular shop
+NPC).
+
+**Category classification**, from real data:
+- **Black Market**: `uniqueName` starts with `"DarkTrader"` - 2 distinct
+  individuals resolved (`DarkTrader` at 3 spawn points, `DarkTrader03` at 1).
+- **Dog Coin**: `uniqueName == "MedalTrader"` - confirmed via
+  `DT_ItemShopSettingData`'s `"Medal_Shop_1"` row, whose `CurrencyItemID` is
+  literally `"DogCoin"` (not "Medal", despite the row/NPC name - see the
+  Quests-era investigation notes elsewhere in this file). 1 individual, 4
+  spawn points.
+- **Trader (general store)**: **zero confirmed entries.** Real evidence the
+  concept exists — `BP_NPC_SalesPerson*`/`PalDealer*` character Blueprints,
+  38 shop configs in `DT_ItemShopCreateData`, Bobby's `DT_UniqueNPC` row
+  having `OneTalkDTName: "ItemShop"` — but none of those specific named NPCs
+  (`Bobby`, `Johnson`, `InnkeeperA`, `Doctor`, `MerchantwithPAL`,
+  `DarkTrader02`/`04`) resolved to a spawner anywhere in this scan (checked
+  both spawner-class broadening passes). Most likely placed inside an
+  interior sub-level not covered by the open-world persistent+streamed scan
+  - not chased further. Shown in the frontend as a disabled "(none found)"
+  row rather than hidden, so the gap is visible, not silently absent.
+- **General NPC**: everything else with a resolved position (~82 entries) -
+  regional-people/Farmer/Scholar/Breeder/Ranger/Nomad variants,
+  BountyNavigator_*, Yamishima guides, Head_of_Village, Police_dependable,
+  etc. Excludes two prefixes that resolved with real positions but aren't
+  real talkable characters: `U_Reward_*` (invisible reward-dispenser stubs
+  reusing the NPC system) and `U_Emote_location_*` (background idle-emote
+  trigger points) - same judgment call as the Quests reward-stub situation.
+
+Only 90 of `DT_UniqueNPC`'s 216 rows resolved to a position in the end -
+real, not exhaustive. No orphan `UniqueName` values (every spawner's key
+matched a real `DT_UniqueNPC` row, 0 mismatches across both full scans) -
+the join mechanism itself is fully trustworthy, coverage of the roster is
+just partial.
+
+**Icons**: per-individual real portraits wherever one exists, not just a
+per-category fallback - `PalIcon/Normal` turns out to have near-complete
+per-archetype coverage (e.g. `U_Female_Farmer01_v01` -> real file
+`T_Female_Farmer01_v01_icon_normal`, found by stripping the `U_` prefix and
+matching case-insensitively against the real game file list - casing isn't
+consistent, e.g. `T_Male_Scholar01_v02_Icon_normal` capitalizes "Icon" and
+nothing else does). Zoe (`GrassBoss`) has her own dedicated portrait,
+`T_Human_GrassBoss_icon_normal` - visually confirmed to genuinely be her
+(pink/white hair, black beanie, matches the known "Zoe & Grizzbolt" Tower
+design), not assumed from the name. Police-flavor names
+(`Police_dependable`/`Police_WarningOilrig`/`DesertPolice*`/`VolcanoPolice*`)
+share `T_Police_icon_normal` (a PIDF officer, visually confirmed) - no
+per-individual portrait exists for these specifically, but a real "an
+officer" look beats the generic fallback. Final fallback (43 of 90 current
+rows - `Head_of_Village`, `BountyTrader`, `BountyNavigator_*`, `ArenaShop`,
+village/guide flavor names, etc.) is `T_MobuCitizen_Male_icon_normal`, the
+game's own generic-villager archetype. `DarkTrader01_icon_normal` (Black
+Market) is the one category-level override, applied unconditionally
+regardless of the specific `DarkTrader`/`DarkTrader03` identity. Categories
+are still visually told apart by marker border color too (same trick
+`.bounty-marker`'s red border already uses) - color-codes the category,
+portrait shows the individual. 37 distinct icon files exported in total.
+
+**MedalTrader (Dog Coin) uses `T_Male_DarkTrader02_icon_normal`, not a
+MobuCitizen fallback** - a real user report that Dog Coin "looks like Black
+Market" turned out to be correct, not a bug: her own Blueprint
+(`Character/NPC/Fat/BP_NPC_MedalTrader`) has its `CharacterMesh0` component
+set to `SK_NPC_Male_DarkTrader02` directly - she's a literal reskin of the
+DarkTrader02 model (confirmed against a real in-game screenshot of "Medal
+Merchant" - same hooded, masked silhouette, an olive/yellow robe where
+Black Market's is dark). No dedicated "MedalTrader"-named icon exists
+anywhere in `PalIcon/`, so `T_Male_DarkTrader02_icon_normal` is her actual
+real look, not a placeholder - the visual similarity to Black Market is a
+genuine fact about the game's own asset reuse, not something to "fix"
+further. Border color (gold vs. purple) is what actually distinguishes the
+two categories at a glance.
+Originally used `T_Male_Trader01_v04_icon_normal` (the "Wandering
+Merchant" SalesPerson's own real look) as the generic fallback - switched
+away once that turned out to be a specific, distinct NPC identity (see the
+Trader investigation below), not a generic look.
+
+### Trader ("general store" NPCs) — confirmed to exist, position mechanism not found
+
+`BP_NPC_SalesPerson*`/`BP_NPC_PalDealer*`/`BP_NPC_Recruiter` are real
+character Blueprints (`Character/NPC/Shop/`), with real portrait icons
+confirmed by the user in-game: **red coat = item trader** ("Wandering
+Merchant", `T_SalesPerson_icon_normal`), **green coat** = a second item-trader
+variant (`T_SalesPerson_Green_icon_normal` - *not* the Pal trader, contrary
+to the user's first guess), **blue coat = the Pal trader**
+(`T_PalDealer_icon_normal`, the one actually named "PalDealer"). None of
+this trio resolved to a placeable map marker despite an unusually thorough
+search - documenting the full trail so it isn't re-walked:
+
+- **Not spawned via the `BP_MonoNPCSpawner` family** (the mechanism that
+  works for DarkTrader/MedalTrader) - the full non-quest asset listing (35
+  files) has no SalesPerson/PalDealer/Recruiter member, and the full
+  persistent+streamed scan for that family (110 resolved NPCs) has zero
+  matches for these identities.
+- **Not placed directly as their own actor** - a full persistent+streamed
+  scan for `BP_NPC_SalesPerson*`/`BP_NPC_PalDealer*`/`BP_NPC_Recruiter*`
+  placed as their own class anywhere in the world: 0 found.
+- **Not in any spawn/lottery DataTable** - content-searched
+  `DT_PalSpawnerPlacement` (8253 rows, the master spawner-placement table -
+  this IS where the boss-tier `BOSS_DarkTrader`/`BOSS_Male_Trader01/02/03`
+  bounty spawners live, confirming the table and method both work),
+  `DT_PalWildSpawner` (1691 rows), and 6 other spawn/lottery tables for
+  "SalesPerson"/"PalDealer"/"Recruiter"/"Wander": zero matches anywhere.
+- **Not nearby either** - a real user-reported sighting (a "Wandering
+  Merchant", red coat, Level 12) at in-game HUD coords (77, -475) converts
+  to within ~750 raw units of Small Settlement's known exact position (same
+  precision class as every other HUD cross-check in this pipeline - this
+  location is confirmed correct). Every `DT_PalSpawnerPlacement` row within
+  30,000 units of that point (105 rows) is a normal wildlife
+  (`BP_PalSpawner_Sheets_*`) or dungeon spawner - nothing merchant-related,
+  even searching by proximity instead of by name.
+
+**Why, per the user (who plays on this server)**: these are wild spawns,
+capturable exactly like a Pal (captures into the Pal Box, deployable to a
+base to buy/sell from) - the user described the mechanic before this was
+independently confirmed by save data. **Level.sav's `CharacterSaveParameterMap`
+confirms the "captured" half exactly**: a real recruited `SalesPerson_Wander`
+instance (Level 40, a different individual from the Level 12 wild one
+above) has `FriendshipPoint`, `FriendshipBasecampSec`, `OwnerPlayerUId`,
+`OwnedTime`, and a `SlotId` into a container - the identical schema a
+captured Pal uses, and **no `Location`/transform field at all**. Once
+captured, this is per-player base-worker state, not a world position - the
+same category of thing as a Guild Base (`backend/parse.py`'s
+`load_guild_bases`, read live each refresh, not baked into extracted
+static data), not a fixed NPC like DarkTrader.
+
+**Per the user: these spawn once when the dedicated server boots (or the
+save loads, in single-player) and do NOT respawn if killed until the world
+restarts.** That, combined with the total absence from every static
+placement/spawn table checked above, means the wild (pre-capture) spawn
+location is almost certainly chosen by procedural/scripted logic at world
+boot (e.g. a hardcoded `SpawnActor` call in Blueprint graph/K2 bytecode)
+rather than being a DataTable row or a placed actor - a fundamentally
+different and harder problem than every other extraction in this pipeline,
+all of which read serialized *properties*, not compiled *graph logic*.
+**Not pursued further** - real Blueprint decompilation would be required,
+which is out of scope for this pipeline as built. Trader remains an
+empty/unpopulated category in `npcs_static.json`, shown in the frontend as
+a disabled "(none found)" row rather than silently absent.
+
+**Follow-up dig (position still not found, but two real wins on identity/
+inventory) - picking this back up should start here, not from scratch:**
+
+- **`DT_NPCTalkFlow` confirms `"SalesPerson_Wander"` is a real, intentional
+  row key** (`SoftTalkFlowAsset` -> `FABP_CommonItemShop`, the generic shop
+  dialogue graph) - and surfaces siblings never found via any placement/
+  spawner search: `SalesPerson_Desert`, `SalesPerson_Desert2`,
+  `SalesPerson_Volcano`, `SalesPerson_Volcano2`, plus `NPC_Dungeon_Shop`
+  (a dungeon-interior variant) and `MedalTrader` itself (->
+  `FABP_CommonItemShop_WithoutSell`, confirming Dog Coin's NPC is a
+  buy-only shop, no sell option - matches a currency-exchange vendor, not
+  a general trader). All the SalesPerson_* variants point to the *same*
+  dialogue graph, so "which region flavor" isn't decided by the dialogue
+  system either - it's just consumed by it. This means there are likely
+  at least 2 more wild-spawn zones (Desert, Volcano biomes) beyond the
+  Small Settlement one the user found, doubling as confirmation this is a
+  real, designed, per-biome mechanic rather than a one-off.
+- **Inventory mechanism, confirmed and extractable if positions are ever
+  found**: `BP_NPC_SalesPerson`'s own `BP_PalShopVenderDataComponent` has
+  `itemShopLotteryType: EPalShopLotteryType::SimpleLottery` and
+  `itemShopSimpleLotteryTableName: "TestTable_2"` (a row key into
+  `DT_ItemShopLotteryData`) - inventories are randomly rolled from a
+  lottery table per restock (`ItemShopRestockMinute`/`PalShopRestockMinute`:
+  48), not a fixed list. This is the "different inventories" the user
+  described, and is a real, separate data pipe from the position problem -
+  worth wiring up on its own even before/if position is ever solved.
+- **Still not found**: no `UniqueName`/`TalkFlowId`-style property exists
+  on `BP_NPC_SalesPerson`'s own CDO that would say "I am the Wander vs.
+  Desert vs. Volcano variant" - and this identifier is confirmed NOT a
+  `BP_MonoNPCSpawner`-family instance (already exhaustively scanned, 110
+  resolved `UniqueName` values, none of the SalesPerson_* variants among
+  them). Whatever assigns identity + position to a placed instance remains
+  outside every static-data mechanism checked so far - still consistent
+  with the boot-time-procedural-spawn conclusion above.

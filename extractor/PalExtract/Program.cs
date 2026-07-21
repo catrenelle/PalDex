@@ -26,6 +26,31 @@ JObject LoadRows(string path)
     return (JObject)j["Rows"];
 }
 
+// Shared by every icon exporter below (bosses/effigies/schematics/items/
+// NPCs/traders alike) - source textures come straight off the game's own
+// assets at whatever resolution they were authored at (item/currency icons
+// are 256x256, ~30-36KB each; Pal/NPC portraits 128x128, ~14-19KB), but
+// nothing in this UI ever displays one above ~90px (map markers are
+// 28-30px, shop modal cards ~84px). Downscaling here once, project-wide,
+// is the same fix already proven necessary for Journal note icons (see
+// ExportNoteIcon's own comment - that case was a much more extreme
+// 3800x2100 "photo" texture, but the "don't ship 2-3x more pixels than
+// anything ever displays" principle is identical). 128px leaves headroom
+// above every actual display size without being wasteful.
+byte[] DownscalePng(byte[] pngBytes, int maxDim = 128)
+{
+    using var image = SixLabors.ImageSharp.Image.Load(pngBytes);
+    if (image.Width <= maxDim && image.Height <= maxDim) return pngBytes;
+    image.Mutate(x => x.Resize(new ResizeOptions
+    {
+        Mode = ResizeMode.Max,
+        Size = new SixLabors.ImageSharp.Size(maxDim, maxDim),
+    }));
+    using var ms = new MemoryStream();
+    image.Save(ms, new PngEncoder());
+    return ms.ToArray();
+}
+
 string ElementString(JToken? t)
 {
     var s = t?.ToString() ?? "";
@@ -276,7 +301,7 @@ void ExportIcon(string assetPathName, string outFileName)
     if (tex == null) { Console.WriteLine($"  no texture export at {objPath}"); return; }
     var decoded = tex.Decode();
     if (decoded == null) { Console.WriteLine($"  icon decode failed: {objPath}"); return; }
-    var bytes = TextureEncoder.Encode(decoded, ETextureFormat.Png, false, out _);
+    var bytes = DownscalePng(TextureEncoder.Encode(decoded, ETextureFormat.Png, false, out _));
     File.WriteAllBytes(Path.Combine(iconOutDir, outFileName), bytes);
 }
 
@@ -700,6 +725,54 @@ var noteRawPositions = new List<(string id, string instanceId, double x, double 
 // this same pass rather than paying for a second ~4-6 min full-map walk.
 var schematicRawPositions = new List<(string id, string instanceId, double x, double y, double z)>();
 
+// NPCs (Trader / Black Market / Dog Coin / General) are spawned at runtime
+// by a BP_MonoNPCSpawner-family actor (persistent level + streamed
+// World Partition, same two-place split as Notes/Schematics) rather than
+// hand-placed as their own character Blueprint - confirmed by inspecting
+// real placed instances: each spawner's Properties.UniqueName.Key is a
+// real, exact foreign key into DT_UniqueNPC's row names (e.g. "DarkTrader",
+// "U_Male_SorajimaPeople01") - not a naming-convention guess. Two extra
+// classes beyond the plain base were needed after the first pass came back
+// with real, important NPCs unexplained (MedalTrader - our sole Dog Coin
+// NPC - was completely missing): BP_MonoNPCSpawner_Unique_C is a bare
+// subclass with no own properties (safe to treat identically), while
+// BP_MonoNPCSpawner_MedalTrader_C (in its own dedicated
+// Spawner/UniqueNPC/ subfolder) bakes UniqueName/Level as its own class
+// defaults rather than a per-instance override - npcClassDefaultUniqueName/
+// npcClassDefaultLevel below are the fallback for that one case.
+// Deliberately excluded: "_Quest"-suffixed / BP_QuestTargetNPCSpawner_*
+// variants (key off HumanName + a quest-state-gated SpawnerRuleClass, not
+// UniqueName - functionally the same "go here" concept the Quests feature
+// already covers, so including them would just duplicate that) and
+// Spawner/HumanNPCBoss/* (a separate mechanism for the human Bounty targets
+// already covered by bosses.py/DT_BossSpawnerLoactionData).
+var npcSpawnerClasses = new HashSet<string> { "BP_MonoNPCSpawner_C", "BP_MonoNPCSpawner_Unique_C", "BP_MonoNPCSpawner_MedalTrader_C" };
+var npcClassDefaultUniqueName = new Dictionary<string, string> { ["BP_MonoNPCSpawner_MedalTrader_C"] = "MedalTrader" };
+var npcClassDefaultLevel = new Dictionary<string, int> { ["BP_MonoNPCSpawner_MedalTrader_C"] = 50 };
+var npcRawPositions = new List<(string uniqueName, int? level, double x, double y, double z)>();
+
+void CollectNpcSpawner(List<CUE4Parse.UE4.Assets.Exports.UObject> exports, int idx)
+{
+    var exp = exports[idx];
+    var cn = exp.Class?.Name.ToString() ?? "";
+    if (!npcSpawnerClasses.Contains(cn)) return;
+    var j = JObject.Parse(JsonConvert.SerializeObject(exp));
+    var props = j["Properties"] as JObject;
+    var uniqueName = props?["UniqueName"]?["Key"]?.ToString();
+    if (string.IsNullOrEmpty(uniqueName) || uniqueName == "None")
+        uniqueName = npcClassDefaultUniqueName.GetValueOrDefault(cn);
+    if (string.IsNullOrEmpty(uniqueName)) return;
+    var level = props?["Level"]?.ToObject<int?>() ?? npcClassDefaultLevel.GetValueOrDefault(cn);
+    var rootPath = props?["RootComponent"]?["ObjectPath"]?.ToString();
+    if (rootPath == null) return;
+    var rootIdxStr = rootPath[(rootPath.LastIndexOf('.') + 1)..];
+    if (!int.TryParse(rootIdxStr, out var rootIdx) || rootIdx < 0 || rootIdx >= exports.Count) return;
+    var rootObj = JObject.Parse(JsonConvert.SerializeObject(exports[rootIdx]));
+    var loc = (rootObj["Properties"] as JObject)?["RelativeLocation"];
+    if (loc == null) return;
+    npcRawPositions.Add((uniqueName, level, (double)loc["X"]!, (double)loc["Y"]!, (double)loc["Z"]!));
+}
+
 void CollectLevelObjectPosition<T>(List<T> results, List<CUE4Parse.UE4.Assets.Exports.UObject> exports, int idx,
     string wantedClass, string rowNamePropertyKey, Func<string, string, double, double, double, T> make)
 {
@@ -747,8 +820,9 @@ foreach (var exp in persistentLevelExports)
     if (loc == null) continue;
     schematicRawPositions.Add((rowName, instanceId, (double)loc["X"]!, (double)loc["Y"]!, (double)loc["Z"]!));
 }
+for (int idx = 0; idx < persistentLevelExports.Count; idx++) CollectNpcSpawner(persistentLevelExports, idx);
 
-Console.WriteLine("Scanning World Partition cells for the remaining Journal notes + Schematics...");
+Console.WriteLine("Scanning World Partition cells for the remaining Journal notes + Schematics + NPC spawners...");
 var cellPaths = provider.Files.Keys
     .Where(k => k.ToString().Contains("Pal/Content/Pal/Maps/MainWorld_5/PL_MainWorld5/_Generated_/", StringComparison.OrdinalIgnoreCase)
              && k.ToString().EndsWith(".umap", StringComparison.OrdinalIgnoreCase))
@@ -768,6 +842,7 @@ foreach (var cellPath in cellPaths)
             (id, instId, x, y, z) => (id, instId, x, y, z));
         CollectLevelObjectPosition(schematicRawPositions, exports, idx, "BP_LevelObject_ItemPickupTower_C", "ItemPickupRowName",
             (id, instId, x, y, z) => (id, instId, x, y, z));
+        CollectNpcSpawner(exports, idx);
     }
 }
 
@@ -870,7 +945,7 @@ void ExportSchematicIcon(string assetPathName, string outFileName)
     if (tex == null) return;
     var decoded = tex.Decode();
     if (decoded == null) return;
-    var bytes = TextureEncoder.Encode(decoded, ETextureFormat.Png, false, out _);
+    var bytes = DownscalePng(TextureEncoder.Encode(decoded, ETextureFormat.Png, false, out _));
     File.WriteAllBytes(Path.Combine(schematicIconOutDir, outFileName), bytes);
 }
 
@@ -929,6 +1004,299 @@ Console.WriteLine($"Total Schematics: {schematicResult.Count}, icons exported: {
 File.WriteAllText(@"C:\Projects\PalworldMap\data\schematics_static.json", schematicResult.ToString(Formatting.Indented));
 Console.WriteLine("Wrote data/schematics_static.json");
 
+// ============ Item shop tables (shared: NPCs' Medal/Bounty/Arena/Wandering
+// Merchant entries below all need these) ============
+// Each shop-NPC's BP_PalShopVenderDataComponent has an
+// itemShopSimpleLotteryTableName (-> this DT_ItemShopLotteryData row's
+// lotteryDataArray -> a ShopGroupName -> DT_ItemShopCreateData's real
+// productDataArray of StaticItemIds, resolved via the same
+// ItemDisplayName/ExportItemIcon helpers the Schematics section above
+// already defines). Confirmed for every table used below: a single
+// lotteryDataArray entry at Weight 100, i.e. a deterministic 100%-chance
+// pointer to one ShopGroupName, not a real item-level random draw - so
+// "items" below is the genuine complete, always-available inventory, not a
+// lottery-selected subset (contrast the Pal Dealer/Black Market pal pool
+// further down, which IS a real subset-per-restock pool).
+//
+// Price (2026-07-20, for the in-game-style shop modal): each product's own
+// OverridePrice is 0 for most rows (Medal/Bounty/Arena/Wander alike) -
+// that's NOT "free", it's UE's "no override" sentinel, confirmed by
+// DT_ItemDataTable itself carrying a real per-item "Price" field (e.g.
+// Pal_crystal_S = 70) that matches what the game actually charges. Real
+// price = OverridePrice if > 0, else the item's own base Price.
+var itemShopLotteryRows = LoadRows("Pal/Content/Pal/DataTable/ItemShop/DT_ItemShopLotteryData");
+var itemShopCreateRows = LoadRows("Pal/Content/Pal/DataTable/ItemShop/DT_ItemShopCreateData");
+var itemShopSettingRows = LoadRows("Pal/Content/Pal/DataTable/ItemShop/DT_ItemShopSettingData");
+// Pal-selling side (Pal Dealer/Black Market's palShopSimpleLotteryTableName)
+// - declared here, not down by ResolvePalShopPool's own definition further
+// below, because the NPCs section's spawner loop (which calls
+// NpcShopInventory -> ResolvePalShopPool for DarkTrader/DarkTrader03)
+// needs it in scope first.
+var palShopCreateRows = LoadRows("Pal/Content/Pal/DataTable/PalShop/DT_PalShopCreateData");
+
+JArray ResolveItemShopProducts(string lotteryTableKey)
+{
+    var arr = new JArray();
+    var groupName = ((itemShopLotteryRows[lotteryTableKey] as JObject)?["lotteryDataArray"] as JArray)
+        ?.FirstOrDefault()?["ShopGroupName"]?.ToString() ?? lotteryTableKey;
+    var products = (itemShopCreateRows[groupName] as JObject)?["productDataArray"] as JArray;
+    if (products == null) return arr;
+    foreach (var p in products)
+    {
+        var itemId = p["StaticItemId"]?.ToString();
+        if (string.IsNullOrEmpty(itemId) || itemId == "None") continue;
+        var overridePrice = (int?)p["OverridePrice"] ?? 0;
+        var basePrice = (int?)(itemDataRows[itemId] as JObject)?["Price"] ?? 0;
+        arr.Add(new JObject
+        {
+            ["itemId"] = itemId,
+            ["name"] = ItemDisplayName(itemId),
+            ["icon"] = ExportItemIcon(itemId),
+            ["price"] = overridePrice > 0 ? overridePrice : basePrice,
+        });
+    }
+    return arr;
+}
+
+// Currency + its own real icon (e.g. "Gold Coin"/T_itemicon_Money.png,
+// "Dog Coin"/T_itemicon_DogCoin.png) - every shop has one, defaulting to
+// plain Gold ("Money", DT_ItemDataTable's own row for it) when no
+// DT_ItemShopSettingData override row exists (Wander/Village/Dark* tables
+// have none - confirmed, only Medal/Bounty/Arena do).
+(string name, string? icon) TraderCurrencyInfo(string? shopSettingKey)
+{
+    var currencyId = shopSettingKey != null ? (itemShopSettingRows[shopSettingKey] as JObject)?["CurrencyItemID"]?.ToString() : null;
+    if (string.IsNullOrEmpty(currencyId) || currencyId == "None") currencyId = "Money";
+    return (ItemDisplayName(currencyId), ExportItemIcon(currencyId));
+}
+
+// Real circular species portrait, same table/join the Bosses section above
+// already uses for boss icons (DT_PalCharacterIconDataTable, keyed by the
+// bare Tribe codename via DT_PalMonsterParameter - NOT always equal to the
+// CharacterID, so this re-resolves Tribe per species rather than assuming
+// CharacterID==Tribe). Reuses that section's own ExportIcon/boss_icons
+// output - same real asset, no reason to export it twice into a separate
+// folder just because this feature is a shop modal, not a boss marker.
+string PalPortraitIcon(string characterId)
+{
+    var monster = monsterRows[characterId] as JObject;
+    var tribeKey = monster != null ? ElementString(monster["Tribe"]) : characterId;
+    if (palIconLookup.TryGetValue(tribeKey, out var palIconProp))
+    {
+        var iconAssetPath = ((JObject)palIconProp.Value)["Icon"]?["AssetPathName"]?.ToString();
+        if (!string.IsNullOrEmpty(iconAssetPath))
+        {
+            var fileName = "Pal_" + tribeKey + ".png";
+            try { ExportIcon(iconAssetPath, fileName); return fileName; }
+            catch (Exception ex) { Console.WriteLine($"  pal shop portrait export failed for {tribeKey}: {ex.Message}"); }
+        }
+    }
+    return "T_MobuCitizen_Male_icon_normal.png"; // unreached in practice - every pool species checked has a real portrait
+}
+
+// ============ NPCs (Trader / Black Market / Dog Coin / General) ============
+// Positions resolved via npcRawPositions above (collected in the same
+// persistent-level + World Partition passes as Notes/Schematics - see that
+// section's comment for the full spawner-mechanism investigation).
+//
+// Category classification, from real data, not guesses:
+// - Black Market: uniqueName starts with "DarkTrader" (BP_NPC_DarkTrader*
+//   character Blueprints exist for exactly this family) - 2 distinct
+//   individuals resolved (DarkTrader, DarkTrader03; DarkTrader has 3 spawn
+//   points, DarkTrader03 has 1).
+// - Dog Coin: uniqueName == "MedalTrader" - confirmed via
+//   DT_ItemShopSettingData's "Medal_Shop_1" row, whose CurrencyItemID is
+//   literally "DogCoin" (not "Medal", despite the row/NPC name - see
+//   NOTES.md). Exactly 1 individual, 1 spawn point.
+// - Wandering Merchant / Pal Dealer: NOT resolved via this spawner scan at
+//   all - despite real evidence the "Trader"/"SalesPerson" concept exists
+//   (BP_NPC_SalesPerson*/PalDealer* character Blueprints, 38 shop configs
+//   in DT_ItemShopCreateData, Bobby's DT_UniqueNPC row having
+//   OneTalkDTName "ItemShop"), none of those specific named NPCs (Bobby,
+//   Johnson, InnkeeperA, Doctor, MerchantwithPAL, DarkTrader02/04) resolved
+//   to a spawner anywhere in this scan - they wild-spawn once per server
+//   boot via procedural Blueprint logic invisible to this pipeline
+//   (confirmed dead end, see NOTES.md). Positions for these two categories
+//   are merged in further below instead, from an external source
+//   (palpedia.ru's live map data) - see that comment block for the full
+//   story, including why "Trader" isn't the category name used.
+// - General NPC: everything else with a resolved position - villagers
+//   (Farmer/Scholar/Breeder/Ranger/Nomad/regional-people variants),
+//   guides/navigators (BountyNavigator_*, Yamishima guides), Head_of_Village,
+//   Police_dependable, etc. Excludes two prefixes that resolved with real
+//   positions but aren't real talkable characters: "U_Reward_*" (invisible
+//   reward-dispenser stubs reusing the NPC system) and "U_Emote_location_*"
+//   (background idle-emote trigger points) - same judgment call already
+//   applied to the equivalent Quests reward-stub situation.
+//
+// Shop inventory (items/currency, 2026-07-20): MedalTrader (Dog Coin),
+// BountyTrader, and ArenaShop (all three General-category individuals)
+// each get real "items"/"currency" fields via the shared
+// ResolveItemShopProducts/TraderCurrency helpers above. This was
+// discovered while building a separate Traders section (further down,
+// covering Wandering Merchant/Pal Dealer positions sourced from
+// palpedia.ru) - that site's "medal"/"bounty"/"arena" merchant categories
+// turned out to be EXACT coordinate duplicates of these three already-
+// resolved NPCs (confirmed by direct comparison, not assumed), so rather
+// than show the same marker twice under two different sections, the real
+// inventory data gets merged onto the entries here instead, and Traders
+// only keeps the two categories (Wandering Merchant, Pal Dealer) that
+// were genuinely never findable via this NPCs pipeline at all.
+var npcNameRows = LoadRows("Pal/Content/L10N/en/Pal/DataTable/Text/DT_UniqueNPCText_Common");
+var uniqueNpcRowsForNpcs = LoadRows("Pal/Content/Pal/DataTable/Character/DT_UniqueNPC");
+var npcExcludedPrefixes = new[] { "U_Reward_", "U_Emote_location_" };
+
+string ReadableNpcName(string uniqueName)
+{
+    var stripped = uniqueName.StartsWith("U_", StringComparison.Ordinal) ? uniqueName["U_".Length..] : uniqueName;
+    var withSpaces = System.Text.RegularExpressions.Regex.Replace(stripped, "(?<!^)([A-Z])", " $1");
+    var collapsed = System.Text.RegularExpressions.Regex.Replace(withSpaces.Replace("_", " "), @"\s+", " ");
+    return collapsed.Trim();
+}
+
+string NpcCategory(string uniqueName)
+{
+    if (uniqueName.StartsWith("DarkTrader", StringComparison.Ordinal)) return "BlackMarket";
+    if (uniqueName == "MedalTrader") return "DogCoin";
+    return "General";
+}
+
+// Per-individual real portraits, not just a per-category fallback -
+// PalIcon/Normal turns out to have near-complete per-archetype coverage
+// (e.g. "U_Female_Farmer01_v01" -> "T_Female_Farmer01_v01_icon_normal",
+// stripping "U_" - confirmed by visual check, a farmer girl with a straw
+// hat, matching names like "Foodie Farmer"). Zoe (DT_UniqueNPC row
+// "GrassBoss") has her own dedicated portrait, "T_Human_GrassBoss_icon_normal"
+// - confirmed to genuinely be her (pink/white hair, black beanie, matches
+// the known "Zoe & Grizzbolt" Tower design), not a guess from the name
+// alone. Police-flavor names (Police_dependable/Police_WarningOilrig/
+// DesertPolice*/VolcanoPolice*) share "T_Police_icon_normal" (a PIDF
+// officer, visually confirmed) - no per-individual portrait exists for
+// these, but a real "an officer" look beats the generic villager fallback.
+// Matching is case-insensitive against the actual game file list (not
+// blindly constructed) since casing isn't consistent -
+// "T_Male_Scholar01_v02_Icon_normal" capitalizes "Icon", everything else
+// doesn't. MobuCitizen_Male (the game's own generic-villager archetype,
+// used for its own basic named NPCs like Johnson/Bobby in DT_UniqueNPC) is
+// the final fallback for anything with no per-individual or per-flavor
+// match. Originally used Trader01_v04 (the "Wandering Merchant"
+// SalesPerson's own real look) as that fallback - switched away once that
+// turned out to be a specific, distinct NPC identity (see the Trader
+// investigation further down this file), not a generic look.
+var normalIconLookup = provider.Files.Keys
+    .Select(k => k.ToString())
+    .Where(k => k.Contains("Pal/Content/Pal/Texture/PalIcon/Normal/", StringComparison.OrdinalIgnoreCase)
+             && k.EndsWith(".uasset", StringComparison.OrdinalIgnoreCase))
+    .Select(k => Path.GetFileNameWithoutExtension(k))
+    .GroupBy(f => f, StringComparer.OrdinalIgnoreCase)
+    .ToDictionary(g => g.Key, g => g.First(), StringComparer.OrdinalIgnoreCase);
+
+var npcPoliceNames = new HashSet<string> { "Police_dependable", "Police_WarningOilrig", "DesertPolice001", "DesertPolice002", "DesertPolice003", "VolcanoPolice001", "VolcanoPolice002" };
+var npcUsedIcons = new HashSet<string> { "T_Male_DarkTrader01_icon_normal", "T_MobuCitizen_Male_icon_normal" }; // always-present fallbacks
+
+string NpcIcon(string uniqueName, string category)
+{
+    if (category == "BlackMarket") return "T_Male_DarkTrader01_icon_normal";
+    // MedalTrader's own Blueprint (Character/NPC/Fat/BP_NPC_MedalTrader)
+    // literally reuses the SK_NPC_Male_DarkTrader02 skeletal mesh - not a
+    // guess, confirmed by reading its CharacterMesh0 component directly -
+    // so DarkTrader02's icon IS her actual in-game look (a hooded, masked
+    // figure like Black Market, just an olive/yellow robe instead of dark -
+    // visually confirmed against a real user screenshot of "Medal
+    // Merchant"). This is why Dog Coin and Black Market read as similar at
+    // a glance - they genuinely share a character model in the game's own
+    // assets, not an artifact of our icon choice.
+    if (uniqueName == "MedalTrader") { npcUsedIcons.Add("T_Male_DarkTrader02_icon_normal"); return "T_Male_DarkTrader02_icon_normal"; }
+    if (uniqueName == "GrassBoss") { npcUsedIcons.Add("T_Human_GrassBoss_icon_normal"); return "T_Human_GrassBoss_icon_normal"; }
+    if (npcPoliceNames.Contains(uniqueName)) { npcUsedIcons.Add("T_Police_icon_normal"); return "T_Police_icon_normal"; }
+    if (uniqueName.StartsWith("U_", StringComparison.Ordinal))
+    {
+        var candidate = "T_" + uniqueName["U_".Length..] + "_icon_normal";
+        if (normalIconLookup.TryGetValue(candidate, out var real))
+        {
+            npcUsedIcons.Add(real);
+            return real;
+        }
+    }
+    return "T_MobuCitizen_Male_icon_normal";
+}
+
+// See the NPCs section's own comment above for why these five (and only
+// these five) get real shop data merged in here. DarkTrader/DarkTrader03
+// (Black Market) sell Pals, same mechanism as Pal Dealer further below
+// (BP_NPC_DarkTrader/_03's own palShopSimpleLotteryTableName - "Dark_01"/
+// "Dark_03" - confirmed real DT_PalShopCreateData rows, not a guess; the
+// unresolved individuals _02/_04/_BOSS aren't placed anywhere this
+// project's spawner scan reaches, same "coverage is real but not 100%"
+// caveat as the rest of this NPCs section - _BOSS is also a wholly
+// different bounty-boss encounter already covered by bosses.py, not a
+// missed shop variant).
+(JArray? items, string? currency, string? currencyIcon, JObject? palPool) NpcShopInventory(string uniqueName)
+{
+    string? shopSettingKey = uniqueName switch
+    {
+        "MedalTrader" => "Medal_Shop_1",
+        "BountyTrader" => "Bounty_Shop_1",
+        "ArenaShop" => "Arena_Shop_1",
+        _ => null,
+    };
+    string? itemLotteryKey = uniqueName switch
+    {
+        "MedalTrader" => "MedalShop1",
+        "BountyTrader" => "BountyShop1",
+        "ArenaShop" => "ArenaShop1",
+        _ => null,
+    };
+    if (itemLotteryKey != null)
+    {
+        var (currency, currencyIcon) = TraderCurrencyInfo(shopSettingKey);
+        return (ResolveItemShopProducts(itemLotteryKey), currency, currencyIcon, null);
+    }
+    string? palShopKey = uniqueName switch
+    {
+        "DarkTrader" => "Dark_01",
+        "DarkTrader03" => "Dark_03",
+        _ => null,
+    };
+    if (palShopKey != null) return (null, null, null, ResolvePalShopPool(palShopKey));
+    return (null, null, null, null);
+}
+
+var npcResult = new JArray();
+foreach (var (uniqueName, level, x, y, z) in npcRawPositions)
+{
+    if (npcExcludedPrefixes.Any(p => uniqueName.StartsWith(p, StringComparison.Ordinal))) continue;
+    var npcRow = uniqueNpcRowsForNpcs[uniqueName];
+    var nameTextId = (string?)npcRow?["NameTextID"];
+    var realName = !string.IsNullOrEmpty(nameTextId) ? npcNameRows[nameTextId]?["TextData"]?["LocalizedString"]?.ToString() : null;
+    var displayName = !string.IsNullOrEmpty(realName) ? realName : ReadableNpcName(uniqueName);
+    var category = NpcCategory(uniqueName);
+    var (items, currency, currencyIcon, palPool) = NpcShopInventory(uniqueName);
+
+    npcResult.Add(new JObject
+    {
+        ["id"] = $"{uniqueName}:{x:F0}:{y:F0}",
+        ["uniqueName"] = uniqueName,
+        ["name"] = displayName,
+        ["category"] = category,
+        ["icon"] = NpcIcon(uniqueName, category) + ".png",
+        ["level"] = level,
+        ["items"] = items,
+        ["currency"] = currency,
+        ["currencyIcon"] = currencyIcon,
+        ["palPool"] = palPool,
+        ["x"] = x,
+        ["y"] = y,
+        ["z"] = z,
+    });
+}
+// Not written yet - Wandering Merchant/Pal Dealer entries (external
+// positions, see the comment block further below) still need to be merged
+// into npcResult first. The actual file write + icon export happens once,
+// after that merge, so both sources land in one npcs_static.json.
+var npcIconOutDir = @"C:\Projects\PalworldMap\frontend\assets\npc_icons";
+Directory.CreateDirectory(npcIconOutDir);
+
 // ============ Guild Base icon ============
 // Guild bases themselves aren't static game data (players build/dismantle
 // them at runtime) - positions/ownership are read live from Level.sav each
@@ -949,3 +1317,476 @@ Directory.CreateDirectory(baseIconOutDir);
     File.WriteAllBytes(Path.Combine(baseIconOutDir, "T_icon_compass_camp.png"), bytes);
 }
 Console.WriteLine("Wrote frontend/assets/base_icons/T_icon_compass_camp.png");
+
+// ============ NPCs continued: Wandering Merchant / Pal Dealer ============
+// Merged directly into npcResult/npcs_static.json (categories "Wandering"/
+// "PalDealer"), not a separate section - originally shipped as a standalone
+// "Traders" feature, folded back in once it became clear these two plus
+// the NPCs section's own Medal/Bounty/Arena were really one merchant
+// system split across two data sources for no good reason. There's no
+// standalone Traders UI section, endpoint, or data file anymore.
+//
+// Position is a genuine dead end for static extraction (see NOTES.md's
+// "Trader" investigation - exhaustively confirmed not in any DataTable/
+// placed-actor/spawner; these wild-spawn once per server boot via
+// procedural Blueprint logic invisible to this pipeline). Positions below
+// are instead sourced from palpedia.ru's own live map data
+// (https://palpedia.ru/api/merchants, a data-mined community site - same
+// "external source, cross-checked" approach as the Towers section's HUD
+// coordinates), 2026-07-20. Coordinate system confirmed to already match
+// this project's raw save units: converted a known HUD reference point
+// (Small Settlement's Pal Merchant) through the project's own map->save
+// formula and landed within ~1500 units of palpedia's own "pal" entry
+// there - same tolerance class as every other cross-check in this
+// pipeline, not a coincidence.
+//
+// Only 2 of palpedia's 5 merchant categories end up here. Its full 22-entry
+// export also included "medal"/"bounty"/"arena" (8 entries) - but those
+// turned out to be EXACT coordinate duplicates (confirmed by direct
+// comparison, not assumed) of MedalTrader/BountyTrader/ArenaShop, three
+// individuals the NPCs section above already finds via its own spawner
+// scan. Rather than show the same merchant twice, those three keep their
+// one entry above (enriched with real shop data via NpcShopInventory) and
+// are deliberately left OUT of merchantPositions below. Only "wandering"
+// (Wandering Merchant) and "pal" (Pal Dealer) remain - the two categories
+// this project's own extraction has never been able to place at all.
+//
+// Inventory, by contrast, IS real extractable game data once you have the
+// right Blueprint. Each shop-NPC class under Character/NPC/Shop/BP_NPC_*
+// has its own BP_PalShopVenderDataComponent with an
+// itemShopSimpleLotteryTableName (-> the shared ResolveItemShopProducts
+// helper above, defined before the NPCs section since both need it) for
+// item sellers, and a separate palShopSimpleLotteryTableName (->
+// DT_PalShopCreateData's CharacterIDArray, resolved via the same
+// palNameRows/monsterRows the Bosses section above already loads) for the
+// Pal Dealer.
+//
+// "wandering" maps unambiguously to one Blueprint variant
+// (BP_NPC_SalesPerson_4, "WanderShopTable" - no other SalesPerson variant
+// uses that table) - its "items" list is real and complete (confirmed
+// single-entry, Weight-100 lottery, not a random draw - see
+// ResolveItemShopProducts' own comment above). "pal" is NOT similarly
+// unambiguous: PalDealer has 3 known variants (base/Desert/Volcano, tables
+// "Test_00"/"Desert_00"/"Volcano_00") and palpedia's data doesn't
+// distinguish which of its 6 "pal" locations uses which - defaulted to the
+// base "Test_00" pool below, clearly labeled as a best-guess, not a
+// confirmed per-location fact. Per the user's own caution: even for a
+// correctly-identified table, this is a PAL POOL (DT_PalShopCreateData's
+// own CharacterNum field shows only a random subset of the pool is
+// actually offered at once, rotating on restock - genuinely different from
+// the item shops' deterministic full list). Frontend must not present the
+// Pal pool as "in stock now" - see frontend copy below.
+var merchantPositions = new (double x, double y, string type, int? level)[]
+{
+    (-248788, 356707, "pal", 13),
+    (-248285, 356691, "wandering", 15),
+    (-467186, -60985, "wandering", 30),
+    (-469164, -60831, "pal", 27),
+    (-467854, -61656, "wandering", 28),
+    (-115720, -24042, "wandering", 14),
+    (-116506, -23892, "pal", 11),
+    (42175, 315392, "wandering", 43),
+    (40444, 314941, "pal", 43),
+    (42236, 314931, "wandering", 45),
+    (-344289, 193934, "pal", 12),
+    (-341414, 192849, "wandering", 12),
+    (-399694, 71535, "wandering", 22),
+    (-408341, 75076, "pal", 14),
+};
+
+JObject? ResolvePalShopPool(string palShopTableKey)
+{
+    var row = palShopCreateRows[palShopTableKey] as JObject;
+    var charArray = row?["CharacterIDArray"] as JArray;
+    if (charArray == null) return null;
+    var species = new JArray();
+    foreach (var c in charArray)
+    {
+        var characterId = c["Key"]?.ToString();
+        if (string.IsNullOrEmpty(characterId)) continue;
+        // Regular wild-Pal species (unlike bosses) don't carry their own
+        // OverrideNameTextID on DT_PalMonsterParameter - it's "None" for
+        // these - so the real lookup key is "PAL_NAME_<CharacterID>"
+        // directly (confirmed: PAL_NAME_ChickenPal -> "Chikipi"), the same
+        // convention NOTES.md documents for Effigies. Only fall back to the
+        // boss-style OverrideNameTextID indirection if that direct key
+        // comes up empty, in case a boss-tier species ever ends up in a
+        // Pal Dealer's pool.
+        //
+        // Sanity check if this ever looks "wrong" again (spent real time
+        // chasing this as a suspected bug 2026-07-20, it wasn't one):
+        // DarkTrader's Dark_01/Dark_03 CharacterIDArray uses old internal
+        // dev codenames (e.g. "GhostBlackCat", "RobinHood", "HerculesBeetle")
+        // that read as completely unrelated to their real released names
+        // ("Wispaw", "Robinquill", "Warsect") - PAL_NAME_ resolves them
+        // correctly (confirmed thematically thanks to PalPortraitIcon's own
+        // Tribe-keyed icon staying correctly paired regardless - Robinquill
+        // gets the bird-archer "RobinHood" portrait, Warsect gets the
+        // "HerculesBeetle" one, etc.) - a real codename/release-name split
+        // baked into the game's own data, not a lookup bug here.
+        var name = (palNameRows["PAL_NAME_" + characterId] as JObject)?["TextData"]?["LocalizedString"]?.ToString();
+        if (string.IsNullOrEmpty(name))
+        {
+            var monster = monsterRows[characterId] as JObject;
+            var nameTextId = monster?["OverrideNameTextID"]?.ToString();
+            name = (!string.IsNullOrEmpty(nameTextId) && nameTextId != "None")
+                ? (palNameRows[nameTextId] as JObject)?["TextData"]?["LocalizedString"]?.ToString() ?? characterId
+                : characterId;
+        }
+        // No price here (unlike item shops) - per the user's own call, a
+        // Pal's real in-game price depends on its randomly-rolled level and
+        // stats, which this static extraction has no way to know. Name +
+        // real portrait only.
+        species.Add(new JObject { ["name"] = name, ["icon"] = PalPortraitIcon(characterId) });
+    }
+    return new JObject
+    {
+        ["poolSpecies"] = species,
+        ["offeredCount"] = row?["CharacterNum"],
+        ["levelMin"] = row?["MinCharacterLevel"],
+        ["levelMax"] = row?["MaxCharacterLevel"],
+    };
+}
+
+// Real portraits confirmed by the user in-game against these exact coat
+// colors (see NOTES.md's Trader investigation) - not a guess. Added to the
+// shared npcUsedIcons set (declared in the NPCs section above) so the
+// NPCs section's own icon-export loop picks these up too - no separate
+// export path needed.
+string MerchantIconVariant(string type)
+{
+    var variant = type == "wandering" ? "T_SalesPerson_icon_normal" : "T_PalDealer_icon_normal";
+    npcUsedIcons.Add(variant);
+    return variant;
+}
+
+string MerchantCategory(string type) => type == "wandering" ? "Wandering" : "PalDealer";
+string MerchantDisplayName(string type) => type == "wandering" ? "Wandering Merchant" : "Pal Dealer";
+// Nominal identity, not a real DT_UniqueNPC row (these aren't spawner-
+// sourced) - matches this project's own internal naming for these
+// Blueprints (SalesPerson_Wander/PalDealer, see NOTES.md) rather than
+// leaving uniqueName blank.
+string MerchantUniqueName(string type) => type == "wandering" ? "SalesPerson_Wander" : "PalDealer";
+
+foreach (var (x, y, type, level) in merchantPositions)
+{
+    var uniqueName = MerchantUniqueName(type);
+    // wandering sells items for plain Gold - no DT_ItemShopSettingData
+    // override row exists for it, unlike Medal/Bounty/Arena (see the NPCs
+    // section's NpcShopInventory), so TraderCurrencyInfo(null) resolves to
+    // the Gold/"Money" default. pal has no currency shown at all - see
+    // ResolvePalShopPool's own comment on why no price is computed.
+    JArray? items = null;
+    string? currency = null, currencyIcon = null;
+    JObject? palPool = null;
+    if (type == "wandering")
+    {
+        items = ResolveItemShopProducts("WanderShopTable");
+        (currency, currencyIcon) = TraderCurrencyInfo(null);
+    }
+    else
+    {
+        palPool = ResolvePalShopPool("Test_00");
+    }
+
+    npcResult.Add(new JObject
+    {
+        ["id"] = $"{uniqueName}:{x:F0}:{y:F0}",
+        ["uniqueName"] = uniqueName,
+        ["name"] = MerchantDisplayName(type),
+        ["category"] = MerchantCategory(type),
+        ["icon"] = MerchantIconVariant(type) + ".png",
+        ["level"] = level,
+        ["items"] = items,
+        ["currency"] = currency,
+        ["currencyIcon"] = currencyIcon,
+        ["palPool"] = palPool,
+        ["x"] = x,
+        ["y"] = y,
+        ["z"] = null,
+    });
+}
+
+Console.WriteLine($"Total NPCs with a map marker: {npcResult.Count}, distinct icons used: {npcUsedIcons.Count}");
+File.WriteAllText(@"C:\Projects\PalworldMap\data\npcs_static.json", npcResult.ToString(Formatting.Indented));
+Console.WriteLine("Wrote data/npcs_static.json");
+foreach (var variant in npcUsedIcons)
+{
+    var exports = provider.LoadPackageObjects($"Pal/Content/Pal/Texture/PalIcon/Normal/{variant}").ToList();
+    var tex = exports.OfType<UTexture2D>().First();
+    var decoded = tex.Decode()!;
+    var bytes = DownscalePng(TextureEncoder.Encode(decoded, ETextureFormat.Png, false, out _));
+    File.WriteAllBytes(Path.Combine(npcIconOutDir, $"{variant}.png"), bytes);
+}
+Console.WriteLine($"Wrote {npcUsedIcons.Count} frontend/assets/npc_icons/*.png");
+
+// ============ Quests (Main + Sub, map-marker-bearing only) ============
+// Every quest (DT_PalQuestData, 120 rows: 58 Main / 59 Sub / 3 Hidden) is an
+// ordered sequence of "blocks" (its own Blueprint's QuestBlockGroupList ->
+// each group's BlockList, one or more blocks running in parallel per step).
+// Each block *optionally* carries LocationSettingData.FixedLocationPointArray
+// - a real, explicit foreign key ({DataTable: DT_PalQuestLocationData,
+// RowName}), not a naming-convention guess - confirmed directly against
+// Zoe's first block (BP_SubQuestBlock_Zoe01_DisplayElecpanda), which points
+// at row "Sub_Zoe" (plus "Main_CaptureDeerGround").
+//
+// Per user's own scoping call: only keep quests where at least one step
+// resolves to a real location - "if there's no map marker, we don't care
+// about it." Hidden-type quests (3 rows, background triggers like
+// "change your weapon's ammo type") are dropped entirely, not evaluated.
+//
+// This directly resolves an earlier open question about whether quests map
+// 1:1 to NPCs: they don't, in two different ways. Zoe alone is 5 separate
+// quest rows (Sub_Zoe01..04 + Sub_Zoe_Halloween) at one spot - a real
+// multi-quest chain. Sub_Farmer01..04 *look* like the same shape (numbered
+// suffix) but resolve to 4 physically distinct locations - four different
+// farmers, one quest each, not a chain. There's no explicit chain-grouping
+// field in the data for either case - the per-block RowName join above
+// sidesteps needing one: each quest's own steps carry their own locations
+// regardless of how many other quests happen to share an NPC or a spot.
+//
+// Live per-player join (not done here - see backend/parse.py +
+// backend/quests.py): SaveData.OrderedQuestArray_FullRelease gives
+// {QuestName, BlockIndex} for every currently in-progress quest - BlockIndex
+// indexes this array's own "steps" directly (confirmed: a real player's
+// Main_RayneSyndicate was at BlockIndex 1, its own 2nd QuestBlockGroupList
+// entry, the "DefeatBoss" step, matching where a Rayne-Syndicate-progress
+// player would actually be). SaveData.CompletedQuestArray_FullRelease is a
+// flat list of finished quest IDs. Not-started = known quest ID in neither
+// array - its target is steps[0] (where you'd go to begin it).
+//
+// Quest title text is a genuine dead end for static extraction, confirmed
+// exhaustively 2026-07-20 (an earlier pass just had a bug - see below - that
+// made it look unexplored). QuestTitleMsgId (e.g. "Quest_Main_Title_
+// DefeatKingWhale", "QUEST_SUB_QUESTNAME_BREEDER1") lives on the quest
+// Blueprint's own CDO (questCdo["Properties"]["QuestTitleMsgId"]), NOT on
+// the DT_PalQuestData row (qp.Value) - the original code read it from the
+// row, where the field doesn't exist at all, so titleMsgId was silently
+// always null. Fixed to read from questCdo. But the MsgId->real-text
+// resolution itself has no static answer anywhere in the shipped game
+// files: no DataTable row (any casing/substring of "QUEST") matches these
+// keys; the only 7 ST_*/StringTable uassets in the whole game are unrelated
+// (rope-physics/animation tables + one PSN EULA table); and
+// Pal/Content/Localization/Game/<culture>/Game.locres is a byte-identical
+// empty 37-byte stub for EVERY shipped culture (en/ja/ko/zh-Hans checked),
+// i.e. the compiled UE StringTable/locres localization pipeline is entirely
+// unused by this game - real text must be resolved by native code against
+// something not present in Pal/Content at all.
+//
+// Real display names below (questRealTitleById) instead come from
+// palpedia.ru (a data-mined Palworld quest database whose URLs are keyed
+// directly by this exact internal quest ID, e.g.
+// https://palpedia.ru/en/missions/quest:Main_DefeatKingWhale) - same
+// external-source approach as the Towers section's boss names. Two entries
+// were user-confirmed in-game before any lookup (Main_DefeatKingWhale =
+// "Panthalus", Sub_Breeder01 = "Breeding Basics") and both matched
+// palpedia.ru exactly, validating the source for the rest. 77 of 87 quests
+// resolved this way 2026-07-20; the 9 unresolved (Sub_PalDisplay_A_01
+// .. I_01, all 404 on palpedia.ru) and Test_UnlockAreaBarriers (a leftover
+// dev/test quest, expected 404) fall back to ReadableQuestTitle's
+// row-name-derived label below, same as before this pass.
+string QuestPackagePath(string assetPathName)
+{
+    var withoutObjectName = assetPathName[..assetPathName.LastIndexOf('.')];
+    return withoutObjectName.Replace("/Game/", "Pal/Content/");
+}
+
+JObject? LoadCdo(string packagePath)
+{
+    try
+    {
+        var exports = provider.LoadPackageObjects(packagePath).ToList();
+        var cdo = exports.FirstOrDefault(e => e.Name.ToString().StartsWith("Default__", StringComparison.Ordinal));
+        if (cdo == null) return null;
+        return JObject.Parse(JsonConvert.SerializeObject(cdo));
+    }
+    catch
+    {
+        return null;
+    }
+}
+
+string ReadableQuestTitle(string questId)
+{
+    var stripped = questId.StartsWith("Main_") ? questId["Main_".Length..]
+        : questId.StartsWith("Sub_") ? questId["Sub_".Length..]
+        : questId;
+    var withSpaces = System.Text.RegularExpressions.Regex.Replace(stripped, "(?<!^)([A-Z])", " $1");
+    var collapsed = System.Text.RegularExpressions.Regex.Replace(withSpaces.Replace("_", " "), @"\s+", " ");
+    return collapsed.Trim();
+}
+
+var questRealTitleById = new Dictionary<string, string>
+{
+    ["Main_UnlockFastTravel"] = "Activate Great Eagle Statue",
+    ["Main_DefeatWildBoss"] = "First Boss Battle",
+    ["Main_DefeatDungeonBoss"] = "Sealed Pals",
+    ["Main_DefeatGrassBoss"] = "The Girl and the Tower",
+    ["Main_CaptureDeerGround"] = "Wildlife Sanctuaries",
+    ["Main_DefeatForestBoss"] = "Thou Shalt Not Harm Pals",
+    ["Main_DefeatVolcanoBoss"] = "Flawless Victory Fixation",
+    ["Main_DefeatDesertBoss"] = "Ruler of the Sands",
+    ["Main_DefeatSnowyMountainBoss"] = "Interspecies Experiments",
+    ["Main_DefeatSakurajimaBoss"] = "A Fine Night for a Drink",
+    ["Main_DefeatVikingBoss"] = "Bearer of All Burdens",
+    ["Sub_Farmer01"] = "Pal's Blessing",
+    ["Sub_Farmer02"] = "Hungry for Recruits",
+    ["Sub_Farmer03"] = "A Special Dish",
+    ["Sub_Farmer04"] = "Medical Bills",
+    ["Sub_Scholar01"] = "Prove the Legend!",
+    ["Sub_Scholar02"] = "Lock In",
+    ["Sub_Scholar03"] = "Give a Fuack",
+    ["Sub_Scholar04"] = "Metal on Your Mind",
+    ["Sub_Breeder01"] = "Breeding Basics", // user-confirmed in-game, matches palpedia.ru exactly
+    ["Sub_Breeder02"] = "Farewell Under the Sakura Tree",
+    ["Sub_Breeder03"] = "No Mercy for Pal Thieves",
+    ["Sub_Breeder04"] = "Operation: Splatterina Spree",
+    ["Sub_Ranger01"] = "Hunting Essentials",
+    ["Sub_Ranger02"] = "The Fugitive",
+    ["Sub_Ranger03"] = "Formidable Faleris Aqua",
+    ["Sub_Ranger04"] = "A Sweet Deal",
+    ["Sub_Nomad01"] = "A True Ascent Ends in Descent",
+    ["Sub_Nomad02"] = "Sparkly and Smooth",
+    ["Sub_Nomad03"] = "Dungeon Hunt",
+    ["Sub_Nomad04"] = "Easygoing Adventures",
+    ["Sub_Zoe01"] = "Don't Get Cocky",
+    ["Sub_Zoe02"] = "I Still Don't Trust You",
+    ["Sub_Zoe03"] = "A Warm Memory",
+    ["Sub_Angler01"] = "A Fine Day for Fishing",
+    ["Sub_PalCaptureCountReward"] = "Request from a Wise Hunter",
+    ["Sub_BossDefeatReward"] = "Request from a Veteran Hunter",
+    ["Sub_PaldexReward"] = "Request from a Pal Ecological Researcher",
+    ["Sub_FoodReward"] = "Request from an Arrogant Foodie",
+    ["Sub_Kigurumi01"] = "That's That Me, Depresso!",
+    ["Sub_Zoe04"] = "Zoe's Sphere",
+    ["Sub_Zoe_Halloween"] = "Happy Halloween!",
+    ["Sub_Kigurumi01_Replay"] = "That's That Me, Depresso! (Repeat)",
+    ["Sub_StrongOldMan01"] = "Captured Adventurer",
+    ["Sub_StrongOldMan02"] = "Taking Down a Bounty",
+    ["Sub_StrongOldMan03"] = "The Proxy",
+    ["Sub_StrongOldMan04"] = "The Past",
+    ["Sub_StrongOldMan05"] = "The Knight's Last Stand",
+    ["Main_TutorialStart"] = "The First Islander",
+    ["Main_BeginAdventure"] = "The Adventure Begins",
+    ["Main_SmallVillage"] = "Small Settlement",
+    ["Main_CraftPalGear"] = "Crafting Pal Gear",
+    ["Main_RayneSyndicate"] = "The Rayne Syndicate",
+    ["Main_ReturnSmallVillage"] = "The Key Sphere",
+    ["Main_TalkGrassBoss"] = "Zoe Rayne",
+    ["Main_TalkSkyBoss"] = "The Sunreacher",
+    ["Main_TalkSkyBossAgain"] = "The Calamity",
+    ["Main_DefeatKingWhale"] = "Panthalus", // user-confirmed in-game, matches palpedia.ru exactly
+    ["Main_ReachWorldTree"] = "To the World Tree",
+    ["Main_TalkWorldTreeNPC"] = "Sin",
+    ["Main_WorldTreeAbyss"] = "The Sealed Calamity",
+    ["Main_DefeatWorldTreeDragon"] = "Awakening",
+    ["Main_DefeatSkyIslandBoss"] = "Hope Springs Eternal",
+    ["Main_DefeatWorldTreeMiddleBoss"] = "Path to the Abyss",
+    ["Sub_RookieExpeditionTeam01"] = "The Rookie Expedition Team",
+    ["Sub_RookieExpeditionTeam02"] = "Budding",
+    ["Sub_RookieExpeditionTeam03"] = "Growth",
+    ["Sub_RookieExpeditionTeam04"] = "A Sterile Flower",
+    ["Sub_LoneWolf01"] = "The Sable Loner",
+    ["Sub_LoneWolf02"] = "Reminiscent Wandering",
+    ["Sub_LoneWolf03"] = "The Unsheathed Katana",
+    ["Sub_DeliverySulfur"] = "Stockpiling Sulfur",
+    ["Sub_DeliveryWood_Fine"] = "Stockpiling Hardwood",
+    ["Sub_DeliveryQuartz"] = "Stockpiling Pure Quartz",
+    ["Sub_DeliveryRainbowCrystal"] = "Stockpiling Hexolite Quartz",
+    ["Sub_DeliverySkyIslandOre"] = "Stockpiling Soralite",
+    ["Sub_HowSurviveWorldTree"] = "Surviving the World Tree",
+    // Unresolved (404 on palpedia.ru, no confirmed real name yet):
+    // Sub_PalDisplay_A_01 .. I_01 (9 quests), Test_UnlockAreaBarriers (dev/test
+    // quest, expected). These fall through to ReadableQuestTitle below.
+};
+
+var questRows = LoadRows("Pal/Content/Pal/DataTable/Quest/DT_PalQuestData");
+var questLocRows = LoadRows("Pal/Content/Pal/DataTable/Quest/DT_PalQuestLocationData");
+var questResult = new JArray();
+int questBlocksLoaded = 0, questBlocksMissing = 0;
+
+foreach (var qp in questRows.Properties())
+{
+    var questId = qp.Name;
+    var questType = ElementString(qp.Value["QuestType"]); // Main / Sub / Hidden
+    if (questType == "Hidden") continue;
+
+    var questAssetPath = (string?)qp.Value["QuestData"]?["AssetPathName"];
+    if (string.IsNullOrEmpty(questAssetPath)) continue;
+    var questCdo = LoadCdo(QuestPackagePath(questAssetPath));
+    var groupList = questCdo?["Properties"]?["QuestBlockGroupList"] as JArray;
+    if (groupList == null) continue;
+
+    var steps = new JArray();
+    bool anyLocation = false;
+
+    foreach (var group in groupList)
+    {
+        var stepLocations = new JArray();
+        var blockList = group["BlockList"] as JArray;
+        if (blockList != null)
+        {
+            foreach (var block in blockList)
+            {
+                var blockAssetPath = (string?)block["AssetPathName"];
+                if (string.IsNullOrEmpty(blockAssetPath)) continue;
+                var blockCdo = LoadCdo(QuestPackagePath(blockAssetPath));
+                if (blockCdo == null) { questBlocksMissing++; continue; }
+                questBlocksLoaded++;
+
+                var fixedPoints = blockCdo["Properties"]?["LocationSettingData"]?["FixedLocationPointArray"] as JArray;
+                if (fixedPoints == null) continue;
+                foreach (var fp in fixedPoints)
+                {
+                    var rowName = (string?)fp["RowName"];
+                    if (string.IsNullOrEmpty(rowName) || rowName == "None") continue;
+                    var locRow = questLocRows[rowName];
+                    var pos = locRow?["Position"];
+                    if (pos == null) continue;
+                    stepLocations.Add(new JObject
+                    {
+                        ["rowName"] = rowName,
+                        ["x"] = pos["X"],
+                        ["y"] = pos["Y"],
+                        ["z"] = pos["Z"],
+                    });
+                }
+            }
+        }
+        if (stepLocations.Count > 0) anyLocation = true;
+        steps.Add(new JObject { ["locations"] = stepLocations });
+    }
+
+    if (!anyLocation) continue; // no map marker anywhere in this quest - skip per scoping call
+
+    questResult.Add(new JObject
+    {
+        ["id"] = questId,
+        ["type"] = questType,
+        ["title"] = questRealTitleById.TryGetValue(questId, out var realTitle) ? realTitle : ReadableQuestTitle(questId),
+        ["titleMsgId"] = (string?)questCdo?["Properties"]?["QuestTitleMsgId"],
+        ["steps"] = steps,
+    });
+}
+Console.WriteLine($"Total quests with a map marker: {questResult.Count} (blocks loaded: {questBlocksLoaded}, missing: {questBlocksMissing})");
+File.WriteAllText(@"C:\Projects\PalworldMap\data\quests_static.json", questResult.ToString(Formatting.Indented));
+Console.WriteLine("Wrote data/quests_static.json");
+
+// The game's own in-game compass quest marker (T_icon_Compass_Quest_0/_1) -
+// two variants, found by an asset-path keyword sweep. Visually checked
+// before wiring in (per this project's own rule - don't trust an asset name
+// alone, see the Watchtower/Waypoint icon mixup elsewhere in NOTES.md):
+// _0 is a gold diamond with "!" (standard "NPC has a quest for you" prompt
+// icon - used here for Not Started), _1 is a plain blue diamond with no
+// symbol (standard "current objective" tracking marker - used for Active).
+var questIconOutDir = @"C:\Projects\PalworldMap\frontend\assets\quest_icons";
+Directory.CreateDirectory(questIconOutDir);
+foreach (var variant in new[] { "T_icon_Compass_Quest_0", "T_icon_Compass_Quest_1" })
+{
+    var exports = provider.LoadPackageObjects($"Pal/Content/Pal/Texture/UI/InGame/{variant}").ToList();
+    var tex = exports.OfType<UTexture2D>().First();
+    var decoded = tex.Decode()!;
+    var bytes = TextureEncoder.Encode(decoded, ETextureFormat.Png, false, out _);
+    File.WriteAllBytes(Path.Combine(questIconOutDir, $"{variant}.png"), bytes);
+    Console.WriteLine($"Wrote frontend/assets/quest_icons/{variant}.png");
+}
