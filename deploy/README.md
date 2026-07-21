@@ -5,6 +5,11 @@ hostnames) belongs in committed source or docs. Every deployment-specific
 value below is a placeholder; fill in your own via `deploy/.env` (gitignored)
 or your Portainer stack's environment variables.
 
+Don't want Docker? See [`deploy/bare-metal.md`](bare-metal.md) for running
+directly on a Linux LXC/VM instead — same config below applies, but a couple
+of these variables behave differently (or need setting explicitly) once
+there's no container providing their defaults.
+
 ## Required config
 
 All of these are read env-var-first, falling back to `backend/secrets.py`
@@ -17,6 +22,15 @@ All of these are read env-var-first, falling back to `backend/secrets.py`
 | `AMP_USER` | SSH account on the AMP host with the scoped sudo rsync rule below |
 | `AMP_SAVE_ROOT` | Full path to the AMP instance's SaveGames dir, e.g. `/home/<amp-user>/.ampdata/instances/<instance>/palworld/<steam-app-id>/Pal/Saved/SaveGames/` |
 | `AMP_WORLD_GUID` | The live world's save GUID (subdirectory under SaveGames) |
+| `PALDEX_SSH_KEY` | *(Container-internal, usually left unset)* Path `backend/remote.py` reads the SSH private key from — defaults to `/run/secrets/paldex_ssh_key`, the Docker-secrets mount path `docker-compose.yml` already wires up via `PALDEX_SSH_KEY_HOST_PATH` below. You only need to set this directly if you're running outside that compose setup. |
+
+Note the two similarly-named SSH key variables aren't interchangeable:
+`PALDEX_SSH_KEY_HOST_PATH` (below) is a `docker-compose.yml` build-time
+variable — the key's location *on the Docker host*, which Compose bind-mounts
+into the container. `PALDEX_SSH_KEY` (above) is what `remote.py` actually
+reads *inside* the container/process at runtime. For a standard Compose
+deploy you only ever need to set `PALDEX_SSH_KEY_HOST_PATH`; `PALDEX_SSH_KEY`
+exists for the non-Docker case where nothing does that mount for you.
 
 ## One-time setup
 
@@ -29,9 +43,24 @@ All of these are read env-var-first, falling back to `backend/secrets.py`
    echo '<contents of paldex_deploy_key.pub>' >> ~/.ssh/authorized_keys
    ```
 
-   `<AMP_USER>` needs a scoped NOPASSWD sudoers rule limited to
-   `rsync`/`find` against `AMP_SAVE_ROOT` — that rule is per-account, not
-   per-key, so this new key inherits it automatically.
+   `<AMP_USER>` needs a scoped NOPASSWD sudoers rule limited to `rsync`
+   against `AMP_SAVE_ROOT` — that rule is per-account, not per-key, so this
+   new key inherits it automatically. `remote.py` only ever runs one sudo
+   command (`rsync -a <AMP_SAVE_ROOT> /tmp/palworld-saves/`), so that's all
+   the rule needs to cover:
+
+   ```
+   # /etc/sudoers.d/paldex-readonly — validate with `visudo -cf` before installing
+   <amp-user> ALL=(root) NOPASSWD: /usr/bin/rsync -a <AMP_SAVE_ROOT> /tmp/palworld-saves/
+   ```
+
+   Use the **literal, concrete** `AMP_SAVE_ROOT` path here, not a wildcard —
+   a quoted glob in a sudoers command spec can silently fail to match, which
+   quietly disables NOPASSWD rather than erroring, and there's normally only
+   one fixed instance path to cover anyway. See
+   [`deploy/bare-metal.md`](bare-metal.md) for a related gotcha: this same
+   rsync mirror has no `--delete`, so `/tmp/palworld-saves/` on the AMP host
+   grows forever unless you separately cron-prune it.
 
 2. **Copy the private key onto the Docker host**, e.g. into the same
    directory as `docker-compose.yml` at `deploy/paldex_deploy_key`. Keep

@@ -101,6 +101,13 @@ wouldn't be possible without these open-source projects:
 
 ## Running locally
 
+This is the Windows dev-box flow (uses the Bitvise SSH Client for the AMP
+pull — see `backend/remote.py`). For Linux, including a bare LXC/VM with no
+Docker, use [`deploy/bare-metal.md`](deploy/bare-metal.md) instead — the
+setup differs enough (OpenSSH key provisioning, an env var with no default
+outside a container, a Python import gotcha in how you invoke `server.py`)
+that it's not just a `pip install` away.
+
 ```
 cd backend
 python -m venv ../.venv
@@ -112,11 +119,28 @@ python server.py
 
 Then open `http://localhost:5151`.
 
+**Whichever platform you're on, always run `server.py` directly as a
+script** (`python server.py` / `python backend/server.py`), never as a
+module (`python -m backend.server`) or via a WSGI target
+(`backend.server:app`). The config loader (`backend/config.py`) resolves
+`backend/secrets.py` via a plain `import secrets` — that only finds this
+project's file if `backend/` is the directory Python was launched from
+(true for `python server.py`/`python backend/server.py`, false for `-m`
+invocation). Get it wrong and Python silently imports its own **standard
+library** `secrets` module instead, which has no `RCON_PASSWORD` attribute —
+producing a "not set" error that looks like a missing-config problem, not
+an import-shadowing one.
+
 ## Deploying
 
-See [`deploy/README.md`](deploy/README.md) for the full Docker/Portainer
-setup (required env vars, SSH key provisioning, and gotchas from the first
-real deploy).
+Two supported paths:
+
+- **Docker/Portainer** — see [`deploy/README.md`](deploy/README.md) (required
+  env vars, SSH key provisioning, and gotchas from the first real deploy).
+- **Bare Linux LXC/VM, no Docker** — see
+  [`deploy/bare-metal.md`](deploy/bare-metal.md) (same config, plus the
+  container-only defaults and import gotchas above that don't apply once
+  there's no container around it).
 
 ## Project layout
 
