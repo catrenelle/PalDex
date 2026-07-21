@@ -34,13 +34,27 @@ exists for the non-Docker case where nothing does that mount for you.
 
 ## One-time setup
 
-1. **Add the deploy SSH key to the AMP host.** A dedicated ed25519 keypair
-   lives at `deploy/paldex_deploy_key(.pub)` (gitignored, generated once —
-   not the same key used for local Windows dev). On `<AMP_HOST>`, as
+1. **Generate your own dedicated ed25519 keypair — do not reuse one across
+   deployments, and never share a private key between installs.** Each
+   self-hosted instance of this project should have its own unique keypair,
+   generated on the machine that will run it:
+
+   ```
+   ssh-keygen -t ed25519 -f deploy/paldex_deploy_key -N ""
+   ```
+
+   This writes `deploy/paldex_deploy_key` (private) and
+   `deploy/paldex_deploy_key.pub` (public) — both gitignored, never commit
+   either. It's a separate keypair from whatever you use for your own
+   interactive SSH access (don't point this at a personal key), scoped to
+   nothing but the one sudo-limited rsync command below, so a compromise of
+   this key alone can't do anything beyond re-reading that one save path.
+
+   Add the **public** key to `<AMP_HOST>`'s `~/.ssh/authorized_keys` for
    `<AMP_USER>`:
 
    ```
-   echo '<contents of paldex_deploy_key.pub>' >> ~/.ssh/authorized_keys
+   cat deploy/paldex_deploy_key.pub | ssh <amp-user>@<amp-host> 'cat >> ~/.ssh/authorized_keys'
    ```
 
    `<AMP_USER>` needs a scoped NOPASSWD sudoers rule limited to `rsync`
