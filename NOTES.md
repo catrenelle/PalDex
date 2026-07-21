@@ -869,16 +869,26 @@ saves via the Flask test client before wiring up the frontend — found real
 active chains at every stage (e.g. one player's `Main_DefeatForestBoss` at
 6/7, another's `Main_WorldTreeAbyss` at 2/6).
 
-**Quest title text is not real extracted display text.** `QuestTitleMsgId`
-(e.g. `"QUEST_MAIN_TITLE_BOSS_AURI"`) does not resolve through any
-DataTable — an exhaustive DataTable/L10N path keyword search
-(QuestText/QuestName/QuestTitle/QuestDesc) came back with zero hits, so it's
-presumably a StringTable (a different UE asset type CUE4Parse handles
-differently) rather than the DataTable-based `L10N/en` convention every
-other name/text lookup in this pipeline uses. Not chased further — `title`
-in `quests_static.json` is a readable label mechanically derived from the
-quest's own row name (`Main_RayneSyndicate` -> "Rayne Syndicate"), not real
-game text. Revisit if real quest title text turns out to be worth it.
+**Quest title text is not resolvable from any shipped game asset.**
+`QuestTitleMsgId` (e.g. `"QUEST_MAIN_TITLE_BOSS_AURI"`) does not resolve
+through any DataTable — an exhaustive DataTable/L10N path keyword search
+(QuestText/QuestName/QuestTitle/QuestDesc) came back with zero hits, and a
+follow-up check of every `ST_*`/StringTable uasset in the game (7 total)
+and every shipped culture's `Game.locres` (byte-identical 37-byte empty
+stubs across en/ja/ko/zh-Hans) confirmed the compiled UE localization
+pipeline isn't used by this game at all — real text must come from native
+code, not `Pal/Content`. **Resolved 2026-07-20** by sourcing real display
+names from [palpedia.ru](https://palpedia.ru) instead, a data-mined
+community Palworld quest database whose URLs are keyed directly by this
+exact internal quest ID (e.g.
+`https://palpedia.ru/en/missions/quest:Main_DefeatKingWhale`). Two entries
+were user-confirmed in-game before trusting the source
+(`Main_DefeatKingWhale` = "Panthalus", `Sub_Breeder01` = "Breeding Basics"),
+both matching palpedia.ru exactly. 77 of 87 quests resolved this way; the 9
+that 404 on palpedia.ru (`Sub_PalDisplay_A_01`..`I_01`) plus
+`Test_UnlockAreaBarriers` (a leftover dev/test quest) still fall back to the
+row-name-derived label described below. See
+`extractor/PalExtract/Program.cs`'s Quests section for the implementation.
 
 **Known clutter, left in deliberately, flagged for a follow-up call**: 14 of
 the 59 Sub quests kept are reward/trigger stubs reusing the quest system for

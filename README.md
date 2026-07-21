@@ -89,6 +89,14 @@ we cross-check public wikis instead:
   coordinates read off the map, independently cross-checked against
   [palworld.fandom.com](https://palworld.fandom.com)'s Tower page for
   agreement.
+- **Wandering Merchant / Pal Dealer positions, and real quest display
+  names** — these NPCs are wild-spawns with no placement data anywhere in
+  the game's own files (confirmed dead end after an exhaustive search), and
+  `QuestTitleMsgId` doesn't resolve through any shipped DataTable or
+  StringTable either. Both are sourced from
+  [palpedia.ru](https://palpedia.ru), a data-mined community Palworld
+  database, spot-checked against real in-game reports before trusting it
+  for the rest.
 
 The full investigation log — including how each of these was verified, and
 a wiki-sourced typo that was caught and corrected along the way — lives in
