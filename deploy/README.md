@@ -22,7 +22,8 @@ all), Pterodactyl, or anything else works identically — just point
 ## Required config
 
 All of these are read env-var-first, falling back to `backend/secrets.py`
-(gitignored, local dev only) — see `backend/config.py`:
+(gitignored, local dev only — copy `backend/secrets.py.example` to get
+started) — see `backend/config.py`:
 
 | Variable | What it is |
 |---|---|

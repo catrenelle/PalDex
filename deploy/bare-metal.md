@@ -89,8 +89,9 @@ setup and the examples below happen to use.
 | `PALDEX_SSH_KEY` | **Not optional outside Docker.** Absolute path to the private key from the step below. |
 
 Either `export` these (e.g. in the systemd unit's `Environment=`/
-`EnvironmentFile=`) or write a local `backend/secrets.py` — same format as
-`deploy/.env.example` but as Python assignments, not `KEY=value` lines.
+`EnvironmentFile=`) or `cp backend/secrets.py.example backend/secrets.py`
+and fill it in — same format as `deploy/.env.example` but as Python
+assignments, not `KEY=value` lines.
 `PALDEX_SSH_KEY` specifically should be an env var either way — it's a
 filesystem path, not a secret value, and `backend/secrets.py`'s fallback
 exists for local dev convenience, not deployment.
