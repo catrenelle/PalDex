@@ -1449,3 +1449,258 @@ conversion on the result — there's no automated regeneration path for
 these two files specifically. `tree_thumb.png` (284KB, confirmed orphaned —
 zero references anywhere in `frontend/`/`backend/`) was left alone, out of
 scope for this pass; worth a separate cleanup if anyone asks.
+
+## Pal Spawn Locations (wild field spawns, pals only) — 2026-07-22
+
+"Where can I find X in the wild" as flat highlighted circular regions on
+the map, not a color-gradient heatmap — an explicit user requirement,
+along with "strictly pals only" (no Alpha Bosses, no dungeon spawns, no
+human NPC patrols) and defaulting to nothing selected/shown (the *only*
+section in this whole app that doesn't default to fully visible — every
+other section shows everything until a user opts out; this one shows
+nothing until a user opts in, since ~260 species selected at once would
+just highlight the entire map and defeat the point).
+
+- **Source table**: `DT_PalSpawnerPlacement` (`Pal/Content/Pal/DataTable/Spawner/`,
+  a `CompositeDataTable`, 8253 rows) — the master spawn-point placement
+  table for *every* spawner category in the game, not just wild Pals.
+  Filtering to `SpawnerType::Common` + `PlacementType::Field` is exactly
+  the regular wild-Pal field spawns wanted (~7474 rows). This single
+  filter cleanly excludes every other category already covered elsewhere
+  or out of scope: `SpawnerType::Common` + `PlacementType::Dungeon` (444
+  rows, dungeon trash — already the Dungeon Contents feature),
+  `SpawnerType::FieldBoss` (72 rows — the existing "Alpha Bosses" section,
+  `backend/bosses.py`/`DT_BossSpawnerLoactionData` — confirms "alphas" in
+  the user's own request means exactly this category, the sidebar
+  literally labels it "Alpha Bosses"), `SpawnerType::RandomDungeonBoss`
+  (245 rows, dungeon bosses, also Dungeon Contents), and
+  `SpawnerType::ImprisonmentBoss` (18 rows, a separate boss category, out
+  of scope). Each row carries its own `StaticRadius` (world units,
+  virtually always 15000.0 but always read per-row, never hardcoded) —
+  this maps a spawn point directly onto a circle, no clustering/heuristic
+  needed to turn points into "regions."
+- **Species/level join**: each placement row's `SpawnerName` field against
+  `DT_PalWildSpawner` (1691 rows) **by that table's own `SpawnerName`
+  property, not the dict row-key** — confirmed 7403/7474 match via the
+  field vs. only 73/7474 via the key, the same "don't get this backwards"
+  gotcha as `DT_BossSpawnerLoactionData.SpawnerID` elsewhere in this
+  pipeline. **Multiple `DT_PalWildSpawner` rows can share one
+  `SpawnerName`** — a weighted candidate pool, one row per candidate (NOT
+  a single row containing a groups array like the dungeon tables' shape) —
+  each candidate has up to 3 simultaneous slots (`Pal_1/NPC_1/LvMin_1/
+  LvMax_1` through `_3`).
+- **"Strictly pals only" filtering** (the user's explicit requirement): a
+  slot counts only when `Pal_N` is a real species — excludes `Pal_N ==
+  "None"` and `Pal_N == "RowName"` (a literal leftover template-default
+  string found on at least one real stub row, e.g. `grass_FBOSS_1_1`,
+  which also has `Weight: 0.0` — both guards kept, not relying on the
+  weight check alone) — and excludes any slot where `NPC_N` is set instead
+  of `Pal_N` (human, not a Pal — the 33 `RadiusType::NPC` rows hint some
+  Field spawners are human patrols using these NPC slots; this is the
+  "other enemies" half of the user's requirement).
+- **Species name/icon resolution reuses the exact same case-insensitive
+  logic already fixed for Dungeon Contents** (`DungeonPalName`/
+  `DungeonPalIcon` generalized to `ResolvePalName`/`ResolvePalIcon` —
+  same `monsterRowsCI`/`palNameRowsCI` case-insensitive dictionaries, not
+  a second copy-pasted case-sensitive implementation) — keyed by the base
+  non-`BOSS_` CharacterID (e.g. `"Alpaca"` not `"BOSS_Alpaca"`, since wild
+  field spawns are already the common form). Icons land in the existing
+  shared `frontend/assets/boss_icons/` directory, reusing whatever's
+  already exported from Bosses/Dungeons where species overlap.
+- **A genuine remaining resolution gap exists and is correctly dropped, not
+  fabricated**: of 262 distinct species reachable from Field+Common
+  placements, 261 resolve a real name cleanly. The sole miss,
+  `Male_NinjaElite01`, is a human character mistakenly placed in a `Pal_2`
+  slot (its sibling `Pal_1` slot on the *same row* correctly uses `NPC_1`
+  for the human `Male_Ninja01`) rather than `NPC_2` — a real, if minor,
+  upstream data inconsistency in the game's own table, not an extraction
+  bug. It fails name resolution and is dropped rather than shown with its
+  raw internal id as a fake species name, which would violate "strictly
+  pals only."
+- **Extraction totals** (logged, confirmed via `extractor/ScratchSpawns`
+  before shipping, same "verify before trusting an extractor came back
+  empty/wrong" discipline as Dungeon Contents' casing-bug correction):
+  7474 Field+Common placement rows, 261 distinct resolved species, 57208
+  total species-location entries (most spawn points offer more than one
+  possible species — a location's own weighted candidate pool, same
+  concept as a dungeon's Boss pool, just per-field-spawn instead of
+  per-dungeon), only ~7310 distinct physical coordinates (confirming most
+  of that 57208 fan-out is real multi-species overlap at shared spots, not
+  a duplication bug). One species, `MimicDog` ("Mimog" — the treasure-
+  chest-disguise Pal), has an outlier 5317 locations — genuinely correct,
+  not a bug: Mimog is a real low-weight "any generic wild encounter might
+  secretly be a mimic" mechanic bundled onto a huge share of the game's
+  own spawner rows, confirmed by checking that its location entries really
+  are 5317 *distinct* coordinates (not a repeated/duplicated handful) with
+  wildly varying level ranges matching whatever normal spawn was rolled at
+  each spot.
+- **Coordinate/radius conversion**: `backend/coord.py` gained
+  `radius_to_pixels(world_radius)` (`world_radius / _WORLD_UNITS_PER_PIXEL`
+  — a pure linear scale, no offset needed unlike `locate()`, and shared
+  between main-map and Tree-inset spawns since both use the same
+  units-per-pixel factor) for use with Leaflet's `L.circle`. **Confirmed
+  empirically, not just assumed, that `L.circle`'s `radius` option is in
+  the same flat coordinate-unit space as marker lat/lng under this app's
+  `L.CRS.Simple` setup** (no geographic projection to complicate it) — a
+  circle's on-screen pixel radius was checked at two different map zoom
+  levels (`zoom -4` → 5px, `zoom -2`, 2 levels in → 21px, ≈4×, matching
+  the expected 2² zoom-scale factor) — proving `L.circle` (real
+  world-space radius, scales with zoom) was the right choice over
+  `L.circleMarker` (fixed screen-pixel radius, would NOT have scaled).
+- **Backend**: `backend/pal_spawns.py`'s `load_pal_spawn_locations()`
+  loads the static JSON once at startup (fully static, world-shared, no
+  per-player/per-refresh state at all — spawn point *definitions* aren't
+  live save data) and does the pixel/radius conversion at load time (not
+  baked into the static JSON) so it stays in sync with `coord.py` if the
+  map bounds/texture size ever change, same pattern as every other loader.
+  Served via `/api/pal_spawn_locations`.
+- **Frontend**: a new top-level sidebar category, "Pal Spawns", alongside
+  the existing "Points of Interest"/"Collectibles"/"Combat"/"Quests"
+  groups — deliberately **not** built on the shared
+  `createTypeChecklistSection()` factory (that renders point markers
+  grouped by species with per-player collected state; this renders
+  potentially thousands of translucent area circles per species with zero
+  per-player state — different enough on both axes to warrant bespoke
+  code), but reuses `.type-row`'s row markup/CSS for visual consistency
+  with every other checklist in the app. A plain substring search box
+  (new UI pattern for this app — no other section has 260+ entries, so no
+  prior section needed one) filters the visible rows without touching
+  selection state. Each checked species gets a small colored swatch (a
+  fixed 10-color palette cycling by check-order) so multiple simultaneous
+  selections stay visually distinguishable; unchecking removes only that
+  species' circles. **Uses `L.canvas()` as the circle layer's renderer,
+  not Leaflet's default SVG** — a popular species (Mimog: 5317 circles at
+  once) would be far more sluggish as one `<path>` element per circle than
+  as canvas draw calls. Selection state persists across a page reload via
+  the existing `uiState`/`localStorage` mechanism, but with **inverted
+  polarity from every other section's persistence** — `sectionUnchecked`/
+  `saveSectionUnchecked` store the *unchecked* exceptions (so new entries
+  default visible, matching those sections' own "everything visible by
+  default" behavior) — Pal Spawns instead stores the *checked* set
+  directly (`uiState.palSpawnsChecked`), matching its own opposite
+  "nothing visible by default" behavior. Deliberately excluded from
+  `ALL_MASTER_TOGGLE_IDS` so the existing Show All/Hide All buttons and
+  `?isolate=`/`?view_as=` screenshot-mode bootstraps never touch it
+  either — Show All lighting up all 260 species would be exactly the
+  "entire map highlighted" outcome the user explicitly didn't want, even
+  as a side effect of an unrelated button.
+- **Verified live in a real browser, not just via curl**: zero circles
+  with nothing selected; selecting a 20-location species (Lullu/
+  LeafPrincess) created exactly 20 `L.Circle` layers, positioned at
+  real world coordinates that `map.fitBounds()` on them correctly framed
+  as one tight, blended cluster in the Sakura region (screenshotted);
+  selecting a second species (Pierdon/RockBeast) simultaneously produced
+  two visually distinct colors (`rgb(224,108,117)` vs. `rgb(97,175,239)`,
+  confirmed programmatically, not just eyeballed); zero console errors
+  throughout.
+
+### Mimog Effigy ("Capture Power" relic) progress badge — same day, follow-up
+
+The user provided a real gameplay mechanic that isn't documented anywhere
+else in this codebase: capturing 5 of a given Pal species awards one Mimog
+Effigy (the game's own internal name for this relic type is "Capture
+Power" — confirmed below). Investigated directly against a real player
+save (`data/saves/Players/*.sav`, already locally cached by the refresh
+loop, no fresh SSH pull needed) rather than guessing a field name:
+
+- **`SaveData.RecordData.PalCaptureCount`** — a flat `NameProperty`→
+  `IntProperty` map, keyed by the exact same base CharacterID codenames
+  `pal_spawn_locations_static.json` already uses (`"PinkCat"` for Cattiva,
+  `"MimicDog"` for Mimog — confirmed exact key match, no casing gotcha
+  this time). **Lifetime, uncapped, monotonically non-decreasing** — real
+  values seen well past 5 for well-farmed species (`"ChickenPal": 106`,
+  `"CatMage": 50`) — captures are never "spent," so `count >= 5` is a
+  stable, permanent "reward already earned" signal per species.
+- **A real dead-end ruled out before trusting the right field**:
+  `RelicPossessNumMap`'s `"EPalRelicType::CapturePower"` entry looked like
+  an obvious candidate (its value, 54, is even the internal name match for
+  "Capture Power") — but it's confirmed (via `RelicPossessNum`, a
+  top-level duplicate of that same figure) to be the player's **current
+  unspent currency balance**, which drops when spent at a Statue of Power
+  — same "resets on turn-in" caveat this file already documented for
+  `RelicPossessNumMap` under Effigies above, just now applied to the
+  wrong assumption of what it could be reused for here. In this same real
+  save, 182 distinct species already have `PalCaptureCount >= 5` while the
+  spendable `CapturePower` balance sat at only 54 — proof the two numbers
+  track genuinely different things, not just the same value observed at
+  different times.
+- **`bCaptureCompletionRelicFixupDone`** (a boolean "one-time migration
+  applied" flag) independently confirms the internal system name really is
+  "CaptureCompletionRelic," matching the user's description exactly.
+- **Backend**: `backend/parse.py`'s `load_pal_capture_counts()` reads the
+  map directly (species codename → count). `/api/pal_spawn_locations` now
+  accepts the same `?view_as=<uid>` pattern as `/api/relics`/`/api/bosses`/
+  etc., overlaying `capture_count`/`effigy_complete` (`count >= 5`) onto
+  each species entry only when a player is selected — omitted entirely
+  otherwise (`capture_known: false`), same "don't imply false state when
+  the answer is actually unknown" rule as `defeat_known` elsewhere.
+- **Frontend**: each Pal Spawns checklist row gained a small badge — a
+  green ✓ once complete, an amber "`N/5`" while in progress, nothing when
+  no player is selected or the species has zero captures. Refreshes on the
+  same `reloadCollectionState()` cycle every other per-player section uses
+  (view_as switch + the 10s poll), but **doesn't rebuild the checklist
+  itself** on every refresh (the species roster/checkbox state never
+  changes, only the badge content does) — a lighter `updatePalSpawnEffigyBadges()`
+  path updates just the badge `<span>` per row in place, leaving
+  checkboxes/circles/search-filter state untouched.
+- **Verified against the real save used for the field investigation
+  itself**: selecting that same player in "View As" showed Cattiva (5
+  lifetime captures in that save) with the ✓ badge and a tooltip reading
+  "Mimog Effigy earned (5 Cattiva captured)," and Anubis (1 capture) with
+  "1/5" — both matching the raw save data exactly, not just plausible-
+  looking output. Confirmed badges are empty with no player selected, and
+  that toggling a species checkbox / drawing its circles still works
+  unaffected by the new badge column, zero console errors.
+
+**Follow-up, same day: real in-game icon instead of a checkmark, plus
+column alignment.** Swapped the plain ✓ for the actual Mimog Effigy item
+icon — `frontend/assets/relic_icons/T_itemicon_Relic_12.png`, the same
+file the Effigies section already uses, confirmed correct (not Lunaris's,
+an earlier icon-table mismatch this project already caught and fixed —
+see `backend/relics.py`'s own comment) rather than assumed. Alignment
+fix: `.pal-spawn-effigy-slot` changed from `min-width` to an exact fixed
+`width`/`height` with flex centering, so the slot occupies identical
+screen space whether it's empty, holding the effigy icon, or holding
+`"N/5"` progress text — without this, rows would visibly jitter
+left/right as content varied. **A real scare during verification, not an
+actual bug**: an early screenshot taken 800ms after switching "View As"
+showed every icon-based badge completely blank while the text-based
+`"N/5"` ones rendered fine — looked exactly like a broken-image
+regression. Direct DOM inspection (`img.src`, `naturalWidth`, the
+species data actually in `palSpawnData`) showed everything was correct
+underneath; a second screenshot at 2000ms showed every icon rendering
+properly. Root cause was purely test-script timing — `reloadCollectionState()`
+fires ~10 sections' fetches in parallel on a View As switch, and the
+image itself needs an extra network round-trip beyond the JSON that
+plain text badges don't, so it can lag behind by a few hundred ms on a
+busy first load. Not a real user-facing issue (the browser's own image
+cache means every occurrence after the first is instant, and a few
+hundred ms lag on switching players isn't noticeable at normal
+interaction speed) — flagged here so a future "screenshot taken right
+after an action looks broken" doesn't get mistaken for a real bug again
+without checking the DOM state directly first.
+
+**Real alignment bug, caught by the user from an actual screenshot (not
+this project's own verification, which had missed it) — fixed same day.**
+The fixed-width effigy slot above only solved *horizontal* alignment
+within a row; it didn't address that longer species names (`"Bushi Noct"`,
+`"Capriity Noct"`, etc.) were wrapping to a second line, making just those
+rows taller than their neighbors — every row's own internal content was
+individually correct, but the *row-to-row vertical rhythm* looked jagged
+scrolling past a mix of 1-line and 2-line rows, which is what actually
+read as "not lining up." Fixed with `.pal-spawn-row .rt-label { white-space:
+nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }` (plus
+a `title` attribute so the full name is still available on hover) —
+forces every row to the same single-line height regardless of name
+length. Confirmed via real computed `getBoundingClientRect()` heights
+across 30 consecutive rows (all exactly 32px, including the two that
+previously wrapped) and a screenshot at the same narrow sidebar width the
+user's own screenshot used, scrolled to the same species. **Lesson: this
+project's own Playwright verification checked individual elements'
+positions/sizes in isolation and missed a real visual defect that was
+obvious from one glance at an actual screenshot of a scrolled list — when
+a UI issue is about a list "feeling" janky/inconsistent while scrolling,
+a full-list screenshot (not just spot-checking a couple of rows'
+computed styles) is the right verification, not just after the fact
+either — should have screenshotted a longer scroll of mixed-length names
+before calling the badge feature done in the first place.**

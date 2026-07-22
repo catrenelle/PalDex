@@ -59,6 +59,18 @@ def _to_pixel(
     return round(px), round(py)
 
 
+def radius_to_pixels(world_radius: float) -> float:
+    """World-unit radius (e.g. DT_PalSpawnerPlacement's StaticRadius) -> pixel
+    radius in the shared canvas, for use with Leaflet's L.circle (which takes
+    its radius in the same flat coordinate-unit space as marker lat/lng under
+    CRS.Simple, confirmed empirically - see the Pal Spawn Locations frontend
+    section). Both map/tree share the same _WORLD_UNITS_PER_PIXEL scale
+    factor (each is independently square, main-map-units-per-pixel), so no
+    per-map branch is needed here unlike locate() - only a linear scale, not
+    an offset."""
+    return world_radius / _WORLD_UNITS_PER_PIXEL
+
+
 def locate(x: float, y: float) -> tuple[str, int, int]:
     """Returns (map_name, pixel_x, pixel_y) in one shared canvas. Checks the
     Tree's bounds first since it sits just outside the main map's edge."""

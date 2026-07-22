@@ -744,30 +744,39 @@ string DungeonAreaLabel(string spawnAreaId)
 // their own features (every shop-pool/boss species there really does
 // resolve).
 //
-// Case-insensitive lookups, unlike every other join in this file: the
-// dungeon spawner Blueprints' own baked-in PalId.Key casing genuinely
+// Case-insensitive lookups, unlike every other join in this file: some
+// spawner Blueprints/DataTable rows' own baked-in Pal ID casing genuinely
 // disagrees with DT_PalMonsterParameter/DT_PalNameText_Common's real row
 // keys for some species - confirmed real, not a typo in this extractor.
-// WindChimes/BOSS_WindChimes (Grass002/Dessert001 boss pools) has a real
-// DT_PalMonsterParameter row (Tribe "WindChimes", exact case, so the old
-// case-sensitive icon join happened to work) whose OverrideNameTextID
-// points at "PAL_NAME_WindChimes" - but the actual text row key is
-// "PAL_NAME_Windchimes" (lowercase c), LocalizedString "Hangyu" (a real
-// Pal, user-confirmed by sight against this project's own exported icon -
-// see NOTES.md). Icewitch (Snow001's boss pool) is worse-cased -
-// "BOSS_Icewitch"/"Icewitch" (lowercase w) vs. the table's real
-// "BOSS_IceWitch"/"IceWitch" (capital W), so even the old icon join failed
-// (needs an exact monsterRows hit first) - same species as
+// WindChimes/BOSS_WindChimes (originally found via the Dungeon Contents
+// Grass002/Dessert001 boss pools) has a real DT_PalMonsterParameter row
+// (Tribe "WindChimes", exact case, so the old case-sensitive icon join
+// happened to work) whose OverrideNameTextID points at "PAL_NAME_WindChimes"
+// - but the actual text row key is "PAL_NAME_Windchimes" (lowercase c),
+// LocalizedString "Hangyu" (a real Pal, user-confirmed by sight against this
+// project's own exported icon - see NOTES.md). Icewitch (Snow001's boss
+// pool) is worse-cased - "BOSS_Icewitch"/"Icewitch" (lowercase w) vs. the
+// table's real "BOSS_IceWitch"/"IceWitch" (capital W), so even the old icon
+// join failed (needs an exact monsterRows hit first) - same species as
 // Yakushima001 Normal's correctly-cased "IceWitch" entry, which always
 // resolved fine to "Icelyn". Building case-insensitive dictionaries here
 // (matching palIconLookup's own existing OrdinalIgnoreCase pattern above)
 // instead of switching monsterRows/palNameRows globally, since those two
 // are plain case-sensitive JObjects used correctly-cased everywhere else
 // in this file - no need to risk changing behavior elsewhere.
+//
+// Generalized 2026-07-22 from Dungeon-Contents-only DungeonPalName/
+// DungeonPalIcon to ResolvePalName/ResolvePalIcon - the Pal Spawn Locations
+// section below (wild field spawns) needs byte-identical species name/icon
+// resolution logic (same case-insensitive gotcha applies there too, since
+// it joins through the same monsterRowsCI/palNameRowsCI/palIconLookup
+// tables), so this is now a shared helper rather than a second copy-pasted
+// implementation. No behavior change for the existing Dungeon Contents
+// call sites - purely a rename.
 var monsterRowsCI = monsterRows.Properties().ToDictionary(p => p.Name, p => p.Value, StringComparer.OrdinalIgnoreCase);
 var palNameRowsCI = palNameRows.Properties().ToDictionary(p => p.Name, p => p.Value, StringComparer.OrdinalIgnoreCase);
 
-string? DungeonPalName(string characterId)
+string? ResolvePalName(string characterId)
 {
     // Same "PAL_NAME_<CharacterID> direct key first, OverrideNameTextID
     // fallback" order as ResolvePalShopPool above - regular wild-Pal-style
@@ -788,7 +797,7 @@ string? DungeonPalName(string characterId)
     return null; // a genuine remaining gap, if any - not assumed, verify before shipping as "(unresolved)"
 }
 
-string? DungeonPalIcon(string characterId)
+string? ResolvePalIcon(string characterId)
 {
     monsterRowsCI.TryGetValue(characterId, out var monsterTok);
     var monster = monsterTok as JObject;
@@ -888,8 +897,8 @@ foreach (var areaId in realSpawnAreaIds)
                 pals.Add(new JObject
                 {
                     ["characterId"] = characterId,
-                    ["name"] = isHuman ? DungeonHumanName(npcId) : DungeonPalName(palId),
-                    ["icon"] = isHuman ? null : DungeonPalIcon(palId),
+                    ["name"] = isHuman ? DungeonHumanName(npcId) : ResolvePalName(palId),
+                    ["icon"] = isHuman ? null : ResolvePalIcon(palId),
                     ["levelMin"] = palEntry["Level"],
                     ["levelMax"] = palEntry["Level_Max"],
                     ["numMin"] = palEntry["Num"],
@@ -938,6 +947,194 @@ if (yakushimaBoss?.Count == 1)
 Console.WriteLine($"Total dungeon content areas: {dungeonContents.Count} (expect 14)");
 File.WriteAllText(@"C:\Projects\PalworldMap\data\dungeon_contents_static.json", dungeonContents.ToString(Formatting.Indented));
 Console.WriteLine("Wrote data/dungeon_contents_static.json");
+
+// ============ Pal Spawn Locations (wild field spawns, pals only) ============
+// "Spawn locations" as flat highlighted regions rather than a color-gradient
+// heatmap, per explicit user request - strictly regular wild-Pal field
+// spawns, NOT alpha/field bosses, NOT dungeon trash/boss spawns, NOT human
+// NPC patrols. Defaults to nothing shown on the frontend (the one section in
+// this app that doesn't default to fully visible - see frontend/index.html).
+//
+// DT_PalSpawnerPlacement (Pal/Content/Pal/DataTable/Spawner/DT_PalSpawnerPlacement,
+// a CompositeDataTable, 8253 rows) is the master spawn-point placement table
+// for every spawner category in the game. Filtering to
+// SpawnerType::Common + PlacementType::Field is exactly the regular wild-Pal
+// field spawns wanted (~7474 rows) - excludes SpawnerType::Common +
+// PlacementType::Dungeon (dungeon trash, already covered by Dungeon Contents
+// above), SpawnerType::FieldBoss (the existing Alpha Bosses section,
+// backend/bosses.py/DT_BossSpawnerLoactionData), SpawnerType::RandomDungeonBoss
+// (dungeon bosses, also covered by Dungeon Contents), and
+// SpawnerType::ImprisonmentBoss (a separate boss category, out of scope
+// here).
+var spawnerPlacementRows = LoadRows("Pal/Content/Pal/DataTable/Spawner/DT_PalSpawnerPlacement");
+var wildSpawnerRows = LoadRows("Pal/Content/Pal/DataTable/Spawner/DT_PalWildSpawner");
+
+// Species/level resolution: join each placement row's SpawnerName field
+// against DT_PalWildSpawner BY THAT TABLE'S OWN "SpawnerName" PROPERTY, NOT
+// the dict row-key - confirmed 7403/7474 match via the field vs only 73/7474
+// via the dict key, the same "don't get this backwards" gotcha as
+// DT_BossSpawnerLoactionData.SpawnerID elsewhere in this pipeline. Multiple
+// DT_PalWildSpawner rows can share one SpawnerName (a weighted candidate
+// pool, one row per candidate - NOT a single row containing a groups array
+// like the dungeon tables), so this builds a one-to-many lookup.
+var wildSpawnersBySpawnerName = new Dictionary<string, List<JObject>>();
+foreach (var prop in wildSpawnerRows.Properties())
+{
+    var row = (JObject)prop.Value;
+    var spawnerName = row["SpawnerName"]?.ToString();
+    if (string.IsNullOrEmpty(spawnerName)) continue;
+    if (!wildSpawnersBySpawnerName.TryGetValue(spawnerName, out var list))
+    {
+        list = new List<JObject>();
+        wildSpawnersBySpawnerName[spawnerName] = list;
+    }
+    list.Add(row);
+}
+
+// Pal_N/NPC_N are plain FName-style fields in this table (not a RowHandle
+// struct like the dungeon roster's PalId/NPCID), but handled defensively for
+// either shape (a bare string, or a {Key: ...}/{RowName: ...} object) rather
+// than assuming.
+string? RowKeyOf(JToken? t)
+{
+    if (t == null) return null;
+    if (t is JObject o) return o["Key"]?.ToString() ?? o["RowName"]?.ToString();
+    var s = t.ToString();
+    return string.IsNullOrEmpty(s) ? null : s;
+}
+
+var palSpawnLocations = new JObject();
+// characterId -> {x,y} pairs already recorded, defensive dedupe for the case
+// (shouldn't happen - one location = one SpawnerName = one candidate pool -
+// but be defensive) where the same species is reachable via multiple
+// SpawnerName/candidate rows at the exact same location.
+var palSpawnSeenLocations = new Dictionary<string, HashSet<(double x, double y)>>();
+
+// characterId -> resolved name (or null), cached so ResolvePalName only
+// actually runs once per distinct species rather than once per occurrence -
+// a popular species can appear in hundreds of location slots.
+var palNameResolutionCache = new Dictionary<string, string?>();
+
+int placementFieldCommonRows = 0, placementNoWildSpawnerMatch = 0, placementResolvedSlots = 0, unresolvedNameSlots = 0;
+
+foreach (var prop in spawnerPlacementRows.Properties())
+{
+    var row = (JObject)prop.Value;
+    var spawnerType = ElementString(row["SpawnerType"]);
+    var placementType = ElementString(row["PlacementType"]);
+    if (spawnerType != "Common" || placementType != "Field") continue;
+    placementFieldCommonRows++;
+
+    var spawnerName = row["SpawnerName"]?.ToString();
+    var loc = row["Location"];
+    var xTok = loc?["X"];
+    var yTok = loc?["Y"];
+    if (string.IsNullOrEmpty(spawnerName) || xTok == null || yTok == null)
+    {
+        placementNoWildSpawnerMatch++;
+        continue;
+    }
+    var x = (double)xTok;
+    var y = (double)yTok;
+    // Always read the row's own StaticRadius, never hardcode the common
+    // 15000.0 value - a few rows might genuinely differ.
+    var staticRadius = (double?)row["StaticRadius"] ?? 15000.0;
+
+    if (!wildSpawnersBySpawnerName.TryGetValue(spawnerName, out var candidates))
+    {
+        placementNoWildSpawnerMatch++;
+        continue;
+    }
+
+    bool anySlotResolved = false;
+    foreach (var candidate in candidates)
+    {
+        // "Strictly pals only" per the user's explicit requirement: a slot
+        // only counts when Pal_N is a real species - exclude Pal_N == "None"
+        // AND Pal_N == "RowName" (a literal leftover template-default string
+        // found on at least one real stub row, e.g. grass_FBOSS_1_1 - also
+        // has Weight: 0.0, so the Weight<=0 guard below catches it too, kept
+        // as a second explicit guard rather than relying on Weight alone).
+        // Skip any candidate where NPC_N is set instead of Pal_N (human, not
+        // a Pal - RadiusType::NPC rows, 33 of them, some Field spawners are
+        // human patrols using NPC_N slots - this is the "other enemies" the
+        // user wants excluded).
+        var weight = (double?)candidate["Weight"] ?? 0.0;
+        if (weight <= 0) continue;
+
+        for (int slot = 1; slot <= 3; slot++)
+        {
+            var palKey = RowKeyOf(candidate[$"Pal_{slot}"]);
+            var npcKey = RowKeyOf(candidate[$"NPC_{slot}"]);
+            if (!string.IsNullOrEmpty(npcKey) && npcKey != "None") continue;
+            if (string.IsNullOrEmpty(palKey) || palKey == "None" || palKey == "RowName") continue;
+
+            // Key by the base non-BOSS_ CharacterID (e.g. "Alpaca" not
+            // "BOSS_Alpaca") - wild field spawns are already the common form
+            // in practice, but strip defensively rather than assume.
+            var characterId = palKey.StartsWith("BOSS_", StringComparison.OrdinalIgnoreCase)
+                ? palKey["BOSS_".Length..] : palKey;
+
+            // A genuine remaining resolution gap exists and must be dropped,
+            // not fabricated: confirmed via a throwaway scratch investigation
+            // (extractor/ScratchSpawns, same "verify before shipping" rule as
+            // Dungeon Contents) that 261 of 262 distinct species reachable
+            // from Field+Common placements resolve a real name cleanly - the
+            // sole miss, "Male_NinjaElite01", is a human character mistakenly
+            // placed in a Pal_2 slot (its sibling Pal_1 slot on the same row
+            // correctly uses NPC_1 for the human "Male_Ninja01") rather than
+            // NPC_2 - it fails name resolution and must NOT be shown as a
+            // fake "pal" species using its raw internal id as a display name,
+            // which would violate this feature's explicit "strictly pals
+            // only" requirement.
+            if (!palNameResolutionCache.TryGetValue(characterId, out var resolvedName))
+            {
+                resolvedName = ResolvePalName(characterId);
+                palNameResolutionCache[characterId] = resolvedName;
+            }
+            if (resolvedName == null) { unresolvedNameSlots++; continue; }
+
+            anySlotResolved = true;
+
+            if (!palSpawnSeenLocations.TryGetValue(characterId, out var seenLocs))
+            {
+                seenLocs = new HashSet<(double, double)>();
+                palSpawnSeenLocations[characterId] = seenLocs;
+            }
+            if (!seenLocs.Add((x, y))) continue; // dedupe same species @ same location
+
+            if (!palSpawnLocations.TryGetValue(characterId, out var speciesEntryTok))
+            {
+                speciesEntryTok = new JObject
+                {
+                    ["name"] = resolvedName,
+                    ["icon"] = ResolvePalIcon(characterId),
+                    ["locations"] = new JArray(),
+                };
+                palSpawnLocations[characterId] = speciesEntryTok;
+            }
+            ((JArray)speciesEntryTok!["locations"]!).Add(new JObject
+            {
+                ["x"] = x,
+                ["y"] = y,
+                ["radius"] = staticRadius,
+                ["levelMin"] = candidate[$"LvMin_{slot}"],
+                ["levelMax"] = candidate[$"LvMax_{slot}"],
+            });
+            placementResolvedSlots++;
+        }
+    }
+    if (!anySlotResolved) placementNoWildSpawnerMatch++;
+}
+
+Console.WriteLine(
+    $"Pal Spawn Locations: {placementFieldCommonRows} SpawnerType::Common+PlacementType::Field rows " +
+    $"(expect ~7474), {placementFieldCommonRows - placementNoWildSpawnerMatch} resolved >=1 real Pal slot, " +
+    $"{placementNoWildSpawnerMatch} empty/NPC-only/stub/unmatched/no-wildspawner-match, " +
+    $"{unresolvedNameSlots} slots dropped for a genuine name-resolution gap (expect 1: Male_NinjaElite01), " +
+    $"{placementResolvedSlots} total species-location entries, {palSpawnLocations.Count} distinct species.");
+File.WriteAllText(@"C:\Projects\PalworldMap\data\pal_spawn_locations_static.json", palSpawnLocations.ToString(Formatting.Indented));
+Console.WriteLine("Wrote data/pal_spawn_locations_static.json");
 
 // ============ Journals (internally "Notes") ============
 // Collectible lore pickups, shown to the user as "Journals" - internally the

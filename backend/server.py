@@ -12,6 +12,7 @@ from dungeons import load_dungeon_contents, load_dungeons
 from fasttravel import load_watchtowers, load_waypoints
 from notes import load_notes
 from npcs import load_npcs
+from pal_spawns import load_pal_spawn_locations
 from parse import (
     load_active_quests,
     load_collected_effigy_ids,
@@ -19,6 +20,7 @@ from parse import (
     load_completed_quests,
     load_defeated_boss_spawner_ids,
     load_defeated_tower_flags,
+    load_pal_capture_counts,
     load_read_note_ids,
     load_unlocked_fasttravel_ids,
 )
@@ -47,6 +49,7 @@ _notes_cache = load_notes()
 _schematics_cache = load_schematics()
 _quests_cache = load_quests()
 _npcs_cache = load_npcs()
+_pal_spawn_locations_cache = load_pal_spawn_locations()
 
 
 def _player_sav_path(uid: str) -> Path:
@@ -387,6 +390,41 @@ def api_dungeons():
         for e in _dungeons_cache
     ]
     return jsonify({"entrances": entrances, "state_known": bool(marker_state)})
+
+
+@app.route("/api/pal_spawn_locations")
+def api_pal_spawn_locations():
+    # Positions/rosters are fully static (loaded once at startup, same
+    # pattern as /api/dungeon_contents) - only the per-species capture
+    # progress overlay below is live per-player state, same view_as pattern
+    # as /api/relics, /api/bosses, etc. "Effigy" here means the Mimog
+    # Effigy/"Capture Power" relic, awarded per species once its lifetime
+    # capture count reaches 5 - see parse.load_pal_capture_counts's own
+    # docstring for why this reads PalCaptureCount directly rather than the
+    # RelicPossessNumMap currency balance (that balance drops when spent,
+    # this per-species counter doesn't).
+    view_as = request.args.get("view_as", "").strip()
+    capture_counts = None
+    if view_as:
+        sav_path = _player_sav_path(view_as)
+        if sav_path.exists():
+            try:
+                capture_counts = load_pal_capture_counts(sav_path)
+            except Exception:
+                traceback.print_exc()
+
+    species = _pal_spawn_locations_cache
+    if capture_counts is not None:
+        species = {
+            char_id: {
+                **entry,
+                "capture_count": capture_counts.get(char_id, 0),
+                "effigy_complete": capture_counts.get(char_id, 0) >= 5,
+            }
+            for char_id, entry in _pal_spawn_locations_cache.items()
+        }
+
+    return jsonify({"species": species, "capture_known": capture_counts is not None})
 
 
 @app.route("/api/dungeon_contents")

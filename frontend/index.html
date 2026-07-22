@@ -488,6 +488,72 @@
     width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
     color: #56636e; font-size: 22px; font-weight: 700;
   }
+
+  /* Pal Spawns: unlike every other section, this one defaults to nothing
+     selected/visible (see #cat-pal-spawns' own JS section for why - it's an
+     opt-in "where do I find X" lookup, not a collectible list, and every
+     species selected at once would just highlight the entire map). Search
+     box + a plain checklist (reusing .type-row from createTypeChecklistSection's
+     own rows for visual consistency, even though this section doesn't use
+     that factory - the data/rendering shape, area circles instead of point
+     markers, is different enough to warrant bespoke code). */
+  #pal-spawns-search-row {
+    display: flex; gap: 6px; padding: 4px 8px 6px; align-items: center;
+  }
+  #pal-spawns-search {
+    flex: 1; background: #1a1d22; border: 1px solid #3a4048; border-radius: 3px;
+    color: #ddd; font-size: 12px; padding: 4px 6px;
+  }
+  #pal-spawns-search::placeholder { color: #6a7078; }
+  #pal-spawns-clear {
+    background: none; border: 1px solid #3a4048; border-radius: 3px; color: #9ab;
+    font-size: 11px; padding: 4px 8px; cursor: pointer; white-space: nowrap;
+  }
+  #pal-spawns-clear:hover { color: #fff; border-color: #5a6068; }
+  .pal-spawn-row.hidden-by-search { display: none; }
+  /* Tighter than .type-row's default 8px - with checkbox, effigy badge,
+     AND portrait all packed in before the name now, the default gap made
+     the badge look stranded in a wide empty stretch rather than sitting
+     next to the checkbox/portrait it's between. */
+  .pal-spawn-row { gap: 4px; }
+  /* Per-species selection color (see palSpawnColorFor) lives on the
+     checkbox itself via accent-color, not a separate swatch dot - a
+     dedicated `.pal-spawn-swatch` element was tried first but its reserved
+     box (even hidden via visibility, not display, so unchecked rows didn't
+     jump width when checked) still ate real row width and read as a dead
+     gap between the effigy badge and the portrait. accent-color recolors
+     the native checkbox in place, zero extra layout. */
+  .pal-spawn-row input[type=checkbox] { accent-color: #6a7078; }
+  /* Mimog Effigy ("Capture Power" relic) progress - awarded once a
+     species' lifetime capture count reaches 5 (see backend/parse.py's
+     load_pal_capture_counts docstring). Empty/no content when no player is
+     selected (collection state unknown) or the player hasn't captured any
+     yet, same "don't imply false state" rule as every other per-player
+     badge in this app. Sized to its content (max "4/5" text or the 18px
+     icon), not the wider box used when this sat next to the count column -
+     a snug slot next to the checkbox reads as "belongs to this row's
+     leading controls," not as a stray gap. */
+  .pal-spawn-effigy-slot {
+    font-size: 10px; flex-shrink: 0; width: 20px; height: 18px; text-align: center;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .pal-spawn-effigy-slot.progress { color: #f2b56b; }
+  .pal-spawn-effigy-slot img { width: 18px; height: 18px; object-fit: contain; }
+  /* Long species names (e.g. "Capriity Noct") were wrapping to a second
+     line, making just those rows taller than the rest - every row's icon/
+     badge/count then "rode" at a different vertical offset relative to its
+     own row, reading as jagged/misaligned while scrolling even though each
+     row's own internal layout was individually correct. Forcing a single
+     line with ellipsis truncation (title attribute carries the full name)
+     keeps every row exactly the same height. */
+  .pal-spawn-row .rt-label {
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
+  }
+  .pal-spawn-unresolved-icon {
+    width: 24px; height: 24px; border-radius: 50%; background: #1a1d22;
+    display: flex; align-items: center; justify-content: center;
+    color: #56636e; font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
 </style>
 </head>
 <body>
@@ -644,6 +710,25 @@
         </div>
         <div id="sub-quest-list" class="type-list"></div>
       </div>
+    </div>
+  </div>
+  <div class="category" id="cat-pal-spawns">
+    <div id="cat-pal-spawns-header" class="category-header">
+      <span class="chevron">&#9656;</span>
+      <span class="category-title">Pal Spawns</span>
+    </div>
+    <!-- Wild-Pal field spawn locations, shown as highlighted circular regions
+         (not a heatmap) - strictly regular wild Pals, not Alpha Bosses/
+         Dungeon spawns/human NPCs (see backend/pal_spawns.py + NOTES.md).
+         The one section in this app that defaults to nothing selected/shown
+         - deliberately excluded from ALL_MASTER_TOGGLE_IDS below so
+         Show All/Hide All never touch it either. -->
+    <div id="cat-pal-spawns-body" class="category-body">
+      <div id="pal-spawns-search-row">
+        <input type="text" id="pal-spawns-search" placeholder="Search pals..." />
+        <button id="pal-spawns-clear" type="button" title="Deselect all Pal Spawns">Clear</button>
+      </div>
+      <div id="pal-spawns-list" class="type-list expanded"></div>
     </div>
   </div>
   <div id="global-toggle-row">
@@ -998,7 +1083,7 @@
   // / Quests) - a pure collapse layer above the pre-existing section headers
   // below, same click-to-toggle pattern as every .section-header. All
   // collapsed by default. ----------
-  for (const catId of ['cat-poi', 'cat-collectibles', 'cat-combat', 'cat-quests']) {
+  for (const catId of ['cat-poi', 'cat-collectibles', 'cat-combat', 'cat-quests', 'cat-pal-spawns']) {
     const header = document.getElementById(`${catId}-header`);
     const body = document.getElementById(`${catId}-body`);
     const setExpanded = (expanded) => {
@@ -1123,6 +1208,7 @@
     loadRelics(); loadBosses(); loadBounties(); loadTowers();
     loadQuests({ rebuildList: !!isPlayerSwitch });
     loadJournals(); loadSchematics(); loadWatchtowers(); loadWaypoints(); loadBases(); loadDungeons();
+    loadPalSpawns();
   }
   viewAsSelect.addEventListener('change', () => reloadCollectionState(true));
 
@@ -2229,6 +2315,205 @@
   loadDungeons();
   loadDungeonContents();
 
+  // ---------- Pal Spawns (wild-Pal field spawn locations, highlighted
+  // regions) ----------
+  // Strictly regular wild Pals - not Alpha Bosses, not Dungeon spawns, not
+  // human NPCs (see backend/pal_spawns.py's own docstring for the
+  // extraction/filtering story: DT_PalSpawnerPlacement's Common+Field rows
+  // joined against DT_PalWildSpawner). The only section in this whole app
+  // that defaults to nothing selected/shown - per explicit user request,
+  // selecting every one of ~260 species at once would just highlight the
+  // entire map, defeating the point of "highlighted regions" over a
+  // heatmap. Deliberately NOT built on createTypeChecklistSection (that
+  // factory renders point markers grouped by species with per-player
+  // collected state; this renders potentially thousands of translucent
+  // area circles per species with no per-player state at all - different
+  // enough on both axes to warrant bespoke code), but reuses its `.type-row`
+  // row markup/CSS for visual consistency.
+  const PAL_SPAWN_COLORS = [
+    '#e06c75', '#61afef', '#98c379', '#e5c07b', '#c678dd',
+    '#56b6c2', '#d19a66', '#ff79c6', '#8be9fd', '#f1fa8c',
+  ];
+  // Canvas renderer, not Leaflet's default SVG - a popular species (e.g. a
+  // near-universal low-weight "surprise" species) can have thousands of
+  // circles at once; canvas handles that volume far more smoothly than one
+  // SVG <path> per circle would.
+  const palSpawnRenderer = L.canvas({ padding: 0.5 });
+  const palSpawnLayers = new Map(); // characterId -> L.LayerGroup of circles
+  const palSpawnChecked = new Set(); // characterId, in check-order (stable-ish color assignment)
+  let palSpawnData = null; // { [characterId]: {name, icon, location_count, locations, capture_count, effigy_complete} }
+  let palSpawnCaptureKnown = false; // true once a view_as player's PalCaptureCount has been read
+  let palSpawnListBuilt = false;
+
+  function palSpawnColorFor(characterId) {
+    const idx = [...palSpawnChecked].indexOf(characterId);
+    return PAL_SPAWN_COLORS[idx < 0 ? 0 : idx % PAL_SPAWN_COLORS.length];
+  }
+
+  function removePalSpawnCircles(characterId) {
+    const group = palSpawnLayers.get(characterId);
+    if (group) { map.removeLayer(group); palSpawnLayers.delete(characterId); }
+  }
+
+  function renderPalSpawnCircles(characterId) {
+    const species = palSpawnData[characterId];
+    if (!species) return;
+    const color = palSpawnColorFor(characterId);
+    const group = L.layerGroup();
+    for (const loc of species.locations) {
+      L.circle([loc.pixel_y, loc.pixel_x], {
+        renderer: palSpawnRenderer,
+        radius: loc.radius_px,
+        color, weight: 1, opacity: 0.6,
+        fillColor: color, fillOpacity: 0.28,
+      }).addTo(group);
+    }
+    group.addTo(map);
+    palSpawnLayers.set(characterId, group);
+  }
+
+  // Re-derive colors for every currently-selected species (selection order
+  // may have shifted after an uncheck) and redraw - simplest way to keep
+  // colors stable/distinct without separately tracking a color assignment.
+  function recolorAllPalSpawns() {
+    for (const characterId of palSpawnChecked) {
+      removePalSpawnCircles(characterId);
+      renderPalSpawnCircles(characterId);
+    }
+  }
+
+  function updateAllPalSpawnSwatches() {
+    for (const row of document.querySelectorAll('.pal-spawn-row')) {
+      const cb = row.querySelector('input');
+      cb.style.accentColor = cb.checked ? palSpawnColorFor(cb.dataset.charId) : '';
+    }
+  }
+
+  function savePalSpawnChecked() {
+    uiState.palSpawnsChecked = [...palSpawnChecked];
+    saveUiState();
+  }
+
+  // Mimog Effigy ("Capture Power" relic, per the user's own confirmed
+  // mechanic) progress for the currently-selected player - capped display
+  // at "complete" once capture_count >= 5, matching
+  // backend/parse.py's load_pal_capture_counts. Empty when no player is
+  // selected (palSpawnCaptureKnown false) or the species hasn't been
+  // captured at all yet - same "don't imply false state" convention as
+  // defeatKnown/collectedField elsewhere in this app.
+  // Same real in-game icon the Effigies section uses for this exact relic
+  // (T_itemicon_Relic_12 - confirmed as Mimog's, not Lunaris's, per
+  // backend/relics.py's own corrected mapping) rather than a generic
+  // checkmark - a real "what you actually earn" icon, not a placeholder.
+  const MIMOG_EFFIGY_ICON = '/assets/relic_icons/T_itemicon_Relic_12.png';
+  function applyEffigyBadge(el, species) {
+    // Fixed-size slot regardless of content (empty/icon/"N/5" text) is what
+    // keeps every row's icon and count columns aligned - see the
+    // .pal-spawn-effigy-slot CSS fixed width/height, not just this markup.
+    if (!palSpawnCaptureKnown || !species) {
+      el.className = 'pal-spawn-effigy-slot';
+      el.innerHTML = '';
+      el.title = '';
+    } else if (species.effigy_complete) {
+      el.className = 'pal-spawn-effigy-slot complete';
+      el.innerHTML = `<img src="${MIMOG_EFFIGY_ICON}" alt="Mimog Effigy" />`;
+      el.title = `Mimog Effigy earned (${species.capture_count} ${species.name} captured)`;
+    } else if (species.capture_count > 0) {
+      el.className = 'pal-spawn-effigy-slot progress';
+      el.innerHTML = `${species.capture_count}/5`;
+      el.title = `${species.capture_count}/5 ${species.name} captured toward a Mimog Effigy`;
+    } else {
+      el.className = 'pal-spawn-effigy-slot';
+      el.innerHTML = '';
+      el.title = '';
+    }
+  }
+
+  // Lightweight refresh for the 10s poll / a same-player re-fetch - updates
+  // every row's effigy badge in place from fresh palSpawnData without
+  // touching checkboxes/circles (the species roster itself never changes,
+  // only capture progress does).
+  function updatePalSpawnEffigyBadges() {
+    for (const row of document.querySelectorAll('.pal-spawn-row')) {
+      const cid = row.querySelector('input').dataset.charId;
+      applyEffigyBadge(row.querySelector('.pal-spawn-effigy-slot'), palSpawnData[cid]);
+    }
+  }
+
+  function buildPalSpawnList() {
+    const list = document.getElementById('pal-spawns-list');
+    list.innerHTML = '';
+    const persisted = new Set(uiState.palSpawnsChecked || []);
+    const sorted = Object.entries(palSpawnData).sort((a, b) => a[1].name.localeCompare(b[1].name));
+    for (const [characterId, species] of sorted) {
+      const isChecked = persisted.has(characterId);
+      if (isChecked) palSpawnChecked.add(characterId);
+      const iconHtml = species.icon
+        ? `<img src="/assets/boss_icons/${species.icon}" />`
+        : `<div class="pal-spawn-unresolved-icon">?</div>`;
+      const row = document.createElement('label');
+      row.className = 'type-row pal-spawn-row';
+      row.dataset.name = species.name.toLowerCase();
+      row.innerHTML = `
+        <input type="checkbox" ${isChecked ? 'checked' : ''} data-char-id="${characterId}" />
+        <span class="pal-spawn-effigy-slot"></span>
+        ${iconHtml}
+        <span class="rt-label" title="${species.name}">${species.name}</span>
+        <span class="rt-count">${species.location_count}</span>
+      `;
+      applyEffigyBadge(row.querySelector('.pal-spawn-effigy-slot'), species);
+      row.querySelector('input').addEventListener('change', (e) => {
+        const cid = e.target.dataset.charId;
+        if (e.target.checked) palSpawnChecked.add(cid);
+        else { palSpawnChecked.delete(cid); removePalSpawnCircles(cid); }
+        recolorAllPalSpawns();
+        updateAllPalSpawnSwatches();
+        savePalSpawnChecked();
+      });
+      list.appendChild(row);
+    }
+    // Draw already-persisted selections once the whole list (and thus
+    // palSpawnChecked) is populated, so color indices are stable from the start.
+    for (const characterId of palSpawnChecked) renderPalSpawnCircles(characterId);
+    updateAllPalSpawnSwatches();
+  }
+
+  document.getElementById('pal-spawns-search').addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    for (const row of document.querySelectorAll('.pal-spawn-row')) {
+      row.classList.toggle('hidden-by-search', !!q && !row.dataset.name.includes(q));
+    }
+  });
+  document.getElementById('pal-spawns-clear').addEventListener('click', () => {
+    for (const row of document.querySelectorAll('.pal-spawn-row')) {
+      const cb = row.querySelector('input');
+      if (cb.checked) { cb.checked = false; cb.dispatchEvent(new Event('change')); }
+    }
+  });
+
+  async function loadPalSpawns() {
+    const playerUid = viewAsSelect.value;
+    const url = playerUid
+      ? `/api/pal_spawn_locations?view_as=${encodeURIComponent(playerUid)}`
+      : '/api/pal_spawn_locations';
+    const res = await fetch(url, { cache: 'no-store' });
+    const json = await res.json();
+    palSpawnData = json.species;
+    palSpawnCaptureKnown = json.capture_known;
+    // Species/locations are static (never change), only capture-effigy
+    // progress does - build the checklist once, then just refresh badges
+    // on every later call (view_as switch or the 10s poll), same
+    // "data-only refresh" pattern reloadCollectionState's own comment
+    // documents for Bosses/Bounty/Towers.
+    if (!palSpawnListBuilt) {
+      buildPalSpawnList();
+      palSpawnListBuilt = true;
+    } else {
+      updatePalSpawnEffigyBadges();
+    }
+  }
+  loadPalSpawns();
+
   // ---------- Watchtowers / Waypoints (fast-travel points) ----------
   // Greyed out until unlocked, full color after (visualStyle: 'grayscale'),
   // unlike the checkmark badge used by Bosses/Bounty/Towers above.
@@ -2362,7 +2647,7 @@
       // comment) aren't covered by the per-section walk above - hide the
       // three non-Quests ones outright so their now-empty headers don't
       // clutter the screenshot either.
-      for (const catId of ['cat-poi', 'cat-collectibles', 'cat-combat']) {
+      for (const catId of ['cat-poi', 'cat-collectibles', 'cat-combat', 'cat-pal-spawns']) {
         const header = document.getElementById(`${catId}-header`);
         if (header) header.style.display = 'none';
       }

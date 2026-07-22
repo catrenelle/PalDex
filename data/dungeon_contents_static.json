@@ -2925,7 +2925,7 @@
             "pals": [
               {
                 "characterId": "BOSS_PinkCat",
-                "name": null,
+                "name": "Cattiva",
                 "icon": "Pal_PinkCat.png",
                 "levelMin": 10,
                 "levelMax": 13,
@@ -3760,7 +3760,7 @@
             "pals": [
               {
                 "characterId": "BOSS_PinkCat",
-                "name": null,
+                "name": "Cattiva",
                 "icon": "Pal_PinkCat.png",
                 "levelMin": 10,
                 "levelMax": 13,
@@ -4595,7 +4595,7 @@
             "pals": [
               {
                 "characterId": "BOSS_PinkCat",
-                "name": null,
+                "name": "Cattiva",
                 "icon": "Pal_PinkCat.png",
                 "levelMin": 10,
                 "levelMax": 13,
@@ -5430,7 +5430,7 @@
             "pals": [
               {
                 "characterId": "BOSS_PinkCat",
-                "name": null,
+                "name": "Cattiva",
                 "icon": "Pal_PinkCat.png",
                 "levelMin": 10,
                 "levelMax": 13,
@@ -6310,7 +6310,7 @@
             "pals": [
               {
                 "characterId": "BOSS_PinkCat",
-                "name": null,
+                "name": "Cattiva",
                 "icon": "Pal_PinkCat.png",
                 "levelMin": 10,
                 "levelMax": 13,

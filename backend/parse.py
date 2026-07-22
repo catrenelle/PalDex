@@ -345,6 +345,33 @@ def load_completed_quests(player_sav: Path) -> set[str]:
     return set(entries)
 
 
+def load_pal_capture_counts(player_sav: Path) -> dict[str, int]:
+    """Lifetime per-species capture count, SaveData.RecordData.PalCaptureCount
+    - a flat NameProperty->IntProperty map keyed by the same base CharacterID
+    codenames backend/pal_spawns.py's data uses (e.g. "PinkCat" for Cattiva,
+    "MimicDog" for Mimog - confirmed exact key match against a real player's
+    save). Uncapped and monotonically non-decreasing (captures are never
+    "spent") - confirmed against a real save with values well past 5 (e.g.
+    "ChickenPal": 106) for well-farmed species, not clamped.
+
+    This is what actually determines Mimog Effigy ("Capture Power" relic)
+    eligibility per the user's own confirmed mechanic: capturing 5 of a
+    given species awards one. **Deliberately NOT read from
+    RelicPossessNumMap's "EPalRelicType::CapturePower" entry** - that field
+    is confirmed (by exact value match against this same save, both read
+    54) to be the player's current *unspent currency balance*, which drops
+    when spent at a Statue of Power - it does not track "has this specific
+    species reached its 5-capture reward" per species, only an aggregate
+    spendable total. `count >= 5` on this per-species map is the correct,
+    stable "reward already earned for this species" signal - it doesn't
+    reset on spending the resulting relic.
+    """
+    d = _read_gvas(player_sav)
+    record_data = d["properties"]["SaveData"]["value"]["RecordData"]["value"]
+    entries = record_data.get("PalCaptureCount", {}).get("value", [])
+    return {e["key"]: e["value"] for e in entries}
+
+
 def build_player_snapshot(save_dir: Path, names: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
     players = []
     for player_sav in sorted((save_dir / "Players").glob("*.sav")):
