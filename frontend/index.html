@@ -293,7 +293,7 @@
      every other .section-header) makes clicking anywhere in the row toggle
      the checkbox natively, since there's no expand-click behavior to reserve
      the row-click for. */
-  .dungeon-marker { display: flex; align-items: center; justify-content: center; }
+  .dungeon-marker { display: flex; align-items: center; justify-content: center; cursor: pointer; }
   .dungeon-marker .portrait {
     width: 100% !important; height: 100% !important; object-fit: contain;
     filter: drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000)
@@ -406,6 +406,88 @@
     align-items: center; gap: 5px; font-size: 12px; color: #f4c95d; font-weight: 600;
   }
   .shop-card-price img { width: 14px !important; height: 14px !important; object-fit: contain; }
+
+  /* Dungeon contents modal - same visual language as the Shop modal above
+     (dark grey header bar over a near-black grid of icon-tile cards),
+     opened by clicking a Dungeon Portal marker. Unlike the Shop modal's
+     single flat grid, this has several tier sections stacked vertically
+     (Boss/MidBoss/Normal/Monster/FishPal/NPCHuman - whichever the area
+     actually has), each with its own small grid - #dungeon-modal-body is
+     ONLY the flex/scroll container (mirroring the Shop modal's own
+     documented split between #shop-modal-grid and -grid-inner, to avoid
+     the same flex+grid+height-cap-on-one-element squishing bug), each
+     .dungeon-tier-grid is its own independent grid with no scroll/flex
+     concerns of its own. */
+  #dungeon-modal-backdrop {
+    display: none; position: fixed; inset: 0; z-index: 3000;
+    background: rgba(0,0,0,0.6);
+    align-items: center; justify-content: center;
+  }
+  #dungeon-modal-backdrop.open { display: flex; }
+  #dungeon-modal {
+    width: min(760px, 92vw); max-height: 84vh;
+    background: rgba(13,17,23,0.97); border: 1px solid #444; border-radius: 6px;
+    display: flex; flex-direction: column; overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    font: 13px system-ui, sans-serif; color: #ddd;
+  }
+  #dungeon-modal-header {
+    background: #454b54; color: #f0f0f0; padding: 10px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 14px; font-weight: 600; flex-shrink: 0;
+  }
+  #dungeon-modal-close {
+    background: none; border: none; color: #ccc; font-size: 20px; line-height: 1;
+    cursor: pointer; padding: 0 2px;
+  }
+  #dungeon-modal-close:hover { color: #fff; }
+  #dungeon-modal-body {
+    padding: 16px; overflow-y: auto; flex: 1; min-height: 0; max-height: 70vh;
+  }
+  .dungeon-tier { margin-bottom: 20px; }
+  .dungeon-tier:last-child { margin-bottom: 0; }
+  .dungeon-tier-header {
+    font-size: 12px; font-weight: 600; color: #eee; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .dungeon-tier-badge {
+    font-size: 11px; font-weight: 500; text-transform: none; letter-spacing: 0;
+    padding: 2px 8px; border-radius: 10px;
+  }
+  .dungeon-tier-badge.guaranteed { background: rgba(90,190,110,0.18); color: #7fd995; }
+  .dungeon-tier-badge.pool { background: rgba(242,181,107,0.18); color: #f2b56b; }
+  .dungeon-tier-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px;
+  }
+  /* An "outcome" is one weighted roll from a tier's spawn pool - usually a
+     single Pal, but a Boss/MidBoss roll is often a boss + 1-2 lower-level
+     escorts of the same species that spawn together as that one roll (see
+     dungeon_contents_static.json's per-group `pals` array). Flattening
+     every group's pals into the grid directly (the first version of this
+     modal did that) lost this relationship - a boss+escort pair looked
+     like two unrelated, independently-random entries, and the "N possible"
+     count above double-counted them as 2 outcomes instead of 1. Multi-pal
+     outcomes get their own bordered box spanning 2 grid columns so the
+     pals inside visibly belong together; single-pal outcomes render as a
+     bare .shop-card (no extra box) to match every other 1-pal tier. */
+  .dungeon-outcome.multi {
+    grid-column: span 2; display: flex; gap: 6px; padding: 6px;
+    border: 1px solid #3a4048; border-radius: 4px; background: rgba(255,255,255,0.02);
+  }
+  .dungeon-outcome.multi .shop-card { flex: 1; min-width: 0; }
+  .dungeon-pal-card-level {
+    border-top: 1px solid #30353c; padding: 4px 8px; font-size: 11px; color: #9ab;
+    text-align: center;
+  }
+  .dungeon-pal-escort-flag {
+    border-top: 1px solid #30353c; padding: 3px 6px; font-size: 10px;
+    color: #f2b56b; text-align: center; cursor: help;
+  }
+  .dungeon-pal-unresolved-icon {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+    color: #56636e; font-size: 22px; font-weight: 700;
+  }
 </style>
 </head>
 <body>
@@ -595,6 +677,17 @@
     </div>
   </div>
 </div>
+<!-- Dungeon contents modal - opened by clicking a Dungeon Portal marker, see
+     the "Dungeon modal" JS section below for what data drives it. -->
+<div id="dungeon-modal-backdrop">
+  <div id="dungeon-modal">
+    <div id="dungeon-modal-header">
+      <span id="dungeon-modal-title">Dungeon Contents</span>
+      <button id="dungeon-modal-close" type="button" aria-label="Close">&times;</button>
+    </div>
+    <div id="dungeon-modal-body"></div>
+  </div>
+</div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
   // Must match backend/coord.py exactly. Leaflet renders a *higher* row
@@ -618,8 +711,14 @@
     zoomControl: false, // default topleft position clashes with #legend
   });
   L.control.zoom({ position: 'bottomright' }).addTo(map);
-  L.imageOverlay('/assets/map.png', mainBounds).addTo(map);
-  L.imageOverlay('/assets/tree.png', treeBounds).addTo(map);
+  // WebP, not PNG (2026-07-22) - lossy q90 re-encode of the same 8192x8192
+  // source, ~82% smaller (27.5MB->4.8MB / 39.6MB->7.1MB) with no visible
+  // quality loss verified at native 1:1 pixel zoom (the most demanding
+  // case - normal usage is zoomed out further than that). Format only, same
+  // pixel dimensions - MAIN_TEXTURE_SIZE/MAIN_SIZE and bounds below are
+  // untouched and don't need to be, unlike a resize which would.
+  L.imageOverlay('/assets/map.webp', mainBounds).addTo(map);
+  L.imageOverlay('/assets/tree.webp', treeBounds).addTo(map);
   map.fitBounds(combinedBounds);
 
   function colorForUid(uid) {
@@ -1875,6 +1974,11 @@
   const dungeonMarkers = new Map(); // entry id -> L.marker
   let dungeonData = null;
   let dungeonStateKnown = false;
+  // SpawnAreaId -> {biomeLabel, tiers} roster map (data/dungeon_contents_static.json
+  // via /api/dungeon_contents) - static, fetched once, joined client-side onto
+  // each entrance by its own spawn_area_id (only 14 distinct rosters exist
+  // across all 157 entrances - see backend/dungeons.py docstring).
+  let dungeonContentsData = null;
 
   function formatDuration(seconds) {
     if (seconds == null) return null;
@@ -1883,9 +1987,49 @@
     return h > 0 ? `${h}h ${m}m` : `${m}m`;
   }
 
+  // A dungeon-boss spawn group is usually {BOSS_<Species> x1, <Species> x2-3}
+  // - a boss + same-lineage escorts that spawn together as one roll. The
+  // escorts aren't a distinct "possible outcome" on their own, so both the
+  // tooltip preview and the modal only notate the boss (characterId
+  // starting "BOSS_"); falls back to the group's first pal when no such
+  // entry exists (confirmed real for 10/281 multi-pal groups project-wide -
+  // human "patrol" groups in Normal/NPCHuman tiers with 2-3 *different*
+  // human types and no single boss identity, e.g. Forest001's
+  // Believer_Bat_Invader + Believer_Bat - those keep showing every pal, see
+  // dungeonOutcomeHtml below).
+  function dungeonPrimaryPal(group) {
+    return group.pals.find((p) => p.characterId.startsWith('BOSS_')) || group.pals[0];
+  }
+
+  // One-line Boss-tier preview for the tooltip - deliberately just the Boss
+  // tier (not every tier present), matching the tooltip's existing "keep it
+  // to one short line" convention elsewhere in this codebase. Returns null
+  // (no extra line) if contents aren't loaded yet or the area has no Boss
+  // tier at all (shouldn't happen - every one of the 14 real areas has
+  // exactly one Boss row - but degrade gracefully rather than assume).
+  function dungeonBossPreview(spawnAreaId) {
+    const tier = dungeonContentsData?.[spawnAreaId]?.tiers?.Boss;
+    if (!tier || !tier.groups.length) return null;
+    const primaries = tier.groups.map(dungeonPrimaryPal);
+    if (tier.guaranteed) {
+      const names = primaries.map((p) => p.name || `${p.characterId} (unresolved)`).join(' + ');
+      const p0 = primaries[0];
+      const lvl = p0.levelMin === p0.levelMax ? `Lv ${p0.levelMin}` : `Lv ${p0.levelMin}-${p0.levelMax}`;
+      return `Boss: ${names} (${lvl})`;
+    }
+    const levels = primaries.flatMap((p) => [p.levelMin, p.levelMax]);
+    const lvlMin = Math.min(...levels);
+    const lvlMax = Math.max(...levels);
+    // groups.length, not allPals.length - a boss+escort group is 1 possible
+    // outcome even though it's 2 pals (see dungeonOutcomeHtml's comment).
+    return `Boss: ${tier.groups.length} possible (Lv ${lvlMin}-${lvlMax}) — <span style="color:#6fa8dc;">click for details</span>`;
+  }
+
   function dungeonTooltipHtml(entry) {
     const eta = formatDuration(entry.disappear_in_seconds);
-    return `Dungeon (${entry.biome})${eta ? ` — despawns in ${eta}` : ''}`;
+    const base = `Dungeon (${entry.biome})${eta ? ` — despawns in ${eta}` : ''}`;
+    const preview = dungeonBossPreview(entry.spawn_area_id);
+    return preview ? `${base}<br>${preview}` : base;
   }
 
   function renderDungeons() {
@@ -1903,6 +2047,7 @@
             icon: L.divIcon({ className: 'dungeon-marker', html, iconSize: [22, 22] }),
           }).addTo(map);
           marker.bindTooltip(tooltip, { direction: 'top' });
+          marker.on('click', () => openDungeonModal(entry));
           dungeonMarkers.set(entry.id, marker);
         } else {
           if (!map.hasLayer(marker)) marker.addTo(map);
@@ -1936,7 +2081,153 @@
     renderDungeons();
   }
 
+  // Fetched once alongside loadDungeons() - no per-player/per-refresh state
+  // (see backend/server.py's api_dungeon_contents docstring) - re-renders
+  // existing markers afterward so tooltips pick up the Boss preview line
+  // once contents are known (they render without it on the very first paint
+  // if this fetch is still in flight, same graceful-degradation pattern as
+  // dungeonStateKnown above).
+  async function loadDungeonContents() {
+    try {
+      const res = await fetch('/api/dungeon_contents', { cache: 'no-store' });
+      const json = await res.json();
+      dungeonContentsData = json.contents;
+    } catch (e) {
+      return;
+    }
+    renderDungeons();
+  }
+
+  // ---------- Dungeon contents modal ----------
+  // Full "what's actually in here" detail view, opened by clicking a
+  // Dungeon Portal marker - mirrors the Shop modal's structure/styling (see
+  // that JS section + #shop-modal-* CSS) rather than inventing a new visual
+  // language, just with several stacked tier sections instead of one flat
+  // grid (see #dungeon-modal-* CSS for why that needed its own small
+  // grid-per-tier markup instead of reusing #shop-modal-grid-inner as-is).
+  const TIER_ORDER = ['Boss', 'MidBoss', 'Normal', 'Monster', 'FishPal', 'NPCHuman'];
+  const TIER_LABELS = {
+    Boss: 'Boss', MidBoss: 'Mid-Boss', Normal: 'Normal', Monster: 'Monster',
+    FishPal: 'Fish', NPCHuman: 'Human Enemy',
+  };
+  const dungeonModalBackdrop = document.getElementById('dungeon-modal-backdrop');
+  const dungeonModalTitle = document.getElementById('dungeon-modal-title');
+  const dungeonModalBody = document.getElementById('dungeon-modal-body');
+
+  function closeDungeonModal() {
+    dungeonModalBackdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  dungeonModalBackdrop.addEventListener('click', (e) => {
+    if (e.target === dungeonModalBackdrop) closeDungeonModal();
+  });
+  document.getElementById('dungeon-modal-close').addEventListener('click', closeDungeonModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && dungeonModalBackdrop.classList.contains('open')) closeDungeonModal();
+  });
+
+  function dungeonPalLevelCount(p) {
+    const lvl = p.levelMin === p.levelMax ? `Lv ${p.levelMin}` : `Lv ${p.levelMin}-${p.levelMax}`;
+    const count = p.numMin === p.numMax ? `x${p.numMin}` : `x${p.numMin}-${p.numMax}`;
+    return `${lvl} &middot; ${count}`;
+  }
+
+  // escortNote, when given, adds a small "w/ Escorts" flag to the card -
+  // hovering/tapping it shows what those escorts actually are (name/level/
+  // count) without giving them their own cards, see dungeonOutcomeHtml.
+  function dungeonPalCardHtml(p, escortNote) {
+    const displayName = p.name || `${p.characterId} (unresolved)`;
+    // Icon is nullable even for non-human entries - 2 real species
+    // (WindChimes, Icewitch) have no resolvable portrait at all (see
+    // NOTES.md) - a "?" placeholder tile rather than a broken <img> or a
+    // fabricated fallback portrait.
+    const iconHtml = p.icon
+      ? `<img src="/assets/boss_icons/${p.icon}" />`
+      : `<div class="dungeon-pal-unresolved-icon">?</div>`;
+    const escortHtml = escortNote
+      ? `<div class="dungeon-pal-escort-flag" title="${escortNote}">w/ Escorts</div>`
+      : '';
+    return `
+      <div class="shop-card">
+        <div class="shop-card-icon round">${iconHtml}</div>
+        <div class="shop-card-name">${displayName}${p.isHuman ? ' <span style="color:#9ab;">(NPC)</span>' : ''}</div>
+        <div class="dungeon-pal-card-level">${dungeonPalLevelCount(p)}</div>
+        ${escortHtml}
+      </div>
+    `;
+  }
+
+  // One weighted group = one roll outcome. When the group is a boss +
+  // same-lineage escort(s) (the common {BOSS_X x1, X x2-3} shape), only the
+  // boss gets a card - the escorts are folded into a "w/ Escorts" flag
+  // (hover for the breakdown) rather than their own cards, since they're
+  // not a separately-random outcome, just part of this one. Groups with no
+  // single boss identity (rare - human "patrol" groups in Normal/NPCHuman
+  // tiers, e.g. Forest001's Believer_Bat_Invader + Believer_Bat) still show
+  // every pal, boxed together, since there's no one card to fold the rest
+  // into.
+  function dungeonOutcomeHtml(group) {
+    if (group.pals.length === 1) return dungeonPalCardHtml(group.pals[0]);
+    const boss = group.pals.find((p) => p.characterId.startsWith('BOSS_'));
+    if (boss) {
+      const escorts = group.pals.filter((p) => p !== boss);
+      const escortNote = escorts
+        .map((p) => `${p.name || `${p.characterId} (unresolved)`} — ${dungeonPalLevelCount(p).replace('&middot;', '·')}`)
+        .join('; ');
+      return dungeonPalCardHtml(boss, escortNote);
+    }
+    return `<div class="dungeon-outcome multi">${group.pals.map((p) => dungeonPalCardHtml(p)).join('')}</div>`;
+  }
+
+  function openDungeonModal(entry) {
+    const contents = dungeonContentsData?.[entry.spawn_area_id];
+    dungeonModalTitle.textContent = contents ? `${contents.biomeLabel} — Dungeon Contents` : `Dungeon (${entry.biome})`;
+    if (!contents) {
+      dungeonModalBody.innerHTML = '<div style="padding:8px;color:#9ab;">No roster data available.</div>';
+    } else {
+      const tiers = { ...contents.tiers };
+      // Boss and MidBoss draw from the identical weighted pool in every
+      // area that has both (Grass001/002, Forest001/002, Dessert001) - two
+      // independent rolls from the same roster, not two different rosters
+      // - so showing the same 15-31-card grid twice under separate headers
+      // was just redundant. Merge into one section when the pools are
+      // actually identical (an equality check, not assumed just because
+      // every area seen so far has this shape - if MidBoss ever gets its
+      // own distinct pool this falls back to two normal sections
+      // automatically).
+      let bossLabel = TIER_LABELS.Boss;
+      if (tiers.Boss && tiers.MidBoss && JSON.stringify(tiers.Boss.groups) === JSON.stringify(tiers.MidBoss.groups)) {
+        bossLabel = 'Boss & Mid-Boss (2 rolls)';
+        delete tiers.MidBoss;
+      }
+      const tierKeys = Object.keys(tiers).sort((a, b) => {
+        const ia = TIER_ORDER.indexOf(a);
+        const ib = TIER_ORDER.indexOf(b);
+        return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+      });
+      dungeonModalBody.innerHTML = tierKeys.map((tierKey) => {
+        const tier = tiers[tierKey];
+        // "possible" = number of distinct roll outcomes (groups), not the
+        // flattened pal count - a boss+escort group is 1 possible outcome
+        // even though it puts 2 cards on screen.
+        const badge = tier.guaranteed
+          ? '<span class="dungeon-tier-badge guaranteed">Guaranteed</span>'
+          : `<span class="dungeon-tier-badge pool">Random pool (${tier.groups.length} possible)</span>`;
+        const label = tierKey === 'Boss' ? bossLabel : (TIER_LABELS[tierKey] || tierKey);
+        return `
+          <div class="dungeon-tier">
+            <div class="dungeon-tier-header">${label} ${badge}</div>
+            <div class="dungeon-tier-grid">${tier.groups.map(dungeonOutcomeHtml).join('')}</div>
+          </div>
+        `;
+      }).join('');
+    }
+    dungeonModalBackdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
   loadDungeons();
+  loadDungeonContents();
 
   // ---------- Watchtowers / Waypoints (fast-travel points) ----------
   // Greyed out until unlocked, full color after (visualStyle: 'grayscale'),

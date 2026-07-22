@@ -1125,3 +1125,327 @@ inventory) - picking this back up should start here, not from scratch:**
   them). Whatever assigns identity + position to a placed instance remains
   outside every static-data mechanism checked so far - still consistent
   with the boot-time-procedural-spawn conclusion above.
+
+## Dungeons
+
+Two independent mechanisms live under this one section: open-world Dungeon
+Portal *entrance positions* + live active/inactive state (shipped
+2026-07-19), and per-entrance *contents* — the actual enemy/loot roster
+(shipped 2026-07-22). Only the second is new; the first predates this file
+even having a dedicated Dungeons section (it was only documented in
+`backend/dungeons.py`'s own docstring until now).
+
+### Entrances + active/inactive state
+
+- **Placed actor class** `BP_DungeonPortalMarker_<Biome>_C`, 157 instances
+  across 11 biome variants (Desert, Forest, Grass1, Sakura, Skyland, Snow,
+  Viking/Viking_B/Viking_C, Volcano, Yakushima — "Viking" is the
+  Sakurajima/Darkisland snow-viking biome). All 157 live in the persistent
+  level (`PL_MainWorld5`), no `_Generated_` World Partition scan needed —
+  matched by a `BP_DungeonPortalMarker_` class-name prefix scan rather than
+  hardcoding each biome variant, so a future biome wouldn't silently drop.
+- **No per-instance display name or DataTable row reference** exists,
+  unlike every other placed-actor category in this pipeline — only the
+  biome baked into the class name (before this pass; see Contents below for
+  what's now joined on top). No per-player "unlocked"/"cleared" state
+  exists either — distinct from the per-instance `RespawnProbability`
+  override seen on some instances' `EditSpawnParameter` (spawn-table
+  tuning, not a player-visible flag).
+- **Live world-shared active/inactive state**: contrary to what was first
+  assumed when this shipped, `worldSaveData.DungeonPointMarkerSaveData`/
+  `DungeonSaveData` track exactly which markers currently have a dungeon
+  spawned, re-read each 30s refresh like Guild Bases (`parse.
+  load_dungeon_marker_state`, `refresh.py`'s `DUNGEONS_STATE_OUTPUT`).
+  `server.py`'s `/api/dungeons` merges that onto the static position list by
+  id (dashes-stripped/uppercase). Because there's still no per-item
+  *collectible* state, the frontend keeps a single show/hide-all toggle
+  (not the per-item checklist every other section uses) over a list
+  filtered to only the currently-active entrances, with an "active/total"
+  header count — falls back to showing everything if the backend doesn't
+  know the live state yet (`state_known: false`, e.g. right after a restart
+  before the first refresh cycle).
+- **Icon**: the game's own compass icon, `T_icon_compass_dungeon` — same
+  "prefer the game's real icon" rule as Towers/Watchtowers/Waypoints/Bases.
+
+### Contents (per-SpawnAreaId enemy/loot roster)
+
+Fully solved via a throwaway scratch project (`extractor/ScratchDungeon`,
+deleted after verification per this file's usual cleanup convention) before
+being folded into the permanent `extractor/PalExtract/Program.cs` pipeline.
+
+- **The join chain, end to end**: each placed marker instance resolves to a
+  `SpawnAreaId` — either an instance-level `SpawnAreaIds` property override
+  (`[{Key: "<id>"}]`, confirmed real on a minority of instances) or, absent
+  that, the biome *class's own* CDO default (same property name/shape on
+  the `Default__` object). `DT_DungeonEnemySpawnDataTable`
+  (`Pal/Content/Pal/DataTable/Dungeon/DT_DungeonEnemySpawnDataTable`) has
+  exactly one row per `(SpawnAreaId, RankType)` combo (confirmed: 59 rows,
+  59 unique combos, zero duplicates — `WeightInSpawnAreaAndRank` is
+  irrelevant to this extraction, not a second weighted-selection layer on
+  top of a row's own spawner). Each row's `SpawnerBlueprintSoftClass` points
+  at a Blueprint whose CDO has a `SpawnGroupList` array — each entry a
+  weighted group of `{Weight, PalList: [{PalId.Key, NPCID.Key, Level,
+  Level_Max, Num, Num_Max}]}`.
+- **Dead end, don't repeat**: `DT_PalWildSpawner` (1691 rows) looked like
+  the obvious roster join by analogy with regular wildlife spawners, but
+  has zero overlap with any dungeon `SpawnerName`/`SpawnAreaId` — the real
+  join is entirely through the enemy spawn table + spawner Blueprint CDO
+  above, not this table.
+- **Only 14 real `SpawnAreaId`s exist**, derived generically (not
+  hardcoded) as whatever distinct `SpawnAreaId` value actually gets
+  resolved onto at least one of the 157 placed markers: Grass001, Grass002,
+  Forest001, Forest002, Dessert001 (double-s, a real typo baked into the
+  game's own row key), Volcano001, Snow001, Sakura001, Viking001,
+  Yakushima001, Skyland001, Island001, Island002, Island003.
+  `DT_DungeonEnemySpawnDataTable` also has rows for `TestDebug01` and
+  `Meadow01` — both dev-only/orphaned, never resolved onto by any placed
+  marker — restricting to the real, marker-referenced set drops them
+  automatically with no skip-list needed.
+- **Island001/002/003 are NOT separate biomes** — they're a variety-
+  injection override pool that some Grass1 instances get switched to via
+  their own instance-level `SpawnAreaIds` override (confirmed: 6 Grass1
+  instances override to Island001, 6 to Island002, 6 to Island003, on top
+  of the separate 14 Grass1 instances overriding to Grass002 instead).
+  Their Boss and Normal tiers (the only two tiers any Island area has) are
+  content-identical to Grass001's, byte-for-byte after key-order
+  normalization — same spawner Blueprints referenced, confirmed
+  programmatically, not eyeballed. They do get their own real, distinct
+  display name though (see below) — "Isolated Island Cavern", shared by all
+  three, vs. Grass001's own "Hillside Cavern" — so they're worth surfacing
+  as their own map/UI entries even though the roster is a duplicate.
+- **Per-area display name**: `DT_DungeonSpawnAreaDataTable`
+  (`Pal/Content/Pal/DataTable/Dungeon/DT_DungeonSpawnAreaDataTable`) maps
+  each `SpawnAreaId` to a `DungeonNameTextId` (e.g. `Grass001` ->
+  `NAME_RandomDungeon_grass01`), resolved through the L10N `en`
+  `DT_DungeonNameText` table to a real localized name (e.g. "Hillside
+  Cavern"). **Not** the same join as the unrelated "Fixed Dungeon"/Sealed
+  Realm system, which also reads from `DT_DungeonNameText` but via
+  different, non-`NAME_RandomDungeon_*` row keys (`NAME_Dungeon01`..`08`,
+  `NAME_FixedDungeon_*`) and mostly-unlocalized "en Text" placeholder junk —
+  don't conflate the two despite sharing a table.
+- **Yakushima001 is a real Terraria crossover, confirmed via this exact
+  lookup**: its `DungeonNameTextId` (`NAME_RandomDungeon_Yakushima01`)
+  resolves to the literal localized string `"???"` — not a broken lookup,
+  a real, deliberate easter-egg region name, kept as-is. Its trash tiers use
+  non-Pal creature names (Green/Blue/Red Slime, "Demon Eye") alongside a
+  handful of real Pals (Herbil, Dazzi, Dumud Gild) in the same tier — all of
+  these resolve through the ordinary `PAL_NAME_<CharacterID>` /
+  `DT_PalMonsterParameter` join with no special-casing needed (confirmed:
+  every single Yakushima001 entry resolved a real name, including the
+  Terraria-flavored ones).
+- **Roster join per pal/human entry**: regular species resolve name via
+  `PAL_NAME_<CharacterID>` direct-key lookup into `DT_PalNameText_Common`
+  first, falling back to `DT_PalMonsterParameter`'s `OverrideNameTextID`
+  indirection if the direct key misses (same order `ResolvePalShopPool`
+  already uses for Pal Dealer/Black Market pools) — icon via the same
+  `DT_PalCharacterIconDataTable`-keyed-by-`Tribe` join Bosses/shop pools use,
+  exported to the existing shared `frontend/assets/boss_icons/` dir (no
+  separate output folder for this feature). Human entries (`NPCID` set,
+  `PalId: "None"`, `RankType: NPCHuman`) resolve name via
+  `DT_PalHumanParameter` + `DT_HumanNameText_Common`, joined directly by the
+  roster's own `NPCID` (not a `BOSS_`-prefixed `SpawnerID` like Bounty's
+  human bosses use) — all 32 real human roster entries across every area
+  resolved a name this way, zero misses. **No icon exists for these**
+  though — `DT_PalBossNPCIcon` (Bounty's own icon table) is keyed by
+  boss-tier `SpawnerID`s, not these generic dungeon-trash `NPCID`s, and no
+  equivalent table was found — `icon: null` for every `isHuman: true` entry,
+  by design, not a gap worth chasing further (this is a minor/rare category:
+  32 entries total, 3 of 14 areas).
+- **Correction (2026-07-22): `WindChimes`/`Icewitch` were never actually
+  unresolvable — a real user recognized `WindChimes`' exported portrait
+  in-game ("looks like Hangyu") and that tip cracked it.** Both are a
+  **casing mismatch between the dungeon spawner Blueprints' own baked-in
+  `PalId.Key` and the real `DT_PalMonsterParameter`/`DT_PalNameText_Common`
+  row keys** — the same class of gotcha this file already flags repeatedly
+  elsewhere (`BOSS_Police_old` vs `BOSS_Police_Old`, etc.), just missed here
+  the first time because `DungeonPalName`/`DungeonPalIcon` were the only two
+  lookups in this whole pipeline still doing a case-*sensitive* exact-match
+  against `monsterRows`/`palNameRows` instead of a case-insensitive one
+  (`palIconLookup` already used `StringComparer.OrdinalIgnoreCase`, these
+  two didn't). Confirmed by direct query: `BOSS_WindChimes`'s own
+  `OverrideNameTextID` is `"PAL_NAME_WindChimes"` (capital C) but the real
+  text row key is `PAL_NAME_Windchimes` (lowercase c) → **"Hangyu"** (a
+  `WindChimes_Ice` variant also exists → "Hangyu Cryst", unused in any
+  current dungeon roster). `Icewitch` is worse-cased in the spawner data —
+  `BOSS_Icewitch`/`Icewitch` (lowercase w) vs. the table's real
+  `BOSS_IceWitch`/`IceWitch` (capital W) — same species Yakushima001's
+  *correctly*-cased `IceWitch` Normal-tier entry already resolved fine, to
+  **"Icelyn"**; its icon (`Pal_IceWitch.png`) already existed on disk from
+  that entry, just needed reusing. Fixed in `Program.cs`'s
+  `DungeonPalName`/`DungeonPalIcon` by building case-insensitive
+  `monsterRowsCI`/`palNameRowsCI` dictionaries (mirroring `palIconLookup`'s
+  existing pattern) instead of switching `monsterRows`/`palNameRows`
+  globally (those two are used case-correctly everywhere else in this file
+  — no need to risk changing behavior elsewhere for a fix that's only
+  needed in this one section). The live `data/dungeon_contents_static.json`
+  was hand-patched to the corrected values rather than paying for a full
+  multi-section pipeline rebuild (effigies/journals/notes/schematics all
+  re-run their own expensive World Partition scans) just for 2 species'
+  names — the next real full extractor run will reproduce the same result
+  from the fixed code, this was just a shortcut to ship the correction
+  immediately. **Lesson: don't declare "real, confirmed absence" from an
+  extractor coming back empty without checking whether the lookup itself
+  might be case-sensitive first** — this file already carried that warning
+  for other joins; it just hadn't been applied to this section yet.
+- **"Guaranteed" vs. "random pool" is computed generically per tier, not
+  hardcoded per area**: a tier is `guaranteed: true` only when its merged
+  `groups` array has exactly one entry — i.e. its spawner Blueprint's
+  `SpawnGroupList` had exactly one group (level-range width alone doesn't
+  make a tier "random" for this purpose, only species-pool multiplicity
+  does). Verified result: Yakushima001's Boss tier is the *only*
+  guaranteed Boss/MidBoss tier among all 14 areas (Eye of Cthulhu, Lv45) —
+  every other area's Boss (and MidBoss, where present) is a real weighted
+  pool (15-31 candidates). A handful of trash tiers (FishPal on several
+  areas, NPCHuman on a couple) are also single-group/guaranteed, which
+  falls out of the same generic rule rather than being special-cased.
+- **`Normal02`-`05`/`MidBoss02`-`05` merge into one `Normal`/`MidBoss` tier
+  bucket** for the frontend — confirmed real (as of this game version) only
+  for Yakushima001 (`Normal`/`02`/`03`/`04`, 4 distinct spawner Blueprints —
+  cavern/mushroom/hallow variants of its trash tier, no `05`; no area has a
+  `MidBoss02`-`05` at all in practice, but the merge rule is applied
+  generically rather than hardcoding "only Yakushima has this"). Each
+  contributing row's own `SpawnGroupList` groups are concatenated into one
+  flat `groups` array — they're independent trash-tier rolls, not weighted
+  alternatives of each other, so there's no single correct combined weight
+  across rows; concatenating and leaving each group's own intra-row weight
+  intact is the simplest faithful representation for a UI that's listing
+  "what can appear here," not simulating exact roll probabilities.
+- **Only 5 of 14 areas have any `MidBoss` row at all**: Grass001/002,
+  Forest001/002, Dessert001. For exactly those 5, the `MidBoss` row points
+  at the *same* spawner Blueprint as the area's own `Boss` row — two
+  independent boss-tier rolls per dungeon instance for those 5 areas
+  specifically, not a display duplicate.
+- **Output split, not embedded**: `data/dungeon_contents_static.json` is
+  keyed by `SpawnAreaId` (only 14 entries) and written separately from
+  `data/dungeons_static.json` (157 entrance positions, each now carrying its
+  own resolved `spawnAreaId` field) — embedding the same 14 rosters onto
+  every one of the 157 entrances would be pure duplication. `backend/
+  dungeons.py`'s `load_dungeon_contents()` / `server.py`'s
+  `/api/dungeon_contents` serve it as a second, independent, cache-once
+  endpoint; the frontend fetches both and joins client-side by
+  `spawn_area_id`, same pattern as every other client-side join in this
+  codebase.
+- **Frontend**: the existing single show/hide-all Dungeons toggle and
+  marker rendering are unchanged; markers are now clickable (mirroring the
+  Shop modal's NPC-marker click pattern), opening a dungeon contents modal
+  styled after (not a new visual language from) the existing Shop modal —
+  stacked per-tier sections (Boss/Mid-Boss/Normal/Monster/Fish/Human Enemy,
+  whichever a given area actually has) each with a "Guaranteed" or "Random
+  pool (N possible)" badge and a card grid reusing the Shop modal's
+  `.shop-card` styling. The tooltip gained one optional extra line — a
+  one-sentence Boss-tier preview only (not every tier, to keep the tooltip
+  short) — degrading gracefully to no extra line if dungeon contents
+  haven't loaded yet or (in principle) an area has no Boss tier.
+- **Boss/Mid-Boss merge, same day**: confirmed via the live API that every
+  area with a `MidBoss` tier at all (Grass001/002, Forest001/002,
+  Dessert001 — the same 5 already noted above as rolling "two independent
+  boss-tier encounters") has `MidBoss.groups` byte-identical to
+  `Boss.groups` — literally the same weighted pool, not two different
+  rosters. The modal originally rendered both as separate stacked sections
+  with the exact same 15-31-card grid twice, which just read as confusing
+  duplication. Fixed by comparing `JSON.stringify(tiers.Boss.groups) ===
+  JSON.stringify(tiers.MidBoss.groups)` in `openDungeonModal` and, when
+  true, dropping the `MidBoss` section and relabeling `Boss` to "Boss & Mid-
+  Boss (2 rolls)" — conveys that two independent picks from this same pool
+  actually spawn, rather than silently implying only one. The equality
+  check (not a hardcoded area-name list) means this stays correct
+  automatically if a future game update ever gives some area's MidBoss its
+  own distinct pool — it'd just fall back to two normal separate sections.
+
+## Icon export web-optimization (2026-07-22)
+
+`extractor/PalExtract/Program.cs`'s shared `DownscalePng` helper (used by
+every icon exporter — bosses/effigies/schematics/NPCs/dungeon pals) had a
+real inefficiency: it only resized+re-encoded when the source texture was
+*larger* than the 128px cap, and just returned the raw source bytes
+untouched otherwise (`if (image.Width <= maxDim && image.Height <= maxDim)
+return pngBytes;`). Since most Pal/NPC portraits are already authored at
+exactly 128×128, that early-return meant ~90% of exported icons were never
+actually re-encoded at all — shipped as whatever raw PNG `TextureEncoder`
+produced straight off the game's own compressed texture data, not tuned for
+web delivery.
+
+**Fix**: re-encoding is now unconditional, with `PngCompressionLevel.
+BestCompression` + `ColorType.Palette` (8-bit indexed) + a `WuQuantizer`
+capped at 256 colors. Measured on 40 real exported `boss_icons` files:
+compression-level alone only saved ~2% (the source PNGs were already
+reasonably compressed) — the real win is the palette conversion, ~55-65%
+smaller. This is technically lossy (every sample file has 1000-3700+ unique
+colors before quantization — these are real game-rendered portraits with
+soft shading, not flat pixel art, so 256 colors doesn't capture them exactly)
+but verified visually safe at actual display size: 3x-zoomed side-by-side
+crops of a busy human portrait (`BOSS_Male_Trader01`) and a gradient-heavy
+Pal portrait (`Pal_Bastet`) showed no perceptible banding. These render at
+28-84px in the UI, never larger — revisit if a future icon type ever needs
+a zoomable full-size view. `ExportNoteIcon` (Journal photo thumbnails,
+currently unused by the frontend — see the Journals section above) had its
+own separate, duplicate inline resize+encode; simplified to just call the
+shared `DownscalePng` instead of maintaining two copies of the same logic.
+
+Applied to the ~500 already-exported files on disk directly (a plain PNG
+re-encode with the same settings, via a throwaway ImageSharp-only scratch
+script — no CUE4Parse/game files needed) rather than paying for a full
+multi-section pipeline rebuild, same "patch the artifact, fix the source for
+next time" shortcut as the WindChimes/Icewitch correction above. Net result:
+the icon subdirectories (`boss_icons`/`npc_icons`/`schematic_icons`/etc, not
+counting the map backgrounds below) dropped from ~9.3MB to ~4.7MB, roughly
+halved.
+
+**Near-miss, caught before any commit — worth flagging for next time**: the
+first pass of that batch re-encode script walked `frontend/assets/**/*.png`
+unscoped, which also matched `frontend/assets/map.png` (27.5MB) and
+`frontend/assets/tree.png` (39.6MB) — the actual 8192×8192 `T_WorldMap`/
+`T_TreeMap` Leaflet background textures the whole map renders on top of,
+*not* icons, sitting directly in `frontend/assets/` rather than a `*_icons/`
+subdirectory. The script's blanket 128px resize cap shrank both down to
+literal 128×128 thumbnails before the mistake was caught (`git status`
+showed both as modified with drastically smaller sizes, which is what
+raised the flag) — `git checkout -- frontend/assets/tree.png
+frontend/assets/map.png frontend/assets/tree_thumb.png` restored the
+originals byte-for-byte since they were already git-tracked and hadn't been
+committed over. **These two backgrounds were correctly left un-reprocessed
+in the end** — resizing them would break Leaflet's `CRS.Simple` coordinate
+alignment at every zoom level (the whole map's coordinate system is
+calibrated against their exact pixel dimensions, see `backend/coord.py`),
+and they were never in scope for an "icon" web-optimization ask in the first
+place. **Lesson: when a batch transform walks a directory tree by
+extension/glob rather than an explicit known file list, double-check the
+glob doesn't also match unrelated large assets that happen to share the
+same file type** — `*.png` caught the map backgrounds because nothing about
+the glob itself distinguished "128×128 UI icon" from "8192×8192 rendered
+map layer," only their directory placement did, and the script didn't check
+that.
+
+**Follow-up, same day: `map.png`/`tree.png` themselves optimized properly
+(not skipped forever just because the first attempt was scoped wrong).**
+27.5MB/39.6MB PNGs (both fully opaque, no alpha channel) re-encoded as
+lossy WebP at quality 90, same exact 8192×8192 pixel dimensions — **format
+change only, not a resize**, so `backend/coord.py`'s `MAIN_TEXTURE_SIZE`
+and `frontend/index.html`'s `MAIN_SIZE` constants (both hardcoded 8192,
+driving every marker's pixel-space placement) didn't need to change.
+Result: 4.8MB/7.1MB, ~82% smaller, `frontend/index.html`'s two
+`L.imageOverlay()` calls updated to `/assets/map.webp`/`/assets/tree.webp`.
+Verified safe (not just measured smaller) two ways: (1) a 700×700 crop from
+each at native 1:1 pixel scale, viewed side-by-side against the PNG
+original, showed no visible banding/blockiness even in fine gravel/rock
+texture — the single most demanding comparison, since normal map usage is
+zoomed out further than 1:1; (2) live in a real headless-Chromium session
+zoomed to `maxZoom` (2), no failed asset requests, no console errors. Tried
+plain `PngCompressionLevel.BestCompression` first (only ~5-6% smaller — these
+PNGs were already reasonably compressed, same finding as the icon pass
+above) and lossless WebP (~33% smaller, zero quality loss) before deciding
+lossy q90 WebP's ~82% reduction was worth it — q80 (~90% reduction) was
+tested too and still looked clean, but q90 was picked for extra margin
+since the difference in absolute MB saved between q80 and q90 is small
+relative to the win either already gets. **No pipeline code needed
+updating** — unlike every icon type, `map.png`/`tree.png` were never
+produced by `extractor/PalExtract/Program.cs` in the first place (confirmed
+by grep — no `T_WorldMap`/`T_TreeMap` export code exists there), just a
+one-off manual CUE4Parse pull per the Architecture section's own wording
+("Pulled... textures... as the backgrounds") predating this file's
+detailed-documentation habit. If these ever need re-pulling from a newer
+game version, redo that manual export, then re-run this same WebP q90
+conversion on the result — there's no automated regeneration path for
+these two files specifically. `tree_thumb.png` (284KB, confirmed orphaned —
+zero references anywhere in `frontend/`/`backend/`) was left alone, out of
+scope for this pass; worth a separate cleanup if anyone asks.

@@ -8,7 +8,7 @@ from flask import Flask, jsonify, request, send_from_directory
 
 import refresh
 from bosses import load_bosses, load_bounties, load_oilrigs, load_towers
-from dungeons import load_dungeons
+from dungeons import load_dungeon_contents, load_dungeons
 from fasttravel import load_watchtowers, load_waypoints
 from notes import load_notes
 from npcs import load_npcs
@@ -39,6 +39,7 @@ _bosses_cache = load_bosses()
 _bounties_cache = load_bounties()
 _oilrigs_cache = load_oilrigs()
 _dungeons_cache = load_dungeons()
+_dungeon_contents_cache = load_dungeon_contents()
 _towers_cache = load_towers()
 _watchtowers_cache = load_watchtowers()
 _waypoints_cache = load_waypoints()
@@ -386,6 +387,17 @@ def api_dungeons():
         for e in _dungeons_cache
     ]
     return jsonify({"entrances": entrances, "state_known": bool(marker_state)})
+
+
+@app.route("/api/dungeon_contents")
+def api_dungeon_contents():
+    # Static (14 distinct SpawnAreaId rosters, no per-player/per-refresh
+    # state at all) — loaded once at startup like bosses/towers. Returned
+    # as its own endpoint rather than embedded per-entrance in /api/dungeons
+    # (only 157 markers but 14 distinct rosters — the frontend joins
+    # entrance -> contents client-side via spawn_area_id). See dungeons.py
+    # docstring and NOTES.md's Dungeons section.
+    return jsonify({"contents": _dungeon_contents_cache})
 
 
 def _refresh_loop():

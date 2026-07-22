@@ -7,7 +7,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Processing.Processors.Quantization;
 
 var paksDir = @"D:\Steam\steamapps\common\Palworld\Pal\Content\Paks";
 var usmapPath = @"C:\Projects\PalworldMap\extractor\Mappings.usmap";
@@ -27,27 +29,52 @@ JObject LoadRows(string path)
 }
 
 // Shared by every icon exporter below (bosses/effigies/schematics/items/
-// NPCs/traders alike) - source textures come straight off the game's own
-// assets at whatever resolution they were authored at (item/currency icons
-// are 256x256, ~30-36KB each; Pal/NPC portraits 128x128, ~14-19KB), but
-// nothing in this UI ever displays one above ~90px (map markers are
-// 28-30px, shop modal cards ~84px). Downscaling here once, project-wide,
-// is the same fix already proven necessary for Journal note icons (see
-// ExportNoteIcon's own comment - that case was a much more extreme
-// 3800x2100 "photo" texture, but the "don't ship 2-3x more pixels than
-// anything ever displays" principle is identical). 128px leaves headroom
-// above every actual display size without being wasteful.
+// NPCs/traders/dungeon pals alike) - source textures come straight off the
+// game's own assets at whatever resolution they were authored at (item/
+// currency icons are 256x256, ~30-36KB each; Pal/NPC portraits already
+// 128x128, ~14-19KB), but nothing in this UI ever displays one above ~90px
+// (map markers are 28-30px, shop modal cards ~84px). Downscaling here once,
+// project-wide, is the same fix already proven necessary for Journal note
+// icons (see ExportNoteIcon's own comment - that case was a much more
+// extreme 3800x2100 "photo" texture, but the "don't ship 2-3x more pixels
+// than anything ever displays" principle is identical). 128px leaves
+// headroom above every actual display size without being wasteful.
+//
+// Web-optimization pass added 2026-07-22: re-encoding is now unconditional,
+// not just when a resize actually happens - the old code's early-return
+// (`if already <= maxDim, ship the raw source bytes untouched`) meant the
+// ~90% of icons authored at exactly 128x128 (every Pal/NPC portrait) never
+// got re-encoded at all, so the real win here was never about the resize.
+// Measured on 40 real exported boss_icons files: plain re-encoding with
+// PngCompressionLevel.BestCompression alone saved ~2% (the raw
+// TextureEncoder-produced PNGs were already reasonably compressed) - the
+// actual win is ColorType.Palette (8-bit indexed, WuQuantizer max 256
+// colors), ~55-65% smaller. That's lossy (every sample file has 1000-3700+
+// unique colors pre-quantization, real game-rendered portraits with soft
+// shading, not flat pixel art) but verified visually safe at actual display
+// size (3x-zoomed side-by-side crops of a busy human portrait and a
+// gradient-heavy Pal portrait showed no perceptible banding) - these are
+// ~30-84px UI elements, not full-screen art. Revisit if a future icon type
+// needs higher fidelity than that (e.g. a zoomable full-size view).
 byte[] DownscalePng(byte[] pngBytes, int maxDim = 128)
 {
-    using var image = SixLabors.ImageSharp.Image.Load(pngBytes);
-    if (image.Width <= maxDim && image.Height <= maxDim) return pngBytes;
-    image.Mutate(x => x.Resize(new ResizeOptions
+    using var image = SixLabors.ImageSharp.Image.Load<Rgba32>(pngBytes);
+    if (image.Width > maxDim || image.Height > maxDim)
     {
-        Mode = ResizeMode.Max,
-        Size = new SixLabors.ImageSharp.Size(maxDim, maxDim),
-    }));
+        image.Mutate(x => x.Resize(new ResizeOptions
+        {
+            Mode = ResizeMode.Max,
+            Size = new SixLabors.ImageSharp.Size(maxDim, maxDim),
+        }));
+    }
     using var ms = new MemoryStream();
-    image.Save(ms, new PngEncoder());
+    image.Save(ms, new PngEncoder
+    {
+        CompressionLevel = PngCompressionLevel.BestCompression,
+        ColorType = PngColorType.Palette,
+        BitDepth = PngBitDepth.Bit8,
+        Quantizer = new WuQuantizer(new QuantizerOptions { MaxColors = 256 }),
+    });
     return ms.ToArray();
 }
 
@@ -593,6 +620,37 @@ const string dungeonIconFile = "T_icon_compass_dungeon.png";
     File.WriteAllBytes(Path.Combine(dungeonIconOutDir, dungeonIconFile), bytes);
 }
 
+// Each biome's *default* SpawnAreaId (the roster used unless a specific
+// placed instance overrides it - see below) lives on the biome class's own
+// CDO (Default__ object), as a SpawnAreaIds:[{Key: "<id>"}] property -
+// discovered by dumping one instance's full property set per biome (a
+// throwaway scratch project, extractor/ScratchDungeon, since deleted - its
+// out_marker_cdo.json / out_all_marker_instances.json findings are what this
+// block reproduces). Found generically via a package-path scan for
+// "BP_DungeonPortalMarker_" rather than a hardcoded biome->path table, so a
+// future biome variant (or Yakushima's own oddly-nested folder,
+// .../Dungeon/Yakushima/BP_DungeonPortalMarker_Yakushima, vs. every other
+// biome sitting directly under .../Dungeon/) is picked up automatically
+// instead of silently missing a CDO lookup.
+var dungeonMarkerPackages = provider.Files.Keys
+    .Where(k => k.Contains("BP_DungeonPortalMarker_", StringComparison.Ordinal) && k.EndsWith(".uasset", StringComparison.Ordinal))
+    .Select(k => k[..^".uasset".Length])
+    .Distinct()
+    .ToList();
+var biomeDefaultSpawnAreaId = new Dictionary<string, string>();
+foreach (var pkgPath in dungeonMarkerPackages)
+{
+    var fileName = pkgPath.Split('/').Last();
+    if (!fileName.StartsWith("BP_DungeonPortalMarker_", StringComparison.Ordinal)) continue;
+    var biomeKey = fileName["BP_DungeonPortalMarker_".Length..];
+    var cdoExports = provider.LoadPackageObjects(pkgPath).ToList();
+    var cdo = cdoExports.FirstOrDefault(e => (e.Name ?? "").StartsWith("Default__", StringComparison.Ordinal));
+    var cdoJ = cdo != null ? JObject.Parse(JsonConvert.SerializeObject(cdo)) : null;
+    var defaultAreaId = ((cdoJ?["Properties"] as JObject)?["SpawnAreaIds"] as JArray)?.FirstOrDefault()?["Key"]?.ToString();
+    if (defaultAreaId != null) biomeDefaultSpawnAreaId[biomeKey] = defaultAreaId;
+}
+Console.WriteLine($"Biome default SpawnAreaIds resolved: {string.Join(", ", biomeDefaultSpawnAreaId.Select(kv => $"{kv.Key}={kv.Value}"))}");
+
 var dungeonResult = new JArray();
 foreach (var exp in persistentLevelExports)
 {
@@ -607,10 +665,18 @@ foreach (var exp in persistentLevelExports)
     var rootObj = ResolveExportRef(persistentLevelExports, props?["RootComponent"]);
     var loc = (rootObj?["Properties"] as JObject)?["RelativeLocation"];
     if (loc == null) continue;
+    // Per-instance SpawnAreaIds override (same property name/shape as the
+    // class CDO's own default, above) - confirmed real on a minority of
+    // instances (e.g. some Forest instances override to Forest002, some
+    // Grass1 instances override to Grass002/Island001/002/003) - falls back
+    // to the biome's class default when absent, which is the common case.
+    var spawnAreaIdOverride = (props?["SpawnAreaIds"] as JArray)?.FirstOrDefault()?["Key"]?.ToString();
+    var spawnAreaId = spawnAreaIdOverride ?? (biomeDefaultSpawnAreaId.TryGetValue(biome, out var defaultId) ? defaultId : null);
     dungeonResult.Add(new JObject
     {
         ["instanceId"] = instanceId,
         ["biome"] = biome,
+        ["spawnAreaId"] = spawnAreaId,
         ["icon"] = dungeonIconFile,
         ["x"] = loc["X"],
         ["y"] = loc["Y"],
@@ -620,6 +686,258 @@ foreach (var exp in persistentLevelExports)
 Console.WriteLine($"Total dungeon entrances: {dungeonResult.Count}");
 File.WriteAllText(@"C:\Projects\PalworldMap\data\dungeons_static.json", dungeonResult.ToString(Formatting.Indented));
 Console.WriteLine("Wrote data/dungeons_static.json");
+
+// ============ Dungeon Contents (per-SpawnAreaId enemy/loot roster) ============
+// What's actually inside each of the 157 entrances above, keyed by the
+// spawnAreaId resolved onto each dungeonResult entry - a separate, much
+// smaller keyspace (only 14 distinct real SpawnAreaIds exist, see below)
+// than the 157 placed markers, so this writes its own file
+// (dungeon_contents_static.json) rather than duplicating the same 14
+// rosters onto every one of the 157 marker entries.
+//
+// The join chain (fully solved via extractor/ScratchDungeon, a throwaway
+// scratch project now deleted - see NOTES.md's Dungeons section for the
+// full investigation writeup): DT_DungeonEnemySpawnDataTable has one row
+// per (SpawnAreaId, RankType) combo (confirmed: 59 rows, 59 unique combos,
+// zero duplicates - WeightInSpawnAreaAndRank is irrelevant to this
+// extraction, not a second weighted-selection layer). Each row's own
+// SpawnerBlueprintSoftClass points at a Blueprint whose CDO has a
+// SpawnGroupList array - each entry a weighted group of
+// {PalId/NPCID, Level/Level_Max, Num/Num_Max}. This is NOT joined via
+// DT_PalWildSpawner (checked exhaustively during the scratch investigation,
+// zero overlap - a dead end, don't repeat it).
+//
+// Only the 14 SpawnAreaIds actually referenced by a placed marker's
+// resolved spawnAreaId (above) are real - TestDebug01 and Meadow01 both
+// have rows in DT_DungeonEnemySpawnDataTable but no placed marker ever
+// resolves to them (dev-only/orphaned), so restricting to
+// realSpawnAreaIds below drops them automatically, no hardcoded skip list
+// needed.
+var realSpawnAreaIds = dungeonResult.Select(e => e["spawnAreaId"]?.ToString())
+    .Where(id => id != null).Distinct().ToHashSet();
+Console.WriteLine($"Real SpawnAreaIds in use: {realSpawnAreaIds.Count} ({string.Join(", ", realSpawnAreaIds)})");
+
+// Real, authoritative per-area display name (e.g. Grass001 -> "Hillside
+// Cavern", Grass002 -> "Ravine Grotto" - genuinely distinct names, not a
+// generic "Grassland" label reused across the Island biome-pool override
+// - see NOTES.md) - NOT the DT_DungeonNameText rows used for the unrelated
+// "Fixed Dungeon"/Sealed Realm system (that table also has "en Text"
+// placeholder junk and Sealed-Realm-specific rows; DT_DungeonSpawnAreaDataTable
+// is the correct join for random-Dungeon-Portal SpawnAreaIds specifically).
+// Yakushima001's own name resolves to the literal string "???" - a real,
+// confirmed fact (its region is an unmarked Terraria crossover easter egg),
+// not a broken lookup - kept as-is rather than special-cased.
+var dungeonSpawnAreaRows = LoadRows("Pal/Content/Pal/DataTable/Dungeon/DT_DungeonSpawnAreaDataTable");
+var dungeonNameTextRows = LoadRows("Pal/Content/L10N/en/Pal/DataTable/Text/DT_DungeonNameText");
+
+string DungeonAreaLabel(string spawnAreaId)
+{
+    var textId = (dungeonSpawnAreaRows[spawnAreaId] as JObject)?["DungeonNameTextId"]?.ToString();
+    if (string.IsNullOrEmpty(textId)) return spawnAreaId;
+    var label = (dungeonNameTextRows[textId] as JObject)?["TextData"]?["LocalizedString"]?.ToString();
+    return string.IsNullOrEmpty(label) ? spawnAreaId : label;
+}
+
+// Species name/icon resolution - deliberately NOT PalPortraitIcon/the boss
+// name-resolution block above verbatim: those two both have a "never fails"
+// fallback (MobuCitizen icon / raw characterId as name) appropriate for
+// their own features (every shop-pool/boss species there really does
+// resolve).
+//
+// Case-insensitive lookups, unlike every other join in this file: the
+// dungeon spawner Blueprints' own baked-in PalId.Key casing genuinely
+// disagrees with DT_PalMonsterParameter/DT_PalNameText_Common's real row
+// keys for some species - confirmed real, not a typo in this extractor.
+// WindChimes/BOSS_WindChimes (Grass002/Dessert001 boss pools) has a real
+// DT_PalMonsterParameter row (Tribe "WindChimes", exact case, so the old
+// case-sensitive icon join happened to work) whose OverrideNameTextID
+// points at "PAL_NAME_WindChimes" - but the actual text row key is
+// "PAL_NAME_Windchimes" (lowercase c), LocalizedString "Hangyu" (a real
+// Pal, user-confirmed by sight against this project's own exported icon -
+// see NOTES.md). Icewitch (Snow001's boss pool) is worse-cased -
+// "BOSS_Icewitch"/"Icewitch" (lowercase w) vs. the table's real
+// "BOSS_IceWitch"/"IceWitch" (capital W), so even the old icon join failed
+// (needs an exact monsterRows hit first) - same species as
+// Yakushima001 Normal's correctly-cased "IceWitch" entry, which always
+// resolved fine to "Icelyn". Building case-insensitive dictionaries here
+// (matching palIconLookup's own existing OrdinalIgnoreCase pattern above)
+// instead of switching monsterRows/palNameRows globally, since those two
+// are plain case-sensitive JObjects used correctly-cased everywhere else
+// in this file - no need to risk changing behavior elsewhere.
+var monsterRowsCI = monsterRows.Properties().ToDictionary(p => p.Name, p => p.Value, StringComparer.OrdinalIgnoreCase);
+var palNameRowsCI = palNameRows.Properties().ToDictionary(p => p.Name, p => p.Value, StringComparer.OrdinalIgnoreCase);
+
+string? DungeonPalName(string characterId)
+{
+    // Same "PAL_NAME_<CharacterID> direct key first, OverrideNameTextID
+    // fallback" order as ResolvePalShopPool above - regular wild-Pal-style
+    // species (the common case in dungeon rosters) don't carry their own
+    // OverrideNameTextID, only the "BOSS_"-tier variants do.
+    palNameRowsCI.TryGetValue("PAL_NAME_" + characterId, out var directTok);
+    var direct = (directTok as JObject)?["TextData"]?["LocalizedString"]?.ToString();
+    if (!string.IsNullOrEmpty(direct)) return direct;
+    monsterRowsCI.TryGetValue(characterId, out var monsterTok);
+    var monster = monsterTok as JObject;
+    var nameTextId = monster?["OverrideNameTextID"]?.ToString();
+    if (!string.IsNullOrEmpty(nameTextId) && nameTextId != "None")
+    {
+        palNameRowsCI.TryGetValue(nameTextId, out var overrideTok);
+        var viaOverride = (overrideTok as JObject)?["TextData"]?["LocalizedString"]?.ToString();
+        if (!string.IsNullOrEmpty(viaOverride)) return viaOverride;
+    }
+    return null; // a genuine remaining gap, if any - not assumed, verify before shipping as "(unresolved)"
+}
+
+string? DungeonPalIcon(string characterId)
+{
+    monsterRowsCI.TryGetValue(characterId, out var monsterTok);
+    var monster = monsterTok as JObject;
+    if (monster == null) return null;
+    var tribeKey = ElementString(monster["Tribe"]);
+    if (!palIconLookup.TryGetValue(tribeKey, out var palIconProp)) return null;
+    var iconAssetPath = ((JObject)palIconProp.Value)["Icon"]?["AssetPathName"]?.ToString();
+    if (string.IsNullOrEmpty(iconAssetPath)) return null;
+    var fileName = "Pal_" + tribeKey + ".png"; // shared boss_icons dir/naming - same species, no reason to export twice
+    try { ExportIcon(iconAssetPath, fileName); return fileName; }
+    catch (Exception ex) { Console.WriteLine($"  dungeon pal icon export failed for {tribeKey}: {ex.Message}"); return null; }
+}
+
+// Human trash-tier NPCs (RankType NPCHuman, e.g. "Hunter_Handgun" -> "Syndicate
+// Thug") resolve via DT_PalHumanParameter + DT_HumanNameText_Common, same
+// pattern as Bounty's human bosses - but joined by the roster's own NPCID
+// directly (not a "BOSS_"-prefixed SpawnerID like Bounty uses). No dedicated
+// icon table entry exists for these generic dungeon trash humans (unlike
+// Bounty's DT_PalBossNPCIcon, which is keyed by boss-tier SpawnerIDs only) -
+// icon is deliberately null, matching this section's own "don't fabricate"
+// rule rather than reusing an unrelated portrait.
+string? DungeonHumanName(string npcId)
+{
+    var human = humanRows[npcId] as JObject;
+    var nameTextId = human?["OverrideNameTextID"]?.ToString();
+    if (string.IsNullOrEmpty(nameTextId) || nameTextId == "None") return null;
+    return (humanNameRows[nameTextId] as JObject)?["TextData"]?["LocalizedString"]?.ToString();
+}
+
+// Merge Normal02-05/MidBoss02-05 into one "Normal"/"MidBoss" tier bucket -
+// confirmed real only for Yakushima001 (Normal/02/03/04, 4 distinct spawner
+// Blueprints - cavern/mushroom/hallow variants of its trash tier; no area
+// has a MidBoss02-05 in practice, but the same merge rule is applied
+// generically rather than hardcoding "only Yakushima has this"). Each
+// contributing row's own SpawnGroupList groups are concatenated into one
+// flat groups array for the merged tier - they're independent trash-tier
+// rolls, not weighted alternatives of each other, so there's no single
+// correct combined "weight" to assign across rows; concatenating and
+// leaving each group's own intra-row weight intact is the simplest
+// faithful representation for a UI that's just listing "what can appear
+// here", not simulating exact roll probabilities.
+string MergedTierKey(string rankType)
+{
+    if (rankType == "Normal" || System.Text.RegularExpressions.Regex.IsMatch(rankType, @"^Normal0[2-9]$")) return "Normal";
+    if (rankType == "MidBoss" || System.Text.RegularExpressions.Regex.IsMatch(rankType, @"^MidBoss0[2-9]$")) return "MidBoss";
+    return rankType;
+}
+
+var dungeonEnemySpawnRows = LoadRows("Pal/Content/Pal/DataTable/Dungeon/DT_DungeonEnemySpawnDataTable");
+var spawnerGroupListCache = new Dictionary<string, JArray?>();
+JArray? SpawnerGroupList(string assetPathName)
+{
+    if (spawnerGroupListCache.TryGetValue(assetPathName, out var cached)) return cached;
+    var withoutObjectName = assetPathName[..assetPathName.LastIndexOf('.')];
+    var objPath = withoutObjectName.Replace("/Game/", "Pal/Content/");
+    var exports = provider.LoadPackageObjects(objPath).ToList();
+    var cdo = exports.FirstOrDefault(e => (e.Name ?? "").StartsWith("Default__", StringComparison.Ordinal));
+    var cdoJ = cdo != null ? JObject.Parse(JsonConvert.SerializeObject(cdo)) : null;
+    var groupList = (cdoJ?["Properties"] as JObject)?["SpawnGroupList"] as JArray;
+    spawnerGroupListCache[assetPathName] = groupList;
+    return groupList;
+}
+
+var dungeonContents = new JObject();
+foreach (var areaId in realSpawnAreaIds)
+{
+    var tiers = new JObject();
+    // mergedTier -> accumulated groups (JArray), built incrementally across
+    // however many raw DT_DungeonEnemySpawnDataTable rows feed into it.
+    var tierGroups = new Dictionary<string, JArray>();
+
+    foreach (var prop in dungeonEnemySpawnRows.Properties())
+    {
+        var row = (JObject)prop.Value;
+        if (row["SpawnAreaId"]?.ToString() != areaId) continue;
+        var rankType = ElementString(row["RankType"]);
+        var mergedKey = MergedTierKey(rankType);
+        var assetPathName = row["SpawnerBlueprintSoftClass"]?["AssetPathName"]?.ToString();
+        var groupList = !string.IsNullOrEmpty(assetPathName) ? SpawnerGroupList(assetPathName) : null;
+        if (groupList == null) continue;
+
+        if (!tierGroups.TryGetValue(mergedKey, out var groupsArr))
+        {
+            groupsArr = new JArray();
+            tierGroups[mergedKey] = groupsArr;
+        }
+
+        foreach (var group in groupList)
+        {
+            var pals = new JArray();
+            foreach (var palEntry in (group["PalList"] as JArray) ?? new JArray())
+            {
+                var palId = palEntry["PalId"]?["Key"]?.ToString() ?? "None";
+                var npcId = palEntry["NPCID"]?["Key"]?.ToString() ?? "None";
+                var isHuman = palId == "None" && npcId != "None";
+                var characterId = isHuman ? npcId : palId;
+                pals.Add(new JObject
+                {
+                    ["characterId"] = characterId,
+                    ["name"] = isHuman ? DungeonHumanName(npcId) : DungeonPalName(palId),
+                    ["icon"] = isHuman ? null : DungeonPalIcon(palId),
+                    ["levelMin"] = palEntry["Level"],
+                    ["levelMax"] = palEntry["Level_Max"],
+                    ["numMin"] = palEntry["Num"],
+                    ["numMax"] = palEntry["Num_Max"],
+                    ["isHuman"] = isHuman,
+                });
+            }
+            groupsArr.Add(new JObject
+            {
+                ["weight"] = group["Weight"],
+                ["pals"] = pals,
+            });
+        }
+    }
+
+    foreach (var (tierKey, groupsArr) in tierGroups)
+    {
+        tiers[tierKey] = new JObject
+        {
+            ["guaranteed"] = groupsArr.Count == 1,
+            ["groups"] = groupsArr,
+        };
+    }
+
+    dungeonContents[areaId] = new JObject
+    {
+        ["biomeLabel"] = DungeonAreaLabel(areaId),
+        ["tiers"] = tiers,
+    };
+}
+
+// Sanity checks against known-good figures from the scratch investigation
+// (see NOTES.md) - logged, not asserted/thrown, so a real future game
+// content patch that shifts these numbers doesn't hard-fail the pipeline,
+// just gets flagged for a human to look at.
+var grass001Boss = (((dungeonContents["Grass001"] as JObject)?["tiers"] as JObject)?["Boss"] as JObject)?["groups"] as JArray;
+var yakushimaBoss = (((dungeonContents["Yakushima001"] as JObject)?["tiers"] as JObject)?["Boss"] as JObject)?["groups"] as JArray;
+Console.WriteLine($"Sanity: Grass001 Boss groups = {grass001Boss?.Count} (expect ~31), Yakushima001 Boss groups = {yakushimaBoss?.Count} (expect 1, Eye of Cthulhu Lv45)");
+if (yakushimaBoss?.Count == 1)
+{
+    var soleName = yakushimaBoss[0]?["pals"]?[0]?["name"]?.ToString();
+    var soleLevel = yakushimaBoss[0]?["pals"]?[0]?["levelMin"]?.ToString();
+    Console.WriteLine($"  Yakushima001 sole Boss: {soleName} Lv{soleLevel}");
+}
+
+Console.WriteLine($"Total dungeon content areas: {dungeonContents.Count} (expect 14)");
+File.WriteAllText(@"C:\Projects\PalworldMap\data\dungeon_contents_static.json", dungeonContents.ToString(Formatting.Indented));
+Console.WriteLine("Wrote data/dungeon_contents_static.json");
 
 // ============ Journals (internally "Notes") ============
 // Collectible lore pickups, shown to the user as "Journals" - internally the
@@ -700,18 +1018,12 @@ void ExportNoteIcon(string assetPathName, string outFileName)
     // full-screen note-reading UI, not a 30px map marker - no small compact
     // icon exists anywhere in the game's own data for this (checked
     // DT_LocationUIData and every Icon-ish/notebook/diary/document texture
-    // path - nothing). Downscale to a small thumbnail here instead, so 64 of
-    // these don't cost 500+MB on disk and a multi-second page load for detail
-    // nobody sees at 30px.
-    using var image = SixLabors.ImageSharp.Image.Load(bytes);
-    image.Mutate(x => x.Resize(new ResizeOptions
-    {
-        Mode = ResizeMode.Max,
-        Size = new SixLabors.ImageSharp.Size(128, 128),
-    }));
-    using var ms = new MemoryStream();
-    image.Save(ms, new PngEncoder());
-    File.WriteAllBytes(Path.Combine(noteIconOutDir, outFileName), ms.ToArray());
+    // path - nothing). Downscale + web-optimize via the same shared
+    // DownscalePng every other icon exporter uses (see its own comment) -
+    // this used to be its own separate inlined resize+encode, duplicating
+    // logic that now also does palette quantization, no reason to keep two
+    // copies.
+    File.WriteAllBytes(Path.Combine(noteIconOutDir, outFileName), DownscalePng(bytes));
 }
 
 // Collect raw {noteId, instanceId, x, y, z} from both sources first, then

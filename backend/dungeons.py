@@ -21,6 +21,19 @@ single show/hide-all toggle rather than the per-item checklist used
 elsewhere — but now filters the map to only the currently-active entrances
 (instead of showing all 157 with an indicator), with an "active / total"
 count in the section header.
+
+**Contents** (2026-07-22): each entrance's `spawnAreaId` (resolved at
+extraction time — instance-level `SpawnAreaIds` override if present, else
+the biome class's own CDO default, see extractor/PalExtract's Dungeon
+Contents section) joins into `data/dungeon_contents_static.json` — the
+actual enemy/loot roster per SpawnAreaId (only 14 distinct real ones exist
+across all 157 markers, see `load_dungeon_contents()` below). Kept as a
+separate static file/loader rather than embedded per-entrance, since
+embedding would duplicate the same 14 rosters across all 157 entries for no
+reason — the frontend joins entrance -> contents client-side via
+`spawnAreaId`. See NOTES.md's Dungeons section for the full join chain,
+dead ends, and caveats (unresolved species, the Island biome-pool
+discovery, Yakushima's Terraria crossover).
 """
 
 import json
@@ -30,6 +43,9 @@ from typing import Any
 from coord import locate
 
 DUNGEONS_PATH = Path(__file__).resolve().parent.parent / "data" / "dungeons_static.json"
+DUNGEON_CONTENTS_PATH = (
+    Path(__file__).resolve().parent.parent / "data" / "dungeon_contents_static.json"
+)
 
 
 def load_dungeons() -> list[dict[str, Any]]:
@@ -40,6 +56,7 @@ def load_dungeons() -> list[dict[str, Any]]:
             {
                 "id": r["instanceId"],
                 "biome": r["biome"],
+                "spawn_area_id": r.get("spawnAreaId"),
                 "icon": r["icon"],
                 "map": map_name,
                 "pixel_x": pixel_x,
@@ -47,3 +64,11 @@ def load_dungeons() -> list[dict[str, Any]]:
             }
         )
     return entrances
+
+
+def load_dungeon_contents() -> dict[str, Any]:
+    """SpawnAreaId -> {biomeLabel, tiers} roster map — static, no per-refresh
+    reload needed (same as bosses/towers). Passed through as-is; the raw
+    JSON shape already matches what the frontend needs (camelCase keys, see
+    NOTES.md), no per-entry transform required like the other loaders here."""
+    return json.loads(DUNGEON_CONTENTS_PATH.read_text(encoding="utf-8"))
