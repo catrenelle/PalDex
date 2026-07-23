@@ -113,7 +113,7 @@ def api_bosses():
 
     bosses = _bosses_cache
     if defeated_ids is not None:
-        bosses = [{**b, "defeated": b["spawner_id"] in defeated_ids} for b in _bosses_cache]
+        bosses = [{**b, "defeated": b["spawner_id"].upper() in defeated_ids} for b in _bosses_cache]
 
     return jsonify(
         {
@@ -137,7 +137,7 @@ def api_bounties():
 
     targets = _bounties_cache
     if defeated_ids is not None:
-        targets = [{**t, "defeated": t["spawner_id"] in defeated_ids} for t in _bounties_cache]
+        targets = [{**t, "defeated": t["spawner_id"].upper() in defeated_ids} for t in _bounties_cache]
 
     return jsonify(
         {

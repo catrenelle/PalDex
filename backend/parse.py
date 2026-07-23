@@ -254,11 +254,19 @@ def load_defeated_boss_spawner_ids(player_sav: Path) -> set[str]:
     same SpawnerID string used in DT_BossSpawnerLoactionData (confirmed by
     exact match — e.g. Penking's spawner "81_1_grass_FBOSS_9" appears here
     too). Distinct from TowerBossDefeatFlag (dungeon tower bosses, keyed by
-    "BOSS_BATTLE_NAME_*" instead) which this deliberately ignores."""
+    "BOSS_BATTLE_NAME_*" instead) which this deliberately ignores.
+
+    Uppercased here (and compared uppercased in server.py) because at least
+    one real key disagrees in case with its own DT_BossSpawnerLoactionData
+    SpawnerID: Pinch's flag is "BOSS_Police_old" (lowercase "old") but the
+    table's SpawnerID is "BOSS_Police_Old" — confirmed 2026-07-23 against a
+    real player who had beaten Pinch but showed as not-defeated. Same game-
+    data casing drift as the DT_PalHumanParameter row-key mismatch fixed for
+    this same boss's name/icon resolution (see Program.cs)."""
     d = _read_gvas(player_sav)
     record_data = d["properties"]["SaveData"]["value"]["RecordData"]["value"]
     entries = record_data.get("NormalBossDefeatFlag", {}).get("value", [])
-    return {e["key"] for e in entries if e.get("value")}
+    return {e["key"].upper() for e in entries if e.get("value")}
 
 
 def load_defeated_tower_flags(player_sav: Path) -> set[str]:
