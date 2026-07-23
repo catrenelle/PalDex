@@ -2511,10 +2511,18 @@
     const bossesVisible = document.getElementById('bosses-master-toggle').checked;
     const dungeonsVisible = document.getElementById('dungeons-master-toggle').checked;
 
-    const bossTypeKey = 'BOSS_' + characterId;
+    // Case-insensitive, prefix-stripped compare rather than a hardcoded
+    // 'BOSS_' + characterId reconstruction - DT_BossSpawnerLoactionData's own
+    // CharacterID casing isn't perfectly consistent (89 rows are "BOSS_X",
+    // Anubis alone is "Boss_Anubis"), same casing-drift class as the
+    // WindChimes/Icewitch dungeon-roster bug documented in NOTES.md. Matching
+    // this loosely means any future extractor rerun can't silently re-break
+    // a specific species' ring the way an exact-string prefix guess would.
+    const bossKeyLower = characterId.toLowerCase();
     if (bossesVisible) {
       for (const boss of (palSpawnBossData || [])) {
-        if (boss.type_key !== bossTypeKey) continue;
+        const bareBossKey = boss.type_key.replace(/^BOSS_/i, '').toLowerCase();
+        if (bareBossKey !== bossKeyLower) continue;
         L.marker([boss.pixel_y, boss.pixel_x], { icon: palSpawnRingIcon('boss'), interactive: false }).addTo(group);
       }
     }
