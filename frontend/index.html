@@ -214,6 +214,19 @@
     border-radius: 0; border: none; background: transparent; object-fit: contain;
     box-shadow: 0 0 4px rgba(0,0,0,0.9);
   }
+  /* Schematics reuse real in-game item-icon PNGs (T_itemicon_*), authored to
+     sit on the game's own dark inventory-slot background - their art is
+     often pale/semi-transparent and nearly disappears against light map
+     terrain without one, unlike Towers/Journals whose icons (a compass
+     glyph, a hand-drawn page) are opaque enough to read on their own.
+     Overrides the shared transparent background above with a solid dark
+     backing plate, same "readable against any terrain" goal as the
+     watchtower/waypoint/base drop-shadow treatment below, different
+     mechanism since these are flat squares, not silhouette PNGs. */
+  .schematic-marker .portrait {
+    background: rgba(17, 19, 24, 0.85); border-radius: 5px;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.3), 0 0 4px rgba(0,0,0,0.9);
+  }
   .boss-marker .level-badge, .bounty-marker .level-badge, .oilrig-marker .level-badge, .tower-marker .level-badge, .journal-marker .level-badge {
     position: absolute; top: -4px; left: -4px; min-width: 15px; height: 15px;
     padding: 0 2px; border-radius: 8px; background: #1a1d22; border: 1.5px solid #fff;
