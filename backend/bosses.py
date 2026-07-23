@@ -5,7 +5,15 @@ game, not part of any save file, so no per-poll refresh needed. Name +
 element typing (Pals) / name + portrait icon (humans) joined in at
 extraction time — see extractor/PalExtract/Program.cs.
 
-The 159 raw rows split into three groups:
+The table's own 159 raw rows contain exact-duplicate rows for every human
+boss (confirmed 2026-07-23: all 66 raw human rows collapse to 33 distinct
+encounters, byte-identical SpawnerID/Location/Level under two different row
+names — a real authoring artifact in the game's own table, not an
+extraction bug) — extractor/PalExtract/Program.cs dedupes by full field
+equality (not just SpawnerID) before writing data/bosses_static.json, since
+at least one Pal boss (remainsIsland_1_GrassGolem_FBOSS/Dualith) legitimately
+reuses one SpawnerID for two different physical spawn points. 126 rows ship
+today. They split into three groups:
 - **Pal bosses** ("category": "pal") — real field bosses like Penking.
   Name + elements resolved via DT_PalMonsterParameter + DT_PalNameText_Common.
 - **Human "boss" NPCs** ("category": "human") — named bandit/raider/syndicate

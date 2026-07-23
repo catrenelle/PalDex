@@ -73,8 +73,8 @@
     "element2": null,
     "icon": "Pal_WhiteTiger_Ground.png",
     "level": 62,
-    "x": -721639.0,
-    "y": -432015.0,
+    "x": -721639,
+    "y": -432015,
     "z": 10210.874
   },
   {
@@ -99,7 +99,7 @@
     "element2": "Electricity",
     "icon": "Pal_RaijinDaughter_Water.png",
     "level": 60,
-    "x": -516157.0,
+    "x": -516157,
     "y": -393151.12,
     "z": -721.86566
   },
@@ -203,9 +203,9 @@
     "element2": "Leaf",
     "icon": "Pal_GrassGolem.png",
     "level": 75,
-    "x": 517450.0,
-    "y": -626940.0,
-    "z": 10980.0
+    "x": 517450,
+    "y": -626940,
+    "z": 10980
   },
   {
     "spawnerId": "worldtree_9_11_N_FBOSS_1",
@@ -216,8 +216,8 @@
     "element2": null,
     "icon": "Pal_WhiteDeer_Dark.png",
     "level": 79,
-    "x": 520440.0,
-    "y": -727175.0,
+    "x": 520440,
+    "y": -727175,
     "z": 41054.54
   },
   {
@@ -242,9 +242,9 @@
     "element2": null,
     "icon": "Pal_MushroomLady.png",
     "level": 78,
-    "x": 458095.0,
-    "y": -694560.0,
-    "z": 19325.0
+    "x": 458095,
+    "y": -694560,
+    "z": 19325
   },
   {
     "spawnerId": "worldtree_9_07_I_FBOSS_1",
@@ -255,9 +255,9 @@
     "element2": "Earth",
     "icon": "Pal_VolcanoDragon_Ice.png",
     "level": 78,
-    "x": 571870.0,
-    "y": -733420.0,
-    "z": 18000.0
+    "x": 571870,
+    "y": -733420,
+    "z": 18000
   },
   {
     "spawnerId": "worldtree_9_05_D_FBOSS_1",
@@ -270,7 +270,7 @@
     "level": 78,
     "x": 601096.75,
     "y": -572063.06,
-    "z": 30180.0
+    "z": 30180
   },
   {
     "spawnerId": "worldtree_9_13_M_FBOSS_1",
@@ -320,9 +320,9 @@
     "element2": "Earth",
     "icon": "Pal_DarkScorpion.png",
     "level": 44,
-    "x": 122760.0,
-    "y": 318710.0,
-    "z": 320.0
+    "x": 122760,
+    "y": 318710,
+    "z": 320
   },
   {
     "spawnerId": "81_2_dessert_FBOSS_5",
@@ -450,8 +450,8 @@
     "element2": "Water",
     "icon": "Pal_IceNarwhal.png",
     "level": 55,
-    "x": 262730.0,
-    "y": 75740.0,
+    "x": 262730,
+    "y": 75740,
     "z": -3182.9998
   },
   {
@@ -463,9 +463,9 @@
     "element2": null,
     "icon": "Pal_IceHorse.png",
     "level": 60,
-    "x": 109790.0,
-    "y": -5880.0,
-    "z": 22180.0
+    "x": 109790,
+    "y": -5880,
+    "z": 22180
   },
   {
     "spawnerId": "sakura_purple_D_LilyQueen",
@@ -528,8 +528,8 @@
     "element2": "Dark",
     "icon": "Pal_GhostDragon.png",
     "level": 69,
-    "x": -822007.0,
-    "y": -66402.0,
+    "x": -822007,
+    "y": -66402,
     "z": 40122.793
   },
   {
@@ -554,9 +554,9 @@
     "element2": null,
     "icon": "Pal_ThunderFluffyBird.png",
     "level": 67,
-    "x": -822824.0,
-    "y": 16747.0,
-    "z": 45679.0
+    "x": -822824,
+    "y": 16747,
+    "z": 45679
   },
   {
     "spawnerId": "skyisland_8_10_D_swamp_FBOSS_1",
@@ -580,8 +580,8 @@
     "element2": "Water",
     "icon": "Pal_LotusDragon.png",
     "level": 69,
-    "x": -802420.0,
-    "y": -112610.0,
+    "x": -802420,
+    "y": -112610,
     "z": 51608.094
   },
   {
@@ -593,9 +593,9 @@
     "element2": null,
     "icon": "Pal_ElecSnail.png",
     "level": 65,
-    "x": -772844.0,
-    "y": -11173.0,
-    "z": 39727.0
+    "x": -772844,
+    "y": -11173,
+    "z": 39727
   },
   {
     "spawnerId": "81_1_grass_FBOSS_14",
@@ -606,8 +606,8 @@
     "element2": null,
     "icon": "Pal_Anubis.png",
     "level": 55,
-    "x": -167230.0,
-    "y": 96430.0,
+    "x": -167230,
+    "y": 96430,
     "z": -1737.1323
   },
   {
@@ -619,9 +619,9 @@
     "element2": "Earth",
     "icon": "Pal_GrassMammoth.png",
     "level": 38,
-    "x": -343155.0,
-    "y": 244585.0,
-    "z": -95.0
+    "x": -343155,
+    "y": 244585,
+    "z": -95
   },
   {
     "spawnerId": "1_10_plain_F_Boss_FairyDragon",
@@ -645,9 +645,9 @@
     "element2": null,
     "icon": "Pal_FengyunDeeper.png",
     "level": 25,
-    "x": -333940.0,
-    "y": 39610.0,
-    "z": 1600.0
+    "x": -333940,
+    "y": 39610,
+    "z": 1600
   },
   {
     "spawnerId": "81_1_grass_FBOSS_23",
@@ -658,9 +658,9 @@
     "element2": null,
     "icon": "Pal_Kirin.png",
     "level": 31,
-    "x": -372950.0,
-    "y": 104400.0,
-    "z": -770.0
+    "x": -372950,
+    "y": 104400,
+    "z": -770
   },
   {
     "spawnerId": "81_1_grass_FBOSS_4",
@@ -684,9 +684,9 @@
     "element2": "Dragon",
     "icon": "Pal_BlueDragon.png",
     "level": 40,
-    "x": -246100.0,
-    "y": 77200.0,
-    "z": -1460.0
+    "x": -246100,
+    "y": 77200,
+    "z": -1460
   },
   {
     "spawnerId": "81_1_grass_FBOSS_18",
@@ -710,9 +710,9 @@
     "element2": null,
     "icon": "Pal_KingAlpaca.png",
     "level": 23,
-    "x": -335225.0,
-    "y": 180735.0,
-    "z": 475.0
+    "x": -335225,
+    "y": 180735,
+    "z": 475
   },
   {
     "spawnerId": "81_1_grass_FBOSS_24",
@@ -736,8 +736,8 @@
     "element2": "Water",
     "icon": "Pal_Umihebi.png",
     "level": 55,
-    "x": -162910.0,
-    "y": 318720.0,
+    "x": -162910,
+    "y": 318720,
     "z": -2382.3545
   },
   {
@@ -749,9 +749,9 @@
     "element2": null,
     "icon": "Pal_FairyDragon.png",
     "level": 30,
-    "x": -254060.0,
-    "y": 178050.0,
-    "z": 4000.0
+    "x": -254060,
+    "y": 178050,
+    "z": 4000
   },
   {
     "spawnerId": "81_1_grass_FBOSS_27",
@@ -762,9 +762,9 @@
     "element2": "Water",
     "icon": "Pal_LazyCatfish.png",
     "level": 14,
-    "x": -122060.0,
-    "y": 15810.0,
-    "z": -1460.0
+    "x": -122060,
+    "y": 15810,
+    "z": -1460
   },
   {
     "spawnerId": "81_1_grass_FBOSS_22",
@@ -775,9 +775,9 @@
     "element2": null,
     "icon": "Pal_HawkBird.png",
     "level": 18,
-    "x": -155950.0,
-    "y": 31260.0,
-    "z": -1960.0
+    "x": -155950,
+    "y": 31260,
+    "z": -1960
   },
   {
     "spawnerId": "81_1_grass_FBOSS_30",
@@ -827,9 +827,9 @@
     "element2": null,
     "icon": "Pal_GrassPanda_Electric.png",
     "level": 31,
-    "x": -206970.0,
-    "y": 363810.0,
-    "z": 1140.0
+    "x": -206970,
+    "y": 363810,
+    "z": 1140
   },
   {
     "spawnerId": "81_1_grass_FBOSS_29",
@@ -840,9 +840,9 @@
     "element2": null,
     "icon": "Pal_Yeti_Grass.png",
     "level": 38,
-    "x": -147370.0,
-    "y": 364010.0,
-    "z": -1940.0
+    "x": -147370,
+    "y": 364010,
+    "z": -1940
   },
   {
     "spawnerId": "81_1_forest_FBOSS_6",
@@ -1009,9 +1009,9 @@
     "element2": null,
     "icon": "BOSS_Hunter_Fat_GatlingGun.png",
     "level": 20,
-    "x": -242340.0,
-    "y": 36220.0,
-    "z": 13020.0
+    "x": -242340,
+    "y": 36220,
+    "z": 13020
   },
   {
     "spawnerId": "BOSS_Ninja",
@@ -1154,7 +1154,7 @@
     "level": 52,
     "x": -75788.086,
     "y": -82304.96,
-    "z": -960.0
+    "z": -960
   },
   {
     "spawnerId": "BOSS_Male_Trader01",
@@ -1217,9 +1217,9 @@
     "element2": null,
     "icon": "BOSS_Male_NinjaElite.png",
     "level": 53,
-    "x": -18160.0,
-    "y": -151400.0,
-    "z": 2360.0
+    "x": -18160,
+    "y": -151400,
+    "z": 2360
   },
   {
     "spawnerId": "BOSS_Hunter_Rifle",
@@ -1282,9 +1282,9 @@
     "element2": null,
     "icon": "BOSS_Male_Soldier.png",
     "level": 15,
-    "x": -409430.0,
-    "y": 24820.0,
-    "z": 1880.0
+    "x": -409430,
+    "y": 24820,
+    "z": 1880
   },
   {
     "spawnerId": "BOSS_Female_People",
@@ -1308,9 +1308,9 @@
     "element2": null,
     "icon": "BOSS_Female_Soldier.png",
     "level": 19,
-    "x": -177380.0,
-    "y": 9850.0,
-    "z": 6230.0
+    "x": -177380,
+    "y": 9850,
+    "z": 6230
   },
   {
     "spawnerId": "BOSS_Female_Soldier03",
@@ -1321,9 +1321,9 @@
     "element2": null,
     "icon": "BOSS_Female_Soldier03.png",
     "level": 39,
-    "x": -231660.0,
-    "y": -113810.0,
-    "z": -1150.0
+    "x": -231660,
+    "y": -113810,
+    "z": -1150
   },
   {
     "spawnerId": "BOSS_Female_People02",
@@ -1412,9 +1412,9 @@
     "element2": null,
     "icon": "Pal_BerryGoat_Dark.png",
     "level": 23,
-    "x": -426590.0,
-    "y": 90670.0,
-    "z": 110.0
+    "x": -426590,
+    "y": 90670,
+    "z": 110
   },
   {
     "spawnerId": "81_5_Yamijima_FBOSS_9",
@@ -1464,9 +1464,9 @@
     "element2": null,
     "icon": "Pal_IceFox.png",
     "level": 15,
-    "x": -276240.0,
-    "y": 268990.0,
-    "z": -1300.0
+    "x": -276240,
+    "y": 268990,
+    "z": -1300
   },
   {
     "spawnerId": "81_1_forest_FBOSS_4",
@@ -1504,7 +1504,7 @@
     "icon": "Pal_VioletFairy.png",
     "level": 27,
     "x": -245458.9,
-    "y": 149122.0,
+    "y": 149122,
     "z": 822.97565
   },
   {
@@ -1518,7 +1518,7 @@
     "level": 66,
     "x": -773523.9,
     "y": 51495.863,
-    "z": 45252.0
+    "z": 45252
   },
   {
     "spawnerId": "81_1_grass_FBOSS_6",
@@ -1594,9 +1594,9 @@
     "element2": null,
     "icon": "Pal_Kitsunebi_Ice.png",
     "level": 15,
-    "x": -149050.0,
-    "y": -30550.0,
-    "z": -1380.0
+    "x": -149050,
+    "y": -30550,
+    "z": -1380
   },
   {
     "spawnerId": "REGION_Oilrig_3",
@@ -1608,7 +1608,7 @@
     "icon": "T_icon_compass_Oilrig.png",
     "level": 60,
     "x": -789847.9,
-    "y": -636231.0,
+    "y": -636231,
     "z": -250.0003
   },
   {
@@ -1635,435 +1635,6 @@
     "level": 30,
     "x": -250672.6,
     "y": 232290.08,
-    "z": -2100.0
-  },
-  {
-    "spawnerId": "BOSS_Female_Soldier02",
-    "characterId": "None",
-    "category": "human",
-    "name": "Dazzle",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Female_Soldier02.png",
-    "level": 56,
-    "x": -712045.56,
-    "y": -229952.92,
-    "z": 8893.03
-  },
-  {
-    "spawnerId": "BOSS_Male_People03",
-    "characterId": "None",
-    "category": "human",
-    "name": "Scoot",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Male_People03.png",
-    "level": 10,
-    "x": -335675.2,
-    "y": 148683.03,
-    "z": 6384.3687
-  },
-  {
-    "spawnerId": "BOSS_Police_Rifle",
-    "characterId": "None",
-    "category": "human",
-    "name": "Whip",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Police_Rifle.png",
-    "level": 40,
-    "x": 45909.48,
-    "y": 304971.44,
-    "z": -1015.37305
-  },
-  {
-    "spawnerId": "BOSS_Believer_CrossBow",
-    "characterId": "None",
-    "category": "human",
-    "name": "Ego",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Believer_CrossBow.png",
-    "level": 23,
-    "x": -164164.23,
-    "y": 152549.42,
-    "z": -1410.9744
-  },
-  {
-    "spawnerId": "BOSS_Ninja",
-    "characterId": "None",
-    "category": "human",
-    "name": "Fumble",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Ninja.png",
-    "level": 28,
-    "x": -124623.98,
-    "y": 232502.7,
-    "z": 7801.965
-  },
-  {
-    "spawnerId": "BOSS_DarkTrader",
-    "characterId": "None",
-    "category": "human",
-    "name": "Ram",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_DarkTrader.png",
-    "level": 59,
-    "x": -666737.7,
-    "y": -409956.38,
-    "z": 25605.273
-  },
-  {
-    "spawnerId": "BOSS_Male_Trader03",
-    "characterId": "None",
-    "category": "human",
-    "name": "Billy",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Male_Trader03.png",
-    "level": 57,
-    "x": -538826.5,
-    "y": -337667.7,
-    "z": -426.02618
-  },
-  {
-    "spawnerId": "BOSS_Believer_Fat_GiantClub",
-    "characterId": "None",
-    "category": "human",
-    "name": "Brick",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Believer_Fat_GiantClub.png",
-    "level": 30,
-    "x": -79599.086,
-    "y": 192658.28,
-    "z": 6188.3384
-  },
-  {
-    "spawnerId": "BOSS_Male_Soldier03",
-    "characterId": "None",
-    "category": "human",
-    "name": "Clint",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Male_Soldier03.png",
-    "level": 49,
-    "x": 21850.117,
-    "y": -8346.555,
-    "z": 6712.4634
-  },
-  {
-    "spawnerId": "BOSS_Male_Soldier04",
-    "characterId": "None",
-    "category": "human",
-    "name": "Lasso",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Male_Soldier04.png",
-    "level": 21,
-    "x": -217110.73,
-    "y": 127090.61,
-    "z": 6141.974
-  },
-  {
-    "spawnerId": "BOSS_Police_Old",
-    "characterId": "None",
-    "category": "human",
-    "name": "Pinch",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Police_old.png",
-    "level": 57,
-    "x": -686537.5,
-    "y": -380252.66,
-    "z": 32747.375
-  },
-  {
-    "spawnerId": "BOSS_Female_People03",
-    "characterId": "None",
-    "category": "human",
-    "name": "Turncoat",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Female_People03.png",
-    "level": 15,
-    "x": -300962.38,
-    "y": 157210.73,
-    "z": -164.24446
-  },
-  {
-    "spawnerId": "BOSS_Female_Soldier04",
-    "characterId": "None",
-    "category": "human",
-    "name": "Nimble",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Female_Soldier04.png",
-    "level": 52,
-    "x": -75788.086,
-    "y": -82304.96,
-    "z": -960.0
-  },
-  {
-    "spawnerId": "BOSS_Male_Trader01",
-    "characterId": "None",
-    "category": "human",
-    "name": "Skim",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Male_Trader01.png",
-    "level": 42,
-    "x": -57544.383,
-    "y": 116422.49,
-    "z": 9060.125
-  },
-  {
-    "spawnerId": "BOSS_Male_DesertPeople",
-    "characterId": "None",
-    "category": "human",
-    "name": "Phantom",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Male_DesertPeople.png",
-    "level": 36,
-    "x": -62624.902,
-    "y": 402438.94,
-    "z": 12180.669
-  },
-  {
-    "spawnerId": "BOSS_Female_DesertPeople",
-    "characterId": "None",
-    "category": "human",
-    "name": "Whisper",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Female_DesertPeople.png",
-    "level": 37,
-    "x": 147119.08,
-    "y": 347473.56,
-    "z": -856.4007
-  },
-  {
-    "spawnerId": "BOSS_FireCult_FlameThrower",
-    "characterId": "None",
-    "category": "human",
-    "name": "Shadow",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_FireCult_FlameThrower.png",
-    "level": 41,
-    "x": -331690.16,
-    "y": -40407.434,
-    "z": 15982.14
-  },
-  {
-    "spawnerId": "BOSS_Male_NinjaElite",
-    "characterId": "None",
-    "category": "human",
-    "name": "Urchin",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Male_NinjaElite.png",
-    "level": 53,
-    "x": -18160.0,
-    "y": -151400.0,
-    "z": 2360.0
-  },
-  {
-    "spawnerId": "BOSS_Hunter_Rifle",
-    "characterId": "None",
-    "category": "human",
-    "name": "Hawk",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Hunter_Rifle.png",
-    "level": 12,
-    "x": -359201.56,
-    "y": 181724.28,
-    "z": 5179.0977
-  },
-  {
-    "spawnerId": "BOSS_Male_People",
-    "characterId": "None",
-    "category": "human",
-    "name": "Dyna",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Male_People.png",
-    "level": 26,
-    "x": -126584.234,
-    "y": 318232.75,
-    "z": -1519.0695
-  },
-  {
-    "spawnerId": "BOSS_Male_Soldier02",
-    "characterId": "None",
-    "category": "human",
-    "name": "Dart",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Male_Soldier02.png",
-    "level": 23,
-    "x": -224118.3,
-    "y": 277672.06,
-    "z": -864.3568
-  },
-  {
-    "spawnerId": "BOSS_Male_People02",
-    "characterId": "None",
-    "category": "human",
-    "name": "Quill",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Male_People02.png",
-    "level": 43,
-    "x": 97107.99,
-    "y": 68422.43,
-    "z": 42381.047
-  },
-  {
-    "spawnerId": "BOSS_Male_Soldier",
-    "characterId": "None",
-    "category": "human",
-    "name": "Crash",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Male_Soldier.png",
-    "level": 15,
-    "x": -409430.0,
-    "y": 24820.0,
-    "z": 1880.0
-  },
-  {
-    "spawnerId": "BOSS_Female_People",
-    "characterId": "None",
-    "category": "human",
-    "name": "Flare",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Female_People.png",
-    "level": 38,
-    "x": -470651.97,
-    "y": -80708.37,
-    "z": -2009.124
-  },
-  {
-    "spawnerId": "BOSS_Female_Soldier03",
-    "characterId": "None",
-    "category": "human",
-    "name": "Aloha",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Female_Soldier03.png",
-    "level": 39,
-    "x": -231660.0,
-    "y": -113810.0,
-    "z": -1150.0
-  },
-  {
-    "spawnerId": "BOSS_Female_People02",
-    "characterId": "None",
-    "category": "human",
-    "name": "Siren",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Female_People02.png",
-    "level": 16,
-    "x": -304539.22,
-    "y": 35742.273,
-    "z": 2271.2825
-  },
-  {
-    "spawnerId": "BOSS_Male_Trader02",
-    "characterId": "None",
-    "category": "human",
-    "name": "Mimic",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Male_Trader02.png",
-    "level": 57,
-    "x": -907334.1,
-    "y": -389724.44,
-    "z": -1882.6733
-  },
-  {
-    "spawnerId": "BOSS_Male_People2",
-    "characterId": "None",
-    "category": "human",
-    "name": "Mite",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Male_People2.png",
-    "level": 26,
-    "x": -124753.86,
-    "y": 318055.84,
-    "z": -1920.7535
-  },
-  {
-    "spawnerId": "BOSS_Viking",
-    "characterId": "None",
-    "category": "human",
-    "name": "Gnaw",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Viking.png",
-    "level": 57,
-    "x": -584187.7,
-    "y": -181661.73,
-    "z": 978.42706
-  },
-  {
-    "spawnerId": "BOSS_Hunter_Fat_GatlingGun",
-    "characterId": "None",
-    "category": "human",
-    "name": "Grill",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Hunter_Fat_GatlingGun.png",
-    "level": 20,
-    "x": -242340.0,
-    "y": 36220.0,
-    "z": 13020.0
-  },
-  {
-    "spawnerId": "BOSS_VikingElite",
-    "characterId": "None",
-    "category": "human",
-    "name": "Cache",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_VikingElite.png",
-    "level": 58,
-    "x": -805295.06,
-    "y": -478475.2,
-    "z": -815.0132
-  },
-  {
-    "spawnerId": "BOSS_Scientist_LaserRifle",
-    "characterId": "None",
-    "category": "human",
-    "name": "Whisk",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Scientist_LaserRifle.png",
-    "level": 45,
-    "x": 10215.881,
-    "y": 153782.08,
-    "z": 3150.0002
-  },
-  {
-    "spawnerId": "BOSS_Female_Soldier",
-    "characterId": "None",
-    "category": "human",
-    "name": "Jade",
-    "element1": null,
-    "element2": null,
-    "icon": "BOSS_Female_Soldier.png",
-    "level": 19,
-    "x": -177380.0,
-    "y": 9850.0,
-    "z": 6230.0
+    "z": -2100
   }
 ]

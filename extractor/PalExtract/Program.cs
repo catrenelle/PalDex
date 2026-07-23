@@ -477,8 +477,23 @@ foreach (var prop in bossRows.Properties())
     });
 }
 
-Console.WriteLine($"Total bosses: {result.Count}, icons exported: {exportedIcons.Count}");
-File.WriteAllText(@"C:\Projects\PalworldMap\data\bosses_static.json", result.ToString(Formatting.Indented));
+// DT_BossSpawnerLoactionData itself contains exact-duplicate rows under
+// different row-name keys for every single human "Bounty" boss (confirmed
+// 2026-07-23: all 66 human rows collapse to exactly 33 distinct encounters,
+// each duplicate pair byte-identical down to SpawnerID/Location/Level - a
+// real authoring artifact in the game's own table, not a join/extraction
+// bug here). Dedupe on full field equality, not just SpawnerID, because at
+// least one Pal boss (remainsIsland_1_GrassGolem_FBOSS/Dualith) reuses the
+// same SpawnerID for two genuinely different physical spawn points
+// (different Location/Level) - deduping by SpawnerID alone would wrongly
+// drop a real encounter there.
+var dedupedResult = new JArray(
+    result.Children<JObject>()
+        .GroupBy(o => o.ToString(Formatting.None))
+        .Select(g => g.First())
+);
+Console.WriteLine($"Total bosses: {result.Count} ({result.Count - dedupedResult.Count} exact-duplicate rows dropped), icons exported: {exportedIcons.Count}");
+File.WriteAllText(@"C:\Projects\PalworldMap\data\bosses_static.json", dedupedResult.ToString(Formatting.Indented));
 Console.WriteLine("Wrote data/bosses_static.json");
 
 // ============ Watchtowers / Waypoints ============

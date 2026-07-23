@@ -1908,3 +1908,73 @@ Three small, explicit user requests:
    (106 circles + 9 rings) dropped everything to 0 checked/0 circles/
    0 rings; a subsequent Show All correctly left Pal Spawns at 0 checked.
    Zero console errors throughout.
+
+### Pal Spawns Alpha Boss ring not matching Anubis — another `BOSS_` casing drift, 2026-07-23
+
+A real user reported selecting Anubis in Pal Spawns highlighted its spawn
+region but never drew the Alpha Boss call-out ring. Root cause: unlike 89
+of the 90 Pal boss rows, `DT_BossSpawnerLoactionData`'s own `CharacterID`
+for Anubis is `Boss_Anubis` (mixed case) instead of `BOSS_Anubis` — this is
+baked straight from the game's own table (`extractor/PalExtract/Program.cs`
+line ~354 reads `row["CharacterID"]` verbatim, no lookup involved), so it
+isn't something the extractor can "correct" the way a table-join casing
+mismatch would be. `renderPalSpawnHighlights` in `frontend/index.html` was
+reconstructing the expected type_key as a hardcoded `'BOSS_' + characterId`
+and comparing it exact-case against `/api/bosses`' own `type_key` — Anubis
+never matched. Fixed by comparing case-insensitively with the `BOSS_`
+prefix stripped from both sides instead of assumed, so any future
+extractor rerun can't silently reintroduce this for a different species.
+Verified against a throwaway local instance (port 5152, real production
+never touched directly) — selecting Anubis renders exactly one boss ring,
+zero console errors — then confirmed again against the live Portainer
+deployment after redeploying.
+
+### Bounty defeat-flag casing mismatch (Pinch) + the human-boss row duplication reclassified as a real bug, 2026-07-23
+
+A real user reported that Myshie had beaten Pinch (`BOSS_Police_Old`) but
+the Bounty checklist still showed him as never defeated. This is a
+*different* casing bug than the name-resolution one fixed for this same
+boss above (that one was a DataTable join; this one is the live per-player
+`RecordData.NormalBossDefeatFlag` lookup, an entirely separate code path)
+— confirmed directly against Myshie's own cached save
+(`data/saves/Players/BC8B701B...sav`): her real flag key is
+`BOSS_Police_old` (lowercase "old"), but `DT_BossSpawnerLoactionData`'s own
+`SpawnerID` for him is `BOSS_Police_Old` (capital "O"). `backend/server.py`
+was doing an exact-case Python `in` check against the raw flag-key set from
+`parse.load_defeated_boss_spawner_ids()`. Fixed by uppercasing both sides
+(the flag-key set at load time, `spawner_id` at compare time) rather than
+special-casing Pinch — same general lesson as every other casing-drift fix
+in this file: the game's own data isn't internally case-consistent, so any
+runtime match against it should be case-insensitive by default, not
+patched reactively per-boss as each one gets reported. Verified against
+every real player's cached save locally (regression-checked: Cat's
+Alpha-Boss defeat count stayed 47/90, matching before the change) before
+shipping, then confirmed live against production.
+
+**While investigating, revisited this file's own earlier conclusion (see
+the Pinch name-resolution entry above) that `DT_BossSpawnerLoactionData`'s
+duplicate `BOSS_Police_Old` rows were "harmless, since the frontend already
+groups Bounty markers by spawnerId" — that was wrong.** Grouping by
+spawnerId does correctly collapse the *map markers* to one, but the
+checklist's own total/defeated counts are computed per raw row, not per
+group, so every human Bounty target was silently counted twice (Pinch
+showed "2 / 2" instead of a real "1 / 1" once the defeat-flag bug above was
+fixed, which is what surfaced this). Checked whether this generalizes
+before fixing: **all 66 raw human-category rows collapse to exactly 33
+distinct encounters** when deduped on full field equality (SpawnerID +
+Location + Level, not just SpawnerID) — every duplicate pair is
+byte-identical, a real authoring artifact in the game's own table, not
+two different real encounters. Confirmed this dedup key is safe project-
+wide, not just for humans: one Pal boss,
+`remainsIsland_1_GrassGolem_FBOSS` (Dualith), reuses the same SpawnerID for
+two *genuinely different* physical spawn points (different Location and
+Level — Lv55 and Lv75) — deduping by SpawnerID alone would have silently
+dropped a real encounter there, which is why the dedup compares full row
+content rather than just the id. Fixed in
+`extractor/PalExtract/Program.cs` (dedup pass right before writing
+`data/bosses_static.json`, keeping the first occurrence per distinct row)
+and hand-patched the live JSON the same way rather than paying for a full
+pipeline rebuild (159 → 126 rows: 90 Pal + 33 human ×1 + 3 Oilrig). Human
+Bounty's real count was always 33, not 66 — `backend/bosses.py`'s own
+docstring already independently said "33 unique icons exported" for this
+category, which should have been the tell.

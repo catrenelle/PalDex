@@ -15,7 +15,7 @@ public wikis instead — see below for exactly which ones.
 | **Players** | Live position, level, HP, hunger, online/offline (via RCON), last-online time | — |
 | **Effigies** (Relics) | 407 collectible statues, grouped by tier | ✅ per-player collected |
 | **Alpha Bosses** | 90 field-boss spawns, name/species/element | ✅ per-player defeated |
-| **Bounty** | 66 named human NPC bosses (bandit/raider/syndicate leaders) | ✅ per-player defeated |
+| **Bounty** | 33 named human NPC bosses (bandit/raider/syndicate leaders) | ✅ per-player defeated |
 | **Challenge Towers** | The 9 "GYM" boss-rush towers | ✅ per-player defeated |
 | **Oil Rigs** | The 3 raid-zone POIs | world-shared (no per-player state exists) |
 | **Watchtowers / Waypoints** | 22 climbable watchtowers + 152 fast-travel points | ✅ per-player unlocked |
