@@ -311,6 +311,20 @@ var palIconLookup = palIconRows.Properties().ToDictionary(p => p.Name, p => p, S
 // casing but DT_PalBossNPCIcon has at least one mismatch: "BOSS_Police_old" vs "BOSS_Police_Old").
 var iconLookup = iconRows.Properties().ToDictionary(p => p.Name, p => p, StringComparer.OrdinalIgnoreCase);
 
+// Same "BOSS_Police_old" vs "BOSS_Police_Old" casing mismatch also broke the
+// *name* resolution for this one, not just its icon (confirmed 2026-07-22 -
+// a real user reported the bounty rendering as the raw "BOSS_Police_Old" id
+// instead of its real name "Pinch"; DT_PalHumanParameter's actual row key
+// is lowercase "old"). humanRows/humanNameRows were still being indexed
+// case-sensitively everywhere (this Bosses/Bounty section below, and
+// DungeonHumanName/DungeonHumanIcon further down) even though every other
+// join in this file learned this lesson already (palIconLookup/iconLookup
+// above, monsterRowsCI/palNameRowsCI near the Dungeon Contents section) -
+// case-insensitive dictionaries here close the gap for both remaining call
+// sites at once, not just this one bounty.
+var humanRowsCI = humanRows.Properties().ToDictionary(p => p.Name, p => p.Value, StringComparer.OrdinalIgnoreCase);
+var humanNameRowsCI = humanNameRows.Properties().ToDictionary(p => p.Name, p => p.Value, StringComparer.OrdinalIgnoreCase);
+
 var iconOutDir = @"C:\Projects\PalworldMap\frontend\assets\boss_icons";
 Directory.CreateDirectory(iconOutDir);
 var exportedIcons = new HashSet<string>();
@@ -415,13 +429,15 @@ foreach (var prop in bossRows.Properties())
     }
     else
     {
-        var human = humanRows[spawnerId] as JObject;
+        humanRowsCI.TryGetValue(spawnerId, out var humanTok);
+        var human = humanTok as JObject;
         if (human != null)
         {
             var nameTextId = human["OverrideNameTextID"]?.ToString();
             if (!string.IsNullOrEmpty(nameTextId) && nameTextId != "None")
             {
-                var nameRow = humanNameRows[nameTextId] as JObject;
+                humanNameRowsCI.TryGetValue(nameTextId, out var nameTok);
+                var nameRow = nameTok as JObject;
                 name = nameRow?["TextData"]?["LocalizedString"]?.ToString() ?? nameTextId;
             }
         }
@@ -687,6 +703,22 @@ Console.WriteLine($"Total dungeon entrances: {dungeonResult.Count}");
 File.WriteAllText(@"C:\Projects\PalworldMap\data\dungeons_static.json", dungeonResult.ToString(Formatting.Indented));
 Console.WriteLine("Wrote data/dungeons_static.json");
 
+// Case-insensitive lookup of every real Pal/Content/Pal/Texture/PalIcon/Normal/
+// file, keyed by its own filename (no extension) - shared by DungeonHumanIcon
+// below and the NPCs section further down this file (see that section's own
+// comment for the full "why case-insensitive" story - casing isn't
+// consistent in the real file list, e.g. "T_Male_Scholar01_v02_Icon_normal"
+// capitalizes "Icon" and nothing else does). Declared here (not down in the
+// NPCs section where it was originally written) purely because this section
+// runs first and needs it too - not moved for any NPCs-section reason.
+var normalIconLookup = provider.Files.Keys
+    .Select(k => k.ToString())
+    .Where(k => k.Contains("Pal/Content/Pal/Texture/PalIcon/Normal/", StringComparison.OrdinalIgnoreCase)
+             && k.EndsWith(".uasset", StringComparison.OrdinalIgnoreCase))
+    .Select(k => Path.GetFileNameWithoutExtension(k))
+    .GroupBy(f => f, StringComparer.OrdinalIgnoreCase)
+    .ToDictionary(g => g.Key, g => g.First(), StringComparer.OrdinalIgnoreCase);
+
 // ============ Dungeon Contents (per-SpawnAreaId enemy/loot roster) ============
 // What's actually inside each of the 157 entrances above, keyed by the
 // spawnAreaId resolved onto each dungeonResult entry - a separate, much
@@ -814,17 +846,44 @@ string? ResolvePalIcon(string characterId)
 // Human trash-tier NPCs (RankType NPCHuman, e.g. "Hunter_Handgun" -> "Syndicate
 // Thug") resolve via DT_PalHumanParameter + DT_HumanNameText_Common, same
 // pattern as Bounty's human bosses - but joined by the roster's own NPCID
-// directly (not a "BOSS_"-prefixed SpawnerID like Bounty uses). No dedicated
-// icon table entry exists for these generic dungeon trash humans (unlike
-// Bounty's DT_PalBossNPCIcon, which is keyed by boss-tier SpawnerIDs only) -
-// icon is deliberately null, matching this section's own "don't fabricate"
-// rule rather than reusing an unrelated portrait.
+// directly (not a "BOSS_"-prefixed SpawnerID like Bounty uses).
 string? DungeonHumanName(string npcId)
 {
-    var human = humanRows[npcId] as JObject;
-    var nameTextId = human?["OverrideNameTextID"]?.ToString();
+    humanRowsCI.TryGetValue(npcId, out var humanTok);
+    var nameTextId = (humanTok as JObject)?["OverrideNameTextID"]?.ToString();
     if (string.IsNullOrEmpty(nameTextId) || nameTextId == "None") return null;
-    return (humanNameRows[nameTextId] as JObject)?["TextData"]?["LocalizedString"]?.ToString();
+    humanNameRowsCI.TryGetValue(nameTextId, out var nameTok);
+    return (nameTok as JObject)?["TextData"]?["LocalizedString"]?.ToString();
+}
+
+// Icons for these WERE originally left null - Bounty's own DT_PalBossNPCIcon
+// is keyed by boss-tier SpawnerIDs only, no entry exists for these regular
+// dungeon-trash humans - but a real one exists via a different, more
+// reliable path: DT_PalHumanParameter's own BPClass field (e.g.
+// "NPC_Hunter_Fat" for Hunter_Fat_GatlingGun, "NPC_Hunter" for the other
+// Hunter_* variants that aren't the "Fat" one) - strip the "NPC_" prefix and
+// it's a real, exact PalIcon/Normal filename (confirmed via
+// extractor/ScratchHumanIcons, a throwaway investigation, now deleted - see
+// NOTES.md's Dungeons section). More reliable than guessing off the row's
+// own NPCID/name, since several distinct NPCIDs legitimately share one
+// BPClass/portrait (all 4 non-"Fat" Hunter_* variants -> the same plain
+// "Hunter" look) - matching on BPClass gets this grouping right
+// automatically instead of needing a hardcoded synonym list.
+string? DungeonHumanIcon(string npcId)
+{
+    humanRowsCI.TryGetValue(npcId, out var humanTok);
+    var bpClass = (humanTok as JObject)?["BPClass"]?.ToString();
+    if (string.IsNullOrEmpty(bpClass)) return null;
+    var baseName = bpClass.StartsWith("NPC_", StringComparison.OrdinalIgnoreCase) ? bpClass["NPC_".Length..] : bpClass;
+    var candidate = $"T_{baseName}_icon_normal";
+    if (!normalIconLookup.TryGetValue(candidate, out var realFileName)) return null;
+    // "NPC_" prefix on the exported filename keeps these visually/namespace
+    // distinct from the "Pal_"-prefixed species portraits already sharing
+    // this same boss_icons directory.
+    var fileName = "NPC_" + realFileName + ".png";
+    var assetPathName = $"/Game/Pal/Texture/PalIcon/Normal/{realFileName}.{realFileName}";
+    try { ExportIcon(assetPathName, fileName); return fileName; }
+    catch (Exception ex) { Console.WriteLine($"  dungeon human icon export failed for {npcId}: {ex.Message}"); return null; }
 }
 
 // Merge Normal02-05/MidBoss02-05 into one "Normal"/"MidBoss" tier bucket -
@@ -898,7 +957,7 @@ foreach (var areaId in realSpawnAreaIds)
                 {
                     ["characterId"] = characterId,
                     ["name"] = isHuman ? DungeonHumanName(npcId) : ResolvePalName(palId),
-                    ["icon"] = isHuman ? null : ResolvePalIcon(palId),
+                    ["icon"] = isHuman ? DungeonHumanIcon(npcId) : ResolvePalIcon(palId),
                     ["levelMin"] = palEntry["Level"],
                     ["levelMax"] = palEntry["Level_Max"],
                     ["numMin"] = palEntry["Num"],
@@ -1692,13 +1751,10 @@ string NpcCategory(string uniqueName)
 // SalesPerson's own real look) as that fallback - switched away once that
 // turned out to be a specific, distinct NPC identity (see the Trader
 // investigation further down this file), not a generic look.
-var normalIconLookup = provider.Files.Keys
-    .Select(k => k.ToString())
-    .Where(k => k.Contains("Pal/Content/Pal/Texture/PalIcon/Normal/", StringComparison.OrdinalIgnoreCase)
-             && k.EndsWith(".uasset", StringComparison.OrdinalIgnoreCase))
-    .Select(k => Path.GetFileNameWithoutExtension(k))
-    .GroupBy(f => f, StringComparer.OrdinalIgnoreCase)
-    .ToDictionary(g => g.Key, g => g.First(), StringComparer.OrdinalIgnoreCase);
+// (normalIconLookup itself now lives up near the Dungeon Contents section,
+// shared with DungeonHumanIcon below - moved there since it needs to run
+// before that section, not after; nothing here changed except its
+// declaration site.)
 
 var npcPoliceNames = new HashSet<string> { "Police_dependable", "Police_WarningOilrig", "DesertPolice001", "DesertPolice002", "DesertPolice003", "VolcanoPolice001", "VolcanoPolice002" };
 var npcUsedIcons = new HashSet<string> { "T_Male_DarkTrader01_icon_normal", "T_MobuCitizen_Male_icon_normal" }; // always-present fallbacks

@@ -24,22 +24,46 @@ public wikis instead — see below for exactly which ones.
 | **NPCs** | 104 named NPCs (General/Wandering Merchant/Pal Dealer/Black Market/Dog Coin), with a shop-inventory modal (items or capturable Pals, live price/pool where the game exposes one) | — |
 | **Quests** | 87 quests with a map location (28 Main, 59 Sub), split into Active/Not Started | ✅ per-player, shown only once a player is selected |
 | **Guild Bases** | Player-built bases, grouped by guild | live, world-shared |
-| **Dungeons** | Open-world dungeon entrances — **only the ones currently spawned/enterable are shown**, with a live `active / total` count and a despawn ETA | live, world-shared |
+| **Dungeons** | Open-world dungeon entrances — **only the ones currently spawned/enterable are shown**, with a live `active / total` count and a despawn ETA. Click one for a full contents modal: every Boss/Mid-Boss/Normal/Monster/Fish/Human-Enemy tier, each marked **Guaranteed** or **Random pool (N possible)**, boss escorts folded into a "w/ Escorts" flag instead of cluttering the grid, real portraits for every enemy including the human factions | live, world-shared |
+| **Pal Spawns** | Wild-Pal field spawn locations as opt-in highlighted map regions (not a heatmap) — strictly regular wild Pals, never Alpha Bosses/dungeon spawns/human NPCs. Defaults to **nothing shown**; pick a species and its actual spawn radius lights up, along with a spinning rainbow ring calling out that species' Alpha Boss (if it has one) and any *currently-active* dungeon it can be found in | ✅ per-player Mimog Effigy capture progress (✓/N-of-5) |
 
-The sidebar groups everything above into four collapsible categories —
-Points of Interest, Collectibles, Combat, and Quests (the last one only
-shows content once a player is picked, since quest progress is inherently
-per-player) — and remembers which sections/checkboxes you had
-expanded/checked, plus your **View As** pick, across a page refresh
+The sidebar groups everything above into five collapsible categories —
+Points of Interest, Collectibles, Combat, Quests (only shows content once a
+player is picked, since quest progress is inherently per-player), and Pal
+Spawns (the one category that stays empty until you actively pick a
+species, for the reason above) — and remembers which sections/checkboxes
+you had expanded/checked, plus your **View As** pick, across a page refresh
 (`localStorage`, client-side only — nothing server-side is saved per
 visitor).
 
 Selecting a player from **View As...** filters every checklist to what *that*
 player has actually collected/defeated/unlocked, and pans the map to their
-current position.
+current position — here's `Cat`, zoomed to her own position, with her own
+per-player checkmarks (and Mimog Effigy capture progress) applied across
+every relevant section:
+
+![View As example, zoomed to a specific player](docs/screenshots/view-as-cat.png)
 
 <img src="docs/screenshots/legend-sidebar.png" width="260" align="left" alt="Legend sidebar" />
 <img src="docs/screenshots/marker-detail.png" width="560" alt="Marker detail closeup" />
+
+<br clear="left" />
+
+Clicking a Dungeon opens its full contents — which tiers are a guaranteed
+single enemy versus a genuine weighted pool, and a boss's escorts folded
+into a "w/ Escorts" flag instead of cluttering the grid with duplicate
+cards:
+
+![Dungeon Contents modal](docs/screenshots/dungeon-contents-modal.png)
+
+Pal Spawns is opt-in on purpose — nothing shows until you pick a species
+(checking everything at once would just highlight the whole map). Selecting
+one lights up its real spawn radius, plus a spinning rainbow ring calling
+out that species' Alpha Boss and any dungeon that's *currently* spawned
+with it inside:
+
+<img src="docs/screenshots/pal-spawns-sidebar.png" width="260" align="left" alt="Pal Spawns sidebar, searchable species list with Mimog Effigy progress" />
+<img src="docs/screenshots/pal-spawns-callout.png" width="560" alt="Pal Spawns highlighted region with an Alpha Boss call-out ring" />
 
 <br clear="left" />
 
@@ -55,17 +79,21 @@ current position.
   [`deafdudecomputers/PalworldSaveTools`](https://github.com/deafdudecomputers/PalworldSaveTools)
   (the PyPI `palworld-save-tools` package doesn't support the 1.0 release's
   save format) and extracts everything live: player state, per-player
-  collection/defeat/unlock flags, guild bases, and — as of the Dungeons
-  feature — which dungeon entrances currently have a spawned instance.
+  collection/defeat/unlock flags, guild bases, which dungeon entrances
+  currently have a spawned instance, and — as of Pal Spawns — each
+  species' lifetime capture count (`PalCaptureCount`), which is what
+  actually determines Mimog Effigy progress.
 - **`extractor/PalExtract`** is a one-off C# console app
   ([CUE4Parse](https://github.com/FabianFG/CUE4Parse)) that reads the
-  *static* data (positions, names, icons, element types, map textures)
-  directly out of the game's own `.uasset`/World Partition files. This runs
-  once per game patch on a Windows box with the game installed, not at
-  request time — its output is baked into the Docker image as
-  `data/*_static.json` + `frontend/assets/`.
+  *static* data (positions, names, icons, element types, map textures, and
+  — for Dungeon Contents/Pal Spawns — full enemy rosters joined from the
+  game's own spawner/loot tables) directly out of the game's own
+  `.uasset`/World Partition files. This runs once per game patch on a
+  Windows box with the game installed, not at request time — its output is
+  baked into the Docker image as `data/*_static.json` + `frontend/assets/`.
 - **`backend/server.py`** is a Flask app that serves the static + live data
-  as JSON (`/api/players`, `/api/relics`, `/api/dungeons`, etc.).
+  as JSON (`/api/players`, `/api/relics`, `/api/dungeons`,
+  `/api/dungeon_contents`, `/api/pal_spawn_locations`, etc.).
 - **`frontend/index.html`** is a single-page Leaflet (`CRS.Simple`) map,
   rendered against the game's own map texture, polling those endpoints —
   no build step, no framework.

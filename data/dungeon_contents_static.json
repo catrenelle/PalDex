@@ -411,7 +411,7 @@
               {
                 "characterId": "Hunter_Fat_GatlingGun",
                 "name": "Syndicate Crusher",
-                "icon": null,
+                "icon": "NPC_T_Hunter_Fat_icon_normal.png",
                 "levelMin": 35,
                 "levelMax": 39,
                 "numMin": 1,
@@ -421,7 +421,7 @@
               {
                 "characterId": "Hunter_Rifle",
                 "name": "Syndicate Gunner",
-                "icon": null,
+                "icon": "NPC_T_Hunter_icon_normal.png",
                 "levelMin": 31,
                 "levelMax": 33,
                 "numMin": 1,
@@ -431,7 +431,7 @@
               {
                 "characterId": "Hunter_Grenade",
                 "name": "Syndicate Grenadier",
-                "icon": null,
+                "icon": "NPC_T_Hunter_icon_normal.png",
                 "levelMin": 31,
                 "levelMax": 33,
                 "numMin": 1,
@@ -1296,7 +1296,7 @@
               {
                 "characterId": "Believer_CrossBow",
                 "name": "Free Pal Alliance Believer",
-                "icon": null,
+                "icon": "NPC_T_Believer_icon_normal.png",
                 "levelMin": 20,
                 "levelMax": 23,
                 "numMin": 1,
@@ -1306,7 +1306,7 @@
               {
                 "characterId": "Believer_Bat",
                 "name": "Free Pal Alliance Believer",
-                "icon": null,
+                "icon": "NPC_T_Believer_icon_normal.png",
                 "levelMin": 20,
                 "levelMax": 25,
                 "numMin": 1,
@@ -1341,7 +1341,7 @@
               {
                 "characterId": "Believer_Bat_Invader",
                 "name": "Free Pal Alliance Believer",
-                "icon": null,
+                "icon": "NPC_T_Believer_icon_normal.png",
                 "levelMin": 20,
                 "levelMax": 23,
                 "numMin": 1,
@@ -1351,7 +1351,7 @@
               {
                 "characterId": "Believer_Bat",
                 "name": "Free Pal Alliance Believer",
-                "icon": null,
+                "icon": "NPC_T_Believer_icon_normal.png",
                 "levelMin": 20,
                 "levelMax": 25,
                 "numMin": 1,
@@ -1366,7 +1366,7 @@
               {
                 "characterId": "Believer_CrossBow",
                 "name": "Free Pal Alliance Believer",
-                "icon": null,
+                "icon": "NPC_T_Believer_icon_normal.png",
                 "levelMin": 20,
                 "levelMax": 23,
                 "numMin": 2,
@@ -1376,7 +1376,7 @@
               {
                 "characterId": "Believer_Bat",
                 "name": "Free Pal Alliance Believer",
-                "icon": null,
+                "icon": "NPC_T_Believer_icon_normal.png",
                 "levelMin": 20,
                 "levelMax": 25,
                 "numMin": 1,
@@ -2256,7 +2256,7 @@
               {
                 "characterId": "Believer_CrossBow",
                 "name": "Free Pal Alliance Believer",
-                "icon": null,
+                "icon": "NPC_T_Believer_icon_normal.png",
                 "levelMin": 20,
                 "levelMax": 23,
                 "numMin": 1,
@@ -2266,7 +2266,7 @@
               {
                 "characterId": "Believer_Bat",
                 "name": "Free Pal Alliance Believer",
-                "icon": null,
+                "icon": "NPC_T_Believer_icon_normal.png",
                 "levelMin": 20,
                 "levelMax": 25,
                 "numMin": 1,
@@ -2301,7 +2301,7 @@
               {
                 "characterId": "Believer_Bat_Invader",
                 "name": "Free Pal Alliance Believer",
-                "icon": null,
+                "icon": "NPC_T_Believer_icon_normal.png",
                 "levelMin": 20,
                 "levelMax": 23,
                 "numMin": 1,
@@ -2311,7 +2311,7 @@
               {
                 "characterId": "Believer_Bat",
                 "name": "Free Pal Alliance Believer",
-                "icon": null,
+                "icon": "NPC_T_Believer_icon_normal.png",
                 "levelMin": 20,
                 "levelMax": 25,
                 "numMin": 1,
@@ -2326,7 +2326,7 @@
               {
                 "characterId": "Believer_CrossBow",
                 "name": "Free Pal Alliance Believer",
-                "icon": null,
+                "icon": "NPC_T_Believer_icon_normal.png",
                 "levelMin": 20,
                 "levelMax": 23,
                 "numMin": 2,
@@ -2336,7 +2336,7 @@
               {
                 "characterId": "Believer_Bat",
                 "name": "Free Pal Alliance Believer",
-                "icon": null,
+                "icon": "NPC_T_Believer_icon_normal.png",
                 "levelMin": 20,
                 "levelMax": 25,
                 "numMin": 1,
@@ -3611,7 +3611,7 @@
               {
                 "characterId": "Hunter_Bat",
                 "name": "Syndicate Thug",
-                "icon": null,
+                "icon": "NPC_T_Hunter_icon_normal.png",
                 "levelMin": 5,
                 "levelMax": 10,
                 "numMin": 2,
@@ -4446,7 +4446,7 @@
               {
                 "characterId": "Hunter_Bat",
                 "name": "Syndicate Thug",
-                "icon": null,
+                "icon": "NPC_T_Hunter_icon_normal.png",
                 "levelMin": 5,
                 "levelMax": 10,
                 "numMin": 2,
@@ -5281,7 +5281,7 @@
               {
                 "characterId": "Hunter_Bat",
                 "name": "Syndicate Thug",
-                "icon": null,
+                "icon": "NPC_T_Hunter_icon_normal.png",
                 "levelMin": 5,
                 "levelMax": 10,
                 "numMin": 2,
@@ -6116,7 +6116,7 @@
               {
                 "characterId": "Hunter_Bat",
                 "name": "Syndicate Thug",
-                "icon": null,
+                "icon": "NPC_T_Hunter_icon_normal.png",
                 "levelMin": 5,
                 "levelMax": 10,
                 "numMin": 2,
@@ -6156,7 +6156,7 @@
               {
                 "characterId": "Hunter_Handgun",
                 "name": "Syndicate Thug",
-                "icon": null,
+                "icon": "NPC_T_Hunter_icon_normal.png",
                 "levelMin": 1,
                 "levelMax": 4,
                 "numMin": 1,
@@ -6166,7 +6166,7 @@
               {
                 "characterId": "Hunter_Bat",
                 "name": "Syndicate Thug",
-                "icon": null,
+                "icon": "NPC_T_Hunter_icon_normal.png",
                 "levelMin": 1,
                 "levelMax": 4,
                 "numMin": 1,
@@ -7451,7 +7451,7 @@
               {
                 "characterId": "Hunter_Handgun",
                 "name": "Syndicate Thug",
-                "icon": null,
+                "icon": "NPC_T_Hunter_icon_normal.png",
                 "levelMin": 12,
                 "levelMax": 15,
                 "numMin": 2,
@@ -7471,7 +7471,7 @@
               {
                 "characterId": "Hunter_Handgun",
                 "name": "Syndicate Thug",
-                "icon": null,
+                "icon": "NPC_T_Hunter_icon_normal.png",
                 "levelMin": 12,
                 "levelMax": 15,
                 "numMin": 2,
@@ -7486,7 +7486,7 @@
               {
                 "characterId": "Hunter_Rifle",
                 "name": "Syndicate Gunner",
-                "icon": null,
+                "icon": "NPC_T_Hunter_icon_normal.png",
                 "levelMin": 12,
                 "levelMax": 15,
                 "numMin": 2,
@@ -7496,7 +7496,7 @@
               {
                 "characterId": "Hunter_Bat",
                 "name": "Syndicate Thug",
-                "icon": null,
+                "icon": "NPC_T_Hunter_icon_normal.png",
                 "levelMin": 12,
                 "levelMax": 15,
                 "numMin": 1,
@@ -7511,7 +7511,7 @@
               {
                 "characterId": "Hunter_Handgun",
                 "name": "Syndicate Thug",
-                "icon": null,
+                "icon": "NPC_T_Hunter_icon_normal.png",
                 "levelMin": 12,
                 "levelMax": 15,
                 "numMin": 2,
@@ -7521,7 +7521,7 @@
               {
                 "characterId": "Hunter_Bat",
                 "name": "Syndicate Thug",
-                "icon": null,
+                "icon": "NPC_T_Hunter_icon_normal.png",
                 "levelMin": 12,
                 "levelMax": 15,
                 "numMin": 1,
@@ -8501,7 +8501,7 @@
               {
                 "characterId": "Male_Ninja01",
                 "name": "Moonflower Genin",
-                "icon": null,
+                "icon": "NPC_T_Male_Ninja01_icon_normal.png",
                 "levelMin": 40,
                 "levelMax": 45,
                 "numMin": 2,
@@ -8786,7 +8786,7 @@
               {
                 "characterId": "Female_Kunoichi01",
                 "name": "Azure Covenant Enforcer",
-                "icon": null,
+                "icon": "NPC_T_Female_Kunoichi01_icon_normal.png",
                 "levelMin": 65,
                 "levelMax": 69,
                 "numMin": 1,
@@ -9271,7 +9271,7 @@
               {
                 "characterId": "Male_Scientist01_LaserRifle",
                 "name": "PAL Genetic Research Unit Executioner",
-                "icon": null,
+                "icon": "NPC_T_Male_Scientist01_icon_normal.png",
                 "levelMin": 38,
                 "levelMax": 42,
                 "numMin": 2,
@@ -9831,7 +9831,7 @@
               {
                 "characterId": "Viking",
                 "name": "Feybreak Warrior",
-                "icon": null,
+                "icon": "NPC_T_Viking_icon_normal.png",
                 "levelMin": 50,
                 "levelMax": 55,
                 "numMin": 2,
@@ -10281,7 +10281,7 @@
               {
                 "characterId": "FireCult_FlameThrower",
                 "name": "Brothers of the Eternal Pyre Martyr",
-                "icon": null,
+                "icon": "NPC_T_FireCult_icon_normal.png",
                 "levelMin": 32,
                 "levelMax": 36,
                 "numMin": 2,

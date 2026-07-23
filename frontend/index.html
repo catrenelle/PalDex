@@ -554,6 +554,46 @@
     display: flex; align-items: center; justify-content: center;
     color: #56636e; font-size: 13px; font-weight: 700; flex-shrink: 0;
   }
+  /* Alpha Boss / active-Dungeon call-out rings - a real spinning rainbow
+     ring (not the per-species solid color used elsewhere) so these stand
+     out from the rest of a busy, marker-dense map at a glance, not just on
+     hover. A plain colored L.circleMarker ring (the first version of this
+     feature) turned out too easy to lose among dozens of other map icons -
+     this is deliberately loud. The ring is a conic-gradient rotating via
+     CSS animation - only feasible because there are ever just a handful of
+     these at once (unlike the thousands of wild-spawn circles, which stay
+     on the canvas renderer for performance) - a plain DOM divIcon marker,
+     not a canvas-drawn shape, so CSS animation actually applies. The
+     center is genuinely masked out (not just painted a solid dark color,
+     which was tried first and rejected - that would have covered the real
+     marker instead of revealing it), so it reads as a ring around the real
+     Alpha Boss/Dungeon marker underneath, not a disc covering it. Alpha
+     Boss gets the larger ring, active Dungeon the smaller one, a size cue
+     for telling them apart at a glance without hovering.
+     pointer-events: none deliberately - this is decoration only, not its
+     own interactive marker (no tooltip binding in JS either). A real
+     marker sits underneath at this exact position whenever the
+     Bosses/Dungeons section it belongs to is also enabled, complete with
+     its own tooltip/click-to-open-modal behavior (Dungeons) - if this ring
+     captured pointer events it would sit on top in the DOM and silently
+     swallow clicks meant for that marker (confirmed while building this:
+     a dungeon's own click-opens-modal handler stopped firing whenever a
+     ring happened to be drawn over it). The one real cost: if the
+     matching section is toggled *off*, there's currently no hover/click
+     info on the ring itself, only the visual "something is here" cue -
+     re-enabling that section restores full interactivity. */
+  @keyframes pal-spawn-ring-spin { to { transform: rotate(360deg); } }
+  .pal-spawn-highlight-ring {
+    position: relative; border-radius: 50%;
+    background: conic-gradient(from 0deg, #ff5252, #ffb300, #ffee58, #66bb6a, #42a5f5, #ab47bc, #ff5252);
+    animation: pal-spawn-ring-spin 2.5s linear infinite;
+    box-shadow: 0 0 6px rgba(255,255,255,0.5);
+    pointer-events: none;
+    -webkit-mask-image: radial-gradient(closest-side, transparent 74%, black 76%);
+    mask-image: radial-gradient(closest-side, transparent 74%, black 76%);
+  }
+  .pal-spawn-highlight-ring.boss { width: 46px; height: 46px; }
+  .pal-spawn-highlight-ring.dungeon { width: 34px; height: 34px; }
 </style>
 </head>
 <body>
@@ -2265,6 +2305,33 @@
     return `<div class="dungeon-outcome multi">${group.pals.map((p) => dungeonPalCardHtml(p)).join('')}</div>`;
   }
 
+  // For every tier EXCEPT Boss/Mid-Boss, the user explicitly doesn't want
+  // to see which specific enemies spawn together in one roll (e.g. "Syndicate
+  // Crusher + Gunner + Grenadier" as one boxed group) - just the flat set of
+  // enemies that could possibly show up in that tier. Flattens every group's
+  // pals, dedupes by characterId (merging level/count ranges when the same
+  // species appears via more than one group), one plain card each. Boss/
+  // Mid-Boss keeps the existing per-group boss+escort rendering above -
+  // there the grouping itself is the meaningful info (a boss's escort
+  // pack), not incidental.
+  function dungeonUniqueEnemies(groups) {
+    const byId = new Map();
+    for (const group of groups) {
+      for (const p of group.pals) {
+        const existing = byId.get(p.characterId);
+        if (!existing) {
+          byId.set(p.characterId, { ...p });
+        } else {
+          existing.levelMin = Math.min(existing.levelMin, p.levelMin);
+          existing.levelMax = Math.max(existing.levelMax, p.levelMax);
+          existing.numMin = Math.min(existing.numMin, p.numMin);
+          existing.numMax = Math.max(existing.numMax, p.numMax);
+        }
+      }
+    }
+    return [...byId.values()].sort((a, b) => (a.name || a.characterId).localeCompare(b.name || b.characterId));
+  }
+
   function openDungeonModal(entry) {
     const contents = dungeonContentsData?.[entry.spawn_area_id];
     dungeonModalTitle.textContent = contents ? `${contents.biomeLabel} — Dungeon Contents` : `Dungeon (${entry.biome})`;
@@ -2293,17 +2360,29 @@
       });
       dungeonModalBody.innerHTML = tierKeys.map((tierKey) => {
         const tier = tiers[tierKey];
-        // "possible" = number of distinct roll outcomes (groups), not the
-        // flattened pal count - a boss+escort group is 1 possible outcome
-        // even though it puts 2 cards on screen.
-        const badge = tier.guaranteed
+        const isBossTier = tierKey === 'Boss' || tierKey === 'MidBoss';
+        const uniqueEnemies = isBossTier ? null : dungeonUniqueEnemies(tier.groups);
+        // "possible" = number of distinct roll outcomes (groups) for Boss/
+        // Mid-Boss (a boss+escort group is 1 possible outcome even though
+        // it puts 2 cards on screen) - everywhere else it's the count of
+        // unique enemies after flattening, since groupings aren't shown
+        // there anymore. Recompute "guaranteed" from that same flattened
+        // count too, not the backend's group-count-based flag - a tier
+        // with 2+ groups that all happen to resolve to the same single
+        // species is genuinely guaranteed once groupings no longer matter.
+        const possibleCount = isBossTier ? tier.groups.length : uniqueEnemies.length;
+        const guaranteed = isBossTier ? tier.guaranteed : possibleCount === 1;
+        const badge = guaranteed
           ? '<span class="dungeon-tier-badge guaranteed">Guaranteed</span>'
-          : `<span class="dungeon-tier-badge pool">Random pool (${tier.groups.length} possible)</span>`;
+          : `<span class="dungeon-tier-badge pool">Random pool (${possibleCount} possible)</span>`;
         const label = tierKey === 'Boss' ? bossLabel : (TIER_LABELS[tierKey] || tierKey);
+        const cardsHtml = isBossTier
+          ? tier.groups.map(dungeonOutcomeHtml).join('')
+          : uniqueEnemies.map((p) => dungeonPalCardHtml(p)).join('');
         return `
           <div class="dungeon-tier">
             <div class="dungeon-tier-header">${label} ${badge}</div>
-            <div class="dungeon-tier-grid">${tier.groups.map(dungeonOutcomeHtml).join('')}</div>
+            <div class="dungeon-tier-grid">${cardsHtml}</div>
           </div>
         `;
       }).join('');
@@ -2355,6 +2434,107 @@
     if (group) { map.removeLayer(group); palSpawnLayers.delete(characterId); }
   }
 
+  // Alpha Boss + currently-active Dungeon call-outs, per explicit user
+  // request: selecting a wild Pal should also surface "and here's its
+  // Alpha version" / "and it's in this active dungeon right now" even if
+  // those sections' own checkboxes are toggled off elsewhere. palSpawnBossData
+  // is fetched once below (species/level/position are static, no view_as
+  // needed); dungeonContentsData/dungeonData are the same globals the
+  // Dungeon Contents modal and Dungeons section already populate - reused
+  // here rather than fetched again.
+  let palSpawnBossData = null;
+  const palSpawnHighlightLayers = new Map(); // characterId -> L.LayerGroup of call-out rings
+
+  async function loadPalSpawnBossData() {
+    try {
+      const res = await fetch('/api/bosses', { cache: 'no-store' });
+      const json = await res.json();
+      palSpawnBossData = json.bosses;
+    } catch (e) { palSpawnBossData = []; }
+  }
+
+  // Every SpawnAreaId where this species can appear in any dungeon tier
+  // (Boss/MidBoss/Normal/Monster/FishPal/NPCHuman).
+  function dungeonAreasContaining(characterId) {
+    const areas = new Set();
+    if (!dungeonContentsData) return areas;
+    for (const [areaId, area] of Object.entries(dungeonContentsData)) {
+      search: for (const tier of Object.values(area.tiers)) {
+        for (const group of tier.groups) {
+          if (group.pals.some((p) => p.characterId === characterId)) {
+            areas.add(areaId);
+            break search;
+          }
+        }
+      }
+    }
+    return areas;
+  }
+
+  function removePalSpawnHighlights(characterId) {
+    const group = palSpawnHighlightLayers.get(characterId);
+    if (group) { map.removeLayer(group); palSpawnHighlightLayers.delete(characterId); }
+  }
+
+  // A spinning rainbow ring (DOM divIcon + CSS animation, not a canvas-drawn
+  // shape - see .pal-spawn-highlight-ring's own CSS comment for why) rather
+  // than a plain per-species-colored ring (the first version of this
+  // feature) - a busy, marker-dense map made the plain colored ring too
+  // easy to miss without hovering every marker, and this needs to actually
+  // grab attention. Larger ring = Alpha Boss, smaller ring = active Dungeon
+  // - a size cue for telling them apart at a glance without hovering,
+  // since both now share the same rainbow treatment; the tooltip (bound
+  // below) fully disambiguates either way.
+  function palSpawnRingIcon(sizeClass) {
+    const px = sizeClass === 'boss' ? 46 : 34;
+    return L.divIcon({
+      className: '',
+      html: `<div class="pal-spawn-highlight-ring ${sizeClass}"></div>`,
+      iconSize: [px, px],
+    });
+  }
+
+  // interactive: false (belt-and-suspenders with the CSS pointer-events:
+  // none on the ring itself) - see .pal-spawn-highlight-ring's own CSS
+  // comment for why this must not intercept clicks/hover meant for the
+  // real marker underneath (e.g. a Dungeon's click-to-open-modal handler).
+  // No .bindTooltip() here for the same reason - an interactive:false
+  // marker can't show one anyway, and the real marker underneath already
+  // carries equivalent (often more detailed) tooltip content whenever its
+  // own section is enabled.
+  function renderPalSpawnHighlights(characterId) {
+    const group = L.layerGroup();
+
+    // Mirror whichever section's own master toggle each ring type belongs
+    // to - hiding Alpha Bosses/Dungeons should hide their call-out rings
+    // here too, same as it hides the real markers.
+    const bossesVisible = document.getElementById('bosses-master-toggle').checked;
+    const dungeonsVisible = document.getElementById('dungeons-master-toggle').checked;
+
+    const bossTypeKey = 'BOSS_' + characterId;
+    if (bossesVisible) {
+      for (const boss of (palSpawnBossData || [])) {
+        if (boss.type_key !== bossTypeKey) continue;
+        L.marker([boss.pixel_y, boss.pixel_x], { icon: palSpawnRingIcon('boss'), interactive: false }).addTo(group);
+      }
+    }
+
+    if (dungeonsVisible) {
+      const areaIds = dungeonAreasContaining(characterId);
+      if (areaIds.size && Array.isArray(dungeonData)) {
+        for (const entry of dungeonData) {
+          if (!entry.active || !areaIds.has(entry.spawn_area_id)) continue;
+          L.marker([entry.pixel_y, entry.pixel_x], { icon: palSpawnRingIcon('dungeon'), interactive: false }).addTo(group);
+        }
+      }
+    }
+
+    if (group.getLayers().length) {
+      group.addTo(map);
+      palSpawnHighlightLayers.set(characterId, group);
+    }
+  }
+
   function renderPalSpawnCircles(characterId) {
     const species = palSpawnData[characterId];
     if (!species) return;
@@ -2379,6 +2559,8 @@
     for (const characterId of palSpawnChecked) {
       removePalSpawnCircles(characterId);
       renderPalSpawnCircles(characterId);
+      removePalSpawnHighlights(characterId);
+      renderPalSpawnHighlights(characterId);
     }
   }
 
@@ -2465,7 +2647,7 @@
       row.querySelector('input').addEventListener('change', (e) => {
         const cid = e.target.dataset.charId;
         if (e.target.checked) palSpawnChecked.add(cid);
-        else { palSpawnChecked.delete(cid); removePalSpawnCircles(cid); }
+        else { palSpawnChecked.delete(cid); removePalSpawnCircles(cid); removePalSpawnHighlights(cid); }
         recolorAllPalSpawns();
         updateAllPalSpawnSwatches();
         savePalSpawnChecked();
@@ -2474,7 +2656,10 @@
     }
     // Draw already-persisted selections once the whole list (and thus
     // palSpawnChecked) is populated, so color indices are stable from the start.
-    for (const characterId of palSpawnChecked) renderPalSpawnCircles(characterId);
+    for (const characterId of palSpawnChecked) {
+      renderPalSpawnCircles(characterId);
+      renderPalSpawnHighlights(characterId);
+    }
     updateAllPalSpawnSwatches();
   }
 
@@ -2484,11 +2669,32 @@
       row.classList.toggle('hidden-by-search', !!q && !row.dataset.name.includes(q));
     }
   });
-  document.getElementById('pal-spawns-clear').addEventListener('click', () => {
+  // Shared by the section's own "Clear" button and the global "Hide All"
+  // button below - unchecking via .dispatchEvent (not just setting
+  // .checked) so the row's own change handler runs normally (removes its
+  // circles/highlights, updates swatches, persists the change), same as a
+  // real user click.
+  function clearAllPalSpawns() {
     for (const row of document.querySelectorAll('.pal-spawn-row')) {
       const cb = row.querySelector('input');
       if (cb.checked) { cb.checked = false; cb.dispatchEvent(new Event('change')); }
     }
+  }
+  document.getElementById('pal-spawns-clear').addEventListener('click', clearAllPalSpawns);
+
+  // Alpha Boss/Dungeon call-out rings should disappear when their own
+  // section is hidden, same as the real markers they're calling out do -
+  // otherwise a ring could keep pointing at a boss/dungeon the user just
+  // explicitly hid, which reads as a bug. Both toggles already fire a
+  // plain 'change' event on every path that can flip them (a direct click
+  // AND Show All/Hide All below, which dispatch synthetic 'change' events
+  // rather than just setting .checked) - one shared listener here covers
+  // every case without touching that existing code.
+  document.getElementById('bosses-master-toggle').addEventListener('change', () => {
+    if (palSpawnListBuilt) recolorAllPalSpawns();
+  });
+  document.getElementById('dungeons-master-toggle').addEventListener('change', () => {
+    if (palSpawnListBuilt) recolorAllPalSpawns();
   });
 
   async function loadPalSpawns() {
@@ -2513,6 +2719,20 @@
     }
   }
   loadPalSpawns();
+
+  // Alpha Boss/active-Dungeon call-outs for any *persisted* checked
+  // selection depend on palSpawnBossData/dungeonData/dungeonContentsData -
+  // buildPalSpawnList's own initial render (triggered by loadPalSpawns()
+  // above) can race ahead of loadDungeons()/loadDungeonContents() (fired
+  // earlier, but async) on a fresh page load, silently skipping call-outs
+  // it would otherwise draw. Re-calling loadDungeons/loadDungeonContents
+  // here is a harmless redundant fetch (cheap, infrequent) in exchange for
+  // a simple Promise.all rather than threading promises through their
+  // original fire-and-forget call sites above. Once every dependency has
+  // actually resolved, redraw so persisted selections catch up;
+  // idempotent/harmless for the common case (nothing persisted yet).
+  Promise.all([loadPalSpawnBossData(), loadDungeons(), loadDungeonContents()])
+    .then(() => { if (palSpawnListBuilt) recolorAllPalSpawns(); });
 
   // ---------- Watchtowers / Waypoints (fast-travel points) ----------
   // Greyed out until unlocked, full color after (visualStyle: 'grayscale'),
@@ -2602,7 +2822,17 @@
     }
   }
   document.getElementById('show-all-btn').addEventListener('click', () => setAllSections(true));
-  document.getElementById('hide-all-btn').addEventListener('click', () => setAllSections(false));
+  // Hide All also clears Pal Spawns selections (Show All deliberately does
+  // NOT select anything there, per this section's own "opt-in only"
+  // design - Pal Spawns is excluded from ALL_MASTER_TOGGLE_IDS above for
+  // exactly that reason, so setAllSections(true) alone already leaves it
+  // untouched). Hide All clearing it too just matches user intent: "hide
+  // everything" should include the one section that isn't a simple master
+  // checkbox.
+  document.getElementById('hide-all-btn').addEventListener('click', () => {
+    setAllSections(false);
+    clearAllPalSpawns();
+  });
 
   // ---------- Screenshot/automation bootstrap (URL params, not linked from any UI) ----------
   // ?view_as=<uid>&only=active|not_started - selects a player and hides

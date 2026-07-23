@@ -1704,3 +1704,207 @@ a full-list screenshot (not just spot-checking a couple of rows'
 computed styles) is the right verification, not just after the fact
 either — should have screenshotted a longer scroll of mixed-length names
 before calling the badge feature done in the first place.**
+
+### Dungeon Contents modal: flatten trash-tier groupings, resolve human NPC icons — same-project follow-up
+
+Two real gaps in the original Dungeon Contents ship, both fixed together:
+
+1. **Trash tiers (Normal/Monster/Fish/Human Enemy) were still showing
+   per-group boxes for multi-human squads** (e.g. Dessert001's Normal tier
+   boxing "Syndicate Crusher + Gunner + Grenadier" together, since none of
+   them match the `BOSS_` prefix the existing boss+escort logic looks for).
+   Per explicit user request, these tiers no longer show groupings at
+   all — `frontend/index.html`'s `dungeonUniqueEnemies()` flattens every
+   group's pals, dedupes by `characterId` (merging level/count ranges when
+   the same species appears via more than one group), and renders one
+   plain card per unique possible enemy. Boss/Mid-Boss tiers are
+   unchanged — there the escort grouping is meaningful (a boss's actual
+   pack), not incidental like a human patrol's roster composition. The
+   "N possible"/"Guaranteed" badge is recomputed from the *unique enemy
+   count* for these tiers now, not the backend's group count — a tier
+   with 2+ groups that all resolve to the same single species is honestly
+   "Guaranteed" once groupings no longer matter to the display.
+2. **Human dungeon-trash NPCs (Syndicate Thug/Gunner/Grenadier/Crusher,
+   Believer, Viking, etc.) previously always showed a "?" placeholder** —
+   the original Dungeon Contents work correctly found no per-instance icon
+   in `DT_PalBossNPCIcon` (that table's keyed by boss-tier `SpawnerID`s
+   only) and left it at that. A real icon path exists via a different,
+   more reliable field: **`DT_PalHumanParameter`'s own `BPClass`** (e.g.
+   `"NPC_Hunter_Fat"` for `Hunter_Fat_GatlingGun`, `"NPC_Hunter"` for the
+   other `Hunter_*` variants) — strip the `NPC_` prefix and it's a real,
+   exact filename in `PalIcon/Normal/` (confirmed via
+   `extractor/ScratchHumanIcons`, a throwaway investigation, now deleted).
+   This is more reliable than guessing off the row's own NPCID/name: 4 of
+   the 5 `Hunter_*` variants (`Bat`/`Grenade`/`Handgun`/`Rifle`) legitimately
+   share one plain "Hunter" portrait, only `Fat_GatlingGun` gets the
+   distinct "Fat" look — matching on `BPClass` gets this grouping right
+   automatically instead of needing a hardcoded name-to-icon synonym list.
+   Implemented as `DungeonHumanIcon()` in `Program.cs`, reusing
+   `normalIconLookup` (the same case-insensitive `PalIcon/Normal` file
+   index the NPCs section already built) — **moved that dictionary's
+   declaration earlier in the file** (from the NPCs section to right
+   before Dungeon Contents) purely because Dungeon Contents now needs it
+   too and runs first; nothing about its contents/behavior changed.
+   Exported icons get an `NPC_` filename prefix (vs. species portraits'
+   `Pal_` prefix) sharing the same `boss_icons/` directory — resolved all
+   13 real human NPCIDs currently used across every dungeon roster down to
+   just 8 distinct portrait files.
+   Both changes verified live: Dessert001's Normal tier now shows a flat
+   9-card grid (was a boxed 3-human group + 6 single cards = 7 groups
+   before), with Syndicate Crusher/Gunner/Grenadier all showing their real
+   masked-bandit portraits instead of "?", zero console errors. Static
+   data hand-patched (`data/dungeon_contents_static.json`, 32 icon fields)
+   rather than paying for a full pipeline rebuild, same shortcut as the
+   WindChimes/Icewitch casing fix earlier in this file — the extractor
+   source itself is fully fixed for the next real full rebuild.
+
+### Bounty "Pinch" (BOSS_Police_Old) name resolution — same casing bug, different field
+
+A real user reported this bounty rendering as the raw `BOSS_Police_Old` id
+instead of a real name. Investigated before touching anything, since the
+user's own second message guessed it might be dev-only unused content —
+it isn't: `DT_PalHumanParameter` has a real row (`BOSS_Police_old`,
+**lowercase "old"**) with `OverrideNameTextID: NAME_BOSS_Police_Old` →
+`DT_HumanNameText_Common` → **"Pinch"**, a real level (57) and real
+location in `DT_BossSpawnerLoactionData`, structurally identical to every
+other legitimate human Bounty target. No `Weight: 0`/`"RowName"`-style red
+flag like the real dev-stub rows found elsewhere in this pipeline. The
+user's *first* message ("this one is named Pinch") was the correct read;
+confirmed against the actual game data before fixing, not just taken on
+faith. (Also confirmed real, not a data bug: `DT_BossSpawnerLoactionData`
+genuinely has *two* identical `BOSS_Police_Old` rows at the exact same
+coordinates — an upstream game-data duplicate, harmless since the
+frontend already groups Bounty markers by `spawnerId`.)
+
+**Root cause**: this is the exact same `BOSS_Police_old` vs. `BOSS_Police_Old`
+casing mismatch this file already flagged for the *icon* join (see above,
+`iconLookup` was already made case-insensitive for this) — it turns out
+the *name* join (`humanRows`/`humanNameRows` in the Bosses/Bounty section)
+was still doing a case-*sensitive* lookup, so the icon quietly worked
+this whole time while the name silently fell through to the raw id.
+`DungeonHumanName`/`DungeonHumanIcon` (Dungeon Contents) had the identical
+latent bug — not yet observed since the 13 human NPCIDs dungeons
+currently use all happen to match case, but fixed proactively rather than
+waiting for the next casing mismatch to surface it. Fixed by adding
+`humanRowsCI`/`humanNameRowsCI` (same `StringComparer.OrdinalIgnoreCase`
+dictionary pattern as `monsterRowsCI`/`palNameRowsCI`/`palIconLookup`
+elsewhere in this file) and switching all four call sites onto them.
+Live data hand-patched (`data/bosses_static.json`, both duplicate rows'
+`name` field) rather than a full pipeline rebuild — same shortcut as
+every other same-session fix in this file.
+
+### Pal Spawns: Alpha Boss + active-Dungeon call-outs — same-session follow-up
+
+Per explicit user request: selecting a wild Pal in Pal Spawns now also
+calls out its Alpha Boss (if one exists) and any currently-active dungeon
+it can be found in — even if the Alpha Bosses/Dungeons sections' own
+checkboxes are toggled off elsewhere in the sidebar. **Entirely
+frontend-only, no new backend endpoints** — reuses data already loaded
+elsewhere in the app rather than fetching anything Pal-Spawns-specific
+beyond one extra static `/api/bosses` call:
+
+- **Alpha Boss match**: `"BOSS_" + <wild species characterId>` against
+  `/api/bosses`' own `type_key` field — confirmed this join key convention
+  already holds project-wide (same `BOSS_<CharacterID>` prefixing pattern
+  documented throughout the Bosses/Bounty/Dungeon Contents sections
+  above). 79 of the ~260 wild-spawn species have a real Alpha Boss match.
+- **Active dungeon match**: scans the already-loaded `dungeonContentsData`
+  (the same object the Dungeon Contents modal itself reads) for every
+  `SpawnAreaId` where the species appears in *any* tier's groups, then
+  cross-references against the already-loaded `dungeonData` (the Dungeons
+  section's own live active/inactive marker list) for markers that are
+  both `active` and match one of those areas.
+- **Rendering**: a hollow ring (`L.circleMarker`, no fill) in the exact
+  same per-species color already assigned to that species' wild-spawn
+  circles/checkbox accent, so the call-outs visually "belong" to the
+  checked row at a glance even with multiple species selected at once.
+  Solid ring = Alpha Boss, dashed ring = active Dungeon — distinguishable
+  from each other without needing separate colors. Each ring gets a real
+  tooltip (`⭐ Alpha Boss: <name> (Lv <level>)` / `Active Dungeon
+  (<biome>) — despawns in <countdown>`, reusing the same `formatDuration`
+  helper the Dungeons section's own tooltip already uses).
+- **Load-order race handled explicitly**: `palSpawnBossData`/
+  `dungeonData`/`dungeonContentsData` are fetched independently and can
+  resolve in any order relative to `buildPalSpawnList()`'s first render of
+  a *persisted* (page-reload-restored) selection — a `Promise.all(...).then(...)`
+  backfill redraws call-outs once every dependency has actually resolved,
+  so a persisted selection doesn't silently end up missing call-outs it
+  should have just because of unlucky fetch timing on a fresh page load.
+- **Verified live with a real dual-match species** (`FlameBuffalo`/Arsox —
+  has both a real Alpha Boss at Lv 15 *and* appears in the currently-active
+  Grass1-biome dungeons): exactly 1 solid ring (correct tooltip, correct
+  level) + 8 dashed rings (one per currently-active Grass1 dungeon marker,
+  each with a correct real despawn countdown) rendered alongside the
+  existing 106 wild-spawn circles, confirmed both programmatically (ring
+  count/dashArray/tooltip content queried directly, not just eyeballed)
+  and visually (a zoomed screenshot clearly shows the ring encircling the
+  Alpha Boss marker). Zero console errors.
+
+**Follow-up, same day: the plain colored ring wasn't loud enough, swapped
+for a spinning rainbow ring — and that swap surfaced a real click-blocking
+bug, fixed before shipping.** The user's own framing: "should we do
+something that gets the user's attention, like a rainbow ring that
+spins?" — reasonable, since the original plain-colored `L.circleMarker`
+ring genuinely was easy to lose in a marker-dense view (confirmed from a
+real full-map screenshot during the original build). Implemented as a
+`conic-gradient` background with a CSS `@keyframes` rotation on a plain
+DOM `L.divIcon` marker — **deliberately not a canvas-drawn shape**, since
+CSS animation doesn't apply to canvas pixels at all, only DOM elements;
+feasible here specifically because there are only ever a handful of these
+rings at once (unlike the thousands of wild-spawn circles, which stay on
+`palSpawnRenderer`'s canvas for that reason). The center is cut out via a
+real CSS `mask-image` (radial-gradient alpha mask), not a solid-color
+inset pseudo-element — a solid fill was tried first and rejected because
+it would have visually covered the real marker underneath instead of
+revealing it; masking genuinely removes those pixels from this element's
+own rendering, letting whatever Leaflet paints behind it show through.
+**Real bug caught before shipping, not after**: the first ring version
+left default Leaflet marker interactivity in place, and since the ring
+sits in front of (higher z-order than) the real Alpha Boss/Dungeon marker
+at the exact same coordinates, it silently swallowed clicks meant for
+that marker — confirmed concretely by clicking a Dungeon marker that had
+a ring drawn over it and watching the Dungeon Contents modal fail to
+open. Standard DOM hit-testing only dispatches a click to the topmost
+element at that pixel; there's no "pass through to what's behind" without
+explicitly opting out. Fixed with `pointer-events: none` (CSS) +
+`interactive: false` (Leaflet's own option, belt-and-suspenders) on the
+ring markers, and dropped the ring's own `.bindTooltip()` call entirely
+(an `interactive: false` marker can't show one anyway, and it was
+redundant with the real marker's own tooltip whenever that marker's
+section is enabled). **Known, accepted tradeoff**: if the matching
+Alpha Bosses/Dungeons section is toggled *off*, the ring is now purely a
+visual "something is here" cue with no hover/click info of its own until
+that section is re-enabled — judged an acceptable cost against silently
+breaking an already-shipped feature (the Dungeon Contents modal).
+Re-verified after the fix, not just assumed: clicked directly on a
+Dungeon marker with a ring drawn over it and confirmed the modal still
+opens (`#dungeon-modal-backdrop.open` present), plus the same ring-count/
+zoomed-screenshot checks as before. Zero console errors.
+
+**Follow-up, same day: call-out rings now respect their own section's
+visibility, and Hide All/Show All integrate correctly with Pal Spawns.**
+Three small, explicit user requests:
+1. Hiding Alpha Bosses (or Dungeons) should hide the matching call-out
+   ring type too, not just the real markers - otherwise a ring could keep
+   pointing at something the user just explicitly hid. `renderPalSpawnHighlights`
+   now checks `#bosses-master-toggle`/`#dungeons-master-toggle`'s own
+   `.checked` state before drawing each ring type, and both checkboxes got
+   a small additional `change` listener (not touching their existing
+   handlers) that calls `recolorAllPalSpawns()` to redraw whenever either
+   toggle flips - covers a direct click AND Show All/Hide All, since both
+   already dispatch a real synthetic `change` event rather than just
+   setting `.checked` directly.
+2. **Hide All now also clears every Pal Spawns selection** (extracted the
+   existing per-section "Clear" button's logic into a shared
+   `clearAllPalSpawns()`, called from both). **Show All deliberately still
+   does not select anything in Pal Spawns** - no code change was actually
+   needed for this half, since Pal Spawns was already excluded from
+   `ALL_MASTER_TOGGLE_IDS` for exactly this reason from the start; this
+   requirement was really "confirm this stays true," and it does.
+3. Verified live, not just read back: unchecking Alpha Bosses with Arsox
+   selected (1 boss ring + 8 dungeon rings) dropped the boss ring to 0
+   while the 8 dungeon rings stayed; re-checking restored it; the same
+   pattern independently for Dungeons. Hide All with Arsox selected
+   (106 circles + 9 rings) dropped everything to 0 checked/0 circles/
+   0 rings; a subsequent Show All correctly left Pal Spawns at 0 checked.
+   Zero console errors throughout.
