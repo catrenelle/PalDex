@@ -98,12 +98,33 @@ exists for the non-Docker case where nothing does that mount for you.
    explicitly. Deploying via Portainer's own stack editor instead just needs
    these set in its environment variables section — no `--env-file` needed.
 
+4. **Gotcha on the very first deploy of a git-repository stack**: the
+   private key from step 2 is (correctly) gitignored, so it doesn't exist
+   yet in Portainer's freshly-cloned copy of this repo. Docker's bind-mount
+   behavior for a source path that doesn't exist is to silently
+   auto-vivify an **empty directory** there instead of erroring — the
+   container starts fine, but every save-file pull then fails an SSH
+   permission check in the background (only visible in the container's own
+   logs, no deploy-time error). Fix: find the real host path Portainer
+   resolved the relative bind mount to (`docker inspect <container>
+   --format '{{.Mounts}}'` — don't assume it's simply the repo path you'd
+   expect; Portainer stacks live under its own managed compose directory on
+   the host), remove the auto-created empty directory, put the real
+   private key file there instead (mode `0600`), then **recreate** the
+   container (not just restart it — once a mount's been set up as a
+   directory, `docker restart` won't reinterpret it as a file; a full
+   recreate is needed).
+
 ## Deploying
 
 Portainer's **git-repository stack deploy** (Stacks → Add stack →
 Repository, point it at this repo's URL, Dockerfile + docker-compose.yml at
-the repo root) is the maintained path: push to the git remote, redeploy the
-stack in Portainer to pick it up.
+the repo root) is the maintained path. Turn on Portainer's "automatic
+updates" for the stack (a polling interval, e.g. every 5 minutes, or a
+webhook for instant updates) and a plain `git push` to your tracked branch
+is all you need — Portainer picks up the new commit and redeploys on its
+own, no manual "Pull and redeploy" click required. That manual button is
+still there for when you don't want to wait for the next poll.
 
 An earlier bootstrap deploy (before this repo had a remote) pushed the repo
 straight to the Docker host over SSH/SFTP and ran Compose there directly —
