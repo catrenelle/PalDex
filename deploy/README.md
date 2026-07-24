@@ -27,12 +27,13 @@ started) — see `backend/config.py`:
 
 | Variable | What it is |
 |---|---|
-| `RCON_PASSWORD` | Palworld server's RCON `AdminPassword` (from `PalWorldSettings.ini`) |
-| `AMP_HOST` | IP/hostname of the game server host (AMP or otherwise) |
-| `AMP_USER` | SSH account on that host with the scoped sudo rsync rule below |
-| `AMP_SAVE_ROOT` | Full path to the `SaveGames` dir wherever the dedicated server process writes it. AMP example: `/home/<amp-user>/.ampdata/instances/<instance>/palworld/<steam-app-id>/Pal/Saved/SaveGames/`. A bare (non-AMP) `PalServer` install typically uses `/home/<user>/Steam/steamapps/common/PalServer/Pal/Saved/SaveGames/` instead — check your own install for the real path. |
-| `AMP_WORLD_GUID` | The live world's save GUID (subdirectory under SaveGames) |
-| `PALDEX_SSH_KEY` | *(Container-internal, usually left unset)* Path `backend/remote.py` reads the SSH private key from — defaults to `/run/secrets/paldex_ssh_key`, the Docker-secrets mount path `docker-compose.yml` already wires up via `PALDEX_SSH_KEY_HOST_PATH` below. You only need to set this directly if you're running outside that compose setup. |
+| `RCON_PASSWORD` | Palworld server's RCON `AdminPassword` (from `PalWorldSettings.ini`) — always required |
+| `AMP_HOST` | IP/hostname of the game server host (AMP or otherwise) — always required (used for RCON regardless of how saves are pulled) |
+| `AMP_USER` | *(SSH-pull mode only — see "Same-host deploy" below for the alternative)* SSH account on that host with the scoped sudo rsync rule below |
+| `AMP_SAVE_ROOT` | *(SSH-pull mode only)* Full path to the `SaveGames` dir wherever the dedicated server process writes it. AMP example: `/home/<amp-user>/.ampdata/instances/<instance>/palworld/<steam-app-id>/Pal/Saved/SaveGames/`. A bare (non-AMP) `PalServer` install typically uses `/home/<user>/Steam/steamapps/common/PalServer/Pal/Saved/SaveGames/` instead — check your own install for the real path. |
+| `AMP_WORLD_GUID` | *(SSH-pull mode only)* The live world's save GUID (subdirectory under SaveGames) |
+| `PALDEX_SSH_KEY` | *(SSH-pull mode only, container-internal, usually left unset)* Path `backend/remote.py` reads the SSH private key from — defaults to `/run/secrets/paldex_ssh_key`, the Docker-secrets mount path `docker-compose.yml` already wires up via `PALDEX_SSH_KEY_HOST_PATH` below. You only need to set this directly if you're running outside that compose setup. |
+| `PALDEX_LOCAL_SAVE_ROOT` | *(Same-host mode only — see below)* Container path where the game server's `SaveGames/<world_guid>/` dir is already bind-mounted; when set, this **replaces** `AMP_USER`/`AMP_SAVE_ROOT`/`AMP_WORLD_GUID`/`PALDEX_SSH_KEY` entirely — no SSH pull happens at all. |
 
 Note the two similarly-named SSH key variables aren't interchangeable:
 `PALDEX_SSH_KEY_HOST_PATH` (below) is a `docker-compose.yml` build-time
@@ -155,6 +156,36 @@ volume management at all. **`data/live/` contains real player names/
 positions — never commit anything under it** (gitignored; it's regenerated
 by the refresh loop, not meant to be static repo content like the other
 `data/*_static.json` files).
+
+## Same-host deploy (no SSH)
+
+If PalDex runs on the **same Docker host as the Palworld dedicated server**,
+skip the whole SSH-keypair/sudoers dance in "One-time setup" above entirely
+— just bind-mount the server's own `SaveGames/<world_guid>/` directory
+(the one containing `Level.sav` and `Players/*.sav`) straight into the
+container, read-only, and point `PALDEX_LOCAL_SAVE_ROOT` at it:
+
+```
+services:
+  paldex:
+    ...
+    environment:
+      - PALDEX_LOCAL_SAVE_ROOT=/palworld_data
+    volumes:
+      - /path/to/SaveGames/<world_guid>:/palworld_data:ro
+```
+
+A ready-to-use version of this is [`docker-compose.local.yml`](../docker-compose.local.yml)
+at the repo root (copy [`deploy/.env.local.example`](.env.local.example) to
+`deploy/.env.local` and fill in `PALWORLD_SAVE_HOST_PATH`). For a Portainer
+git-repository stack, just point its "Compose path" field at
+`docker-compose.local.yml` instead of the default `docker-compose.yml`.
+
+Note this only replaces the save-file pull — `RCON_PASSWORD` and `AMP_HOST`
+are still required for online/offline status, since RCON is a separate
+network connection to the game server's RCON port, not a file access.
+`AMP_USER`/`AMP_SAVE_ROOT`/`AMP_WORLD_GUID` (SSH-pull-only) are the ones
+this mode drops.
 
 ## Updating static game data
 

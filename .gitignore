@@ -7,6 +7,7 @@ backend/secrets.py
 deploy/paldex_deploy_key
 deploy/paldex_deploy_key.pub
 deploy/.env
+deploy/.env.local
 node_modules/
 extractor/PalExtract/bin/
 extractor/PalExtract/obj/

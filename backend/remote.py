@@ -20,16 +20,22 @@ import subprocess
 import sys
 from pathlib import Path
 
-from config import get_config
+from config import get_config, get_optional_config
 
 HOST = get_config("AMP_HOST")
-USER = get_config("AMP_USER")
+
+# USER/REMOTE_SAVE_ROOT/LIVE_WORLD_GUID are only read by the SSH pull
+# functions below (refresh_remote_cache/pull_saves), never by RCON or the
+# uptime query — optional here so a PALDEX_LOCAL_SAVE_ROOT deploy (see
+# refresh.py), which never calls those functions, doesn't have to set them
+# just to let this module import cleanly.
+USER = get_optional_config("AMP_USER")
 
 # Full path to the AMP instance's SaveGames dir, e.g.
 # "/home/amp/.ampdata/instances/<instance>/palworld/<steam-app-id>/Pal/Saved/SaveGames/"
-REMOTE_SAVE_ROOT = get_config("AMP_SAVE_ROOT")
+REMOTE_SAVE_ROOT = get_optional_config("AMP_SAVE_ROOT")
 REMOTE_CACHE = "/tmp/palworld-saves/"
-LIVE_WORLD_GUID = get_config("AMP_WORLD_GUID")
+LIVE_WORLD_GUID = get_optional_config("AMP_WORLD_GUID")
 
 _IS_WINDOWS = sys.platform.startswith("win")
 

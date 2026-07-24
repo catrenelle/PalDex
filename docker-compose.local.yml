@@ -1,0 +1,27 @@
+services:
+  paldex:
+    build: .
+    image: paldex:latest
+    restart: unless-stopped
+    ports:
+      - "30024:5151"
+    environment:
+      # RCON is a separate concern from save-file access (online/offline
+      # status vs. positions) — still needed even when the save dir is
+      # locally mounted below. AMP_USER/AMP_SAVE_ROOT/AMP_WORLD_GUID (the
+      # SSH-pull-only vars in docker-compose.yml) are dropped entirely here;
+      # this deploy mode never reads them.
+      - RCON_PASSWORD=${RCON_PASSWORD}
+      - AMP_HOST=${AMP_HOST}
+      - PALDEX_LOCAL_SAVE_ROOT=/palworld_data
+    volumes:
+      # Same live/static split as docker-compose.yml — see its own comment.
+      - paldex_data:/app/data/live
+      # The Palworld server's SaveGames/<world_guid> dir (containing
+      # Level.sav + Players/*.sav) bind-mounted read-only — only valid when
+      # PalDex runs on the *same host* as the game server. No SSH keypair,
+      # no sudoers rule, no /run/secrets mount needed in this mode at all.
+      - ${PALWORLD_SAVE_HOST_PATH}:/palworld_data:ro
+
+volumes:
+  paldex_data:

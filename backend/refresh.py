@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 import traceback
 from datetime import datetime, timedelta, timezone
@@ -23,14 +24,25 @@ from rcon import get_online_uids, get_server_version
 # so a Docker deploy can mount only this path as a volume and never shadow
 # static data shipped in a newer image (see docker-compose.yml).
 LIVE_DIR = Path(__file__).resolve().parent.parent / "data" / "live"
-SAVE_DIR = LIVE_DIR / "saves"
+
+# If set, PalDex and the Palworld server share a host — the SaveGames dir
+# (Level.sav + Players/) is bind-mounted straight into this container at
+# this path (read-only) instead of being pulled over SSH/rsync every cycle.
+# See deploy/README.md's "Same-host deploy" section / docker-compose.local.yml.
+LOCAL_SAVE_ROOT = os.environ.get("PALDEX_LOCAL_SAVE_ROOT")
+
+SAVE_DIR = Path(LOCAL_SAVE_ROOT) if LOCAL_SAVE_ROOT else LIVE_DIR / "saves"
 OUTPUT = LIVE_DIR / "players.json"
 BASES_OUTPUT = LIVE_DIR / "bases.json"
 DUNGEONS_STATE_OUTPUT = LIVE_DIR / "dungeons_state.json"
 
 
 def run() -> list[dict]:
-    refresh_and_pull(SAVE_DIR)
+    if LOCAL_SAVE_ROOT:
+        # Already mounted read-only at SAVE_DIR — nothing to pull.
+        pass
+    else:
+        refresh_and_pull(SAVE_DIR)
 
     # Level.sav is large — parse it once and share the result rather than
     # re-reading it separately for player names and guild bases.
@@ -62,14 +74,18 @@ def run() -> list[dict]:
         traceback.print_exc()
         server_version = None
 
-    try:
-        uptime_seconds = get_server_uptime_seconds()
-        server_start_time = (datetime.now(timezone.utc) - timedelta(seconds=uptime_seconds)).isoformat()
-    except Exception:
-        # SSH to the AMP host for this is a nice-to-have same as RCON above —
-        # a transient failure here shouldn't take down player positions.
-        traceback.print_exc()
-        server_start_time = None
+    server_start_time = None
+    if not LOCAL_SAVE_ROOT:
+        # Shells out over SSH, same as the save pull — nothing to query this
+        # way in local-mount mode (no SSH access assumed at all).
+        try:
+            uptime_seconds = get_server_uptime_seconds()
+            server_start_time = (datetime.now(timezone.utc) - timedelta(seconds=uptime_seconds)).isoformat()
+        except Exception:
+            # SSH to the AMP host for this is a nice-to-have same as RCON
+            # above — a transient failure here shouldn't take down player
+            # positions.
+            traceback.print_exc()
 
     try:
         now_ticks = load_game_time_ticks(world_save_data)

@@ -21,3 +21,19 @@ def get_config(name: str) -> str:
             f"{name} not set — provide it via the {name} env var (container) "
             "or backend/secrets.py (local dev)."
         ) from e
+
+
+def get_optional_config(name: str) -> str | None:
+    """Same env-var-first/secrets.py-fallback lookup as get_config, but
+    returns None instead of raising when unset — for config that's only
+    required under certain deploy modes (e.g. AMP_USER/AMP_SAVE_ROOT/
+    AMP_WORLD_GUID, which the SSH save-pull needs but a same-host
+    PALDEX_LOCAL_SAVE_ROOT deploy never reads at all)."""
+    env_val = os.environ.get(name)
+    if env_val:
+        return env_val
+    try:
+        module = __import__("secrets")
+        return getattr(module, name)
+    except (ImportError, AttributeError):
+        return None
