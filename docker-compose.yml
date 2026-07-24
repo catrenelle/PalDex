@@ -12,10 +12,12 @@ services:
       - AMP_SAVE_ROOT=${AMP_SAVE_ROOT}
       - AMP_WORLD_GUID=${AMP_WORLD_GUID}
     volumes:
-      # Seeded from the image's baked-in data/ (static schematics/relics/etc.
-      # JSON) on first run, then persists the live-refreshed players.json,
-      # bases.json, and data/saves/ save-file cache across restarts.
-      - paldex_data:/app/data
+      # Mounted only at data/live/ (not all of /app/data) so the image's
+      # baked-in data/*_static.json (schematics/relics/etc., refreshed by
+      # every rebuild) is never shadowed by stale volume content — only the
+      # refresh loop's own players.json/bases.json/dungeons_state.json and
+      # the data/saves/ save-file cache persist here across restarts.
+      - paldex_data:/app/data/live
       - ${PALDEX_SSH_KEY_HOST_PATH:-./deploy/paldex_deploy_key}:/run/secrets/paldex_ssh_key:ro
 
 volumes:

@@ -17,10 +17,16 @@ from parse import (
 from remote import get_server_uptime_seconds, refresh_and_pull
 from rcon import get_online_uids, get_server_version
 
-SAVE_DIR = Path(__file__).resolve().parent.parent / "data" / "saves"
-OUTPUT = Path(__file__).resolve().parent.parent / "data" / "players.json"
-BASES_OUTPUT = Path(__file__).resolve().parent.parent / "data" / "bases.json"
-DUNGEONS_STATE_OUTPUT = Path(__file__).resolve().parent.parent / "data" / "dungeons_state.json"
+# Everything under data/live/ is mutable, refresh-loop-written state (save
+# cache + the derived players/bases/dungeons-state JSON) — kept in its own
+# subdirectory, separate from the extractor's baked-in data/*_static.json,
+# so a Docker deploy can mount only this path as a volume and never shadow
+# static data shipped in a newer image (see docker-compose.yml).
+LIVE_DIR = Path(__file__).resolve().parent.parent / "data" / "live"
+SAVE_DIR = LIVE_DIR / "saves"
+OUTPUT = LIVE_DIR / "players.json"
+BASES_OUTPUT = LIVE_DIR / "bases.json"
+DUNGEONS_STATE_OUTPUT = LIVE_DIR / "dungeons_state.json"
 
 
 def run() -> list[dict]:
