@@ -2,6 +2,12 @@ services:
   paldex:
     build: .
     image: paldex:latest
+    # Without this, `docker compose pull` (which Portainer's stack
+    # auto-update runs before redeploying) tries to pull "paldex:latest"
+    # from a registry — it doesn't exist anywhere but as a local build, so
+    # every auto-update cycle failed with "pull access denied" and silently
+    # retried forever. This tells compose to always build instead of pull.
+    pull_policy: build
     restart: unless-stopped
     ports:
       - "30024:5151"

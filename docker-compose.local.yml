@@ -2,6 +2,10 @@ services:
   paldex:
     build: .
     image: paldex:latest
+    # See docker-compose.yml's own comment — without this, Portainer's
+    # stack auto-update tries to `docker compose pull` this build-only
+    # image from a registry and fails every cycle.
+    pull_policy: build
     restart: unless-stopped
     ports:
       - "30024:5151"
