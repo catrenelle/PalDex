@@ -31,8 +31,13 @@ from schematics import load_schematics
 REFRESH_INTERVAL_SECONDS = 30
 FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
 PLAYERS_DIR = refresh.SAVE_DIR / "Players"
+BUILD_VERSION_FILE = Path(__file__).resolve().parent / "BUILD_VERSION"
 
 app = Flask(__name__, static_folder=None)
+
+# Written by the Dockerfile at image build time; absent when running
+# backend/server.py directly (local dev, outside Docker).
+_build_version = BUILD_VERSION_FILE.read_text().strip() if BUILD_VERSION_FILE.exists() else "dev"
 
 # Relics and bosses are baked into the game's own data tables, not the save
 # file — load once, no need to refresh per-poll like player positions.
@@ -65,6 +70,11 @@ def index():
 @app.route("/assets/<path:filename>")
 def assets(filename):
     return send_from_directory(FRONTEND_DIR / "assets", filename)
+
+
+@app.route("/api/app_version")
+def api_app_version():
+    return jsonify({"build": _build_version})
 
 
 @app.route("/api/players")

@@ -1,0 +1,7 @@
+#!/bin/sh
+# Stamps backend/BUILD_VERSION with the commit time so the app's displayed
+# build version (frontend/index.html's attribution-control credit line) is
+# reproducible: identical for anyone who builds this exact commit, unlike a
+# Docker-build-time stamp which reflects whoever's machine ran `docker build`.
+date -u +%Y-%m-%dT%H:%MZ > backend/BUILD_VERSION
+git add backend/BUILD_VERSION

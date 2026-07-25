@@ -1077,6 +1077,23 @@
     renderPlayers();
   }
 
+  // Fetched once at page load, not on the 10s refresh loop — the build a
+  // page is running doesn't change without a hard reload anyway. Shown via
+  // Leaflet's own attribution control (bottom-right, next to the zoom
+  // control) rather than the already-crowded #controls panel — the
+  // conventional quiet-credit-line spot on a map, not another info line
+  // competing for attention.
+  async function loadAppVersion() {
+    try {
+      const res = await fetch('/api/app_version', { cache: 'no-store' });
+      const data = await res.json();
+      map.attributionControl.setPrefix(`PalDex build ${data.build}`);
+    } catch (e) {
+      // Non-essential — leave the default Leaflet attribution in place.
+    }
+  }
+  loadAppVersion();
+
   offlineToggle.addEventListener('change', () => {
     uiState.offline = offlineToggle.checked;
     saveUiState();
