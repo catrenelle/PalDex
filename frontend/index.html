@@ -1336,7 +1336,9 @@
         }).addTo(map);
         const effigyTitle = `${r.label} Effigy`;
         const effigyTooltip = `<div class="boss-tooltip"${boxWidthStyle(effigyTitle)}><div class="bt-name">${effigyTitle}</div>`
-          + (r.effect_description ? `<div class="bt-desc">${r.effect_description}</div>` : '') + `</div>`;
+          + (r.effect_description ? `<div class="bt-desc">${r.effect_description}</div>` : '')
+          + (r.requires_exploit ? `<div class="bt-weak">⚠ Embedded in rock terrain - requires an exploit to reach</div>` : '')
+          + `</div>`;
         marker.bindTooltip(effigyTooltip, { direction: 'top' });
         relicMarkers.set(r.id, marker);
       } else if (!map.hasLayer(marker)) {

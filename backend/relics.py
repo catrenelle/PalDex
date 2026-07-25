@@ -62,6 +62,18 @@ RELIC_EFFECT_DESCRIPTION: dict[str, str] = {
     "HungerReduction": "Reduces Player hunger depletion rate",
 }
 
+# Effigy instances (normalized LevelObjectInstanceId, dashes stripped/
+# uppercase, same convention as the per-player collected-flag join above)
+# that are legitimately embedded in rock terrain and cannot be reached
+# through normal movement - only via exploits (e.g. glitching through
+# collision). Confirmed by the user 2026-07-25 via an in-game screenshot
+# showing the effigy inside solid rock. Position is correct (it's a real
+# placed level actor, see load_relics() above), this is a genuine in-game
+# oddity, not an extraction bug - do not "fix" the coordinates.
+RELICS_REQUIRING_EXPLOIT: set[str] = {
+    "E4CCA3164C726E1322ACF4A59F349723",  # Lifmunk Effigy, snow crater lake edge
+}
+
 RELIC_META: dict[str, dict[str, Any]] = {
     "BP_LevelObject_Relic": {"label": "Lifmunk", "icon": "T_itemicon_Relic.png", "effect": "CapturePower"},
     "BP_LevelObject_Relic_FlameBambi": {"label": "Rooby", "icon": "T_itemicon_Relic_04.png", "effect": "JumpPower"},
@@ -94,9 +106,10 @@ def load_relics() -> list[dict[str, Any]]:
         meta = RELIC_META.get(type_key, {"label": type_key, "icon": "T_itemicon_Relic.png", "effect": "Unknown"})
         map_name, pixel_x, pixel_y = locate(r["x"], r["y"])
         raw_id = r.get("instanceId")
+        relic_id = _normalize_id(raw_id) if raw_id else f"{r['cell']}:{r['x']}:{r['y']}"
         relics.append(
             {
-                "id": _normalize_id(raw_id) if raw_id else f"{r['cell']}:{r['x']}:{r['y']}",
+                "id": relic_id,
                 "type": type_key,
                 "label": meta["label"],
                 "icon": meta["icon"],
@@ -105,6 +118,7 @@ def load_relics() -> list[dict[str, Any]]:
                 "map": map_name,
                 "pixel_x": pixel_x,
                 "pixel_y": pixel_y,
+                "requires_exploit": relic_id in RELICS_REQUIRING_EXPLOIT,
             }
         )
     return relics
