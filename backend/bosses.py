@@ -100,6 +100,27 @@ def _weaknesses(element1: str | None, element2: str | None) -> list[str]:
     return [ELEMENT_DISPLAY_NAME.get(el, el) for el in weak]
 
 
+def _weakness_pairs(element1: str | None, element2: str | None) -> list[dict[str, str]]:
+    """Same weaknesses as _weaknesses, but keeping which specific boss type
+    each attacking element counters (every element has exactly one real
+    counter in this single-cycle chart, so a dual-typed boss's two
+    weaknesses are never actually redundant against the same type - e.g.
+    Penking (Water/Ice) is weak to Electric *because of* Water and Fire
+    *because of* Ice, not "both types are weak to both"). Frontend uses
+    this to show "Electric — beats Water" pairing for dual-typed bosses
+    instead of one undifferentiated badge row."""
+    pairs = []
+    for el in (element1, element2):
+        if not el:
+            continue
+        for attacker in _WEAK_TO.get(el, []):
+            pairs.append({
+                "attacker": ELEMENT_DISPLAY_NAME.get(attacker, attacker),
+                "defends": ELEMENT_DISPLAY_NAME.get(el, el),
+            })
+    return pairs
+
+
 def _load_raw() -> list[dict[str, Any]]:
     return json.loads(BOSSES_PATH.read_text(encoding="utf-8"))
 
@@ -122,6 +143,7 @@ def load_bosses() -> list[dict[str, Any]]:
                 "icon": r["icon"],
                 "elements": [ELEMENT_DISPLAY_NAME.get(e, e) for e in elements],
                 "weaknesses": _weaknesses(r["element1"], r["element2"]),
+                "weakness_pairs": _weakness_pairs(r["element1"], r["element2"]),
                 "map": map_name,
                 "pixel_x": pixel_x,
                 "pixel_y": pixel_y,
@@ -188,6 +210,7 @@ def load_towers() -> list[dict[str, Any]]:
                 "level_hard": r["levelHard"],
                 "elements": [ELEMENT_DISPLAY_NAME.get(e, e) for e in elements],
                 "weaknesses": _weaknesses(r["element1"], r["element2"]),
+                "weakness_pairs": _weakness_pairs(r["element1"], r["element2"]),
                 "icon": r["icon"],
                 "position_exact": r["positionExact"],
                 "has_position": has_position,

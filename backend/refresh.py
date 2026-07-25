@@ -12,7 +12,10 @@ from parse import (
     load_dungeon_marker_state,
     load_game_time_ticks,
     load_guild_bases,
+    load_guild_storage_counts,
+    load_item_container_index,
     load_level_world_save_data,
+    load_player_common_inventory,
     load_player_names_and_levels,
 )
 from remote import get_server_uptime_seconds, refresh_and_pull
@@ -35,6 +38,7 @@ SAVE_DIR = Path(LOCAL_SAVE_ROOT) if LOCAL_SAVE_ROOT else LIVE_DIR / "saves"
 OUTPUT = LIVE_DIR / "players.json"
 BASES_OUTPUT = LIVE_DIR / "bases.json"
 DUNGEONS_STATE_OUTPUT = LIVE_DIR / "dungeons_state.json"
+INVENTORIES_OUTPUT = LIVE_DIR / "inventories.json"
 
 
 def run() -> list[dict]:
@@ -54,6 +58,7 @@ def run() -> list[dict]:
     # guild name can be attached before the players.json payload is built.
     bases, guilds = load_guild_bases(world_save_data, names)
     guild_by_uid = {uid: g["name"] for g in guilds.values() for uid in g["player_uids"]}
+    guild_id_by_uid = {uid: gid for gid, g in guilds.items() for uid in g["player_uids"]}
     for p in players:
         p["guild"] = guild_by_uid.get(p["uid"].lower())
 
@@ -113,6 +118,42 @@ def run() -> list[dict]:
         "guilds": guilds,
     }
     BASES_OUTPUT.write_text(json.dumps(bases_payload, indent=2, default=str))
+
+    try:
+        # Backpack ("Common" container) + guild base storage item counts per
+        # player, for "does this player already have N of this crafting
+        # material" tooltips (Schematics) - "materials this player can
+        # actually get to" means their own backpack plus whatever their
+        # guild's shared base storage chests hold, not backpack alone.
+        # container_index is a full scan of worldSaveData.ItemContainerSaveData
+        # (23k+ entries across the whole world) - built once here and reused
+        # for every player/guild rather than re-scanning per player, same
+        # "parse Level.sav once, share the result" rule as world_save_data
+        # itself above.
+        container_index = load_item_container_index(world_save_data)
+        guild_storage = load_guild_storage_counts(world_save_data, container_index)
+        inventories = {}
+        for player_sav in (SAVE_DIR / "Players").glob("*.sav"):
+            if player_sav.stem.endswith("_dps"):
+                continue
+            # Inverse of server.py's _player_sav_path (uid.replace("-",
+            # "").upper() + ".sav") - reinsert UUID dashes at the standard
+            # 8-4-4-4-12 positions rather than re-deriving the real uid from
+            # a fresh read of the save (load_player_common_inventory below
+            # doesn't otherwise need to expose it).
+            s = player_sav.stem
+            uid = f"{s[0:8]}-{s[8:12]}-{s[12:16]}-{s[16:20]}-{s[20:32]}".lower()
+            try:
+                combined = dict(load_player_common_inventory(player_sav, container_index))
+                for item_id, count in guild_storage.get(guild_id_by_uid.get(uid, ""), {}).items():
+                    combined[item_id] = combined.get(item_id, 0) + count
+                inventories[uid] = combined
+            except Exception:
+                traceback.print_exc()
+    except Exception:
+        traceback.print_exc()
+        inventories = {}
+    INVENTORIES_OUTPUT.write_text(json.dumps({"inventories": inventories}, indent=2, default=str))
 
     try:
         marker_state = load_dungeon_marker_state(world_save_data)

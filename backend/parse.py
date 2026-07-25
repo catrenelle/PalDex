@@ -380,6 +380,112 @@ def load_pal_capture_counts(player_sav: Path) -> dict[str, int]:
     return {e["key"]: e["value"] for e in entries}
 
 
+def load_item_container_index(world_save_data: dict[str, Any]) -> dict[str, dict[str, int]]:
+    """Maps every item container GUID in the whole world (23k+ - every base
+    storage box, player backpack, drop stash, etc.) to {item_static_id:
+    total_count}, from worldSaveData.ItemContainerSaveData. A container's
+    key is a PalContainerIdInSaveData struct (`entry["key"]["ID"]["value"]`
+    is the real GUID, confirmed against a real save - not a bare string key
+    like GroupSaveDataMap/BaseCampSaveData use). Each slot's `RawData.value`
+    is already a flat dict with `item.static_id`/`count` (confirmed real
+    example: `{"slot_index": 0, "count": 168, "item": {"static_id":
+    "Money", ...}}`) - counts are summed per item id since a container can
+    hold the same item across multiple slots.
+
+    Used for `load_player_common_inventory` below - build this once per
+    refresh cycle (it's a full scan of the largest save structure) and
+    reuse across every player, rather than re-scanning per player.
+    """
+    index: dict[str, dict[str, int]] = {}
+    for entry in world_save_data.get("ItemContainerSaveData", {}).get("value", []):
+        guid = str(entry["key"]["ID"]["value"])
+        counts: dict[str, int] = {}
+        for slot in entry["value"]["Slots"]["value"]["values"]:
+            raw = slot.get("RawData", {}).get("value", {})
+            item_id = raw.get("item", {}).get("static_id")
+            count = raw.get("count", 0)
+            if item_id and item_id != "None" and count:
+                counts[item_id] = counts.get(item_id, 0) + count
+        index[guid] = counts
+    return index
+
+
+def load_player_common_inventory(
+    player_sav: Path, container_index: dict[str, dict[str, int]]
+) -> dict[str, int]:
+    """A player's own backpack ("Common" container) contents, keyed by item
+    static id -> count. Deliberately only the Common container, not
+    DropSlot/Essential/WeaponLoadOut/PlayerEquipArmor/FoodEquip (the other
+    GUIDs on SaveData.InventoryInfo) - those are equipped-slot/key-item/
+    drop-staging containers, not bulk material storage, so Common alone is
+    a reasonable "how much of this material does the player have"
+    approximation. Base storage chests are separate containers tied to
+    BaseCampSaveData, not referenced from a player's own save at all - see
+    load_guild_storage_counts below for those, combined with this by the
+    caller (refresh.py) rather than merged here, since this function has no
+    guild context of its own.
+    """
+    d = _read_gvas(player_sav)
+    inv_info = d["properties"]["SaveData"]["value"]["InventoryInfo"]["value"]
+    guid = str(inv_info["CommonContainerId"]["value"]["ID"]["value"])
+    return container_index.get(guid, {})
+
+
+# Real storage-chest MapObjectIds (confirmed via a real save's MapObjectSaveData
+# scan) - deliberately excludes "DimensionPalStorage"/"GlobalPalStorage" (Pal
+# storage boxes, not item material storage) and "EnergyStorage_Electric" (a
+# power generator building, unrelated despite the "Storage" name).
+_CHEST_MAP_OBJECT_IDS = {"ItemChest", "ItemChest_02", "ItemChest_03", "ItemChest_04", "GuildChest"}
+
+
+def load_guild_storage_counts(
+    world_save_data: dict[str, Any], container_index: dict[str, dict[str, int]]
+) -> dict[str, dict[str, int]]:
+    """Aggregate item counts across every storage chest at every base
+    belonging to a guild, keyed by guild id -> {item_static_id: count} -
+    "does my guild have enough Wood in our shared base storage," combined
+    by the caller with a specific player's own load_player_common_inventory
+    for a single "materials this player can get to" total.
+
+    Each chest is a MapObjectSaveData entry (not referenced from
+    BaseCampSaveData itself, which has no container field at all - checked).
+    Its real storage container GUID lives in a *module*, not a plain field:
+    ConcreteModel.ModuleMap's "EPalMapObjectConcreteModelModuleType::
+    ItemContainer" entry's RawData.target_container_id - joins directly
+    into the same ItemContainerSaveData container_index used for player
+    backpacks (confirmed against a real chest + a real base). The chest's
+    owning base is Model.RawData.base_camp_id_belong_to, joined to a guild
+    id via BaseCampSaveData.RawData.group_id_belong_to - the same base->guild
+    join load_guild_bases does, but that function returns display-ready
+    base/guild dicts rather than a bare base_id->guild_id lookup, so this
+    builds its own small one rather than depending on that function's shape.
+    """
+    base_to_guild = {
+        str(entry["key"]): str(entry["value"]["RawData"]["value"].get("group_id_belong_to", ""))
+        for entry in world_save_data.get("BaseCampSaveData", {}).get("value", [])
+    }
+    guild_counts: dict[str, dict[str, int]] = {}
+    for entry in world_save_data.get("MapObjectSaveData", {}).get("value", {}).get("values", []):
+        if entry.get("MapObjectId", {}).get("value") not in _CHEST_MAP_OBJECT_IDS:
+            continue
+        base_id = str(entry["Model"]["value"]["RawData"]["value"].get("base_camp_id_belong_to", ""))
+        guild_id = base_to_guild.get(base_id)
+        if not guild_id:
+            continue
+        module_map = entry["ConcreteModel"]["value"]["ModuleMap"]["value"]
+        item_container = next((m for m in module_map if "ItemContainer" in str(m.get("key", ""))), None)
+        if not item_container:
+            continue
+        container_guid = str(item_container["value"]["RawData"]["value"].get("target_container_id", ""))
+        counts = container_index.get(container_guid, {})
+        if not counts:
+            continue
+        bucket = guild_counts.setdefault(guild_id, {})
+        for item_id, count in counts.items():
+            bucket[item_id] = bucket.get(item_id, 0) + count
+    return guild_counts
+
+
 def build_player_snapshot(save_dir: Path, names: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
     players = []
     for player_sav in sorted((save_dir / "Players").glob("*.sav")):

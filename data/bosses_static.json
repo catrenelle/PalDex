@@ -73,8 +73,8 @@
     "element2": null,
     "icon": "Pal_WhiteTiger_Ground.png",
     "level": 62,
-    "x": -721639,
-    "y": -432015,
+    "x": -721639.0,
+    "y": -432015.0,
     "z": 10210.874
   },
   {
@@ -99,7 +99,7 @@
     "element2": "Electricity",
     "icon": "Pal_RaijinDaughter_Water.png",
     "level": 60,
-    "x": -516157,
+    "x": -516157.0,
     "y": -393151.12,
     "z": -721.86566
   },
@@ -203,9 +203,9 @@
     "element2": "Leaf",
     "icon": "Pal_GrassGolem.png",
     "level": 75,
-    "x": 517450,
-    "y": -626940,
-    "z": 10980
+    "x": 517450.0,
+    "y": -626940.0,
+    "z": 10980.0
   },
   {
     "spawnerId": "worldtree_9_11_N_FBOSS_1",
@@ -216,8 +216,8 @@
     "element2": null,
     "icon": "Pal_WhiteDeer_Dark.png",
     "level": 79,
-    "x": 520440,
-    "y": -727175,
+    "x": 520440.0,
+    "y": -727175.0,
     "z": 41054.54
   },
   {
@@ -242,9 +242,9 @@
     "element2": null,
     "icon": "Pal_MushroomLady.png",
     "level": 78,
-    "x": 458095,
-    "y": -694560,
-    "z": 19325
+    "x": 458095.0,
+    "y": -694560.0,
+    "z": 19325.0
   },
   {
     "spawnerId": "worldtree_9_07_I_FBOSS_1",
@@ -255,9 +255,9 @@
     "element2": "Earth",
     "icon": "Pal_VolcanoDragon_Ice.png",
     "level": 78,
-    "x": 571870,
-    "y": -733420,
-    "z": 18000
+    "x": 571870.0,
+    "y": -733420.0,
+    "z": 18000.0
   },
   {
     "spawnerId": "worldtree_9_05_D_FBOSS_1",
@@ -270,7 +270,7 @@
     "level": 78,
     "x": 601096.75,
     "y": -572063.06,
-    "z": 30180
+    "z": 30180.0
   },
   {
     "spawnerId": "worldtree_9_13_M_FBOSS_1",
@@ -320,9 +320,9 @@
     "element2": "Earth",
     "icon": "Pal_DarkScorpion.png",
     "level": 44,
-    "x": 122760,
-    "y": 318710,
-    "z": 320
+    "x": 122760.0,
+    "y": 318710.0,
+    "z": 320.0
   },
   {
     "spawnerId": "81_2_dessert_FBOSS_5",
@@ -450,8 +450,8 @@
     "element2": "Water",
     "icon": "Pal_IceNarwhal.png",
     "level": 55,
-    "x": 262730,
-    "y": 75740,
+    "x": 262730.0,
+    "y": 75740.0,
     "z": -3182.9998
   },
   {
@@ -463,9 +463,9 @@
     "element2": null,
     "icon": "Pal_IceHorse.png",
     "level": 60,
-    "x": 109790,
-    "y": -5880,
-    "z": 22180
+    "x": 109790.0,
+    "y": -5880.0,
+    "z": 22180.0
   },
   {
     "spawnerId": "sakura_purple_D_LilyQueen",
@@ -528,8 +528,8 @@
     "element2": "Dark",
     "icon": "Pal_GhostDragon.png",
     "level": 69,
-    "x": -822007,
-    "y": -66402,
+    "x": -822007.0,
+    "y": -66402.0,
     "z": 40122.793
   },
   {
@@ -554,9 +554,9 @@
     "element2": null,
     "icon": "Pal_ThunderFluffyBird.png",
     "level": 67,
-    "x": -822824,
-    "y": 16747,
-    "z": 45679
+    "x": -822824.0,
+    "y": 16747.0,
+    "z": 45679.0
   },
   {
     "spawnerId": "skyisland_8_10_D_swamp_FBOSS_1",
@@ -580,8 +580,8 @@
     "element2": "Water",
     "icon": "Pal_LotusDragon.png",
     "level": 69,
-    "x": -802420,
-    "y": -112610,
+    "x": -802420.0,
+    "y": -112610.0,
     "z": 51608.094
   },
   {
@@ -593,9 +593,9 @@
     "element2": null,
     "icon": "Pal_ElecSnail.png",
     "level": 65,
-    "x": -772844,
-    "y": -11173,
-    "z": 39727
+    "x": -772844.0,
+    "y": -11173.0,
+    "z": 39727.0
   },
   {
     "spawnerId": "81_1_grass_FBOSS_14",
@@ -606,8 +606,8 @@
     "element2": null,
     "icon": "Pal_Anubis.png",
     "level": 55,
-    "x": -167230,
-    "y": 96430,
+    "x": -167230.0,
+    "y": 96430.0,
     "z": -1737.1323
   },
   {
@@ -619,9 +619,9 @@
     "element2": "Earth",
     "icon": "Pal_GrassMammoth.png",
     "level": 38,
-    "x": -343155,
-    "y": 244585,
-    "z": -95
+    "x": -343155.0,
+    "y": 244585.0,
+    "z": -95.0
   },
   {
     "spawnerId": "1_10_plain_F_Boss_FairyDragon",
@@ -645,9 +645,9 @@
     "element2": null,
     "icon": "Pal_FengyunDeeper.png",
     "level": 25,
-    "x": -333940,
-    "y": 39610,
-    "z": 1600
+    "x": -333940.0,
+    "y": 39610.0,
+    "z": 1600.0
   },
   {
     "spawnerId": "81_1_grass_FBOSS_23",
@@ -658,9 +658,9 @@
     "element2": null,
     "icon": "Pal_Kirin.png",
     "level": 31,
-    "x": -372950,
-    "y": 104400,
-    "z": -770
+    "x": -372950.0,
+    "y": 104400.0,
+    "z": -770.0
   },
   {
     "spawnerId": "81_1_grass_FBOSS_4",
@@ -684,9 +684,9 @@
     "element2": "Dragon",
     "icon": "Pal_BlueDragon.png",
     "level": 40,
-    "x": -246100,
-    "y": 77200,
-    "z": -1460
+    "x": -246100.0,
+    "y": 77200.0,
+    "z": -1460.0
   },
   {
     "spawnerId": "81_1_grass_FBOSS_18",
@@ -710,9 +710,9 @@
     "element2": null,
     "icon": "Pal_KingAlpaca.png",
     "level": 23,
-    "x": -335225,
-    "y": 180735,
-    "z": 475
+    "x": -335225.0,
+    "y": 180735.0,
+    "z": 475.0
   },
   {
     "spawnerId": "81_1_grass_FBOSS_24",
@@ -736,8 +736,8 @@
     "element2": "Water",
     "icon": "Pal_Umihebi.png",
     "level": 55,
-    "x": -162910,
-    "y": 318720,
+    "x": -162910.0,
+    "y": 318720.0,
     "z": -2382.3545
   },
   {
@@ -749,9 +749,9 @@
     "element2": null,
     "icon": "Pal_FairyDragon.png",
     "level": 30,
-    "x": -254060,
-    "y": 178050,
-    "z": 4000
+    "x": -254060.0,
+    "y": 178050.0,
+    "z": 4000.0
   },
   {
     "spawnerId": "81_1_grass_FBOSS_27",
@@ -762,9 +762,9 @@
     "element2": "Water",
     "icon": "Pal_LazyCatfish.png",
     "level": 14,
-    "x": -122060,
-    "y": 15810,
-    "z": -1460
+    "x": -122060.0,
+    "y": 15810.0,
+    "z": -1460.0
   },
   {
     "spawnerId": "81_1_grass_FBOSS_22",
@@ -775,9 +775,9 @@
     "element2": null,
     "icon": "Pal_HawkBird.png",
     "level": 18,
-    "x": -155950,
-    "y": 31260,
-    "z": -1960
+    "x": -155950.0,
+    "y": 31260.0,
+    "z": -1960.0
   },
   {
     "spawnerId": "81_1_grass_FBOSS_30",
@@ -827,9 +827,9 @@
     "element2": null,
     "icon": "Pal_GrassPanda_Electric.png",
     "level": 31,
-    "x": -206970,
-    "y": 363810,
-    "z": 1140
+    "x": -206970.0,
+    "y": 363810.0,
+    "z": 1140.0
   },
   {
     "spawnerId": "81_1_grass_FBOSS_29",
@@ -840,9 +840,9 @@
     "element2": null,
     "icon": "Pal_Yeti_Grass.png",
     "level": 38,
-    "x": -147370,
-    "y": 364010,
-    "z": -1940
+    "x": -147370.0,
+    "y": 364010.0,
+    "z": -1940.0
   },
   {
     "spawnerId": "81_1_forest_FBOSS_6",
@@ -1009,9 +1009,9 @@
     "element2": null,
     "icon": "BOSS_Hunter_Fat_GatlingGun.png",
     "level": 20,
-    "x": -242340,
-    "y": 36220,
-    "z": 13020
+    "x": -242340.0,
+    "y": 36220.0,
+    "z": 13020.0
   },
   {
     "spawnerId": "BOSS_Ninja",
@@ -1154,7 +1154,7 @@
     "level": 52,
     "x": -75788.086,
     "y": -82304.96,
-    "z": -960
+    "z": -960.0
   },
   {
     "spawnerId": "BOSS_Male_Trader01",
@@ -1217,9 +1217,9 @@
     "element2": null,
     "icon": "BOSS_Male_NinjaElite.png",
     "level": 53,
-    "x": -18160,
-    "y": -151400,
-    "z": 2360
+    "x": -18160.0,
+    "y": -151400.0,
+    "z": 2360.0
   },
   {
     "spawnerId": "BOSS_Hunter_Rifle",
@@ -1282,9 +1282,9 @@
     "element2": null,
     "icon": "BOSS_Male_Soldier.png",
     "level": 15,
-    "x": -409430,
-    "y": 24820,
-    "z": 1880
+    "x": -409430.0,
+    "y": 24820.0,
+    "z": 1880.0
   },
   {
     "spawnerId": "BOSS_Female_People",
@@ -1308,9 +1308,9 @@
     "element2": null,
     "icon": "BOSS_Female_Soldier.png",
     "level": 19,
-    "x": -177380,
-    "y": 9850,
-    "z": 6230
+    "x": -177380.0,
+    "y": 9850.0,
+    "z": 6230.0
   },
   {
     "spawnerId": "BOSS_Female_Soldier03",
@@ -1321,9 +1321,9 @@
     "element2": null,
     "icon": "BOSS_Female_Soldier03.png",
     "level": 39,
-    "x": -231660,
-    "y": -113810,
-    "z": -1150
+    "x": -231660.0,
+    "y": -113810.0,
+    "z": -1150.0
   },
   {
     "spawnerId": "BOSS_Female_People02",
@@ -1412,9 +1412,9 @@
     "element2": null,
     "icon": "Pal_BerryGoat_Dark.png",
     "level": 23,
-    "x": -426590,
-    "y": 90670,
-    "z": 110
+    "x": -426590.0,
+    "y": 90670.0,
+    "z": 110.0
   },
   {
     "spawnerId": "81_5_Yamijima_FBOSS_9",
@@ -1464,9 +1464,9 @@
     "element2": null,
     "icon": "Pal_IceFox.png",
     "level": 15,
-    "x": -276240,
-    "y": 268990,
-    "z": -1300
+    "x": -276240.0,
+    "y": 268990.0,
+    "z": -1300.0
   },
   {
     "spawnerId": "81_1_forest_FBOSS_4",
@@ -1504,7 +1504,7 @@
     "icon": "Pal_VioletFairy.png",
     "level": 27,
     "x": -245458.9,
-    "y": 149122,
+    "y": 149122.0,
     "z": 822.97565
   },
   {
@@ -1518,7 +1518,7 @@
     "level": 66,
     "x": -773523.9,
     "y": 51495.863,
-    "z": 45252
+    "z": 45252.0
   },
   {
     "spawnerId": "81_1_grass_FBOSS_6",
@@ -1594,9 +1594,9 @@
     "element2": null,
     "icon": "Pal_Kitsunebi_Ice.png",
     "level": 15,
-    "x": -149050,
-    "y": -30550,
-    "z": -1380
+    "x": -149050.0,
+    "y": -30550.0,
+    "z": -1380.0
   },
   {
     "spawnerId": "REGION_Oilrig_3",
@@ -1608,7 +1608,7 @@
     "icon": "T_icon_compass_Oilrig.png",
     "level": 60,
     "x": -789847.9,
-    "y": -636231,
+    "y": -636231.0,
     "z": -250.0003
   },
   {
@@ -1635,6 +1635,6 @@
     "level": 30,
     "x": -250672.6,
     "y": 232290.08,
-    "z": -2100
+    "z": -2100.0
   }
 ]

@@ -4,6 +4,13 @@
 <meta charset="utf-8" />
 <title>PalDex - PalletTown01 Live Map</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<!-- The game's own actual UI fonts (confirmed via extractor/PalExtract's font-asset
+     probe: Pal/Content/Pal/Font/Anton, /NotoSans, /Number/Oxanium) - all three are
+     free/open-license Google Fonts under the hood, so these are the real fonts, not
+     a lookalike substitute. Anton = headers, Noto Sans = body, Oxanium = numbers. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans:wght@400;500;700&family=Oxanium:wght@500;700&display=swap" rel="stylesheet">
 <style>
   /* Matches the map textures' own void color (sampled from T_WorldMap.png
      corners: rgb(13,22,30)) so the canvas edge doesn't cut hard to black. */
@@ -273,10 +280,151 @@
     opacity: 0.75;
   }
 
-  .boss-tooltip .bt-name { font-weight: 700; }
+  /* Palworld-style tooltip shell: header name BAR (its own background,
+     bleeding full-width via negative margins - see the parent
+     .leaflet-tooltip's padding:0/overflow:hidden comment above) + a divider
+     rule below it, matching the game's own Pal-ability tooltip layout (name
+     bar, thin separator, then content) rather than one undifferentiated
+     text block. */
+  .boss-tooltip { padding: 6px 10px 8px; font-family: 'Noto Sans', system-ui, sans-serif; }
+  .boss-tooltip .bt-name {
+    font-family: 'Anton', sans-serif; font-weight: 400; letter-spacing: 0.02em;
+    font-size: 15px;
+    margin: -6px -10px 6px; padding: 7px 10px 6px;
+    background: rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
   .boss-tooltip .bt-line { color: #cde; }
   .boss-tooltip .bt-weak { color: #f2b56b; }
   .boss-tooltip .bt-preview { color: #9ab; font-style: italic; }
+  .boss-tooltip .bt-desc { color: #cde; }
+  /* Numeric stat values read as more "gamey"/HUD-like in the game's own
+     number-specific font rather than Noto Sans' plain digits. */
+  .bt-stat b { font-family: 'Oxanium', sans-serif; font-weight: 700; }
+  /* Separates the description/stats/bonus block above from the crafting
+     materials list below, matching the user's requested "line between
+     description and materials" layout. */
+  .bt-divider { border-top: 1px solid rgba(255,255,255,0.15); margin: 6px 0; }
+
+  /* Element badges: small icon + colored pill, replacing plain-text element/
+     weakness lines - mirrors the game's own ability-tooltip element chip
+     (icon on a colored rounded rect) rather than bare words. Colors are a
+     visual match to each element's own in-game icon palette, not extracted
+     data (no per-element color table exists). */
+  .bt-badge-row { display: flex; flex-wrap: wrap; gap: 4px; margin: 3px 0; }
+  .element-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 1px 7px 1px 3px; border-radius: 10px;
+    font-size: 11px; font-weight: 600; color: #fff;
+    background: var(--el-color, #555);
+  }
+  .element-badge img { width: 14px; height: 14px; object-fit: contain; }
+  .element-badge.el-Fire { --el-color: #d9591f; }
+  .element-badge.el-Water { --el-color: #2f7fd0; }
+  .element-badge.el-Ground { --el-color: #8a6a42; }
+  .element-badge.el-Ice { --el-color: #2ea3b8; }
+  .element-badge.el-Grass { --el-color: #4f9142; }
+  .element-badge.el-Electric { --el-color: #b39113; }
+  .element-badge.el-Dragon { --el-color: #9b3fa8; }
+  .element-badge.el-Dark { --el-color: #4a3568; }
+  .element-badge.el-Neutral { --el-color: #767d85; }
+
+  /* Dual-typed boss weakness pairing (Weakness section, only when a boss
+     has two types) - one row per {attacker, defends} pair, badge + a small
+     "beats X" caption instead of one undifferentiated badge row, so it's
+     clear which half of the dual type each attack actually punishes. */
+  .bt-weakness-pairs { display: flex; flex-direction: column; gap: 3px; margin: 3px 0; }
+  .bt-weakness-pair { display: flex; align-items: center; gap: 6px; }
+  .bt-weakness-beats {
+    font-size: 11px; color: #cde; background: rgba(0,0,0,0.45);
+    padding: 2px 6px; border-radius: 3px;
+  }
+
+  /* NPC shop tooltip's "click for full list" prompt - the game's own real
+     left-click key-guide glyph (extractor/PalExtract's export) instead of
+     plain text, matching how the game itself prompts this interaction. */
+  .bt-click-hint {
+    display: flex; align-items: center; gap: 5px; margin-top: 4px;
+    color: #6fa8dc; font-size: 12px;
+  }
+  .bt-click-hint img { width: 16px; height: 16px; object-fit: contain; }
+  /* NPC tooltip header only (not the shared .bt-name every other tooltip
+     type also uses, which relies on plain block stacking - e.g. Schematics'
+     own category/rarity sub-row appended after the title) - name on the
+     left, currency icon on the right. */
+  .npc-bt-name { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .bt-currency-icon { width: 20px; height: 20px; object-fit: contain; flex-shrink: 0; }
+
+  /* Schematic tooltip extras: Weapon/Armor stat chips (small rounded chip
+     row, same visual language as the element badges above but
+     neutral-colored since these aren't element-typed), and a
+     crafting-materials ROW list (icon/name/cost per row, banded background)
+     matching the game's own crafting-window material list rather than an
+     inline chip row - the cost column needs room to show "{owned}/{cost}",
+     which reads poorly squeezed into a small pill. */
+  .bt-stat-row { display: flex; flex-wrap: wrap; gap: 4px; margin: 3px 0; }
+  .bt-stat {
+    background: rgba(255,255,255,0.08); border-radius: 4px; padding: 1px 6px;
+    font-size: 11px; color: #cde;
+  }
+  .bt-stat b { color: #fff; font-family: 'Oxanium', sans-serif; font-weight: 700; }
+  .bt-section-label {
+    font-size: 10px; font-weight: 700; color: #9ab; text-transform: uppercase;
+    letter-spacing: 0.04em; margin: 2px 0 3px;
+  }
+  .bt-material-list { display: flex; flex-direction: column; margin: 3px 0; border-radius: 4px; overflow: hidden; }
+  .bt-material-row {
+    display: flex; align-items: center; gap: 6px; padding: 3px 6px;
+    font-size: 11px; color: #cde;
+  }
+  .bt-material-row:nth-child(odd) { background: rgba(255,255,255,0.05); }
+  .bt-material-row img { width: 18px; height: 18px; object-fit: contain; flex-shrink: 0; }
+  .bt-material-name { flex: 1; }
+  .bt-material-count { font-family: 'Oxanium', sans-serif; font-weight: 700; color: #fff; }
+  .bt-material-count.bt-material-short { color: #ff6b6b; }
+
+  /* Header sub-row (category + rarity), sitting inside .bt-name below the
+     item name - matches the game's own crafting-panel header layout
+     (name, then a category-left/rarity-right line). */
+  .bt-subheader {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: 'Noto Sans', system-ui, sans-serif; font-size: 11px; font-weight: 400;
+    margin-top: 3px; letter-spacing: normal;
+  }
+  .bt-category { color: #6fd6e8; text-transform: uppercase; letter-spacing: 0.03em; }
+  .bt-rarity { font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
+
+  /* Large item icon preview - approximates the game's own crafting-panel
+     "viewfinder" look (diagonal hazard-stripe background behind the icon,
+     corner-bracket border) in pure CSS, since no such background texture
+     exists as an extractable game asset (confirmed: it's baked into a
+     Widget/Material graph, not a discoverable file) - this is a deliberate
+     approximation, not a real extracted image. Colors come from CSS custom
+     properties (--rarity-rgb solid triplet for the corner brackets,
+     --rarity-tint precomputed rgba() strings for the stripe/border/glow)
+     set inline per-tooltip when the item's real rarity is known
+     (extractor/PalExtract's ExtractRarityLabel) - falls back to a neutral
+     cyan default (var(...)'s fallback) for the ~2 schematic types with no
+     rarity tag (Handbooks/Implants) rather than leaving them unstyled. */
+  .bt-icon-preview {
+    position: relative; width: 100%; height: 72px; margin: 6px 0;
+    border-radius: 4px; overflow: hidden;
+    background-color: #1c2b33;
+    background-image: repeating-linear-gradient(45deg,
+      var(--rarity-tint-weak, rgba(79, 184, 224, 0.10)) 0px, var(--rarity-tint-weak, rgba(79, 184, 224, 0.10)) 2px,
+      transparent 2px, transparent 14px);
+    border: 1px solid var(--rarity-tint-mid, rgba(111, 214, 232, 0.5));
+    box-shadow: inset 0 0 12px var(--rarity-tint-strong, rgba(79, 184, 224, 0.25));
+    display: flex; align-items: center; justify-content: center;
+  }
+  .bt-icon-preview img { width: 56px; height: 56px; object-fit: contain; filter: drop-shadow(0 0 4px rgba(0,0,0,0.6)); }
+  /* Corner brackets, matching the game's own viewfinder-frame accents. */
+  .bt-icon-preview::before, .bt-icon-preview::after {
+    content: ''; position: absolute; width: 10px; height: 10px;
+    border: 2px solid var(--rarity-color, #6fd6e8); opacity: 0.85;
+  }
+  .bt-icon-preview::before { top: 3px; left: 3px; border-right: none; border-bottom: none; }
+  .bt-icon-preview::after { bottom: 3px; right: 3px; border-left: none; border-top: none; }
 
   /* Leaflet's own default tooltip styling is a white box, dark (#222) text,
      and white-space:nowrap - every tooltip on this map (Bosses/Towers/
@@ -288,16 +436,66 @@
      the UI's dark theme (same rgba(20,22,26,*) used by #legend/.player-label)
      and let content actually wrap within a fixed max-width. */
   .leaflet-tooltip:not(.player-label) {
-    /* An explicit width, not max-width: Leaflet positions tooltips purely
-       via CSS transform (no left/right), and Chromium's shrink-to-fit sizing
-       for an unconstrained absolutely-positioned element in that situation
-       collapses width down to its longest unbreakable word, ignoring
-       max-width entirely (confirmed empirically - raising max-width from
-       260px to 1000px made no difference, width stayed ~70-90px). An
-       explicit width sidesteps that shrink-to-fit computation altogether. */
+    /* No width/min-width/max-width here anymore - Leaflet positions
+       tooltips purely via CSS transform (no left/right), and Chromium's
+       shrink-to-fit sizing for an unconstrained absolutely-positioned
+       element in that situation collapses width down to its longest
+       unbreakable word, ignoring max-width entirely (confirmed empirically
+       - raising max-width from 260px to 1000px made no difference, width
+       stayed ~70-90px). A fixed width sidestepped that but forced long
+       titles to wrap. Real fix: .boss-tooltip (the actual content, always
+       this element's sole child) gets an explicit per-instance width
+       inline (see boxWidthStyle, sized to fit that tooltip's own title on
+       one line) - once the child has a definite width, this wrapper sizes
+       to match it correctly; "auto" width is only broken in this specific
+       transform-positioned context, not width-driven-by-a-sized-child. */
     background: rgba(20, 22, 26, 0.95); border: 1px solid #555; color: #eee;
-    white-space: normal; width: 220px; box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    white-space: normal; box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    /* padding lives on .boss-tooltip instead (not here) so .bt-name can
+       bleed full-width for its own header-bar background below - a plain
+       tooltip-level padding would leave the header inset like everything
+       else. overflow:hidden clips that full-bleed header to this element's
+       own border-radius instead of needing to duplicate the radius value
+       on .bt-name. */
+    padding: 0; border-radius: 4px; overflow: hidden;
   }
+
+  /* Watchtowers/Waypoints: the game's own fast-travel tooltip has no boxed
+     panel background behind the whole tooltip - overrides the general
+     boxed-tooltip rule above for this one variant (still needs
+     :not(.player-label)'s own specificity beaten, hence the two-class
+     selector). direction:'right' (not 'top', see the marker.bindTooltip
+     call) anchors the tooltip's left-center edge directly at the marker
+     (confirmed via real measured bounding boxes: the marker's own center
+     sits right at the tooltip's left edge, vertically mid-title) - so
+     Leaflet's own built-in directional arrow already points exactly at the
+     marker with correct geometry; recoloring it (below) is simpler and
+     more accurate than hand-building a custom connector line was (an
+     earlier attempt assumed direction:'top' centered-above geometry and
+     didn't actually reach the marker - this is the fix). white-space:nowrap
+     since a location name is short and never needs to wrap - important
+     here specifically because this variant has no explicit width set at
+     all (unlike boxWidthStyle's boxed tooltips), and nowrap content
+     reports its own real intrinsic width regardless of the
+     transform-positioned-element auto-width quirk documented above
+     (there's no wrapping decision to make, so that shrink-to-fit collapse
+     bug doesn't apply). */
+  .leaflet-tooltip.travel-tooltip {
+    background: none; border: none; box-shadow: none; padding: 0;
+    white-space: nowrap;
+  }
+  .leaflet-tooltip-right.travel-tooltip::before { border-right-color: #6fd6e8; }
+  /* A snug dark pill directly behind the text (not the whole tooltip) -
+     plain colored text with only a drop-shadow was too low-contrast against
+     light map terrain (real user report), matching the boxed tooltips'
+     own dark backing without reintroducing a full panel. */
+  .tt-title {
+    font-family: 'Noto Sans', system-ui, sans-serif; font-weight: 500; font-size: 13px;
+    color: #6fd6e8; display: inline-block;
+    background: rgba(10, 14, 18, 0.8); padding: 4px 9px 5px; border-radius: 3px 3px 0 0;
+    border-bottom: 2px solid #6fd6e8;
+  }
+
   /* Dungeons: unlike every other section, no per-item state exists to check
      off (see backend/dungeons.py docstring), so this reuses .section-header's
      layout/hover styling but with no chevron and no expandable list under it
@@ -1136,7 +1334,10 @@
             iconSize: [22, 22],
           }),
         }).addTo(map);
-        marker.bindTooltip(r.label, { direction: 'top' });
+        const effigyTitle = `${r.label} Effigy`;
+        const effigyTooltip = `<div class="boss-tooltip"${boxWidthStyle(effigyTitle)}><div class="bt-name">${effigyTitle}</div>`
+          + (r.effect_description ? `<div class="bt-desc">${r.effect_description}</div>` : '') + `</div>`;
+        marker.bindTooltip(effigyTooltip, { direction: 'top' });
         relicMarkers.set(r.id, marker);
       } else if (!map.hasLayer(marker)) {
         marker.addTo(map);
@@ -1274,11 +1475,41 @@
   // genuinely per-player - so only loadQuests needs to know which case
   // this is: rebuild (fresh "everything checked") on a real switch, or
   // preserve the user's Hide All/per-quest choices on a same-player poll.
+  // Selected player's backpack item counts (item_id -> count), for
+  // Schematic tooltips' "do I already have this material" display -
+  // {owned}/{cost} once a player is selected, just {cost} for "All players"
+  // (no single-player answer makes sense there, same convention as Quests).
+  // A plain object, not re-fetched per-tooltip-hover - refreshed alongside
+  // everything else in reloadCollectionState.
+  let playerInventory = null;
+  async function loadInventory() {
+    const playerUid = viewAsSelect.value;
+    if (!playerUid) { playerInventory = null; return; }
+    try {
+      const res = await fetch(`/api/inventory?view_as=${encodeURIComponent(playerUid)}`, { cache: 'no-store' });
+      const data = await res.json();
+      playerInventory = data.known ? data.items : null;
+    } catch (e) {
+      playerInventory = null;
+    }
+    // loadSchematics's own tooltipHtml reads playerInventory, but
+    // reloadCollectionState dispatches loadInventory/loadSchematics as two
+    // independent, unordered fetches - without this, a just-selected
+    // player's Schematic tooltips would keep showing stale (or "All
+    // players") material counts until the *next* 10s poll cycle happens to
+    // re-render after this fetch has already resolved. loadSchematics is
+    // declared later in this script but hoisted (function declaration), so
+    // calling it here is safe regardless of textual order.
+    loadSchematics();
+  }
+
+  loadInventory();
+
   function reloadCollectionState(isPlayerSwitch) {
     loadRelics(); loadBosses(); loadBounties(); loadTowers();
     loadQuests({ rebuildList: !!isPlayerSwitch });
     loadJournals(); loadSchematics(); loadWatchtowers(); loadWaypoints(); loadBases(); loadDungeons();
-    loadPalSpawns();
+    loadPalSpawns(); loadInventory();
   }
   viewAsSelect.addEventListener('change', () => reloadCollectionState(true));
 
@@ -1298,13 +1529,89 @@
 
   loadRelics({ rebuildLegend: true });
 
+  // ---------- Shared: element badge (icon + colored pill) ----------
+  // backend/bosses.py's ELEMENT_DISPLAY_NAME already converts internal names
+  // to wiki-common display names (Earth->Ground, Leaf->Grass,
+  // Electricity->Electric, Normal->Neutral) before these arrays ever reach
+  // the frontend - but the extracted icon files (extractor/PalExtract's
+  // element badge section) are named after the *internal* enum, so this map
+  // bridges display name -> icon file/CSS-class name. Fire/Water/Ice/Dark/
+  // Dragon match on both sides and pass through unchanged.
+  const ELEMENT_ICON_FILE = { Ground: 'Earth', Grass: 'Leaf', Electric: 'Electricity', Neutral: 'Normal' };
+  function elementBadge(displayName) {
+    const iconFile = ELEMENT_ICON_FILE[displayName] || displayName;
+    return `<span class="element-badge el-${displayName}"><img src="/assets/element_icons/${iconFile}.png" />${displayName}</span>`;
+  }
+  function elementBadgeRow(names) {
+    return `<div class="bt-badge-row">${names.map(elementBadge).join('')}</div>`;
+  }
+
+  // ---------- Shared: tooltip width-to-fit-title ----------
+  // Every .boss-tooltip is inside Leaflet's own tooltip div, which is
+  // positioned via a CSS transform with no left/right - an absolutely
+  // positioned box like that, given only max-width and wrapping text,
+  // collapses to min-content (the single longest unbreakable word) instead
+  // of a sensible shrink-to-fit size (confirmed empirically elsewhere in
+  // this file - a plain max-width alone doesn't fix it). A fixed width
+  // avoided that but forced long titles ("Applied Medicine Production
+  // Handbook I") to wrap. Fix: measure the title with a real canvas context
+  // (same font as .bt-name) and set an explicit per-tooltip width - once
+  // .boss-tooltip itself has a definite width, the outer Leaflet div sizes
+  // to match it correctly (only "auto" width in that positioning context is
+  // what breaks). Body text (description/materials) still wraps normally
+  // within that width; only the title needs to fit on one line.
+  const _measureCtx = document.createElement('canvas').getContext('2d');
+  function boxWidthStyle(title, { min = 220, max = 340 } = {}) {
+    _measureCtx.font = '400 15px Anton, sans-serif';
+    const textWidth = _measureCtx.measureText(title).width;
+    // +40: .boss-tooltip's own 10px*2 horizontal padding plus a little
+    // breathing room so the title doesn't touch the tooltip's edges.
+    const width = Math.max(min, Math.min(max, Math.ceil(textWidth) + 40));
+    return ` style="width:${width}px"`;
+  }
+
+  // ---------- Schematic tooltip helpers (category label, rarity color) ----------
+  // Plural display category, matching the game's own crafting-panel header
+  // ("Weapons"/"Schematics") - no display-category table exists that gives
+  // these exact plural forms project-wide (DT_UI_Common_Text_Common has
+  // singular COMMON_ITEMTYPE_A_* text instead), so this is a small hardcoded
+  // map rather than extracted data.
+  const ITEM_CATEGORY_LABEL = {
+    Weapon: 'Weapons', Armor: 'Armor', Accessory: 'Accessories',
+    Blueprint: 'Schematics', Consume: 'Consumables', Material: 'Materials',
+  };
+  // Rarity color is Blueprint-UI-logic-only (no DT_Rarity*/color DataTable
+  // exists, confirmed) - but the rarity *word* itself (e.g. "Rare") is real
+  // extracted text (extractor/PalExtract's ExtractRarityLabel, pulled from
+  // the schematic's own in-game description tag, not guessed from the
+  // numeric Rarity field which doesn't correlate with the displayed word).
+  // Only the color-per-word mapping below is a presentation choice.
+  const RARITY_COLOR = {
+    Common: '#b0b6bd', Uncommon: '#5fc75f', Rare: '#4fb8e0',
+    Epic: '#b573e0', Legendary: '#e0a83c',
+  };
+  function hexToRgbTriplet(hex) {
+    const h = hex.replace('#', '');
+    return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)).join(',');
+  }
+  // Icon-preview box tint, driving the CSS custom properties .bt-icon-preview
+  // reads (--rarity-color/--rarity-tint-weak/mid/strong) - built as inline
+  // style rather than a CSS class per rarity since the color set itself is
+  // just RARITY_COLOR's 5 values, no need for 5 near-duplicate CSS rules.
+  function rarityBoxStyle(rarityLabel) {
+    const hex = RARITY_COLOR[rarityLabel];
+    if (!hex) return '';
+    const rgb = hexToRgbTriplet(hex);
+    return ` style="--rarity-color:${hex}; --rarity-tint-weak:rgba(${rgb},0.14); --rarity-tint-mid:rgba(${rgb},0.55); --rarity-tint-strong:rgba(${rgb},0.3);"`;
+  }
+
   // ---------- Shared: collapsible "Bosses"/"Bounty"-style checklist section ----------
   // Groups markers by `type_key` (species for Bosses, name for Bounty) into an
   // expandable checklist, mirroring the Effigies section's UX.
   function createTypeChecklistSection({
     headerId, listId, masterToggleId, countId, markerClass, iconSize, sortByLevel, squareIcon,
     iconDir = 'boss_icons', collectedField = 'defeated', knownFlagKey = 'defeat_known', visualStyle = 'checkmark',
-    collectedWord, storageKey,
+    collectedWord, storageKey, tooltipStyle, hideCollected = false,
   }) {
     const header = document.getElementById(headerId);
     const list = document.getElementById(listId);
@@ -1334,12 +1641,50 @@
     masterToggle.addEventListener('click', (e) => e.stopPropagation());
 
     function tooltipHtml(entry) {
+      // Watchtowers/Waypoints: the game's own fast-travel tooltip has a
+      // completely different visual language from every other marker here
+      // - no boxed panel, just a dark label pill behind Noto Sans text in
+      // the travel-cyan color with a matching underline. direction:'right'
+      // (see marker.bindTooltip) anchors Leaflet's own directional arrow
+      // exactly at the marker already - recolored to match rather than
+      // needing a hand-built connector line (see .travel-tooltip's own
+      // comment for why). Deliberately omits the reference screenshot's
+      // arrow-carousel/"Transfer" button chrome (that's the in-game
+      // teleport-selection UI, not a hover tooltip, and doesn't map to
+      // anything this read-only map does) - user confirmed just the
+      // line/font/color treatment, not that whole interactive panel.
+      if (tooltipStyle === 'travel') {
+        return `<span class="tt-title">${entry.name}</span>`;
+      }
       const title = entry.boss_name ? `${entry.name} — ${entry.boss_name}`
         : entry.guild_id ? `${entry.name} — Base` : entry.name;
       const levelPart = entry.level != null ? ` (Lv ${entry.level})` : '';
       const hardLine = entry.level_hard != null ? `<div class="bt-line">Hard: Lv ${entry.level_hard}</div>` : '';
-      const elLine = entry.elements?.length ? `<div class="bt-line">${entry.elements.join(' / ')}</div>` : '';
-      const weakLine = entry.weaknesses?.length ? `<div class="bt-weak">Weak to: ${entry.weaknesses.join(', ')}</div>` : '';
+      // Labeled section-per-row (TYPE, then WEAKNESS below it), matching the
+      // same .bt-section-label pattern Schematics' "Item Stats"/"Materials"
+      // already use, rather than a bare badge row followed by a plain
+      // "Weak to:" line - one consistent "label, then content" language
+      // across every tooltip type instead of two different treatments.
+      const elLine = entry.elements?.length
+        ? `<div class="bt-section-label">Type</div>${elementBadgeRow(entry.elements)}` : '';
+      // Dual-typed bosses (e.g. Penking, Water/Ice): each weakness actually
+      // counters one specific type, never both at once (backend/bosses.py's
+      // weakness_pairs - every element has exactly one real counter in the
+      // single-cycle chart, so Penking is weak to Electric *because of*
+      // Water and Fire *because of* Ice specifically) - shown paired
+      // ("Electric — beats Water") rather than one undifferentiated badge
+      // row, so it's clear at a glance which half of a dual type each
+      // attack actually punishes. Single-typed bosses (the common case)
+      // collapse back to the exact same plain badge row as before - only
+      // one real pair exists, so there's nothing to disambiguate.
+      const isDualType = (entry.elements?.length || 0) > 1;
+      const weakLine = entry.weakness_pairs?.length
+        ? `<div class="bt-section-label">Weakness</div>` + (isDualType
+            ? `<div class="bt-weakness-pairs">${entry.weakness_pairs.map((p) =>
+                `<div class="bt-weakness-pair">${elementBadge(p.attacker)}<span class="bt-weakness-beats">beats ${p.defends}</span></div>`
+              ).join('')}</div>`
+            : elementBadgeRow(entry.weakness_pairs.map((p) => p.attacker)))
+        : '';
       // Guild bases: as much guild context as the save data has.
       const leaderLine = entry.guild_leader ? `<div class="bt-line">Leader: ${entry.guild_leader}</div>` : '';
       const memberLine = entry.guild_member_count != null
@@ -1348,7 +1693,51 @@
       const collectedLine = entry[collectedField] ? `<div class="bt-line">✓ ${word}</div>` : '';
       const approxLine = entry.position_exact === false ? '<div class="bt-line">(approximate location)</div>' : '';
       const previewLine = entry.preview ? `<div class="bt-preview">${entry.preview}</div>` : '';
-      return `<div class="boss-tooltip"><div class="bt-name">${title}${levelPart}</div>${hardLine}${elLine}${weakLine}${leaderLine}${memberLine}${previewLine}${collectedLine}${approxLine}</div>`;
+      // Schematics: what the pickup actually unlocks (backend/schematics.py's
+      // "unlocked" passthrough of extractor/PalExtract's Blueprint-unwrap
+      // logic) - a large icon preview (game's own crafting-panel look,
+      // approximated in CSS - no such background texture exists as an
+      // extractable game asset, confirmed), a category/rarity sub-header,
+      // a description line, a Weapon/Armor stat chip row (only for those
+      // types), then a crafting-materials row-list with per-material icons
+      // and (when a player is selected) how many the player already has.
+      // No other section sets `entry.unlocked`.
+      const u = entry.unlocked;
+      const categoryRarityLine = u ? `<div class="bt-subheader">
+          <span class="bt-category">${ITEM_CATEGORY_LABEL[u.type] || u.type}</span>
+          ${u.rarity_label ? `<span class="bt-rarity" style="color:${RARITY_COLOR[u.rarity_label] || '#cde'}">${u.rarity_label}</span>` : ''}
+        </div>` : '';
+      const iconPreview = u?.icon
+        ? `<div class="bt-icon-preview"${rarityBoxStyle(u.rarity_label)}><img src="/assets/schematic_icons/${u.icon}" /></div>` : '';
+      const unlockedDescLine = u?.description ? `<div class="bt-preview">${u.description}</div>` : '';
+      const unlockedStatsLine = u?.stats && Object.keys(u.stats).length
+        ? `<div class="bt-section-label">Item Stats</div><div class="bt-stat-row">${Object.entries(u.stats)
+            .map(([k, v]) => `<span class="bt-stat"><b>${v}</b> ${k}</span>`).join('')}</div>`
+        : '';
+      const unlockedMaterialsLine = u?.materials?.length
+        ? `<div class="bt-section-label">Materials</div><div class="bt-material-list">${u.materials.map((m) => {
+            // playerInventory is null with no player selected ("All
+            // players" - just show the cost) or when that player's
+            // inventory isn't known yet; otherwise show {owned}/{cost},
+            // red when short, matching the requested crafting-window look.
+            const owned = playerInventory ? (playerInventory[m.id] || 0) : null;
+            const countText = owned != null ? `${owned}/${m.count}` : `${m.count}`;
+            const shortClass = owned != null && owned < m.count ? ' bt-material-short' : '';
+            return `<div class="bt-material-row">
+                <img src="/assets/schematic_icons/${m.icon}" />
+                <span class="bt-material-name">${m.name}</span>
+                <span class="bt-material-count${shortClass}">${countText}</span>
+              </div>`;
+          }).join('')}</div>`
+        : '';
+      // Section order: description, then the Dog Coin bonus (reads as "this
+      // is what you get / what it costs to make" right under the flavor
+      // text), then a divider before each further section (Item Stats,
+      // Materials) - matching the game's own tooltip layout of
+      // divider-separated labeled blocks rather than one running list.
+      const statsDivider = unlockedStatsLine ? '<div class="bt-divider"></div>' : '';
+      const materialsDivider = unlockedMaterialsLine ? '<div class="bt-divider"></div>' : '';
+      return `<div class="boss-tooltip"${boxWidthStyle(`${title}${levelPart}`)}><div class="bt-name">${title}${levelPart}${categoryRarityLine}</div>${iconPreview}${hardLine}${elLine}${weakLine}${leaderLine}${memberLine}${unlockedDescLine}${previewLine}${statsDivider}${unlockedStatsLine}${materialsDivider}${unlockedMaterialsLine}${collectedLine}${approxLine}</div>`;
     }
 
     function markerHtml(entry) {
@@ -1367,9 +1756,17 @@
 
     function render(entries) {
       const seen = new Set();
+      // Once a specific player is selected (and we actually know their
+      // collection state), drop already-collected entries entirely rather
+      // than showing a checkmark - same "only show what's left to find"
+      // behavior Effigies already had (renderRelics' own hidingCollected),
+      // opted into per-section since e.g. Bosses/Bounty still want to show
+      // defeated ones with a checkmark rather than hiding them.
+      const hidingCollected = hideCollected && data?.defeatKnown;
       for (const entry of entries) {
         if (!visibleTypes.has(entry.type_key)) continue;
         if (entry.has_position === false) continue; // e.g. Volcano Tower - no known location
+        if (hidingCollected && entry[collectedField]) continue;
         seen.add(entry.id);
         const latlng = [entry.pixel_y, entry.pixel_x];
         const html = markerHtml(entry);
@@ -1378,7 +1775,9 @@
           marker = L.marker(latlng, {
             icon: L.divIcon({ className: markerClass, html, iconSize: [iconSize, iconSize] }),
           }).addTo(map);
-          marker.bindTooltip(tooltipHtml(entry), { direction: 'top' });
+          marker.bindTooltip(tooltipHtml(entry), tooltipStyle === 'travel'
+            ? { direction: 'right', className: 'travel-tooltip' }
+            : { direction: 'top' });
           markers.set(entry.id, marker);
         } else {
           if (!map.hasLayer(marker)) marker.addTo(map);
@@ -1566,7 +1965,7 @@
     function questTooltip(e) {
       const stepPart = e.total_steps > 1 ? ` — step ${e.step_index + 1}/${e.total_steps}` : '';
       const statusWord = e.status === 'active' ? 'Active' : 'Not started';
-      return `<div class="boss-tooltip"><div class="bt-name">${e.title}${stepPart}</div><div class="bt-line">${statusWord}</div></div>`;
+      return `<div class="boss-tooltip"${boxWidthStyle(`${e.title}${stepPart}`)}><div class="bt-name">${e.title}${stepPart}</div><div class="bt-line">${statusWord}</div></div>`;
     }
 
     // The game's own compass quest icons (see extractor/PalExtract's Quests
@@ -1781,7 +2180,7 @@
     headerId: 'journals-header', listId: 'journal-type-list', masterToggleId: 'journals-master-toggle',
     countId: 'journals-total-count', markerClass: 'journal-marker', iconSize: 26, squareIcon: true,
     iconDir: 'note_icons', collectedField: 'collected', knownFlagKey: 'collection_known',
-    collectedWord: 'Read', storageKey: 'journals',
+    collectedWord: 'Read', storageKey: 'journals', hideCollected: true,
   });
 
   async function loadJournals({ rebuildList } = {}) {
@@ -1803,7 +2202,7 @@
     headerId: 'schematics-header', listId: 'schematic-type-list', masterToggleId: 'schematics-master-toggle',
     countId: 'schematics-total-count', markerClass: 'schematic-marker', iconSize: 26, squareIcon: true,
     iconDir: 'schematic_icons', collectedField: 'collected', knownFlagKey: 'collection_known',
-    collectedWord: 'Collected', storageKey: 'schematics',
+    collectedWord: 'Collected', storageKey: 'schematics', hideCollected: true,
   });
 
   async function loadSchematics({ rebuildList } = {}) {
@@ -1825,18 +2224,6 @@
   }
 
   loadOilrigs({ rebuildList: true });
-
-  // Shared by every NPC shop category's tooltip (Medal/Bounty/Arena/
-  // Wandering Merchant/Pal Dealer/Black Market) - capped so a longer item
-  // shop doesn't turn a tooltip into an unreadable wall of text, same
-  // "quick glance" goal every other tooltip in this UI follows. The full,
-  // uncapped list is what the shop modal (below) is for.
-  const TRADER_LIST_CAP = 10;
-  function cappedListHtml(names) {
-    const shown = names.slice(0, TRADER_LIST_CAP).join(', ');
-    const rest = names.length - TRADER_LIST_CAP;
-    return rest > 0 ? `${shown}, +${rest} more` : shown;
-  }
 
   // ---------- Shop modal ----------
   // Full "what do they have for sale" detail view, styled after the game's
@@ -1996,19 +2383,39 @@
       // - DT_PalShopCreateData's own offeredCount field confirms only a
       // random subset of poolSpecies is actually offered at once, rotating
       // on restock, per an explicit user caution.
-      const currencyLine = e.currency ? `<div class="bt-line">Currency: ${e.currency}</div>` : '';
+      // Currency icon in the header (right-aligned next to the name)
+      // instead of a separate "Currency: Dog Coin" text line - for the
+      // DogCoin category specifically that line was pure redundancy with
+      // the category label right below it (both just say "Dog Coin"), and
+      // an icon reads faster than either for every category anyway.
+      const currencyIconHtml = e.currency_icon
+        ? `<img class="bt-currency-icon" src="/assets/schematic_icons/${e.currency_icon}" title="${e.currency}" />` : '';
+      // A count, not the actual item/species names - the full capped-list
+      // text ("Sells: A, B, C, ... +14 more") was a wall of text for any
+      // shop with more than a couple items (real user complaint); the shop
+      // modal (click) is already the real place for the full list, so the
+      // tooltip only needs to say how much is there. Still keep the
+      // Pal-pool-is-a-rotating-subset caveat (backend/npcs.py's own
+      // docstring) - that's a real behavior warning, not a list.
       let stockLine = '';
       if (e.items?.length) {
-        stockLine = `<div class="bt-line">Sells: ${cappedListHtml(e.items.map(i => i.name))}</div>`;
+        stockLine = `<div class="bt-line">${e.items.length} item${e.items.length === 1 ? '' : 's'} for sale</div>`;
       } else if (e.pal_pool?.poolSpecies?.length) {
         const lvl = (e.pal_pool.levelMin != null && e.pal_pool.levelMax != null)
           ? ` (Lv ${e.pal_pool.levelMin}-${e.pal_pool.levelMax})` : '';
-        stockLine = `<div class="bt-line">Pal pool${lvl}: ${cappedListHtml(e.pal_pool.poolSpecies.map(s => s.name))}</div>`
+        stockLine = `<div class="bt-line">${e.pal_pool.poolSpecies.length} Pal species in pool${lvl}</div>`
           + `<div class="bt-weak">Only ${e.pal_pool.offeredCount ?? 'a few'} of these are actually offered at once — rotates on restock, not guaranteed.</div>`;
       }
-      const clickHint = NPC_SHOP_MODAL_CATEGORIES.has(e.category) && (e.items?.length || e.pal_pool?.poolSpecies?.length)
-        ? '<div class="bt-line" style="color:#6fa8dc;">Click for full item list</div>' : '';
-      return `<div class="boss-tooltip"><div class="bt-name">${e.name}${levelPart}</div><div class="bt-line">${catLabel}</div>${currencyLine}${stockLine}${clickHint}</div>`;
+      // Real in-game key-guide glyph (extractor/PalExtract's left-click icon
+      // export) instead of plain "Click for full item list" text, matching
+      // how the game itself prompts this exact interaction. Divider above
+      // it separates "here's what/how much they have" from the "go here
+      // for detail" prompt, same divider language Schematics already uses
+      // between its own sections.
+      const hasShopDetail = NPC_SHOP_MODAL_CATEGORIES.has(e.category) && (e.items?.length || e.pal_pool?.poolSpecies?.length);
+      const clickHint = hasShopDetail
+        ? `<div class="bt-divider"></div><div class="bt-click-hint"><img src="/assets/npc_icons/T_MenuKeyGuide_MouseButtonLeft.png" />View full list</div>` : '';
+      return `<div class="boss-tooltip"${boxWidthStyle(`${e.name}${levelPart}`)}><div class="bt-name npc-bt-name"><span>${e.name}${levelPart}</span>${currencyIconHtml}</div><div class="bt-line">${catLabel}</div>${stockLine}${clickHint}</div>`;
     }
 
     function markerHtml(e) {
@@ -2779,7 +3186,7 @@
     headerId: 'watchtowers-header', listId: 'watchtower-type-list', masterToggleId: 'watchtowers-master-toggle',
     countId: 'watchtowers-total-count', markerClass: 'watchtower-marker', iconSize: 36,
     iconDir: 'fasttravel_icons', collectedField: 'collected', knownFlagKey: 'collection_known',
-    visualStyle: 'grayscale', storageKey: 'watchtowers',
+    visualStyle: 'grayscale', storageKey: 'watchtowers', tooltipStyle: 'travel',
   });
 
   async function loadWatchtowers({ rebuildList } = {}) {
@@ -2794,7 +3201,7 @@
     headerId: 'waypoints-header', listId: 'waypoint-type-list', masterToggleId: 'waypoints-master-toggle',
     countId: 'waypoints-total-count', markerClass: 'waypoint-marker', iconSize: 30,
     iconDir: 'fasttravel_icons', collectedField: 'collected', knownFlagKey: 'collection_known',
-    visualStyle: 'grayscale', storageKey: 'waypoints',
+    visualStyle: 'grayscale', storageKey: 'waypoints', tooltipStyle: 'travel',
   });
 
   async function loadWaypoints({ rebuildList } = {}) {

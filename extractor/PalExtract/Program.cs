@@ -85,6 +85,43 @@ string ElementString(JToken? t)
     return idx >= 0 ? s[(idx + 2)..] : s;
 }
 
+// ============ Element badge icons ============
+// Small square badge textures for the 9 element types, used to replace
+// plain-text element/weakness lines (Bosses/Bounty/Pal Spawns tooltips)
+// with icon pills matching the game's own Pal-ability-tooltip style.
+// T_Icon_element_s_00..08 are real asset paths, but the numeric suffix ->
+// element name mapping isn't documented anywhere in the game's own data -
+// resolved by exporting all 9 under their raw numeric names and visually
+// identifying each (flame=Fire, droplet=Water, leaf=Leaf, snowflake=Ice,
+// lightning bolt=Electricity, brown bell/mountain=Earth, purple swirl=Dark
+// (confirmed against a real in-game tooltip screenshot's "Dark" badge),
+// pink/magenta swirl=Dragon, plain ring=Normal) - don't re-derive this from
+// naming conventions alone, it isn't guessable.
+var elementIconOutDir = @"C:\Projects\PalworldMap\frontend\assets\element_icons";
+Directory.CreateDirectory(elementIconOutDir);
+var ELEMENT_ICON_NAME_BY_SUFFIX = new Dictionary<string, string>
+{
+    ["00"] = "Normal", ["01"] = "Fire", ["02"] = "Water", ["03"] = "Electricity",
+    ["04"] = "Leaf", ["05"] = "Dark", ["06"] = "Dragon", ["07"] = "Earth", ["08"] = "Ice",
+};
+void ExportElementIcon(string assetPathName, string outFileName)
+{
+    var withoutObjectName = assetPathName[..assetPathName.LastIndexOf('.')];
+    var objPath = withoutObjectName.Replace("/Game/", "Pal/Content/");
+    var exports = provider.LoadPackageObjects(objPath).ToList();
+    var tex = exports.OfType<UTexture2D>().FirstOrDefault();
+    if (tex == null) { Console.WriteLine($"  no texture export at {objPath}"); return; }
+    var decoded = tex.Decode();
+    if (decoded == null) { Console.WriteLine($"  element icon decode failed: {objPath}"); return; }
+    var bytes = DownscalePng(TextureEncoder.Encode(decoded, ETextureFormat.Png, false, out _));
+    File.WriteAllBytes(Path.Combine(elementIconOutDir, outFileName), bytes);
+}
+foreach (var (suffix, elementName) in ELEMENT_ICON_NAME_BY_SUFFIX)
+{
+    ExportElementIcon($"/Game/Pal/Texture/UI/InGame/T_Icon_element_s_{suffix}.T_Icon_element_s_{suffix}", $"{elementName}.png");
+}
+Console.WriteLine("Wrote 9 element icons to frontend/assets/element_icons");
+
 // ============ Challenge Towers ============
 // 9 fixed "Tower" boss encounters (internally "GYM_" bosses, a queue-then-enter
 // battle instance, distinct from open-world DT_BossSpawnerLoactionData bosses).
@@ -324,6 +361,9 @@ var iconLookup = iconRows.Properties().ToDictionary(p => p.Name, p => p, StringC
 // sites at once, not just this one bounty.
 var humanRowsCI = humanRows.Properties().ToDictionary(p => p.Name, p => p.Value, StringComparer.OrdinalIgnoreCase);
 var humanNameRowsCI = humanNameRows.Properties().ToDictionary(p => p.Name, p => p.Value, StringComparer.OrdinalIgnoreCase);
+
+// TEMP PROBE - dump a real DT_PalHumanParameter row's fields to find any
+// companion-Pal reference, not a permanent extraction step.
 
 var iconOutDir = @"C:\Projects\PalworldMap\frontend\assets\boss_icons";
 Directory.CreateDirectory(iconOutDir);
@@ -1513,6 +1553,15 @@ var itemPickupRows = LoadRows("Pal/Content/Pal/DataTable/Item/DT_ItemPickupDataT
 var itemDataRows = LoadRows("Pal/Content/Pal/DataTable/Item/DT_ItemDataTable");
 var itemIconRows = LoadRows("Pal/Content/Pal/DataTable/Item/DT_ItemIconDataTable");
 var itemNameRows = LoadRows("Pal/Content/L10N/en/Pal/DataTable/Text/DT_ItemNameText_Common");
+// Generic per-item flavor text ("ITEM_DESC_<id>" -> TextData.LocalizedString,
+// same field path as ItemNameText above) - covers weapons, armor,
+// accessories, blueprints/schematics, and consumables alike (confirmed via a
+// throwaway probe against real ids of each type), not just weapons. Real
+// in-game text, but contains inline rich-text tags
+// (<itemName id=|X|/>, <uiCommon id=|X|/>, <mapObjectName id=|X|/>) that
+// need resolving/stripping before display - see CleanDescription below.
+var itemDescRows = LoadRows("Pal/Content/L10N/en/Pal/DataTable/Text/DT_ItemDescriptionText_Common");
+var itemRecipeRows = LoadRows("Pal/Content/Pal/DataTable/Item/DT_ItemRecipeDataTable");
 
 var schematicIconOutDir = @"C:\Projects\PalworldMap\frontend\assets\schematic_icons";
 Directory.CreateDirectory(schematicIconOutDir);
@@ -1535,6 +1584,100 @@ void ExportSchematicIcon(string assetPathName, string outFileName)
 string ItemDisplayName(string itemId) =>
     itemNameRows["ITEM_NAME_" + itemId]?["TextData"]?["LocalizedString"]?.ToString() ?? itemId;
 
+string? ItemDescriptionRaw(string itemId) =>
+    itemDescRows["ITEM_DESC_" + itemId]?["TextData"]?["LocalizedString"]?.ToString();
+
+// Inline rich-text tags look like <itemName id=|OldRevolver|/>,
+// <uiCommon id=|RARITY_RARE|/>, <mapObjectName id=|WeaponFactory_Dirty_02|/>.
+// itemName resolves through the same name table every other lookup here
+// uses; uiCommon/mapObjectName have no equivalent table wired up yet, so
+// they fall back to a readable-enough humanization (strip known enum-style
+// prefixes, underscores -> spaces, title case) rather than leaking a raw
+// internal id into a player-facing tooltip.
+static string HumanizeTagId(string id)
+{
+    var s = id;
+    foreach (var prefix in new[] { "RARITY_", "COMMON_WORK_SUITABILITY_", "COMMON_" })
+        if (s.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) { s = s[prefix.Length..]; break; }
+    s = s.Replace('_', ' ');
+    // Only lowercase-then-recapitalize a word that was ALL CAPS to begin
+    // with (enum-style tokens like "RARE"/"LEGENDARY") - leave anything
+    // already mixed-case (PascalCase identifiers like "WeaponFactory") as
+    // written, or this would mangle "WeaponFactory" into "Weaponfactory".
+    // Bug caught via a real extracted rarity showing "RARE" instead of
+    // "Rare" - char.ToUpper(w[0]) + w[1..] alone never touches the rest of
+    // an already-uppercase word.
+    return string.Join(' ', s.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+        .Select(w => w.Length == 0 ? w
+            : w == w.ToUpperInvariant() ? char.ToUpper(w[0]) + w[1..].ToLower()
+            : char.ToUpper(w[0]) + w[1..]));
+}
+
+var TagRegex = new System.Text.RegularExpressions.Regex(
+    @"<(\w+) id=\|([^|]+)\|\s*/>", System.Text.RegularExpressions.RegexOptions.Compiled);
+
+string CleanDescription(string raw) => TagRegex.Replace(raw, m =>
+{
+    var (tag, id) = (m.Groups[1].Value, m.Groups[2].Value);
+    return tag == "itemName" ? ItemDisplayName(id) : HumanizeTagId(id);
+}).Replace("\\n", " ").Replace("\n", " ").Trim();
+
+// A Blueprint-typed reward item (the schematic "paper" itself, e.g.
+// Blueprint_OldRevolver_3) always names the real craftable item it unlocks
+// as the first <itemName id=|X|/> tag in its own description ("...unlocks
+// recipe for <itemName id=|OldRevolver|/>...") - confirmed against real
+// examples. Reusing that instead of guessing a naming convention (stripping
+// "Blueprint_"/trailing "_N") since the description spells it out directly.
+string? ExtractUnlockedItemId(string raw)
+{
+    var m = TagRegex.Match(raw);
+    while (m.Success)
+    {
+        if (m.Groups[1].Value == "itemName") return m.Groups[2].Value;
+        m = m.NextMatch();
+    }
+    return null;
+}
+
+// A Blueprint reward's own description also embeds its real display rarity
+// as a <uiCommon id=|RARITY_X|/> tag (e.g. "...unlocks recipe for
+// <itemName id=|OldRevolver|/> (<uiCommon id=|RARITY_RARE|/>)...") - this is
+// the actual displayed rarity word, NOT derivable from DT_ItemDataTable's
+// own numeric Rarity field (confirmed: real weapons like AssaultRifle_Default1
+// carry Rarity 0 yet display as "Rare" in-game - that int isn't a usable
+// ordinal for this, it's some other internal value). Only present on
+// Blueprint-wrapped rewards; Handbooks/Implants (unwrapped, TypeA != Blueprint)
+// have no such tag and get no rarity badge rather than a guessed one.
+string? ExtractRarityLabel(string? raw)
+{
+    if (raw == null) return null;
+    var m = TagRegex.Match(raw);
+    while (m.Success)
+    {
+        if (m.Groups[1].Value == "uiCommon" && m.Groups[2].Value.StartsWith("RARITY_", StringComparison.Ordinal))
+            return HumanizeTagId(m.Groups[2].Value);
+        m = m.NextMatch();
+    }
+    return null;
+}
+
+// Fallback for the rare Blueprint item with no authored ITEM_DESC entry at
+// all (confirmed: 1 of 106 real schematics, Blueprint_Accessory_Avoid_1_fix)
+// - the tag-based extraction above can't run with no description text to
+// read, so guess from the naming convention instead (strip "Blueprint_"
+// prefix, then a trailing "_fix" and/or "_<digits>" tier suffix) and only
+// trust a guess that actually resolves to a real DT_ItemDataTable row.
+string? GuessUnlockedItemId(string blueprintItemId)
+{
+    if (!blueprintItemId.StartsWith("Blueprint_", StringComparison.Ordinal)) return null;
+    var stripped = blueprintItemId["Blueprint_".Length..];
+    var candidates = new List<string> { stripped };
+    if (stripped.EndsWith("_fix", StringComparison.Ordinal)) candidates.Add(stripped[..^4]);
+    var noTrailingNum = System.Text.RegularExpressions.Regex.Replace(stripped, @"(_\d+)+$", "");
+    if (noTrailingNum != stripped) candidates.Add(noTrailingNum);
+    return candidates.FirstOrDefault(c => itemDataRows[c] != null);
+}
+
 string? ExportItemIcon(string itemId)
 {
     var itemRow = itemDataRows[itemId] as JObject;
@@ -1555,6 +1698,59 @@ string? ExportItemIcon(string itemId)
     }
 }
 
+// Stat fields to surface for Weapon/Armor-typed unlocked items - only
+// included when non-zero/non-"None" so e.g. a pistol's MagicAttackValue: 0
+// doesn't clutter the tooltip. Field names verbatim from DT_ItemDataTable.
+(string label, string field)[] STAT_FIELDS = new[]
+{
+    ("Attack", "PhysicalAttackValue"), ("Magic Attack", "MagicAttackValue"),
+    ("Defense", "PhysicalDefenseValue"), ("Magic Defense", "MagicDefenseValue"),
+    ("Shield", "ShieldValue"), ("Magazine Size", "MagazineSize"),
+    ("Durability", "Durability"), ("Weight", "Weight"),
+};
+
+JObject? BuildStats(JObject itemRow, string typeA)
+{
+    // Only Weapon/Armor have combat stats worth surfacing - every other type
+    // (Accessory/Consume/Blueprint/...) would only ever contribute a bare
+    // Weight/Rarity, which is just clutter next to their real content (the
+    // description line) since none of STAT_FIELDS is a real accessory-effect
+    // value.
+    if (typeA != "Weapon" && typeA != "Armor") return null;
+    var stats = new JObject();
+    foreach (var (label, field) in STAT_FIELDS)
+    {
+        var v = (double?)itemRow[field];
+        if (v is > 0) stats[label] = v;
+    }
+    var rarity = (int?)itemRow["Rarity"];
+    if (rarity is > 0) stats["Rarity"] = rarity;
+    var element = ElementString(itemRow["ElementType"]);
+    if (!string.IsNullOrEmpty(element) && element != "None") stats["Element"] = element;
+    return stats.Count > 0 ? stats : null;
+}
+
+JArray? BuildMaterials(string itemId)
+{
+    var recipeRow = itemRecipeRows[itemId] as JObject;
+    if (recipeRow == null) return null;
+    var materials = new JArray();
+    for (int i = 1; i <= 5; i++)
+    {
+        var matId = recipeRow[$"Material{i}_Id"]?.ToString();
+        var matCount = (int?)recipeRow[$"Material{i}_Count"] ?? 0;
+        if (string.IsNullOrEmpty(matId) || matId == "None" || matCount <= 0) continue;
+        materials.Add(new JObject
+        {
+            ["id"] = matId,
+            ["name"] = ItemDisplayName(matId),
+            ["icon"] = ExportItemIcon(matId),
+            ["count"] = matCount,
+        });
+    }
+    return materials.Count > 0 ? materials : null;
+}
+
 var schematicResult = new JArray();
 foreach (var (id, instanceId, x, y, z) in schematicRawPositions)
 {
@@ -1571,6 +1767,32 @@ foreach (var (id, instanceId, x, y, z) in schematicRawPositions)
         ? $"+{bonusItemNum} {ItemDisplayName(bonusItemId)}"
         : null;
 
+    // A Blueprint-typed reward (the common case - a schematic "paper" item)
+    // wraps the real craftable item; every other reward type (Technology
+    // Handbooks, Disposable Implants) IS the end content itself, no
+    // indirection. See ExtractUnlockedItemId's own comment.
+    var rewardRow = itemDataRows[rewardItemId] as JObject;
+    var rewardTypeA = ElementString(rewardRow?["TypeA"]);
+    var rewardDescRaw = ItemDescriptionRaw(rewardItemId);
+    var unlockedId = rewardTypeA == "Blueprint"
+        ? (rewardDescRaw != null ? ExtractUnlockedItemId(rewardDescRaw) : null)
+          ?? GuessUnlockedItemId(rewardItemId) ?? rewardItemId
+        : rewardItemId;
+
+    var unlockedRow = itemDataRows[unlockedId] as JObject;
+    var unlockedDescRaw = unlockedId == rewardItemId ? rewardDescRaw : ItemDescriptionRaw(unlockedId);
+    JObject? unlocked = unlockedRow == null ? null : new JObject
+    {
+        ["id"] = unlockedId,
+        ["name"] = ItemDisplayName(unlockedId),
+        ["icon"] = ExportItemIcon(unlockedId),
+        ["type"] = ElementString(unlockedRow["TypeA"]),
+        ["description"] = unlockedDescRaw != null ? CleanDescription(unlockedDescRaw) : null,
+        ["stats"] = BuildStats(unlockedRow, ElementString(unlockedRow["TypeA"])),
+        ["materials"] = BuildMaterials(unlockedId),
+        ["rarity_label"] = rewardTypeA == "Blueprint" ? ExtractRarityLabel(rewardDescRaw) : null,
+    };
+
     schematicResult.Add(new JObject
     {
         ["id"] = id,
@@ -1581,6 +1803,7 @@ foreach (var (id, instanceId, x, y, z) in schematicRawPositions)
         ["x"] = x,
         ["y"] = y,
         ["z"] = z,
+        ["unlocked"] = unlocked,
     });
 }
 Console.WriteLine($"Total Schematics: {schematicResult.Count}, icons exported: {schematicExportedIcons.Count}");
@@ -2099,6 +2322,24 @@ foreach (var variant in npcUsedIcons)
     File.WriteAllBytes(Path.Combine(npcIconOutDir, $"{variant}.png"), bytes);
 }
 Console.WriteLine($"Wrote {npcUsedIcons.Count} frontend/assets/npc_icons/*.png");
+
+// Left-click prompt glyph - the game's own real key-guide icon (Pal/Content/
+// Pal/Texture/UI/KeyGuide/mouse/), used in the shop tooltip's "click for
+// full item list" hint instead of plain text, matching how the actual game
+// prompts this same interaction.
+try
+{
+    var lmbExports = provider.LoadPackageObjects("Pal/Content/Pal/Texture/UI/KeyGuide/mouse/T_MenuKeyGuide_MouseButtonLeft").ToList();
+    var lmbTex = lmbExports.OfType<UTexture2D>().First();
+    var lmbDecoded = lmbTex.Decode()!;
+    var lmbBytes = DownscalePng(TextureEncoder.Encode(lmbDecoded, ETextureFormat.Png, false, out _));
+    File.WriteAllBytes(Path.Combine(npcIconOutDir, "T_MenuKeyGuide_MouseButtonLeft.png"), lmbBytes);
+    Console.WriteLine("Wrote left-click key-guide icon to frontend/assets/npc_icons");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"  left-click icon export failed: {ex.Message}");
+}
 
 // ============ Quests (Main + Sub, map-marker-bearing only) ============
 // Every quest (DT_PalQuestData, 120 rows: 58 Main / 59 Sub / 3 Hidden) is an

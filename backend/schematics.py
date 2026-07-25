@@ -42,6 +42,7 @@ def load_schematics() -> list[dict[str, Any]]:
                 "name": r["name"],
                 "icon": r["icon"],
                 "preview": r["bonus"],
+                "unlocked": r.get("unlocked"),
                 "map": map_name,
                 "pixel_x": pixel_x,
                 "pixel_y": pixel_y,

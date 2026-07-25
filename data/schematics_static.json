@@ -7,7 +7,35 @@
     "instanceId": "486837A0-436F0097-FD509395-FE1B32C3",
     "x": -153259.47,
     "y": 200653.2,
-    "z": 11604.734
+    "z": 11604.734,
+    "unlocked": {
+      "id": "OldRevolver",
+      "name": "Old Revolver",
+      "icon": "T_itemicon_OldRevolver.png",
+      "type": "Weapon",
+      "description": "A slightly outdated revolving handgun. \r Compared to Handgun_default, it excels in single-shot power.",
+      "stats": {
+        "Attack": 600.0,
+        "Magazine Size": 6.0,
+        "Durability": 400.0,
+        "Weight": 8.0
+      },
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 60
+        },
+        {
+          "id": "PalOil",
+          "name": "High Quality Pal Oil",
+          "icon": "T_itemicon_PalOil.png",
+          "count": 20
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "I_HCHP",
@@ -17,7 +45,48 @@
     "instanceId": "4BDB51A6-4A259844-E547629A-BB44EAEE",
     "x": -513854.3,
     "y": -216288.66,
-    "z": -875.78674
+    "z": -875.78674,
+    "unlocked": {
+      "id": "Accessory_HCHP_1",
+      "name": "Vanguard Charm",
+      "icon": "T_itemicon_Accessory_HCHP_1.png",
+      "type": "Accessory",
+      "description": "An accessory that greatly raises Heat and Cold Resistance. It also significantly increases Health.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "Polymer",
+          "name": "Polymer",
+          "icon": "T_itemicon_Polymer.png",
+          "count": 30
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 30
+        },
+        {
+          "id": "FireOrgan",
+          "name": "Flame Organ",
+          "icon": "T_itemicon_FireOrgan.png",
+          "count": 20
+        },
+        {
+          "id": "IceOrgan",
+          "name": "Ice Organ",
+          "icon": "T_itemicon_IceOrgan.png",
+          "count": 20
+        },
+        {
+          "id": "BeastBone_Ancient",
+          "name": "Ancient Bone",
+          "icon": "T_itemicon_BeastBone_Ancient.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "J_SuperJumpAir_2",
@@ -27,7 +96,48 @@
     "instanceId": "5955BF10-4CA6A3C0-EA1C5E8A-7AC0FBB5",
     "x": -750547.7,
     "y": 20549.383,
-    "z": 41712.3
+    "z": 41712.3,
+    "unlocked": {
+      "id": "Accessory_SuperJumpAir_2",
+      "name": "Air Walker EX",
+      "icon": "T_itemicon_Accessory_SuperJumpAir_2.png",
+      "type": "Accessory",
+      "description": "An accessory that allows the player to perform double jumps in mid-air when equipped.\r Also grants a double mid-air dash.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "ManganeseIngot",
+          "name": "Coralum Ingot",
+          "icon": "T_itemicon_ManganeseIngot.png",
+          "count": 30
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 60
+        },
+        {
+          "id": "PalDarkParts",
+          "name": "Dark Fragment",
+          "icon": "T_itemicon_PalDarkParts.png",
+          "count": 45
+        },
+        {
+          "id": "NightStone",
+          "name": "Nightstar Sand",
+          "icon": "T_itemicon_NightStone.png",
+          "count": 60
+        },
+        {
+          "id": "BeastBone_Ancient",
+          "name": "Ancient Bone",
+          "icon": "T_itemicon_BeastBone_Ancient.png",
+          "count": 60
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "J_PPAT",
@@ -37,7 +147,42 @@
     "instanceId": "18DB34AC-4E66C596-D878CB98-FE190F40",
     "x": -814772.6,
     "y": 20300.047,
-    "z": 42495.37
+    "z": 42495.37,
+    "unlocked": {
+      "id": "Accessory_PPAT_1",
+      "name": "Dogen Emblem",
+      "icon": "T_itemicon_Accessory_PPAT_1.png",
+      "type": "Accessory",
+      "description": "An accessory that greatly raises your Attack, and that of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 30
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 35
+        },
+        {
+          "id": "BeastBone_Ancient",
+          "name": "Ancient Bone",
+          "icon": "T_itemicon_BeastBone_Ancient.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "J_Launcher",
@@ -47,7 +192,17 @@
     "instanceId": "5191490C-4E52590D-75E73EB7-C6228A86",
     "x": -793159.5,
     "y": -54318.605,
-    "z": 26565.688
+    "z": 26565.688,
+    "unlocked": {
+      "id": "WorkSuitability_AddTicket_Mining",
+      "name": "Applied Mining Handbook I",
+      "icon": "T_itemicon_WorkSuitability_AddTicket_Mining.png",
+      "type": "Consume",
+      "description": "A rare book written about the secrets of Mining. \r Allowing a Pal to read it permanently increases their Mining affinity by +1.",
+      "stats": null,
+      "materials": null,
+      "rarity_label": null
+    }
   },
   {
     "id": "B_Musket",
@@ -57,7 +212,41 @@
     "instanceId": "8C2E26FC-4BF24220-8125EC80-18BDC020",
     "x": -380577.62,
     "y": 31263.764,
-    "z": -139.06256
+    "z": -139.06256,
+    "unlocked": {
+      "id": "Musket",
+      "name": "Musket",
+      "icon": "T_itemicon_Musket.png",
+      "type": "Weapon",
+      "description": "Simple, old fashioned gun. \r Fires a single, powerful shot at the expense of a long reload time.",
+      "stats": {
+        "Attack": 1000.0,
+        "Magazine Size": 1.0,
+        "Durability": 200.0,
+        "Weight": 20.0
+      },
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 25
+        },
+        {
+          "id": "PalOil",
+          "name": "High Quality Pal Oil",
+          "icon": "T_itemicon_PalOil.png",
+          "count": 5
+        },
+        {
+          "id": "Processed_Wood",
+          "name": "Wooden Board",
+          "icon": "T_itemicon_Processed_Wood.png",
+          "count": 3
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "B_ElementBoost_Water",
@@ -67,7 +256,42 @@
     "instanceId": "521F2896-43D5CCD6-4229639D-8DE14266",
     "x": -266974.94,
     "y": 15169.333,
-    "z": 4846.3345
+    "z": 4846.3345,
+    "unlocked": {
+      "id": "Otomo_ElementBoost_Water_1",
+      "name": "Water Support Whistle",
+      "icon": "T_itemicon_Accessory_Otomo_ElementBoost_Water.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises the Water damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 20
+        },
+        {
+          "id": "PalFluid",
+          "name": "Aquatic Pal Fluids",
+          "icon": "T_itemicon_PalFluid.png",
+          "count": 30
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "B_ElementBoost_Normal",
@@ -77,7 +301,42 @@
     "instanceId": "F3925FF9-4518D3C2-197C8BB0-3BEF75EB",
     "x": -330105.16,
     "y": 81369.68,
-    "z": -2020.0162
+    "z": -2020.0162,
+    "unlocked": {
+      "id": "Otomo_ElementBoost_Normal_1",
+      "name": "Neutral Support Whistle",
+      "icon": "T_itemicon_Accessory_Otomo_ElementBoost_Normal.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises the Neutral damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 20
+        },
+        {
+          "id": "Cement",
+          "name": "Cement",
+          "icon": "T_itemicon_Cement.png",
+          "count": 15
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "B_CoolResist",
@@ -87,7 +346,42 @@
     "instanceId": "A151B666-4641FCDC-6D9FD8BC-7292D8A5",
     "x": -82055.13,
     "y": 33486.035,
-    "z": -1084.6221
+    "z": -1084.6221,
+    "unlocked": {
+      "id": "Accessory_CoolResist_1",
+      "name": "Thermal Undershirt",
+      "icon": "T_itemicon_Accessory_CoolResist.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises Cold Resistance.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "Wool",
+          "name": "Wool",
+          "icon": "T_itemicon_Wool.png",
+          "count": 20
+        },
+        {
+          "id": "IceOrgan",
+          "name": "Ice Organ",
+          "icon": "T_itemicon_IceOrgan.png",
+          "count": 15
+        },
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 25
+        },
+        {
+          "id": "Cloth",
+          "name": "Cloth",
+          "icon": "T_itemicon_Cloth.png",
+          "count": 10
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "B_AquaResist",
@@ -97,7 +391,42 @@
     "instanceId": "91949CFB-4F1FA919-5B478FBA-EB04BB67",
     "x": -144250.44,
     "y": -69065.6,
-    "z": -1485.4269
+    "z": -1485.4269,
+    "unlocked": {
+      "id": "Accessory_AquaResist_1",
+      "name": "Ring of Water Resistance",
+      "icon": "T_itemicon_Accessory_AquaResist.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly reduces incoming Water damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 20
+        },
+        {
+          "id": "PalFluid",
+          "name": "Aquatic Pal Fluids",
+          "icon": "T_itemicon_PalFluid.png",
+          "count": 30
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "C_DarkResist",
@@ -107,7 +436,42 @@
     "instanceId": "8965E4E5-44F56B34-185A38AE-2B588922",
     "x": -196055.92,
     "y": 166946.86,
-    "z": -2054.7852
+    "z": -2054.7852,
+    "unlocked": {
+      "id": "Accessory_DarkResist_1",
+      "name": "Ring of Dark Resistance",
+      "icon": "T_itemicon_Accessory_DarkResist.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly reduces incoming Dark damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 20
+        },
+        {
+          "id": "Venom",
+          "name": "Venom Gland",
+          "icon": "T_itemicon_Venom.png",
+          "count": 10
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "D_ElementBoost_Ice",
@@ -117,7 +481,42 @@
     "instanceId": "6B02629A-4BAD4FD8-EC1C1887-63737DCC",
     "x": -47888.246,
     "y": 224852.0,
-    "z": 2418.1235
+    "z": 2418.1235,
+    "unlocked": {
+      "id": "Otomo_ElementBoost_Ice_1",
+      "name": "Ice Support Whistle",
+      "icon": "T_itemicon_Accessory_Otomo_ElementBoost_Ice.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises the Ice damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 20
+        },
+        {
+          "id": "IceOrgan",
+          "name": "Ice Organ",
+          "icon": "T_itemicon_IceOrgan.png",
+          "count": 15
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "D_LeafResist",
@@ -127,7 +526,42 @@
     "instanceId": "6E59AE55-42523743-24D4B1AF-CBCBAFA2",
     "x": -277726.06,
     "y": 296465.88,
-    "z": -582.0089
+    "z": -582.0089,
+    "unlocked": {
+      "id": "Accessory_LeafResist_1",
+      "name": "Ring of Grass Resistance",
+      "icon": "T_itemicon_Accessory_LeafResist.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly reduces incoming Grass damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 20
+        },
+        {
+          "id": "PalItem_PlantSlime",
+          "name": "Gumoss Leaf",
+          "icon": "T_itemicon_PalItem_PlantSlime.png",
+          "count": 5
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "E_EarthResist",
@@ -137,7 +571,42 @@
     "instanceId": "A913D3E3-4A36F851-D67C48BC-D9736E18",
     "x": -77606.38,
     "y": 393655.2,
-    "z": 575.3603
+    "z": 575.3603,
+    "unlocked": {
+      "id": "Accessory_EarthResist_1",
+      "name": "Ring of Ground Resistance",
+      "icon": "T_itemicon_Accessory_EarthResist.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly reduces incoming Ground damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 20
+        },
+        {
+          "id": "MeteorDrop",
+          "name": "Meteorite Fragment",
+          "icon": "T_itemicon_MeteorDrop.png",
+          "count": 10
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "E_SemiAutoShotgun",
@@ -147,7 +616,41 @@
     "instanceId": "500A129A-4CBC297A-210DA793-CB9FAFAB",
     "x": 202991.36,
     "y": 336967.03,
-    "z": -48.732437
+    "z": -48.732437,
+    "unlocked": {
+      "id": "SemiAutoShotgun",
+      "name": "Semi-Auto Shotgun",
+      "icon": "T_itemicon_SemiAutoShotgun.png",
+      "type": "Weapon",
+      "description": "A rapid-fire shotgun with immense power. \r Its close-range damage output is top-notch.",
+      "stats": {
+        "Attack": 195.0,
+        "Magazine Size": 10.0,
+        "Durability": 300.0,
+        "Weight": 20.0
+      },
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 50
+        },
+        {
+          "id": "Polymer",
+          "name": "Polymer",
+          "icon": "T_itemicon_Polymer.png",
+          "count": 20
+        },
+        {
+          "id": "CarbonFiber",
+          "name": "Carbon Fiber",
+          "icon": "T_itemicon_CarbonFiber.png",
+          "count": 10
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "E_HeatColdResist",
@@ -157,7 +660,42 @@
     "instanceId": "AABB4F96-42E9CF1C-6D4987A1-74C32670",
     "x": 15839.171,
     "y": 435799.3,
-    "z": 9368.694
+    "z": 9368.694,
+    "unlocked": {
+      "id": "Accessory_HeatColdResist_1",
+      "name": "Multiclimate Undershirt",
+      "icon": "T_itemicon_Accessory_HeatColdResist.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises Heat and Cold Resistance.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "Cloth2",
+          "name": "High Quality Cloth",
+          "icon": "T_itemicon_Cloth.png",
+          "count": 40
+        },
+        {
+          "id": "FireOrgan",
+          "name": "Flame Organ",
+          "icon": "T_itemicon_FireOrgan.png",
+          "count": 20
+        },
+        {
+          "id": "IceOrgan",
+          "name": "Ice Organ",
+          "icon": "T_itemicon_IceOrgan.png",
+          "count": 20
+        },
+        {
+          "id": "Polymer",
+          "name": "Polymer",
+          "icon": "T_itemicon_Polymer.png",
+          "count": 20
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "E_Katana",
@@ -167,7 +705,17 @@
     "instanceId": "61080B26-4712981B-B1FBF899-D13A3B1D",
     "x": 4145.587,
     "y": 296633.06,
-    "z": 9649.078
+    "z": 9649.078,
+    "unlocked": {
+      "id": "WorkSuitability_AddTicket_Transport",
+      "name": "Applied Transporting Handbook I",
+      "icon": "T_itemicon_WorkSuitability_AddTicket_Transport.png",
+      "type": "Consume",
+      "description": "A rare book written about the secrets of Transport. \r Allowing a Pal to read it permanently increases their Transport affinity by +1.",
+      "stats": null,
+      "materials": null,
+      "rarity_label": null
+    }
   },
   {
     "id": "F_ElementBoost_Fire",
@@ -177,7 +725,42 @@
     "instanceId": "A6E89341-4A0B2D53-A9E9FEAD-1E1EB19E",
     "x": -379938.56,
     "y": -44639.45,
-    "z": 8533.775
+    "z": 8533.775,
+    "unlocked": {
+      "id": "Otomo_ElementBoost_Fire_1",
+      "name": "Fire Support Whistle",
+      "icon": "T_itemicon_Accessory_Otomo_ElementBoost_Fire.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises the Fire damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 20
+        },
+        {
+          "id": "FireOrgan",
+          "name": "Flame Organ",
+          "icon": "T_itemicon_FireOrgan.png",
+          "count": 15
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "F_FireResist",
@@ -187,7 +770,42 @@
     "instanceId": "0FF6EDD7-482B2449-49D4AFB0-21BC4BAA",
     "x": -320578.1,
     "y": -122854.016,
-    "z": 18493.775
+    "z": 18493.775,
+    "unlocked": {
+      "id": "Accessory_FireResist_1",
+      "name": "Ring of Fire Resistance",
+      "icon": "T_itemicon_Accessory_FireResist.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly reduces incoming Fire damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 20
+        },
+        {
+          "id": "FireOrgan",
+          "name": "Flame Organ",
+          "icon": "T_itemicon_FireOrgan.png",
+          "count": 15
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "G_DFIce_ElementBoost",
@@ -197,7 +815,42 @@
     "instanceId": "90A38481-4FA6BE10-32B1FD84-6ACB7C8A",
     "x": -42420.195,
     "y": 112232.31,
-    "z": 22558.568
+    "z": 22558.568,
+    "unlocked": {
+      "id": "Otomo_DFIce_ElementBoost_1",
+      "name": "Frostallion's Talisman",
+      "icon": "T_itemicon_Otomo_DFIce_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Defense of the Pal fighting alongside you.\r It also significantly increases their Ice damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 30
+        },
+        {
+          "id": "IceOrgan",
+          "name": "Ice Organ",
+          "icon": "T_itemicon_IceOrgan.png",
+          "count": 15
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 10
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "G_DFDark_ElementBoost",
@@ -207,7 +860,42 @@
     "instanceId": "C788607A-430E3277-50A39AAC-FD453A7A",
     "x": 33091.82,
     "y": 21047.773,
-    "z": 11105.751
+    "z": 11105.751,
+    "unlocked": {
+      "id": "Otomo_DFDark_ElementBoost_1",
+      "name": "Lyleen Noct's Talisman",
+      "icon": "T_itemicon_Otomo_DFDark_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Defense of the Pal fighting alongside you.\r It also significantly increases their Dark damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Poppy",
+          "name": "Beautiful Flower",
+          "icon": "T_itemicon_Poppy.png",
+          "count": 5
+        },
+        {
+          "id": "Venom",
+          "name": "Venom Gland",
+          "icon": "T_itemicon_Venom.png",
+          "count": 10
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 10
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "G_Otomo_Ice",
@@ -217,7 +905,42 @@
     "instanceId": "D40B827B-46CFF53D-20513883-EFC3D175",
     "x": 149273.55,
     "y": 101179.49,
-    "z": 43234.086
+    "z": 43234.086,
+    "unlocked": {
+      "id": "Accessory_Otomo_Ice_1",
+      "name": "Cryolinx Ring",
+      "icon": "T_itemicon_Accessory_Otomo_Ice_1.png",
+      "type": "Accessory",
+      "description": "An accessory that greatly reduces incoming Dragon damage of the Pal fighting alongside you.\r It also significantly increases the Ice damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Quartz",
+          "name": "Pure Quartz",
+          "icon": "T_itemicon_Quartz.png",
+          "count": 20
+        },
+        {
+          "id": "IceOrgan",
+          "name": "Ice Organ",
+          "icon": "T_itemicon_IceOrgan.png",
+          "count": 15
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "G_ColdIce",
@@ -227,7 +950,48 @@
     "instanceId": "CCDCF817-4EDDD40C-863C9E8B-E95F7E9E",
     "x": 91844.34,
     "y": 52939.81,
-    "z": 17514.295
+    "z": 17514.295,
+    "unlocked": {
+      "id": "Accessory_ColdIce_1",
+      "name": "Wumpo Charm",
+      "icon": "T_itemicon_Accessory_ColdIce_1.png",
+      "type": "Accessory",
+      "description": "An accessory with incredible resistance to cold. \r Greatly reduces incoming Ice damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "IceOrgan",
+          "name": "Ice Organ",
+          "icon": "T_itemicon_IceOrgan.png",
+          "count": 20
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        },
+        {
+          "id": "Cloth2",
+          "name": "High Quality Cloth",
+          "icon": "T_itemicon_Cloth.png",
+          "count": 30
+        },
+        {
+          "id": "Lava_Ancient",
+          "name": "Ancient Lava",
+          "icon": "T_itemicon_Lava_Ancient.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "G_WKMC",
@@ -237,7 +1001,42 @@
     "instanceId": "978102E3-471E5428-E460F39A-A480D0BB",
     "x": 33674.242,
     "y": 84211.6,
-    "z": 5307.327
+    "z": 5307.327,
+    "unlocked": {
+      "id": "Accessory_WKMC_1",
+      "name": "Islander's Tool Belt",
+      "icon": "T_itemicon_Accessory_WKMC_1.png",
+      "type": "Accessory",
+      "description": "An accessory that greatly raises carrying capacity. It also significantly increases work speed.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 40
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 35
+        },
+        {
+          "id": "Wood_Ancient",
+          "name": "Ancient Bark",
+          "icon": "T_itemicon_Wood_Ancient.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "A_FurArmor",
@@ -247,7 +1046,40 @@
     "instanceId": "8E071A0E-490C0F90-47B99DB1-D6F3A68A",
     "x": -387865.66,
     "y": 196788.61,
-    "z": -1987.8872
+    "z": -1987.8872,
+    "unlocked": {
+      "id": "FurArmor",
+      "name": "Pelt Armor",
+      "icon": "T_itemicon_FurArmor.png",
+      "type": "Armor",
+      "description": "Armor made from Leather.\r Its warmth and defense have been improved.",
+      "stats": {
+        "Defense": 35.0,
+        "Durability": 300.0,
+        "Weight": 10.0
+      },
+      "materials": [
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 10
+        },
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 10
+        },
+        {
+          "id": "Fiber",
+          "name": "Fiber",
+          "icon": "T_itemicon_Fiber.png",
+          "count": 20
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_Otomo_Dargon",
@@ -257,7 +1089,42 @@
     "instanceId": "2C723B4B-4A2CCA8D-2450AE86-2495AC51",
     "x": -580374.25,
     "y": -186973.7,
-    "z": 10016.679
+    "z": 10016.679,
+    "unlocked": {
+      "id": "Accessory_Otomo_Dargon_1",
+      "name": "Elphidran Ring",
+      "icon": "T_itemicon_Accessory_Otomo_Dargon_1.png",
+      "type": "Accessory",
+      "description": "An accessory that greatly reduces incoming Dark damage of the Pal fighting alongside you.\r It also significantly increases the Dragon damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 20
+        },
+        {
+          "id": "PalOil",
+          "name": "High Quality Pal Oil",
+          "icon": "T_itemicon_PalOil.png",
+          "count": 20
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_ATElectricity_ElementBoost",
@@ -267,7 +1134,42 @@
     "instanceId": "B1BB48D8-41D1E3E8-30C0BD87-7701D0B5",
     "x": -579016.25,
     "y": -446038.06,
-    "z": -414.20554
+    "z": -414.20554,
+    "unlocked": {
+      "id": "Otomo_ATElectricity_ElementBoost_1",
+      "name": "Lord of Lightning's Baton",
+      "icon": "T_itemicon_Otomo_ATElectricity_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Attack of the Pal fighting alongside you.\r It also significantly increases their Electric damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 30
+        },
+        {
+          "id": "ElectricOrgan",
+          "name": "Electric Organ",
+          "icon": "T_itemicon_ElectricOrgan.png",
+          "count": 10
+        },
+        {
+          "id": "AncientParts2",
+          "name": "Ancient Civilization Core",
+          "icon": "T_itemicon_AncientParts2.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_DFNormal_ElementBoost",
@@ -277,7 +1179,42 @@
     "instanceId": "90E84CDF-4AD5EED6-53EC928E-4194FE68",
     "x": -665225.6,
     "y": -409944.03,
-    "z": 8438.596
+    "z": 8438.596,
+    "unlocked": {
+      "id": "Otomo_DFNormal_ElementBoost_1",
+      "name": "Hartalis's Talisman",
+      "icon": "T_itemicon_Otomo_DFNormal_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Defense of the Pal fighting alongside you.\r It also significantly increases their Neutral damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 30
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 30
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 10
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_ATIce_ElementBoost",
@@ -287,7 +1224,42 @@
     "instanceId": "85828122-4E9CC37D-D4E612B5-679F2F4C",
     "x": -598655.06,
     "y": -282853.53,
-    "z": 16763.127
+    "z": 16763.127,
+    "unlocked": {
+      "id": "Otomo_ATIce_ElementBoost_1",
+      "name": "Ice Emperor's Baton",
+      "icon": "T_itemicon_Otomo_ATIce_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Attack of the Pal fighting alongside you.\r It also significantly increases their Ice damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 30
+        },
+        {
+          "id": "IceOrgan",
+          "name": "Ice Organ",
+          "icon": "T_itemicon_IceOrgan.png",
+          "count": 15
+        },
+        {
+          "id": "AncientParts2",
+          "name": "Ancient Civilization Core",
+          "icon": "T_itemicon_AncientParts2.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_PPDF",
@@ -297,7 +1269,42 @@
     "instanceId": "36C2AE67-4E7063E2-C2EE5989-E16FE9CB",
     "x": -649822.9,
     "y": -317721.03,
-    "z": 20136.795
+    "z": 20136.795,
+    "unlocked": {
+      "id": "Accessory_PPDF_1",
+      "name": "Silvegis Emblem",
+      "icon": "T_itemicon_Accessory_PPDF_1.png",
+      "type": "Accessory",
+      "description": "An accessory that greatly raises your Defense, and that of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Chromium",
+          "name": "Chromite",
+          "icon": "T_itemicon_Chromium.png",
+          "count": 10
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 35
+        },
+        {
+          "id": "BeastBone_Ancient",
+          "name": "Ancient Bone",
+          "icon": "T_itemicon_BeastBone_Ancient.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_ATLeaf_ElementBoost",
@@ -307,7 +1314,42 @@
     "instanceId": "3B9C31B0-447703B7-48999CBE-E64959FB",
     "x": -729751.56,
     "y": -294426.0,
-    "z": 390.03226
+    "z": 390.03226,
+    "unlocked": {
+      "id": "Otomo_ATLeaf_ElementBoost_1",
+      "name": "Spirit Emperor's Baton",
+      "icon": "T_itemicon_Otomo_ATLeaf_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Attack of the Pal fighting alongside you.\r It also significantly increases their Grass damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 30
+        },
+        {
+          "id": "Poppy",
+          "name": "Beautiful Flower",
+          "icon": "T_itemicon_Poppy.png",
+          "count": 5
+        },
+        {
+          "id": "AncientParts2",
+          "name": "Ancient Civilization Core",
+          "icon": "T_itemicon_AncientParts2.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_DFFire_ElementBoost",
@@ -317,7 +1359,42 @@
     "instanceId": "B9865F8D-4C359F79-54A1479A-41B85F29",
     "x": -732235.3,
     "y": -397016.0,
-    "z": 10389.316
+    "z": 10389.316,
+    "unlocked": {
+      "id": "Otomo_DFFire_ElementBoost_1",
+      "name": "Blazamut's Talisman",
+      "icon": "T_itemicon_Otomo_DFFire_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Defense of the Pal fighting alongside you.\r It also significantly increases their  Fire damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Coal",
+          "name": "Coal",
+          "icon": "T_itemicon_Coal.png",
+          "count": 15
+        },
+        {
+          "id": "FireOrgan",
+          "name": "Flame Organ",
+          "icon": "T_itemicon_FireOrgan.png",
+          "count": 15
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 10
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "A_FurHelmet",
@@ -327,7 +1404,35 @@
     "instanceId": "FE3CBE67-43714E65-8AD0548B-78FA7E78",
     "x": -392808.66,
     "y": 235754.34,
-    "z": -2071.7156
+    "z": -2071.7156,
+    "unlocked": {
+      "id": "FurHelmet_4",
+      "name": "FurHelmet_4",
+      "icon": "T_itemicon_FurHelmet.png",
+      "type": "Armor",
+      "description": null,
+      "stats": {
+        "Defense": 22.0,
+        "Durability": 680.0,
+        "Weight": 5.0,
+        "Rarity": 3
+      },
+      "materials": [
+        {
+          "id": "Fiber",
+          "name": "Fiber",
+          "icon": "T_itemicon_Fiber.png",
+          "count": 17
+        },
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 3
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "A_BowGun",
@@ -337,7 +1442,47 @@
     "instanceId": "FB22DE6E-44C4F83E-1FD0B486-31536D30",
     "x": -275247.03,
     "y": 180285.75,
-    "z": 1317.0383
+    "z": 1317.0383,
+    "unlocked": {
+      "id": "BowGun",
+      "name": "Crossbow",
+      "icon": "T_itemicon_BowGun.png",
+      "type": "Weapon",
+      "description": "Fires an Arrow effortlessly.\r Though it takes time to load, it delivers a powerful shot.",
+      "stats": {
+        "Attack": 280.0,
+        "Magazine Size": 1.0,
+        "Durability": 300.0,
+        "Weight": 13.0
+      },
+      "materials": [
+        {
+          "id": "Wood",
+          "name": "Wood",
+          "icon": "T_itemicon_Wood.png",
+          "count": 50
+        },
+        {
+          "id": "Stone",
+          "name": "Stone",
+          "icon": "T_itemicon_Stone.png",
+          "count": 40
+        },
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 10
+        },
+        {
+          "id": "MachineParts",
+          "name": "Nail",
+          "icon": "T_itemicon_MachineParts.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "A_WorkSpeed",
@@ -347,7 +1492,42 @@
     "instanceId": "55A12448-4FA0DF68-7D0EB3B5-19D32725",
     "x": -348543.8,
     "y": 124778.555,
-    "z": -339.3909
+    "z": -339.3909,
+    "unlocked": {
+      "id": "Accessory_WorkSpeed_1",
+      "name": "Pendant of Diligence",
+      "icon": "T_itemicon_Accessory_WorkSpeed.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises Work Speed.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 25
+        },
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 20
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 25
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "B_ThunderResist",
@@ -357,7 +1537,42 @@
     "instanceId": "F9A43AE2-4B811E24-36FF0F94-622702FB",
     "x": -158482.34,
     "y": 42980.21,
-    "z": -2054.429
+    "z": -2054.429,
+    "unlocked": {
+      "id": "Accessory_ThunderResist_1",
+      "name": "Ring of Electric Resistance",
+      "icon": "T_itemicon_Accessory_ThunderResist.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly reduces incoming Electric damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 20
+        },
+        {
+          "id": "ElectricOrgan",
+          "name": "Electric Organ",
+          "icon": "T_itemicon_ElectricOrgan.png",
+          "count": 10
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "B_NormalResist",
@@ -367,7 +1582,42 @@
     "instanceId": "E46EAD49-4100AA09-16CEB290-75C64E57",
     "x": -251985.17,
     "y": 58771.5,
-    "z": 3890.0854
+    "z": 3890.0854,
+    "unlocked": {
+      "id": "Accessory_NormalResist_1",
+      "name": "Ring of Neutral Resistance",
+      "icon": "T_itemicon_Accessory_NormalResist.png",
+      "type": "Accessory",
+      "description": "Accessory that slightly lowers Neutral damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 20
+        },
+        {
+          "id": "Cement",
+          "name": "Cement",
+          "icon": "T_itemicon_Cement.png",
+          "count": 15
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "B_ElementBoost_Electricity",
@@ -377,7 +1627,42 @@
     "instanceId": "46A69950-4B9A1BDD-B34F0A87-1C2D5921",
     "x": -453711.88,
     "y": 83883.984,
-    "z": 2360.5342
+    "z": 2360.5342,
+    "unlocked": {
+      "id": "Otomo_ElementBoost_Electricity_1",
+      "name": "Electric Support Whistle",
+      "icon": "T_itemicon_Accessory_Otomo_ElementBoost_Electricity.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises the Electric damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 20
+        },
+        {
+          "id": "ElectricOrgan",
+          "name": "Electric Organ",
+          "icon": "T_itemicon_ElectricOrgan.png",
+          "count": 10
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "C_ElementBoost_Dark",
@@ -387,7 +1672,42 @@
     "instanceId": "1821970E-4ADC8A5B-9BA310BB-2B6E871A",
     "x": -235856.16,
     "y": 116640.984,
-    "z": 5973.865
+    "z": 5973.865,
+    "unlocked": {
+      "id": "Otomo_ElementBoost_Dark_1",
+      "name": "Dark Support Whistle",
+      "icon": "T_itemicon_Accessory_Otomo_ElementBoost_Dark.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises the Dark damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 20
+        },
+        {
+          "id": "Venom",
+          "name": "Venom Gland",
+          "icon": "T_itemicon_Venom.png",
+          "count": 10
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "C_Sword",
@@ -397,7 +1717,40 @@
     "instanceId": "1FBF0E1B-4FD6DCF6-8BF14C9D-EBF10AED",
     "x": -239825.78,
     "y": 179007.34,
-    "z": -882.8551
+    "z": -882.8551,
+    "unlocked": {
+      "id": "Sword",
+      "name": "Sword",
+      "icon": "T_itemicon_Sword.png",
+      "type": "Weapon",
+      "description": "Sword for close-range combat.\r The blade is extremely sharp! Mightier than a pen, for sure.\r Requires WeaponFactory Dirty 01 to craft.",
+      "stats": {
+        "Attack": 360.0,
+        "Durability": 500.0,
+        "Weight": 10.0
+      },
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 30
+        },
+        {
+          "id": "Processed_Wood",
+          "name": "Wooden Board",
+          "icon": "T_itemicon_Processed_Wood.png",
+          "count": 2
+        },
+        {
+          "id": "Stone",
+          "name": "Stone",
+          "icon": "T_itemicon_Stone.png",
+          "count": 20
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "C_PalExp",
@@ -407,7 +1760,42 @@
     "instanceId": "E62596C1-449142AD-1F59F083-6B1BAA0C",
     "x": -166259.5,
     "y": 145947.77,
-    "z": 3277.1646
+    "z": 3277.1646,
+    "unlocked": {
+      "id": "Otomo_PalExp_Increase_1",
+      "name": "Growth Acceleration Bell",
+      "icon": "T_itemicon_Accessory_Otomo_Exp_up.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises Pal EXP.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 25
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        },
+        {
+          "id": "PoisonMushroom",
+          "name": "Mysterious Mushroom",
+          "icon": "T_itemicon_PoisonMushroom.png",
+          "count": 10
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 3
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "D_MaxWeightUp",
@@ -417,7 +1805,42 @@
     "instanceId": "D158F43B-466421BD-29CB4B91-734C07C4",
     "x": -109917.29,
     "y": 181024.81,
-    "z": 3801.9084
+    "z": 3801.9084,
+    "unlocked": {
+      "id": "Accessory_MaxWeightUp_01",
+      "name": "Ring of Freight",
+      "icon": "T_itemicon_Accessory_MaxWeightUp.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises carrying capacity.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 25
+        },
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 20
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 3
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "D_MakeshiftShotgun",
@@ -427,7 +1850,41 @@
     "instanceId": "191D1E38-4BDA248E-53E920B1-DF8AF62A",
     "x": -108088.88,
     "y": 238804.86,
-    "z": 19046.242
+    "z": 19046.242,
+    "unlocked": {
+      "id": "MakeshiftShotgun",
+      "name": "Makeshift Shotgun",
+      "icon": "T_itemicon_MakeshiftShotgun.png",
+      "type": "Weapon",
+      "description": "A shotgun handmade from scraps. \r It has a short range but excels in close-range combat",
+      "stats": {
+        "Attack": 215.0,
+        "Magazine Size": 1.0,
+        "Durability": 200.0,
+        "Weight": 24.0
+      },
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 60
+        },
+        {
+          "id": "PalOil",
+          "name": "High Quality Pal Oil",
+          "icon": "T_itemicon_PalOil.png",
+          "count": 15
+        },
+        {
+          "id": "Fiber",
+          "name": "Fiber",
+          "icon": "T_itemicon_Fiber.png",
+          "count": 50
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "D_DragonResist",
@@ -437,7 +1894,42 @@
     "instanceId": "53A06655-48DAA4CC-515B88A5-3A1C2946",
     "x": -219434.92,
     "y": 398602.4,
-    "z": -1914.3995
+    "z": -1914.3995,
+    "unlocked": {
+      "id": "Accessory_DragonResist_1",
+      "name": "Ring of Dragon Resistance",
+      "icon": "T_itemicon_Accessory_DragonResist.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly reduces incoming Dragon damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 20
+        },
+        {
+          "id": "Quartz",
+          "name": "Pure Quartz",
+          "icon": "T_itemicon_Quartz.png",
+          "count": 20
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "E_HeatFire",
@@ -447,7 +1939,48 @@
     "instanceId": "A9367D9D-413D54B4-52070C96-212C5BC2",
     "x": -31185.455,
     "y": 335362.88,
-    "z": -829.43134
+    "z": -829.43134,
+    "unlocked": {
+      "id": "Accessory_HeatFire_1",
+      "name": "Reptyro Charm",
+      "icon": "T_itemicon_Accessory_HeatFire_1.png",
+      "type": "Accessory",
+      "description": "An accessory with incredible resistance to heat. \r Greatly reduces incoming Fire damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "FireOrgan",
+          "name": "Flame Organ",
+          "icon": "T_itemicon_FireOrgan.png",
+          "count": 20
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        },
+        {
+          "id": "CarbonFiber",
+          "name": "Carbon Fiber",
+          "icon": "T_itemicon_CarbonFiber.png",
+          "count": 30
+        },
+        {
+          "id": "Wood_Ancient",
+          "name": "Ancient Bark",
+          "icon": "T_itemicon_Wood_Ancient.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "E_AT",
@@ -457,7 +1990,42 @@
     "instanceId": "2ADA7F75-43C7C649-10051D87-80AC932A",
     "x": 31252.06,
     "y": 354119.16,
-    "z": -556.7998
+    "z": -556.7998,
+    "unlocked": {
+      "id": "Accessory_AT_1",
+      "name": "Attack Pendant",
+      "icon": "T_itemicon_Accessory_AT.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises Attack.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 25
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 20
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 25
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "E_ATEarth_ElementBoost",
@@ -467,7 +2035,42 @@
     "instanceId": "34FA044C-4808DE3E-F9C8ECAA-3074B320",
     "x": 29619.922,
     "y": 238550.42,
-    "z": -1482.5526
+    "z": -1482.5526,
+    "unlocked": {
+      "id": "Otomo_ATEarth_ElementBoost_1",
+      "name": "Earth Emperor's Baton",
+      "icon": "T_itemicon_Otomo_ATEarth_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Attack of the Pal fighting alongside you.\r It also significantly increases their Ground damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 30
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 30
+        },
+        {
+          "id": "AncientParts2",
+          "name": "Ancient Civilization Core",
+          "icon": "T_itemicon_AncientParts2.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "F_defense",
@@ -477,7 +2080,42 @@
     "instanceId": "FDA9D7CE-4774FE86-877E7D9B-87544A81",
     "x": -277579.1,
     "y": -12837.378,
-    "z": -247.58165
+    "z": -247.58165,
+    "unlocked": {
+      "id": "Accessory_defense_1",
+      "name": "Defense Pendant",
+      "icon": "T_itemicon_Accessory_defense.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises Defense.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 30
+        },
+        {
+          "id": "CopperOre",
+          "name": "Ore",
+          "icon": "T_itemicon_CopperOre.png",
+          "count": 20
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 25
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "F_PalConfidence",
@@ -487,7 +2125,42 @@
     "instanceId": "44B4F95F-46451393-81B88B98-67AD01B0",
     "x": -218704.45,
     "y": -77287.516,
-    "z": -2132.3955
+    "z": -2132.3955,
+    "unlocked": {
+      "id": "Otomo_PalConfidence_Increase_1",
+      "name": "Ring of Trust",
+      "icon": "T_itemicon_Otomo_PalConfidence_Increase_1.png",
+      "type": "Accessory",
+      "description": "Equipping this makes it easier to increase your Trust with your Pals.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 25
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        },
+        {
+          "id": "Poppy",
+          "name": "Beautiful Flower",
+          "icon": "T_itemicon_Poppy.png",
+          "count": 10
+        },
+        {
+          "id": "Lava_Ancient",
+          "name": "Ancient Lava",
+          "icon": "T_itemicon_Lava_Ancient.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "B_MakeshiftHandgun",
@@ -497,7 +2170,41 @@
     "instanceId": "A4204434-40A05815-417BDCAB-1EC2F47A",
     "x": -375552.28,
     "y": 82706.91,
-    "z": 1715.6029
+    "z": 1715.6029,
+    "unlocked": {
+      "id": "MakeshiftHandgun",
+      "name": "Makeshift Handgun",
+      "icon": "T_itemicon_MakeshiftHandgun.png",
+      "type": "Weapon",
+      "description": "A handgun created from spare parts.\r Relatively well suited for close-quarters combat, but fires only one shot at a time.",
+      "stats": {
+        "Attack": 320.0,
+        "Magazine Size": 6.0,
+        "Durability": 300.0,
+        "Weight": 10.0
+      },
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 35
+        },
+        {
+          "id": "PalOil",
+          "name": "High Quality Pal Oil",
+          "icon": "T_itemicon_PalOil.png",
+          "count": 10
+        },
+        {
+          "id": "Fiber",
+          "name": "Fiber",
+          "icon": "T_itemicon_Fiber.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "B_HeatResist",
@@ -507,7 +2214,42 @@
     "instanceId": "CCC8C275-4AE8FC43-73113A90-36CE8281",
     "x": -194633.66,
     "y": -15881.568,
-    "z": 9581.627
+    "z": 9581.627,
+    "unlocked": {
+      "id": "Accessory_HeatResist_1",
+      "name": "Heat Resistant Undershirt",
+      "icon": "T_itemicon_Accessory_HeatResist.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises Heat Resistance.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "Wool",
+          "name": "Wool",
+          "icon": "T_itemicon_Wool.png",
+          "count": 20
+        },
+        {
+          "id": "FireOrgan",
+          "name": "Flame Organ",
+          "icon": "T_itemicon_FireOrgan.png",
+          "count": 15
+        },
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 25
+        },
+        {
+          "id": "Fiber",
+          "name": "Fiber",
+          "icon": "T_itemicon_Fiber.png",
+          "count": 35
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "B_CopperArmorHeat",
@@ -517,7 +2259,47 @@
     "instanceId": "2DA59E17-42103D87-9D1291B5-FEC4E66A",
     "x": -170521.27,
     "y": 111321.734,
-    "z": -56.786694
+    "z": -56.786694,
+    "unlocked": {
+      "id": "CopperArmorHeat_3",
+      "name": "CopperArmorHeat_3",
+      "icon": "T_itemicon_CopperArmorHeat.png",
+      "type": "Armor",
+      "description": null,
+      "stats": {
+        "Defense": 147.0,
+        "Durability": 2800.0,
+        "Weight": 30.0,
+        "Rarity": 2
+      },
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 60
+        },
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 19
+        },
+        {
+          "id": "Cloth",
+          "name": "Cloth",
+          "icon": "T_itemicon_Cloth.png",
+          "count": 12
+        },
+        {
+          "id": "FireOrgan",
+          "name": "Flame Organ",
+          "icon": "T_itemicon_FireOrgan.png",
+          "count": 12
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "B_CopperHelmet",
@@ -527,7 +2309,35 @@
     "instanceId": "49247B09-473C086B-01A496BC-1530F92F",
     "x": -212738.89,
     "y": 68530.33,
-    "z": 3619.852
+    "z": 3619.852,
+    "unlocked": {
+      "id": "CopperHelmet_3",
+      "name": "CopperHelmet_3",
+      "icon": "T_itemicon_CopperHelmet.png",
+      "type": "Armor",
+      "description": null,
+      "stats": {
+        "Defense": 70.0,
+        "Durability": 2100.0,
+        "Weight": 10.0,
+        "Rarity": 2
+      },
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 30
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 15
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "C_HandGun",
@@ -537,7 +2347,17 @@
     "instanceId": "68A1D0DE-498FD0A5-08663D93-80AEB468",
     "x": -224312.73,
     "y": 135301.62,
-    "z": 6697.1543
+    "z": 6697.1543,
+    "unlocked": {
+      "id": "WorkSuitability_AddTicket_Seeding",
+      "name": "Applied Planting Handbook I",
+      "icon": "T_itemicon_WorkSuitability_AddTicket_Seeding.png",
+      "type": "Consume",
+      "description": "A rare book written about the secrets of Seeding. \r Allowing a Pal to read it permanently increases their Seeding affinity by +1.",
+      "stats": null,
+      "materials": null,
+      "rarity_label": null
+    }
   },
   {
     "id": "C_CopperArmorCold",
@@ -547,7 +2367,47 @@
     "instanceId": "DDE83D4E-495E8278-DCF881B3-FE7F6525",
     "x": -275867.22,
     "y": 122134.79,
-    "z": 3823.522
+    "z": 3823.522,
+    "unlocked": {
+      "id": "CopperArmorCold_3",
+      "name": "CopperArmorCold_3",
+      "icon": "T_itemicon_CopperArmorCold.png",
+      "type": "Armor",
+      "description": null,
+      "stats": {
+        "Defense": 147.0,
+        "Durability": 2800.0,
+        "Weight": 30.0,
+        "Rarity": 2
+      },
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 60
+        },
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 19
+        },
+        {
+          "id": "Cloth",
+          "name": "Cloth",
+          "icon": "T_itemicon_Cloth.png",
+          "count": 12
+        },
+        {
+          "id": "IceOrgan",
+          "name": "Ice Organ",
+          "icon": "T_itemicon_IceOrgan.png",
+          "count": 12
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "C_HP",
@@ -557,7 +2417,42 @@
     "instanceId": "3A8C2858-4070FF43-DFB8888B-6E164898",
     "x": -230266.52,
     "y": 206569.11,
-    "z": 1724.7694
+    "z": 1724.7694,
+    "unlocked": {
+      "id": "Accessory_HP_1",
+      "name": "Life Pendant",
+      "icon": "T_itemicon_Accessory_HP.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises Health.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 25
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 20
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 25
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "D_ElementBoost_Leaf",
@@ -567,7 +2462,42 @@
     "instanceId": "A1C5179B-4C666037-62507F8F-6562BB0E",
     "x": -187651.03,
     "y": 243315.16,
-    "z": 3838.8745
+    "z": 3838.8745,
+    "unlocked": {
+      "id": "Otomo_ElementBoost_Leaf_1",
+      "name": "Grass Support Whistle",
+      "icon": "T_itemicon_Accessory_Otomo_ElementBoost_Leaf.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises the Grass damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 20
+        },
+        {
+          "id": "PalItem_PlantSlime",
+          "name": "Gumoss Leaf",
+          "icon": "T_itemicon_PalItem_PlantSlime.png",
+          "count": 5
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "D_IceResist",
@@ -577,7 +2507,42 @@
     "instanceId": "CB35FF79-43A15817-5C5B9D84-EC0FB10C",
     "x": -71417.58,
     "y": 267745.0,
-    "z": 13993.009
+    "z": 13993.009,
+    "unlocked": {
+      "id": "Accessory_IceResist_1",
+      "name": "Ring of Ice Resistance",
+      "icon": "T_itemicon_Accessory_IceResist.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly reduces incoming Ice damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 20
+        },
+        {
+          "id": "IceOrgan",
+          "name": "Ice Organ",
+          "icon": "T_itemicon_IceOrgan.png",
+          "count": 15
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "D_MakeshiftAssaultRifle",
@@ -587,7 +2552,41 @@
     "instanceId": "25211EC1-4FB9C2A2-B43A8498-7DA28DF0",
     "x": -159505.86,
     "y": 299820.4,
-    "z": -2119.9504
+    "z": -2119.9504,
+    "unlocked": {
+      "id": "MakeshiftAssaultRifle",
+      "name": "Makeshift Assault Rifle",
+      "icon": "T_itemicon_MakeshiftAssaultRifle.png",
+      "type": "Weapon",
+      "description": "An assault rifle handmade from scraps. \r It excels in rate of fire and long range, but its single-shot power is low.",
+      "stats": {
+        "Attack": 170.0,
+        "Magazine Size": 15.0,
+        "Durability": 1500.0,
+        "Weight": 15.0
+      },
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 70
+        },
+        {
+          "id": "PalOil",
+          "name": "High Quality Pal Oil",
+          "icon": "T_itemicon_PalOil.png",
+          "count": 20
+        },
+        {
+          "id": "Fiber",
+          "name": "Fiber",
+          "icon": "T_itemicon_Fiber.png",
+          "count": 60
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "D_ElementBoost_Dragon",
@@ -597,7 +2596,42 @@
     "instanceId": "8733539E-4ABE5F12-D6A71285-54562BB5",
     "x": -120219.84,
     "y": 327153.28,
-    "z": -1691.6637
+    "z": -1691.6637,
+    "unlocked": {
+      "id": "Otomo_ElementBoost_Dragon_1",
+      "name": "Dragon Support Whistle",
+      "icon": "T_itemicon_Accessory_Otomo_ElementBoost_Dragon.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises the Dragon damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 20
+        },
+        {
+          "id": "Quartz",
+          "name": "Pure Quartz",
+          "icon": "T_itemicon_Quartz.png",
+          "count": 20
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "E_ElementBoost_Earth",
@@ -607,7 +2641,42 @@
     "instanceId": "B5F86F1F-4F44079B-BE85AE89-C05362AB",
     "x": -56834.13,
     "y": 418051.97,
-    "z": 16645.04
+    "z": 16645.04,
+    "unlocked": {
+      "id": "Otomo_ElementBoost_Earth_1",
+      "name": "Ground Support Whistle",
+      "icon": "T_itemicon_Accessory_Otomo_ElementBoost_Earth.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises the Ground damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 20
+        },
+        {
+          "id": "MeteorDrop",
+          "name": "Meteorite Fragment",
+          "icon": "T_itemicon_MeteorDrop.png",
+          "count": 10
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "E_AssaultRifle",
@@ -617,7 +2686,41 @@
     "instanceId": "2FE1550D-4511CFA0-C115A182-82592EAB",
     "x": -36381.25,
     "y": 504757.4,
-    "z": 1379.9994
+    "z": 1379.9994,
+    "unlocked": {
+      "id": "AssaultRifle_Default1",
+      "name": "Assault Rifle",
+      "icon": "T_itemicon_AssaultRifle_Default.png",
+      "type": "Weapon",
+      "description": "An Assault Rifle that mows down enemies with overwhelming force. \r It excels at rapid-fire and is well suited to taking down powerful foes.",
+      "stats": {
+        "Attack": 320.0,
+        "Magazine Size": 20.0,
+        "Durability": 3000.0,
+        "Weight": 15.0
+      },
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 40
+        },
+        {
+          "id": "Polymer",
+          "name": "Polymer",
+          "icon": "T_itemicon_Polymer.png",
+          "count": 10
+        },
+        {
+          "id": "CarbonFiber",
+          "name": "Carbon Fiber",
+          "icon": "T_itemicon_CarbonFiber.png",
+          "count": 10
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "E_StealHelmet",
@@ -627,7 +2730,41 @@
     "instanceId": "ECD38C3A-473F7B64-BAA32DA7-41200B2F",
     "x": 141228.94,
     "y": 402829.66,
-    "z": -1753.1472
+    "z": -1753.1472,
+    "unlocked": {
+      "id": "StealHelmet_3",
+      "name": "StealHelmet_3",
+      "icon": "T_itemicon_StealHelmet.png",
+      "type": "Armor",
+      "description": null,
+      "stats": {
+        "Defense": 210.0,
+        "Durability": 15000.0,
+        "Weight": 15.0,
+        "Rarity": 2
+      },
+      "materials": [
+        {
+          "id": "StealIngot",
+          "name": "Pal Metal Ingot",
+          "icon": "T_itemicon_StealIngot.png",
+          "count": 30
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 3
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "E_StealArmor",
@@ -637,7 +2774,40 @@
     "instanceId": "AD713FDC-400BD4F3-04DC6FA8-6A77CA45",
     "x": 166586.92,
     "y": 281205.78,
-    "z": 328.5363
+    "z": 328.5363,
+    "unlocked": {
+      "id": "StealArmor",
+      "name": "Pal Metal Armor",
+      "icon": "T_itemicon_StealArmor.png",
+      "type": "Armor",
+      "description": "Armor made from Pal Metal Ingot.\r High defense, but extremely heavy.\r Equipment for a hero, it exudes bravery.",
+      "stats": {
+        "Defense": 220.0,
+        "Durability": 5000.0,
+        "Weight": 40.0
+      },
+      "materials": [
+        {
+          "id": "StealIngot",
+          "name": "Pal Metal Ingot",
+          "icon": "T_itemicon_StealIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 20
+        },
+        {
+          "id": "Cloth2",
+          "name": "High Quality Cloth",
+          "icon": "T_itemicon_Cloth.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "E_Defense_up",
@@ -647,7 +2817,42 @@
     "instanceId": "6F709711-4F650CA1-42B3A9A6-58C0559E",
     "x": 101608.54,
     "y": 299111.47,
-    "z": 16799.574
+    "z": 16799.574,
+    "unlocked": {
+      "id": "Otomo_Defense_up1",
+      "name": "Defense Support Whistle",
+      "icon": "T_itemicon_Accessory_Otomo_Defense_up.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises the Defense of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 20
+        },
+        {
+          "id": "Polymer",
+          "name": "Polymer",
+          "icon": "T_itemicon_Polymer.png",
+          "count": 15
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "F_IronArmor",
@@ -657,7 +2862,40 @@
     "instanceId": "F33C73DA-4E79DFEB-ACC722A3-1C734069",
     "x": -436815.84,
     "y": -17738.291,
-    "z": -2079.3323
+    "z": -2079.3323,
+    "unlocked": {
+      "id": "IronArmor",
+      "name": "Refined Metal Armor",
+      "icon": "T_itemicon_IronArmor.png",
+      "type": "Armor",
+      "description": "Armor made from high quality metal.\r Quite heavy, but provides excellent defense.",
+      "stats": {
+        "Defense": 150.0,
+        "Durability": 1500.0,
+        "Weight": 35.0
+      },
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 30
+        },
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 15
+        },
+        {
+          "id": "Cloth2",
+          "name": "High Quality Cloth",
+          "icon": "T_itemicon_Cloth.png",
+          "count": 1
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "F_IronHelmet",
@@ -667,7 +2905,41 @@
     "instanceId": "BC8CB736-41026040-8DE3EEB5-4A2ED6AE",
     "x": -423930.53,
     "y": -179446.84,
-    "z": 15645.756
+    "z": 15645.756,
+    "unlocked": {
+      "id": "IronHelmet_3",
+      "name": "IronHelmet_3",
+      "icon": "T_itemicon_IronHelmet.png",
+      "type": "Armor",
+      "description": null,
+      "stats": {
+        "Defense": 140.0,
+        "Durability": 4500.0,
+        "Weight": 12.0,
+        "Rarity": 2
+      },
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 30
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 22
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "F_SubmachineGun",
@@ -677,7 +2949,35 @@
     "instanceId": "55E5C168-436A427F-6C50CFBB-9B5EFBAB",
     "x": -306382.25,
     "y": -228188.23,
-    "z": -1346.3125
+    "z": -1346.3125,
+    "unlocked": {
+      "id": "SubmachineGun",
+      "name": "SMG",
+      "icon": "T_itemicon_SubmachineGun.png",
+      "type": "Weapon",
+      "description": "A submachine gun with exceptional rate of fire. \r It’s easy to handle and effective in close-range combat.",
+      "stats": {
+        "Attack": 130.0,
+        "Magazine Size": 24.0,
+        "Durability": 2000.0,
+        "Weight": 15.0
+      },
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 25
+        },
+        {
+          "id": "Polymer",
+          "name": "Polymer",
+          "icon": "T_itemicon_Polymer.png",
+          "count": 6
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "F_SingleShotRifle",
@@ -687,7 +2987,41 @@
     "instanceId": "79B2BAD9-4DD28D37-ED8278B4-8D7EE38D",
     "x": -224073.08,
     "y": -174363.67,
-    "z": -620.9245
+    "z": -620.9245,
+    "unlocked": {
+      "id": "SingleShotRifle",
+      "name": "Single-Shot Rifle",
+      "icon": "T_itemicon_SingleShotRifle.png",
+      "type": "Weapon",
+      "description": "A single-shot rifle. Takes time to load.\r What it lacks in capacity, it makes up for with sheer power.",
+      "stats": {
+        "Attack": 1100.0,
+        "Magazine Size": 1.0,
+        "Durability": 1000.0,
+        "Weight": 20.0
+      },
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Polymer",
+          "name": "Polymer",
+          "icon": "T_itemicon_Polymer.png",
+          "count": 5
+        },
+        {
+          "id": "Wood_Fine",
+          "name": "Hardwood",
+          "icon": "T_itemicon_Wood_Fine.png",
+          "count": 20
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "F_Attack_up",
@@ -697,7 +3031,42 @@
     "instanceId": "8489353E-405DF5E6-AAE58FAF-D779F3D7",
     "x": -356889.47,
     "y": -72283.53,
-    "z": 18735.26
+    "z": 18735.26,
+    "unlocked": {
+      "id": "Otomo_Attack_up1",
+      "name": "Attack Support Whistle",
+      "icon": "T_itemicon_Accessory_Otomo_Attack_up.png",
+      "type": "Accessory",
+      "description": "An accessory that slightly raises the Attack of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "CopperIngot",
+          "name": "Ingot",
+          "icon": "T_itemicon_CopperIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 20
+        },
+        {
+          "id": "Sulfur",
+          "name": "Sulfur",
+          "icon": "T_itemicon_Sulfur.png",
+          "count": 25
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 2
+        }
+      ],
+      "rarity_label": "Rare"
+    }
   },
   {
     "id": "F_CompoundBow",
@@ -707,7 +3076,34 @@
     "instanceId": "A6E41DCD-4B242489-3A07B8A1-77FA60B1",
     "x": -416615.62,
     "y": -66259.49,
-    "z": 17173.613
+    "z": 17173.613,
+    "unlocked": {
+      "id": "Bat3",
+      "name": "Metal Bat",
+      "icon": "T_itemicon_Bat3.png",
+      "type": "Weapon",
+      "description": "A Metal Bat that works well in close combat. \r Use it to beat down anyone you don't like.",
+      "stats": {
+        "Attack": 500.0,
+        "Durability": 500.0,
+        "Weight": 3.0
+      },
+      "materials": [
+        {
+          "id": "Wood_Fine",
+          "name": "Hardwood",
+          "icon": "T_itemicon_Wood_Fine.png",
+          "count": 30
+        },
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "G_PlasticArmor",
@@ -717,7 +3113,17 @@
     "instanceId": "346D2872-4D9BDAC6-E01279A6-3594C0F0",
     "x": 122774.14,
     "y": 19185.748,
-    "z": 31414.61
+    "z": 31414.61,
+    "unlocked": {
+      "id": "WorkSuitability_AddTicket_Cool",
+      "name": "Applied Cooling Handbook I",
+      "icon": "T_itemicon_WorkSuitability_AddTicket_Cool.png",
+      "type": "Consume",
+      "description": "A rare book written about the secrets of Cool. \r Allowing a Pal to read it permanently increases their Cool affinity by +1.",
+      "stats": null,
+      "materials": null,
+      "rarity_label": null
+    }
   },
   {
     "id": "G_ATNormal_ElementBoost",
@@ -727,7 +3133,42 @@
     "instanceId": "8E82DE56-4606A610-CE8F1682-03F98AF4",
     "x": 52556.184,
     "y": -40642.938,
-    "z": 7702.9473
+    "z": 7702.9473,
+    "unlocked": {
+      "id": "Otomo_ATNormal_ElementBoost_1",
+      "name": "Celestial Emperor's Baton",
+      "icon": "T_itemicon_Otomo_ATNormal_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Attack of the Pal fighting alongside you.\r It also significantly increases their Neutral damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 30
+        },
+        {
+          "id": "StealIngot",
+          "name": "Pal Metal Ingot",
+          "icon": "T_itemicon_StealIngot.png",
+          "count": 10
+        },
+        {
+          "id": "AncientParts2",
+          "name": "Ancient Civilization Core",
+          "icon": "T_itemicon_AncientParts2.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "G_PlasticHelmet",
@@ -737,7 +3178,17 @@
     "instanceId": "970EA20C-409F1B6E-F2056183-41798C3B",
     "x": -39202.16,
     "y": 44777.992,
-    "z": 87.175514
+    "z": 87.175514,
+    "unlocked": {
+      "id": "WorkSuitability_AddTicket_Deforest",
+      "name": "Applied Lumbering Handbook I",
+      "icon": "T_itemicon_WorkSuitability_AddTicket_Deforest.png",
+      "type": "Consume",
+      "description": "A rare book written about the secrets of Deforest. \r Allowing a Pal to read it permanently increases their Deforest affinity by +1.",
+      "stats": null,
+      "materials": null,
+      "rarity_label": null
+    }
   },
   {
     "id": "G_GatlingGun",
@@ -747,7 +3198,17 @@
     "instanceId": "97546E52-42A7E75A-8A2AD995-30BF1219",
     "x": -15700.959,
     "y": 178270.02,
-    "z": 14398.448
+    "z": 14398.448,
+    "unlocked": {
+      "id": "WorkSuitability_AddTicket_Collection",
+      "name": "Applied Gathering Handbook I",
+      "icon": "T_itemicon_WorkSuitability_AddTicket_Collection.png",
+      "type": "Consume",
+      "description": "A rare book written about the secrets of Collection. \r Allowing a Pal to read it permanently increases their Collection affinity by +1.",
+      "stats": null,
+      "materials": null,
+      "rarity_label": null
+    }
   },
   {
     "id": "G_Avoid",
@@ -757,7 +3218,42 @@
     "instanceId": "10DD9CAE-4CAEE605-64710DBE-6E020B20",
     "x": 92797.3,
     "y": 207482.92,
-    "z": 3380.0176
+    "z": 3380.0176,
+    "unlocked": {
+      "id": "Accessory_Avoid_1",
+      "name": "Phantom Ring",
+      "icon": "T_itemicon_Accessory_Avoid_1.png",
+      "type": "Accessory",
+      "description": "An accessory that extends the invincibility period of rolls and sidesteps.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 30
+        },
+        {
+          "id": "Plastic",
+          "name": "Plasteel",
+          "icon": "T_itemicon_Plastic.png",
+          "count": 10
+        },
+        {
+          "id": "StealIngot",
+          "name": "Pal Metal Ingot",
+          "icon": "T_itemicon_StealIngot.png",
+          "count": 15
+        },
+        {
+          "id": "BeastBone_Ancient",
+          "name": "Ancient Bone",
+          "icon": "T_itemicon_BeastBone_Ancient.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": null
+    }
   },
   {
     "id": "H_DFLeaf_ElementBoost",
@@ -767,7 +3263,42 @@
     "instanceId": "17CF5748-42581C81-AE4402B8-3D01EFF7",
     "x": -25534.838,
     "y": -68022.56,
-    "z": 2225.9626
+    "z": 2225.9626,
+    "unlocked": {
+      "id": "Otomo_DFLeaf_ElementBoost_1",
+      "name": "Lyleen's Talisman",
+      "icon": "T_itemicon_Otomo_DFLeaf_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Defense of the Pal fighting alongside you.\r It also significantly increases their Grass damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 30
+        },
+        {
+          "id": "Poppy",
+          "name": "Beautiful Flower",
+          "icon": "T_itemicon_Poppy.png",
+          "count": 5
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 10
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "H_SFBow",
@@ -777,7 +3308,17 @@
     "instanceId": "0641DD13-46B813DE-C72CEB8D-2E583E40",
     "x": 36135.74,
     "y": -102794.02,
-    "z": -862.14905
+    "z": -862.14905,
+    "unlocked": {
+      "id": "WorkSuitability_AddTicket_Handcraft",
+      "name": "Applied Handiwork Handbook I",
+      "icon": "T_itemicon_WorkSuitability_AddTicket_Handcraft.png",
+      "type": "Consume",
+      "description": "A rare book written about the secrets of Handcraft. \r Allowing a Pal to read it permanently increases their Handcraft affinity by +1.",
+      "stats": null,
+      "materials": null,
+      "rarity_label": null
+    }
   },
   {
     "id": "H_PlasticArmorWeight",
@@ -787,7 +3328,17 @@
     "instanceId": "81BC17C4-47713CEA-F840CB89-94E61E4E",
     "x": -57912.61,
     "y": -190303.52,
-    "z": -1367.7786
+    "z": -1367.7786,
+    "unlocked": {
+      "id": "WorkSuitability_AddTicket_GenerateElectricity",
+      "name": "Applied Generating Electricity Handbook I",
+      "icon": "T_itemicon_WorkSuitability_AddTicket_GenerateElectricity.png",
+      "type": "Consume",
+      "description": "A rare book written about the secrets of GenerateElectricity. \r Allowing a Pal to read it permanently increases their GenerateElectricity affinity by +1.",
+      "stats": null,
+      "materials": null,
+      "rarity_label": null
+    }
   },
   {
     "id": "H_DFHP",
@@ -797,7 +3348,42 @@
     "instanceId": "9BD0802E-4F65E040-AB04E5B6-D4D2F542",
     "x": -110283.65,
     "y": -147448.83,
-    "z": -2046.819
+    "z": -2046.819,
+    "unlocked": {
+      "id": "Accessory_DFHP_1",
+      "name": "Warsect Terra's Belt",
+      "icon": "T_itemicon_Accessory_DFHP_1.png",
+      "type": "Accessory",
+      "description": "An accessory that greatly raises Defense and Health.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 40
+        },
+        {
+          "id": "Honey",
+          "name": "Honey",
+          "icon": "T_itemicon_Honey.png",
+          "count": 20
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 35
+        },
+        {
+          "id": "Lava_Ancient",
+          "name": "Ancient Lava",
+          "icon": "T_itemicon_Lava_Ancient.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_ATWater_ElementBoost",
@@ -807,7 +3393,42 @@
     "instanceId": "5FE57765-46429311-FADD30B5-E5E5C056",
     "x": -623275.1,
     "y": -137240.89,
-    "z": -448.78854
+    "z": -448.78854,
+    "unlocked": {
+      "id": "Otomo_ATWater_ElementBoost_1",
+      "name": "Lord of the Sea's Baton",
+      "icon": "T_itemicon_Otomo_ATWater_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Attack of the Pal fighting alongside you.\r It also significantly increases their Water damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 30
+        },
+        {
+          "id": "PalFluid",
+          "name": "Aquatic Pal Fluids",
+          "icon": "T_itemicon_PalFluid.png",
+          "count": 30
+        },
+        {
+          "id": "AncientParts2",
+          "name": "Ancient Civilization Core",
+          "icon": "T_itemicon_AncientParts2.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_HCMW",
@@ -817,7 +3438,48 @@
     "instanceId": "C4B65940-40942874-DF910887-668A7B74",
     "x": -684950.5,
     "y": -201967.44,
-    "z": 8799.334
+    "z": 8799.334,
+    "unlocked": {
+      "id": "Accessory_HCMW_1",
+      "name": "Wandering Merchant Charm",
+      "icon": "T_itemicon_Accessory_HCMW_1.png",
+      "type": "Accessory",
+      "description": "An accessory that greatly raises Heat and Cold Resistance. It also significantly increases carrying capacity.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "Polymer",
+          "name": "Polymer",
+          "icon": "T_itemicon_Polymer.png",
+          "count": 30
+        },
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 30
+        },
+        {
+          "id": "FireOrgan",
+          "name": "Flame Organ",
+          "icon": "T_itemicon_FireOrgan.png",
+          "count": 20
+        },
+        {
+          "id": "IceOrgan",
+          "name": "Ice Organ",
+          "icon": "T_itemicon_IceOrgan.png",
+          "count": 20
+        },
+        {
+          "id": "BeastBone_Ancient",
+          "name": "Ancient Bone",
+          "icon": "T_itemicon_BeastBone_Ancient.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_ATDark_ElementBoost",
@@ -827,7 +3489,42 @@
     "instanceId": "F4ABC6AC-467C595A-C0F1259E-11F24D1A",
     "x": -641151.94,
     "y": -264290.78,
-    "z": 10875.587
+    "z": 10875.587,
+    "unlocked": {
+      "id": "Otomo_ATDark_ElementBoost_1",
+      "name": "Lord of the Underworld's Baton",
+      "icon": "T_itemicon_Otomo_ATDark_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Attack of the Pal fighting alongside you.\r It also significantly increases their Dark damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 30
+        },
+        {
+          "id": "Quartz",
+          "name": "Pure Quartz",
+          "icon": "T_itemicon_Quartz.png",
+          "count": 15
+        },
+        {
+          "id": "AncientParts2",
+          "name": "Ancient Civilization Core",
+          "icon": "T_itemicon_AncientParts2.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_SFArmor",
@@ -837,7 +3534,42 @@
     "instanceId": "B9D5287F-4EB4D102-F70C8A8F-7ED5AE1F",
     "x": -504318.03,
     "y": -386258.53,
-    "z": 2103.6282
+    "z": 2103.6282,
+    "unlocked": {
+      "id": "Otomo_DFDragon_ElementBoost_1",
+      "name": "Jetragon's Talisman",
+      "icon": "T_itemicon_Otomo_DFDragon_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Defense of the Pal fighting alongside you.\r It also significantly increases their Dragon damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 30
+        },
+        {
+          "id": "PalOil",
+          "name": "High Quality Pal Oil",
+          "icon": "T_itemicon_PalOil.png",
+          "count": 30
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 10
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_ATFire_ElementBoost",
@@ -847,7 +3579,42 @@
     "instanceId": "39F74ECE-4B1C3204-1CE4D596-3E30862A",
     "x": -620359.2,
     "y": -444953.2,
-    "z": 9054.49
+    "z": 9054.49,
+    "unlocked": {
+      "id": "Otomo_ATFire_ElementBoost_1",
+      "name": "Flame Emperor's Baton",
+      "icon": "T_itemicon_Otomo_ATFire_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Attack of the Pal fighting alongside you.\r It also significantly increases their  Fire damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Horn",
+          "name": "Horn",
+          "icon": "T_itemicon_Horn.png",
+          "count": 30
+        },
+        {
+          "id": "FireOrgan",
+          "name": "Flame Organ",
+          "icon": "T_itemicon_FireOrgan.png",
+          "count": 15
+        },
+        {
+          "id": "AncientParts2",
+          "name": "Ancient Civilization Core",
+          "icon": "T_itemicon_AncientParts2.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_SFHelmet",
@@ -857,7 +3624,17 @@
     "instanceId": "BE2A9EF4-47BEA0FE-E4085882-EEDB36E4",
     "x": -765417.1,
     "y": -265338.94,
-    "z": 7678.928
+    "z": 7678.928,
+    "unlocked": {
+      "id": "WorkSuitability_AddTicket_Watering",
+      "name": "Applied Watering Handbook I",
+      "icon": "T_itemicon_WorkSuitability_AddTicket_Watering.png",
+      "type": "Consume",
+      "description": "A rare book written about the secrets of Watering. \r Allowing a Pal to read it permanently increases their Watering affinity by +1.",
+      "stats": null,
+      "materials": null,
+      "rarity_label": null
+    }
   },
   {
     "id": "I_ATDragon_ElementBoost",
@@ -867,7 +3644,42 @@
     "instanceId": "EE862EFB-489D23D5-9FD8848C-EB6EEF5C",
     "x": -810892.7,
     "y": -441755.2,
-    "z": 5901.604
+    "z": 5901.604,
+    "unlocked": {
+      "id": "Otomo_ATDragon_ElementBoost_1",
+      "name": "Divine Dragon's Baton",
+      "icon": "T_itemicon_Otomo_ATDragon_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Attack of the Pal fighting alongside you.\r It also significantly increases their Dragon damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Polymer",
+          "name": "Polymer",
+          "icon": "T_itemicon_Polymer.png",
+          "count": 20
+        },
+        {
+          "id": "Quartz",
+          "name": "Pure Quartz",
+          "icon": "T_itemicon_Quartz.png",
+          "count": 20
+        },
+        {
+          "id": "AncientParts2",
+          "name": "Ancient Civilization Core",
+          "icon": "T_itemicon_AncientParts2.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_LaserGatlingGun",
@@ -877,7 +3689,17 @@
     "instanceId": "F6CA395D-44390FCA-1AEAEC82-446472CC",
     "x": -889655.8,
     "y": -399246.88,
-    "z": 10715.36
+    "z": 10715.36,
+    "unlocked": {
+      "id": "WorkSuitability_AddTicket_EmitFlame",
+      "name": "Applied Kindling Handbook I",
+      "icon": "T_itemicon_WorkSuitability_AddTicket_EmitFlame.png",
+      "type": "Consume",
+      "description": "A rare book written about the secrets of EmitFlame. \r Allowing a Pal to read it permanently increases their EmitFlame affinity by +1.",
+      "stats": null,
+      "materials": null,
+      "rarity_label": null
+    }
   },
   {
     "id": "G_NonkChecker",
@@ -887,7 +3709,42 @@
     "instanceId": "D5E3FFE2-4579FE8A-6BA230BE-BC416494",
     "x": -68429.5,
     "y": 161682.06,
-    "z": 11149.059
+    "z": 11149.059,
+    "unlocked": {
+      "id": "Accessory_NonkChecker_1",
+      "name": "Pal Tamer's Glasses",
+      "icon": "T_itemicon_Accessory_NonkChecker_1.png",
+      "type": "Accessory",
+      "description": "Eyewear for Pal Tamers. \r The wearer's attacks will not reduce the target's Health below 1. \r Reveals hidden Pal potentials.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 10
+        },
+        {
+          "id": "Wood_Ancient",
+          "name": "Ancient Bark",
+          "icon": "T_itemicon_Wood_Ancient.png",
+          "count": 15
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "G_DFWater_ElementBoost",
@@ -897,7 +3754,42 @@
     "instanceId": "0C278793-4F41907A-352385A7-A15D5918",
     "x": 103369.63,
     "y": 79980.195,
-    "z": 48401.555
+    "z": 48401.555,
+    "unlocked": {
+      "id": "Otomo_DFWater_ElementBoost_1",
+      "name": "Neptilius's Talisman",
+      "icon": "T_itemicon_Otomo_DFWater_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Defense of the Pal fighting alongside you.\r It also significantly increases their Water damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "CarbonFiber",
+          "name": "Carbon Fiber",
+          "icon": "T_itemicon_CarbonFiber.png",
+          "count": 15
+        },
+        {
+          "id": "PalFluid",
+          "name": "Aquatic Pal Fluids",
+          "icon": "T_itemicon_PalFluid.png",
+          "count": 30
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 10
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "G_JumpAir_1",
@@ -907,7 +3799,48 @@
     "instanceId": "6EB1181D-40FA3C37-D69F53AD-A2444692",
     "x": 100621.71,
     "y": -40449.86,
-    "z": 26145.031
+    "z": 26145.031,
+    "unlocked": {
+      "id": "Accessory_JumpAir_1",
+      "name": "Air Walker Mk I",
+      "icon": "T_itemicon_Accessory_JumpAir_1.png",
+      "type": "Accessory",
+      "description": "An accessory that allows the player to jump in mid-air when equipped.\r Also grants a mid-air dash.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "StainlessSteel",
+          "name": "Hexolite",
+          "icon": "T_itemicon_StainlessSteel.png",
+          "count": 20
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        },
+        {
+          "id": "PalDarkParts",
+          "name": "Dark Fragment",
+          "icon": "T_itemicon_PalDarkParts.png",
+          "count": 15
+        },
+        {
+          "id": "NightStone",
+          "name": "Nightstar Sand",
+          "icon": "T_itemicon_NightStone.png",
+          "count": 30
+        },
+        {
+          "id": "Wood_Ancient",
+          "name": "Ancient Bark",
+          "icon": "T_itemicon_Wood_Ancient.png",
+          "count": 15
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "H_JumpAir_2",
@@ -917,7 +3850,48 @@
     "instanceId": "4946672E-4A6B96E5-499AF69B-1C1FE67C",
     "x": 8989.857,
     "y": -157312.55,
-    "z": 4800.0176
+    "z": 4800.0176,
+    "unlocked": {
+      "id": "Accessory_JumpAir_2",
+      "name": "Air Walker Mk II",
+      "icon": "T_itemicon_Accessory_JumpAir_2.png",
+      "type": "Accessory",
+      "description": "An accessory that allows the player to jump in mid-air when equipped.\r Also grants a double mid-air dash.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "StainlessSteel",
+          "name": "Hexolite",
+          "icon": "T_itemicon_StainlessSteel.png",
+          "count": 30
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 40
+        },
+        {
+          "id": "PalDarkParts",
+          "name": "Dark Fragment",
+          "icon": "T_itemicon_PalDarkParts.png",
+          "count": 25
+        },
+        {
+          "id": "NightStone",
+          "name": "Nightstar Sand",
+          "icon": "T_itemicon_NightStone.png",
+          "count": 40
+        },
+        {
+          "id": "Lava_Ancient",
+          "name": "Ancient Lava",
+          "icon": "T_itemicon_Lava_Ancient.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_DFEarth_ElementBoost",
@@ -927,7 +3901,42 @@
     "instanceId": "EFDBBA1C-4D1A36C7-0828C197-E2FBED09",
     "x": -509002.28,
     "y": -292992.62,
-    "z": 1913.3712
+    "z": 1913.3712,
+    "unlocked": {
+      "id": "Otomo_DFEarth_ElementBoost_1",
+      "name": "Anubis's Talisman",
+      "icon": "T_itemicon_Otomo_DFEarth_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Defense of the Pal fighting alongside you.\r It also significantly increases their Ground damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 30
+        },
+        {
+          "id": "MeteorDrop",
+          "name": "Meteorite Fragment",
+          "icon": "T_itemicon_MeteorDrop.png",
+          "count": 10
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 10
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_DFElectricity_ElementBoost",
@@ -937,7 +3946,42 @@
     "instanceId": "A855C3DF-468B9A5C-158F1E8E-2BF342CB",
     "x": -724016.9,
     "y": -426770.6,
-    "z": 10488.225
+    "z": 10488.225,
+    "unlocked": {
+      "id": "Otomo_DFElectricity_ElementBoost_1",
+      "name": "Orserk's Talisman",
+      "icon": "T_itemicon_Otomo_DFElectricity_ElementBoost_1.png",
+      "type": "Accessory",
+      "description": "An accessory that raises the Defense of the Pal fighting alongside you.\r It also significantly increases their Electric damage.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Bone",
+          "name": "Bone",
+          "icon": "T_itemicon_Bone.png",
+          "count": 30
+        },
+        {
+          "id": "ElectricOrgan",
+          "name": "Electric Organ",
+          "icon": "T_itemicon_ElectricOrgan.png",
+          "count": 10
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 10
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "I_SuperJumpAir_1",
@@ -947,7 +3991,48 @@
     "instanceId": "B5554453-4F93FC14-450020B6-41C02DB0",
     "x": -823529.2,
     "y": -393098.62,
-    "z": -1686.2307
+    "z": -1686.2307,
+    "unlocked": {
+      "id": "Accessory_SuperJumpAir_1",
+      "name": "Air Walker Mk III",
+      "icon": "T_itemicon_Accessory_SuperJumpAir_1.png",
+      "type": "Accessory",
+      "description": "An accessory that allows the player to perform double jumps in mid-air when equipped.\r Also grants a mid-air dash.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "ManganeseIngot",
+          "name": "Coralum Ingot",
+          "icon": "T_itemicon_ManganeseIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 50
+        },
+        {
+          "id": "PalDarkParts",
+          "name": "Dark Fragment",
+          "icon": "T_itemicon_PalDarkParts.png",
+          "count": 35
+        },
+        {
+          "id": "NightStone",
+          "name": "Nightstar Sand",
+          "icon": "T_itemicon_NightStone.png",
+          "count": 50
+        },
+        {
+          "id": "BeastBone_Ancient",
+          "name": "Ancient Bone",
+          "icon": "T_itemicon_BeastBone_Ancient.png",
+          "count": 30
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "Island_Otomo_Earth",
@@ -957,7 +4042,42 @@
     "instanceId": "60783C36-4BF7E24A-6BDE2DAD-D00796E3",
     "x": -66593.36,
     "y": -253706.95,
-    "z": 7658.438
+    "z": 7658.438,
+    "unlocked": {
+      "id": "Accessory_Otomo_Earth_1",
+      "name": "Menasting Terra Ring",
+      "icon": "T_itemicon_Accessory_Otomo_Earth_1.png",
+      "type": "Accessory",
+      "description": "An accessory that greatly reduces incoming Electric damage of the Pal fighting alongside you.\r It also significantly increases the Ground damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "CrudeOil",
+          "name": "Crude Oil",
+          "icon": "T_itemicon_CrudeOil.png",
+          "count": 15
+        },
+        {
+          "id": "FireOrgan",
+          "name": "Flame Organ",
+          "icon": "T_itemicon_FireOrgan.png",
+          "count": 10
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "Island_Otomo_Fire",
@@ -967,7 +4087,42 @@
     "instanceId": "7479315C-4CDD5BBB-AF3078BF-4F215B73",
     "x": 70539.69,
     "y": 505309.22,
-    "z": -2004.6543
+    "z": -2004.6543,
+    "unlocked": {
+      "id": "Accessory_Otomo_Fire_1",
+      "name": "Blazehowl Ring",
+      "icon": "T_itemicon_Accessory_Otomo_Fire_1.png",
+      "type": "Accessory",
+      "description": "An accessory that greatly reduces incoming Grass damage of the Pal fighting alongside you.\r It also significantly increases the Fire damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        },
+        {
+          "id": "FireOrgan",
+          "name": "Flame Organ",
+          "icon": "T_itemicon_FireOrgan.png",
+          "count": 15
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "Island_Otomo_Leaf",
@@ -977,7 +4132,42 @@
     "instanceId": "106D54AE-435007CC-A4160B9A-789C97E6",
     "x": -167160.28,
     "y": 552219.44,
-    "z": -2096.9827
+    "z": -2096.9827,
+    "unlocked": {
+      "id": "Accessory_Otomo_Leaf_1",
+      "name": "Vaelet Ring",
+      "icon": "T_itemicon_Accessory_Otomo_Leaf_1.png",
+      "type": "Accessory",
+      "description": "An accessory that greatly reduces incoming Ground damage of the Pal fighting alongside you.\r It also significantly increases the Grass damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "TomatoSeeds",
+          "name": "Tomato Seeds",
+          "icon": "T_itemicon_TomatoSeeds.png",
+          "count": 10
+        },
+        {
+          "id": "OnionSeeds",
+          "name": "Onion Seeds",
+          "icon": "T_itemicon_OnionSeeds.png",
+          "count": 10
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "Island_Otomo_Water",
@@ -987,7 +4177,42 @@
     "instanceId": "BF872017-41F408D5-E731ABA4-B0DFE261",
     "x": -456915.75,
     "y": 344294.28,
-    "z": 13508.043
+    "z": 13508.043,
+    "unlocked": {
+      "id": "Accessory_Otomo_Water_1",
+      "name": "Faleris Aqua Ring",
+      "icon": "T_itemicon_Accessory_Otomo_Water_1.png",
+      "type": "Accessory",
+      "description": "An accessory that greatly reduces incoming Fire damage of the Pal fighting alongside you.\r It also significantly increases the Water damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Pal_crystal_S",
+          "name": "Paldium Fragment",
+          "icon": "T_itemicon_Pal_crystal_S.png",
+          "count": 30
+        },
+        {
+          "id": "PalFluid",
+          "name": "Aquatic Pal Fluids",
+          "icon": "T_itemicon_PalFluid.png",
+          "count": 30
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "Island_Otomo_Fire_2",
@@ -997,7 +4222,42 @@
     "instanceId": "9DB0467B-41F6F9E7-88295BB9-E92BD085",
     "x": -1009674.8,
     "y": -401739.16,
-    "z": 1320.2817
+    "z": 1320.2817,
+    "unlocked": {
+      "id": "Accessory_Otomo_Fire_2",
+      "name": "Faleris Ring",
+      "icon": "T_itemicon_Accessory_Otomo_Fire_2.png",
+      "type": "Accessory",
+      "description": "An accessory that greatly reduces incoming Ice damage of the Pal fighting alongside you.\r It also significantly increases the Fire damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "IceOrgan",
+          "name": "Ice Organ",
+          "icon": "T_itemicon_IceOrgan.png",
+          "count": 15
+        },
+        {
+          "id": "FireOrgan",
+          "name": "Flame Organ",
+          "icon": "T_itemicon_FireOrgan.png",
+          "count": 15
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "Island_Otomo_Dark",
@@ -1007,7 +4267,42 @@
     "instanceId": "2F5DC859-402926B1-729F9DB3-651C069D",
     "x": -578173.6,
     "y": -636022.06,
-    "z": -2053.7554
+    "z": -2053.7554,
+    "unlocked": {
+      "id": "Accessory_Otomo_Dark_1",
+      "name": "Katress Ring",
+      "icon": "T_itemicon_Accessory_Otomo_Dark_1.png",
+      "type": "Accessory",
+      "description": "An accessory that greatly reduces incoming Neutral damage of the Pal fighting alongside you.\r It also significantly increases the Dark damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 20
+        },
+        {
+          "id": "PalItem_CatMage",
+          "name": "Katress Hair",
+          "icon": "T_itemicon_PalItem_CatMage.png",
+          "count": 10
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "Island_Otomo_Electricity",
@@ -1017,7 +4312,42 @@
     "instanceId": "35B876E0-4164D3B8-29EFEFA8-FF13AD7D",
     "x": -387719.25,
     "y": -429204.16,
-    "z": 4870.3667
+    "z": 4870.3667,
+    "unlocked": {
+      "id": "Accessory_Otomo_Electricity_1",
+      "name": "Fenglope Lux Ring",
+      "icon": "T_itemicon_Accessory_Otomo_Electricity_1.png",
+      "type": "Accessory",
+      "description": "An accessory that greatly reduces incoming Water damage of the Pal fighting alongside you.\r It also significantly increases the Electric damage of the Pal fighting alongside you.",
+      "stats": null,
+      "materials": [
+        {
+          "id": "IronIngot",
+          "name": "Refined Ingot",
+          "icon": "T_itemicon_IronIngot.png",
+          "count": 20
+        },
+        {
+          "id": "Leather",
+          "name": "Leather",
+          "icon": "T_itemicon_Leather.png",
+          "count": 40
+        },
+        {
+          "id": "ElectricOrgan",
+          "name": "Electric Organ",
+          "icon": "T_itemicon_ElectricOrgan.png",
+          "count": 15
+        },
+        {
+          "id": "PalCrystal_Ex",
+          "name": "Ancient Civilization Parts",
+          "icon": "T_itemicon_PalCrystal_Ex.png",
+          "count": 5
+        }
+      ],
+      "rarity_label": "Epic"
+    }
   },
   {
     "id": "J_FullStomach_Down",
@@ -1027,7 +4357,17 @@
     "instanceId": "83AC5F4E-4D5FFF8F-23DAB695-CD264DAC",
     "x": -755078.75,
     "y": -82828.6,
-    "z": 50651.65
+    "z": 50651.65,
+    "unlocked": {
+      "id": "PalPassiveSkillChange_Consumable_PAL_FullStomach_Down_3",
+      "name": "Disposable Implant: Mastery of Fasting",
+      "icon": "T_itemicon_PalPassiveSkillChange_Consumable.png",
+      "type": "Consume",
+      "description": null,
+      "stats": null,
+      "materials": null,
+      "rarity_label": null
+    }
   },
   {
     "id": "J_Sanity_Down",
@@ -1037,7 +4377,17 @@
     "instanceId": "EE3165AB-4B4F89F2-63C65793-F67ABC69",
     "x": -806838.94,
     "y": 7978.893,
-    "z": 42162.55
+    "z": 42162.55,
+    "unlocked": {
+      "id": "PalPassiveSkillChange_Consumable_PAL_Sanity_Down_3",
+      "name": "Disposable Implant: Heart of the Immovable King",
+      "icon": "T_itemicon_PalPassiveSkillChange_Consumable.png",
+      "type": "Consume",
+      "description": null,
+      "stats": null,
+      "materials": null,
+      "rarity_label": null
+    }
   },
   {
     "id": "J_MoveSpeed_up",
@@ -1047,7 +4397,17 @@
     "instanceId": "8000F1F6-4A5DFC06-0E118080-D5509518",
     "x": -781018.56,
     "y": -96243.19,
-    "z": 39414.117
+    "z": 39414.117,
+    "unlocked": {
+      "id": "PalPassiveSkillChange_Consumable_MoveSpeed_up_3",
+      "name": "Disposable Implant: Swift",
+      "icon": "T_itemicon_PalPassiveSkillChange_Consumable.png",
+      "type": "Consume",
+      "description": null,
+      "stats": null,
+      "materials": null,
+      "rarity_label": null
+    }
   },
   {
     "id": "J_SFArmorWeight",
@@ -1057,6 +4417,16 @@
     "instanceId": "AB390A82-48924747-4012BCA3-4BD92361",
     "x": -828532.1,
     "y": -55806.562,
-    "z": 39997.117
+    "z": 39997.117,
+    "unlocked": {
+      "id": "WorkSuitability_AddTicket_ProductMedicine",
+      "name": "Applied Medicine Production Handbook I",
+      "icon": "T_itemicon_WorkSuitability_AddTicket_ProductMedicine.png",
+      "type": "Consume",
+      "description": "A rare book written about the secrets of ProductMedicine. \r Allowing a Pal to read it permanently increases their ProductMedicine affinity by +1.",
+      "stats": null,
+      "materials": null,
+      "rarity_label": null
+    }
   }
 ]

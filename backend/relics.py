@@ -42,6 +42,26 @@ RELICS_PATH = Path(__file__).resolve().parent.parent / "data" / "relics_static.j
 # by name, nothing for a 13th) — Relic_12 "Mimog Effigy" has real item/name/
 # icon data but no placed spawn in the current game version, so it's
 # unobtainable in the open world and deliberately absent from this map.
+# Human-readable Statue of Power effect text per EPalRelicType. Not a
+# DataTable/extractable string (same "baked into Blueprint UI logic, not
+# data" situation as backend/bosses.py's ELEMENT_STRONG_AGAINST chart) -
+# these are the well-documented, community-verified effects of each Effigy
+# type when turned in at a Statue of Power.
+RELIC_EFFECT_DESCRIPTION: dict[str, str] = {
+    "CapturePower": "Increases Capture Power",
+    "JumpPower": "Increases Jump Height",
+    "RainbowPassiveRate": "Increases chance of rare (Lucky/Alpha) Pal spawns",
+    "FoodDecayReduction": "Reduces food spoilage rate",
+    "ExpBonus": "Increases EXP gained",
+    "GliderSpeed": "Increases Glider Speed",
+    "ClimbSpeed": "Increases Climbing Speed",
+    "SphereHoming": "Increases Pal Sphere homing range",
+    "StatusAilmentResist": "Increases resistance to status ailments",
+    "SwimSpeed": "Increases Swimming Speed",
+    "StaminaReduction": "Reduces Stamina consumption",
+    "HungerReduction": "Reduces Player hunger depletion rate",
+}
+
 RELIC_META: dict[str, dict[str, Any]] = {
     "BP_LevelObject_Relic": {"label": "Lifmunk", "icon": "T_itemicon_Relic.png", "effect": "CapturePower"},
     "BP_LevelObject_Relic_FlameBambi": {"label": "Rooby", "icon": "T_itemicon_Relic_04.png", "effect": "JumpPower"},
@@ -81,6 +101,7 @@ def load_relics() -> list[dict[str, Any]]:
                 "label": meta["label"],
                 "icon": meta["icon"],
                 "effect": meta["effect"],
+                "effect_description": RELIC_EFFECT_DESCRIPTION.get(meta["effect"], meta["effect"]),
                 "map": map_name,
                 "pixel_x": pixel_x,
                 "pixel_y": pixel_y,

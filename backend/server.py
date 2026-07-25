@@ -257,6 +257,21 @@ def api_schematics():
     )
 
 
+@app.route("/api/inventory")
+def api_inventory():
+    # Backpack item counts for a specific player - "does this player already
+    # have N of this crafting material" (Schematic tooltips). No view_as ->
+    # no meaningful single-player answer, same "All players" convention as
+    # /api/quests. Read fresh off refresh.py's own cached output, same
+    # pattern as /api/bases - cheap, no per-request save parsing.
+    view_as = request.args.get("view_as", "").strip().lower()
+    if not view_as or not refresh.INVENTORIES_OUTPUT.exists():
+        return jsonify({"items": {}, "known": False})
+    inventories = json.loads(refresh.INVENTORIES_OUTPUT.read_text()).get("inventories", {})
+    items = inventories.get(view_as)
+    return jsonify({"items": items or {}, "known": items is not None})
+
+
 @app.route("/api/quests")
 def api_quests():
     # Unlike every other section, Quests has no meaningful "all players"
