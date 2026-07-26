@@ -31,6 +31,18 @@
   }
   .player-label.offline { opacity: 0.55; }
 
+  /* Live cursor-position HUD readout, sharing one row with the zoom
+     buttons (bottomright, above the attribution/"PalDex build" line) -
+     matches #controls' own dark-panel treatment. Fixed min-width so the
+     box doesn't resize/jitter as the digit count changes between mouse
+     positions. */
+  .coord-zoom-row { display: flex; align-items: center; gap: 6px; }
+  .cursor-coord-readout {
+    background: rgba(20, 22, 26, 0.85); color: #9ab;
+    font: 12px 'Oxanium', sans-serif; font-weight: 700;
+    padding: 5px 10px; border-radius: 6px; min-width: 78px; text-align: center;
+  }
+
   #legend {
     position: absolute; top: 10px; left: 10px; bottom: 10px; z-index: 1000;
     background: rgba(20, 22, 26, 0.9); color: #ddd; font: 13px system-ui, sans-serif;
@@ -1044,9 +1056,10 @@
     crs: L.CRS.Simple,
     minZoom: -4,
     maxZoom: 2,
-    zoomControl: false, // default topleft position clashes with #legend
+    zoomControl: false, // default topleft position clashes with #legend; a
+    // custom bottomright control combining this with the cursor-coordinate
+    // readout is built below instead, once the map itself exists.
   });
-  L.control.zoom({ position: 'bottomright' }).addTo(map);
   // WebP, not PNG (2026-07-22) - lossy q90 re-encode of the same 8192x8192
   // source, ~82% smaller (27.5MB->4.8MB / 39.6MB->7.1MB) with no visible
   // quality loss verified at native 1:1 pixel zoom (the most demanding
@@ -1056,6 +1069,63 @@
   L.imageOverlay('/assets/map.webp', mainBounds).addTo(map);
   L.imageOverlay('/assets/tree.webp', treeBounds).addTo(map);
   map.fitBounds(combinedBounds);
+
+  // ---------- Cursor HUD-coordinate readout ----------
+  // World bounds from backend/coord.py's MAIN_MAP_BOUNDS/TREE_MAP_BOUNDS
+  // (pulled from the game's own DT_WorldMapUIData), and the
+  // sav_x=map_y*459-123888, sav_y=map_x*459+158000 formula (inverted here)
+  // already used elsewhere in this project to convert a raw world position
+  // into the in-game HUD map coordinate - see backend/coord.py's own
+  // comment for the confirmation trail. Done client-side against the
+  // mouse's own live lat/lng rather than round-tripping through the
+  // backend, since this needs to update on every mousemove.
+  const MAIN_MAP_BOUNDS = [-1099400.0, -724400.0, 349400.0, 724400.0]; // min_x, min_y, max_x, max_y
+  const TREE_MAP_BOUNDS = [347351.5, -818197.0, 689148.5, -476400.0];
+
+  function pixelToHud(row, col) {
+    let bounds, size, rowOffset, colOffset;
+    if (row >= TREE_ROW_OFFSET && row <= TREE_ROW_OFFSET + TREE_SIZE && col >= 0 && col <= TREE_SIZE) {
+      bounds = TREE_MAP_BOUNDS; size = TREE_SIZE; rowOffset = TREE_ROW_OFFSET; colOffset = 0;
+    } else if (row >= 0 && row <= MAIN_SIZE && col >= MAIN_COL_OFFSET && col <= MAIN_COL_OFFSET + MAIN_SIZE) {
+      bounds = MAIN_MAP_BOUNDS; size = MAIN_SIZE; rowOffset = 0; colOffset = MAIN_COL_OFFSET;
+    } else {
+      return null; // the void gap around/between the two map textures
+    }
+    const [minX, minY, maxX, maxY] = bounds;
+    const worldX = minX + ((row - rowOffset) / size) * (maxX - minX);
+    const worldY = minY + ((col - colOffset) / size) * (maxY - minY);
+    const hudY = (worldX + 123888) / 459;
+    const hudX = (worldY - 158000) / 459;
+    return [Math.round(hudX), Math.round(hudY)];
+  }
+
+  // Combined bottomright control: readout + zoom buttons side by side in one
+  // row, sitting above the attribution/"PalDex build" line below it. Built
+  // as one control (rather than two separately-.addTo(map)'d ones) because
+  // Leaflet stacks same-corner controls as separate full-width rows - two
+  // controls can't share a row any other way. The zoom control piece is
+  // built by hand from L.Control.Zoom's own onAdd (never itself .addTo'd)
+  // so it keeps Leaflet's real zoom-button behavior (min/max disabled
+  // state, a11y attributes) instead of reimplementing it.
+  const cursorZoomControl = L.control({ position: 'bottomright' });
+  cursorZoomControl.onAdd = (mapInstance) => {
+    const row = L.DomUtil.create('div', 'coord-zoom-row');
+    const cursorEl = L.DomUtil.create('div', 'cursor-coord-readout', row);
+    cursorEl.textContent = '—';
+
+    const zoomControl = new L.Control.Zoom();
+    zoomControl._map = mapInstance; // onAdd below needs this set before it runs
+    row.appendChild(zoomControl.onAdd(mapInstance));
+
+    mapInstance.on('mousemove', (e) => {
+      const hud = pixelToHud(e.latlng.lat, e.latlng.lng);
+      cursorEl.textContent = hud ? `📍 ${hud[0]}, ${hud[1]}` : '—';
+    });
+    mapInstance.on('mouseout', () => { cursorEl.textContent = '—'; });
+
+    return row;
+  };
+  cursorZoomControl.addTo(map);
 
   function colorForUid(uid) {
     let hash = 0;
