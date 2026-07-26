@@ -2566,12 +2566,16 @@
     return group.pals.find((p) => p.characterId.startsWith('BOSS_')) || group.pals[0];
   }
 
-  // One-line Boss-tier preview for the tooltip - deliberately just the Boss
+  // Boss-tier preview line for the tooltip - deliberately just the Boss
   // tier (not every tier present), matching the tooltip's existing "keep it
-  // to one short line" convention elsewhere in this codebase. Returns null
-  // (no extra line) if contents aren't loaded yet or the area has no Boss
-  // tier at all (shouldn't happen - every one of the 14 real areas has
-  // exactly one Boss row - but degrade gracefully rather than assume).
+  // to one short line" convention elsewhere in this codebase. Reuses the
+  // modal's own .dungeon-tier-badge guaranteed/pool styling (same wording:
+  // "Guaranteed" / "Random pool (N possible)") so the tooltip preview and
+  // the click-through modal never disagree on how a tier is described.
+  // Returns null (no extra section) if contents aren't loaded yet or the
+  // area has no Boss tier at all (shouldn't happen - every one of the 14
+  // real areas has exactly one Boss row - but degrade gracefully rather
+  // than assume).
   function dungeonBossPreview(spawnAreaId) {
     const tier = dungeonContentsData?.[spawnAreaId]?.tiers?.Boss;
     if (!tier || !tier.groups.length) return null;
@@ -2580,21 +2584,31 @@
       const names = primaries.map((p) => p.name || `${p.characterId} (unresolved)`).join(' + ');
       const p0 = primaries[0];
       const lvl = p0.levelMin === p0.levelMax ? `Lv ${p0.levelMin}` : `Lv ${p0.levelMin}-${p0.levelMax}`;
-      return `Boss: ${names} (${lvl})`;
+      return `<div class="bt-line">${names} (${lvl}) <span class="dungeon-tier-badge guaranteed">Guaranteed</span></div>`;
     }
     const levels = primaries.flatMap((p) => [p.levelMin, p.levelMax]);
     const lvlMin = Math.min(...levels);
     const lvlMax = Math.max(...levels);
     // groups.length, not allPals.length - a boss+escort group is 1 possible
     // outcome even though it's 2 pals (see dungeonOutcomeHtml's comment).
-    return `Boss: ${tier.groups.length} possible (Lv ${lvlMin}-${lvlMax}) — <span style="color:#6fa8dc;">click for details</span>`;
+    return `<div class="bt-line">Lv ${lvlMin}-${lvlMax} <span class="dungeon-tier-badge pool">Random pool (${tier.groups.length} possible)</span></div>`;
   }
 
+  // Matches every other section's game-panel tooltip (.boss-tooltip) rather
+  // than the plain-text Leaflet default this used before the tooltip
+  // redesign (see the "Redesign map tooltips" commit) - Dungeons was the
+  // one section left behind since it has no per-item checklist entry point
+  // to redesign alongside. Click-through hint reuses the exact key-guide
+  // icon + wording pattern NPC shops use for "click for full list".
   function dungeonTooltipHtml(entry) {
+    const title = `Dungeon (${entry.biome})`;
     const eta = formatDuration(entry.disappear_in_seconds);
-    const base = `Dungeon (${entry.biome})${eta ? ` — despawns in ${eta}` : ''}`;
-    const preview = dungeonBossPreview(entry.spawn_area_id);
-    return preview ? `${base}<br>${preview}` : base;
+    const etaLine = eta ? `<div class="bt-line">Despawns in ${eta}</div>` : '';
+    const bossPreview = dungeonBossPreview(entry.spawn_area_id);
+    const bossSection = bossPreview ? `<div class="bt-section-label">Boss</div>${bossPreview}` : '';
+    const clickHint = bossPreview
+      ? `<div class="bt-divider"></div><div class="bt-click-hint"><img src="/assets/npc_icons/T_MenuKeyGuide_MouseButtonLeft.png" />View dungeon contents</div>` : '';
+    return `<div class="boss-tooltip"${boxWidthStyle(title)}><div class="bt-name">${title}</div>${etaLine}${bossSection}${clickHint}</div>`;
   }
 
   function renderDungeons() {
