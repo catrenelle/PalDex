@@ -1189,6 +1189,17 @@
   let knownPlayerUids = new Set();
   let viewAsRestored = false;
 
+  // "Hide Collected" only means anything once a specific player is selected
+  // (every section's own hidingCollected gate already checks defeatKnown/
+  // capture_known, which requires one) — hide the row entirely with no
+  // player picked rather than showing a control that would silently do
+  // nothing if checked.
+  const hideCollectedRow = document.getElementById('hide-collected-row');
+  function updateHideCollectedRowVisibility() {
+    hideCollectedRow.style.display = viewAsSelect.value ? '' : 'none';
+  }
+  updateHideCollectedRowVisibility();
+
   // Coarse "Xm/Xh/Xd ago" for the hover tooltip's Last Online line — no
   // need for anything more precise than that at a glance.
   function relativeTimeAgo(isoString) {
@@ -1388,6 +1399,7 @@
   viewAsSelect.addEventListener('change', () => {
     uiState.viewAs = viewAsSelect.value;
     saveUiState();
+    updateHideCollectedRowVisibility();
   });
   refreshPlayers();
   setInterval(refreshPlayers, 10000);
