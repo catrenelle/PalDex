@@ -523,6 +523,12 @@
       drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000)
       drop-shadow(0 0 3px rgba(0,0,0,0.95));
   }
+  #hide-collected-row {
+    padding: 8px 12px 0; flex-shrink: 0;
+  }
+  #hide-collected-row label {
+    cursor: pointer; user-select: none; color: #eee; font: 13px system-ui, sans-serif;
+  }
   #global-toggle-row {
     padding: 8px 12px; border-top: 1px solid #333; flex-shrink: 0;
     display: flex; gap: 8px;
@@ -734,6 +740,7 @@
   }
   #pal-spawns-clear:hover { color: #fff; border-color: #5a6068; }
   .pal-spawn-row.hidden-by-search { display: none; }
+  .pal-spawn-row.hidden-by-collected { display: none; }
   /* Tighter than .type-row's default 8px - with checkbox, effigy badge,
      AND portrait all packed in before the name now, the default gap made
      the badge look stranded in a wide empty stretch rather than sitting
@@ -994,6 +1001,9 @@
       <div id="pal-spawns-list" class="type-list expanded"></div>
     </div>
   </div>
+  <div id="hide-collected-row">
+    <label><input type="checkbox" id="hide-collected-toggle" /> Hide Collected</label>
+  </div>
   <div id="global-toggle-row">
     <button id="show-all-btn" type="button">Show All</button>
     <button id="hide-all-btn" type="button">Hide All</button>
@@ -1166,6 +1176,14 @@
   const markers = new Map(); // uid -> L.marker
   const offlineToggle = document.getElementById('offline-toggle');
   offlineToggle.checked = !!uiState.offline;
+
+  // Global "Hide Collected" - read here (alongside every other persisted
+  // toggle) so it's already correct by the time any section's first render()
+  // runs; the checkbox's own change-listener + the sections it drives are
+  // wired up near the bottom of this script, once every section exists.
+  const hideCollectedToggle = document.getElementById('hide-collected-toggle');
+  hideCollectedToggle.checked = !!uiState.hideCollected;
+  let hideCollectedGlobal = hideCollectedToggle.checked;
   const viewAsSelect = document.getElementById('view-as-player');
   let lastPlayerData = null;
   let knownPlayerUids = new Set();
@@ -1834,7 +1852,7 @@
       // behavior Effigies already had (renderRelics' own hidingCollected),
       // opted into per-section since e.g. Bosses/Bounty still want to show
       // defeated ones with a checkmark rather than hiding them.
-      const hidingCollected = hideCollected && data?.defeatKnown;
+      const hidingCollected = (hideCollected || hideCollectedGlobal) && data?.defeatKnown;
       for (const entry of entries) {
         if (!visibleTypes.has(entry.type_key)) continue;
         if (entry.has_position === false) continue; // e.g. Volcano Tower - no known location
@@ -1952,6 +1970,12 @@
         if (rebuildList) buildList(data.entries, data.defeatKnown);
         else updateCounts(data.entries, data.defeatKnown);
         render(data.entries);
+      },
+      // Re-runs render() off already-loaded data, no fetch - used by the
+      // global "Hide Collected" toggle below, which changes marker
+      // visibility without any new data having arrived.
+      refreshVisibility() {
+        if (data) render(data.entries);
       },
     };
   }
@@ -3026,6 +3050,10 @@
   // carries equivalent (often more detailed) tooltip content whenever its
   // own section is enabled.
   function renderPalSpawnHighlights(characterId) {
+    // Same "Hide Collected" gate as renderPalSpawnCircles below - a maxed
+    // (5/5) species' Alpha Boss/Dungeon call-out rings shouldn't linger on
+    // the map once its own circles are hidden by the toggle.
+    if (hideCollectedGlobal && palSpawnData[characterId]?.effigy_complete) return;
     const group = L.layerGroup();
 
     // Mirror whichever section's own master toggle each ring type belongs
@@ -3069,6 +3097,11 @@
   function renderPalSpawnCircles(characterId) {
     const species = palSpawnData[characterId];
     if (!species) return;
+    // "Hide Collected": a species with its 5/5 Mimog Effigy already earned
+    // is left checked/persisted (unlike a hard uncheck) but simply isn't
+    // drawn - toggling the global checkbox back off calls recolorAllPalSpawns()
+    // again, which re-adds it with no other state having been lost.
+    if (hideCollectedGlobal && species.effigy_complete) return;
     const color = palSpawnColorFor(characterId);
     const group = L.layerGroup();
     for (const loc of species.locations) {
@@ -3142,14 +3175,17 @@
     }
   }
 
-  // Lightweight refresh for the 10s poll / a same-player re-fetch - updates
-  // every row's effigy badge in place from fresh palSpawnData without
+  // Lightweight refresh for the 10s poll / a same-player re-fetch / the
+  // global "Hide Collected" toggle - updates every row's effigy badge +
+  // hidden-by-collected visibility in place from fresh palSpawnData without
   // touching checkboxes/circles (the species roster itself never changes,
-  // only capture progress does).
+  // only capture progress and the toggle do).
   function updatePalSpawnEffigyBadges() {
     for (const row of document.querySelectorAll('.pal-spawn-row')) {
       const cid = row.querySelector('input').dataset.charId;
-      applyEffigyBadge(row.querySelector('.pal-spawn-effigy-slot'), palSpawnData[cid]);
+      const species = palSpawnData[cid];
+      applyEffigyBadge(row.querySelector('.pal-spawn-effigy-slot'), species);
+      row.classList.toggle('hidden-by-collected', hideCollectedGlobal && !!species?.effigy_complete);
     }
   }
 
@@ -3175,6 +3211,7 @@
         <span class="rt-count">${species.location_count}</span>
       `;
       applyEffigyBadge(row.querySelector('.pal-spawn-effigy-slot'), species);
+      row.classList.toggle('hidden-by-collected', hideCollectedGlobal && !!species.effigy_complete);
       row.querySelector('input').addEventListener('change', (e) => {
         const cid = e.target.dataset.charId;
         if (e.target.checked) palSpawnChecked.add(cid);
@@ -3297,6 +3334,30 @@
   }
 
   loadWaypoints({ rebuildList: true });
+
+  // ---------- Global "Hide Collected" ----------
+  // Effigies/Journals/Schematics already always hide a collected/read/
+  // unlocked entry once a player is selected (their own always-on
+  // hidingCollected - see renderRelics and the hideCollected:true sections
+  // above) - this adds the same "collected -> hidden from the map" behavior,
+  // opt-in via one checkbox, to every other section that has a real
+  // per-player collected state but didn't otherwise hide it: Bosses/Bounty
+  // (Alpha/field bosses + human "Bounty" targets), Towers, Watchtowers,
+  // Waypoints, and Pal Spawns' own Mimog Effigy "5/5 captured" completion
+  // (renderPalSpawnCircles/renderPalSpawnHighlights/updatePalSpawnEffigyBadges
+  // above already gate on hideCollectedGlobal). Bases (collectedField
+  // 'own_guild' means "belongs to my guild", not "already found") and
+  // Oilrigs/Dungeons/NPCs/Quests (no per-player collected concept at all)
+  // are deliberately not included, same reasoning as ALL_MASTER_TOGGLE_IDS
+  // excluding Pal Spawns below for a different reason.
+  const HIDE_COLLECTED_SECTIONS = [bossSection, bountySection, towerSection, watchtowerSection, waypointSection];
+  hideCollectedToggle.addEventListener('change', () => {
+    hideCollectedGlobal = hideCollectedToggle.checked;
+    uiState.hideCollected = hideCollectedGlobal;
+    saveUiState();
+    for (const section of HIDE_COLLECTED_SECTIONS) section.refreshVisibility();
+    if (palSpawnListBuilt) { updatePalSpawnEffigyBadges(); recolorAllPalSpawns(); }
+  });
 
   // ---------- Bases (guild-owned bases, read live from Level.sav) ----------
   // Same dim-vs-full-color language as Watchtowers/Waypoints, but "collected"
