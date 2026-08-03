@@ -42,6 +42,30 @@ INVENTORIES_OUTPUT = LIVE_DIR / "inventories.json"
 
 
 def run() -> list[dict]:
+    try:
+        online_uids = get_online_uids()
+    except Exception:
+        # RCON is a nice-to-have on top of save-file data; don't let a
+        # transient connection failure take down the whole refresh.
+        traceback.print_exc()
+        online_uids = None
+
+    # Nobody's connected right now, and we already have a full baseline from
+    # a prior cycle (OUTPUT existing is that marker) — the world can't have
+    # changed with zero players in it, so skip the SSH pull + Level.sav/player
+    # .sav reparse entirely this cycle and just flip everyone to offline in
+    # the cached output. A RCON hiccup (online_uids is None, i.e. "unknown")
+    # falls through to a full refresh same as before — we can't tell if
+    # skipping is safe, so don't risk it.
+    if online_uids is not None and not online_uids and OUTPUT.exists():
+        payload = json.loads(OUTPUT.read_text())
+        for p in payload["players"]:
+            p["online"] = False
+        payload["online_known"] = True
+        payload["updated_at"] = datetime.now(timezone.utc).isoformat()
+        OUTPUT.write_text(json.dumps(payload, indent=2, default=str))
+        return payload["players"]
+
     if LOCAL_SAVE_ROOT:
         # Already mounted read-only at SAVE_DIR — nothing to pull.
         pass
@@ -61,14 +85,6 @@ def run() -> list[dict]:
     guild_id_by_uid = {uid: gid for gid, g in guilds.items() for uid in g["player_uids"]}
     for p in players:
         p["guild"] = guild_by_uid.get(p["uid"].lower())
-
-    try:
-        online_uids = get_online_uids()
-    except Exception:
-        # RCON is a nice-to-have on top of save-file data; don't let a
-        # transient connection failure take down the whole refresh.
-        traceback.print_exc()
-        online_uids = None
 
     for p in players:
         p["online"] = p["uid"] in online_uids if online_uids is not None else None
