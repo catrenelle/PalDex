@@ -1414,7 +1414,11 @@
     updateHideCollectedRowVisibility();
   });
   refreshPlayers();
-  setInterval(refreshPlayers, 10000);
+  // Matches the backend's own fast-position poll (FAST_POSITION_INTERVAL_SECONDS,
+  // 1s default in server.py) - no point polling the UI slower than the data
+  // underneath it can actually change. Unrelated to reloadCollectionState's own
+  // 10s interval below (effigies/quests/etc.), which is intentionally slower.
+  setInterval(refreshPlayers, 1000);
 
   // ---------- Relics (shown to the user as "Effigies") ----------
   const relicMarkers = new Map(); // relic id -> L.marker
