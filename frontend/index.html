@@ -1048,6 +1048,18 @@
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+  // Player nicknames and guild names are player-controlled text, unlike
+  // every other string rendered here (boss/item/quest names etc., which
+  // all come from this project's own static extracted game data) — they
+  // must be escaped before landing in any Leaflet tooltip, since
+  // bindTooltip/setTooltipContent set their string argument via innerHTML,
+  // not textContent.
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[c]));
+  }
+
   // Must match backend/coord.py exactly. Leaflet renders a *higher* row
   // (lat) value toward screen-top (confirmed empirically), so the Tree box
   // — which should appear above the main map — needs the higher row range,
@@ -1216,10 +1228,10 @@
   // mouseover/mouseout (Leaflet only supports one bound tooltip per layer,
   // so this reuses the same tooltip rather than adding a second one).
   function buildRichPlayerLabel(p, isOffline) {
-    const lines = [`${p.nickname}${p.level != null ? ' (Lv ' + p.level + ')' : ''}${isOffline ? ' (offline)' : ''}`];
+    const lines = [`${escapeHtml(p.nickname)}${p.level != null ? ' (Lv ' + p.level + ')' : ''}${isOffline ? ' (offline)' : ''}`];
     if (p.hp != null) lines.push(`HP: ${Math.round(p.hp)}`);
     if (p.hunger != null) lines.push(`Hunger: ${Math.round(p.hunger)}%`);
-    if (p.guild) lines.push(`Guild: ${p.guild}`);
+    if (p.guild) lines.push(`Guild: ${escapeHtml(p.guild)}`);
     if (isOffline && p.last_online) lines.push(`Last Online: ${relativeTimeAgo(p.last_online)}`);
     return lines.join('<br>');
   }
@@ -1243,7 +1255,7 @@
       // Leaflet CRS.Simple + imageOverlay(bounds=[[0,0],[H,W]]) takes
       // [row, col] directly, matching image pixel space with no extra flip.
       const latlng = [p.pixel_y, p.pixel_x];
-      const label = `${p.nickname}${p.level != null ? ' (Lv ' + p.level + ')' : ''}${isOffline ? ' (offline)' : ''}`;
+      const label = `${escapeHtml(p.nickname)}${p.level != null ? ' (Lv ' + p.level + ')' : ''}${isOffline ? ' (offline)' : ''}`;
       const richLabel = buildRichPlayerLabel(p, isOffline);
       const opacity = isOffline ? 0.5 : 1;
       let marker = markers.get(p.uid);
@@ -1755,11 +1767,15 @@
       // teleport-selection UI, not a hover tooltip, and doesn't map to
       // anything this read-only map does) - user confirmed just the
       // line/font/color treatment, not that whole interactive panel.
+      // entry.name is player-controlled guild text for Base markers (the
+      // guild's own chosen name), unlike every other marker type here where
+      // it's static game data — always escape it.
+      const safeName = entry.guild_id ? escapeHtml(entry.name) : entry.name;
       if (tooltipStyle === 'travel') {
-        return `<span class="tt-title">${entry.name}</span>`;
+        return `<span class="tt-title">${safeName}</span>`;
       }
-      const title = entry.boss_name ? `${entry.name} — ${entry.boss_name}`
-        : entry.guild_id ? `${entry.name} — Base` : entry.name;
+      const title = entry.boss_name ? `${safeName} — ${entry.boss_name}`
+        : entry.guild_id ? `${safeName} — Base` : safeName;
       const levelPart = entry.level != null ? ` (Lv ${entry.level})` : '';
       const hardLine = entry.level_hard != null ? `<div class="bt-line">Hard: Lv ${entry.level_hard}</div>` : '';
       // Labeled section-per-row (TYPE, then WEAKNESS below it), matching the
@@ -1788,7 +1804,7 @@
             : elementBadgeRow(entry.weakness_pairs.map((p) => p.attacker)))
         : '';
       // Guild bases: as much guild context as the save data has.
-      const leaderLine = entry.guild_leader ? `<div class="bt-line">Leader: ${entry.guild_leader}</div>` : '';
+      const leaderLine = entry.guild_leader ? `<div class="bt-line">Leader: ${escapeHtml(entry.guild_leader)}</div>` : '';
       const memberLine = entry.guild_member_count != null
         ? `<div class="bt-line">${entry.guild_member_count} member${entry.guild_member_count === 1 ? '' : 's'}</div>` : '';
       const word = collectedWord || (visualStyle === 'grayscale' ? 'Unlocked' : 'Defeated');

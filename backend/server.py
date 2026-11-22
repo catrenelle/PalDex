@@ -1,4 +1,5 @@
 import json
+import re
 import threading
 import time
 import traceback
@@ -57,9 +58,21 @@ _npcs_cache = load_npcs()
 _pal_spawn_locations_cache = load_pal_spawn_locations()
 
 
+# A real PlayerUId is a UUID (32 hex chars, dashes optional) - anchoring on
+# this before building a path keeps `view_as` (an unvalidated query param)
+# from ever being able to traverse outside PLAYERS_DIR via "../" or "/".
+_UID_HEX_RE = re.compile(r"^[0-9a-fA-F]{32}$")
+
+
 def _player_sav_path(uid: str) -> Path:
     # PlayerUId "387579c4-0000-..." -> save filename "387579C4000...00.sav"
-    return PLAYERS_DIR / (uid.replace("-", "").upper() + ".sav")
+    normalized = uid.replace("-", "")
+    if not _UID_HEX_RE.fullmatch(normalized):
+        # Not a well-formed UID. Every caller only ever does
+        # `sav_path.exists()`/passes it to a loader guarded the same way, so
+        # a path that can never exist is a sufficient, minimal-diff fix.
+        return PLAYERS_DIR / "__invalid_uid__.sav"
+    return PLAYERS_DIR / (normalized.upper() + ".sav")
 
 
 @app.route("/")
