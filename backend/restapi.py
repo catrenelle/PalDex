@@ -10,17 +10,21 @@ so unlike Level.sav — which a vanilla dedicated server only rewrites every
 actually poll it. Confirmed to use the same raw Unreal world-unit coordinate
 space as parse.py's `raw_x`/`raw_y` (both read off the same engine's live
 Translation, just via two different transports), so no separate scale/offset
-is needed before `coord.locate()` — only verified against the docs' field
-schema, not yet cross-checked against a real live player on an actual
-server; if a position renders offset once tested live, an X/Y axis swap is
-the first thing to check.
+is needed before `coord.locate()` — cross-checked live against a real
+connected player 2026-11-22, position matched within the expected
+pre-existing map/pixel rounding, no axis swap.
 
 Entirely opt-in: `fetch_positions()` raises RestApiError (not configured,
 connection refused, wrong password, disabled, timeout — anything) whenever
 this can't be used, and every caller is expected to treat that as "fall back
 to the save-file position already in players.json," never as fatal. A
 deploy that never sets REST_API_PASSWORD gets exactly today's behavior with
-zero behavior change — see server.py's _fast_position_loop.
+zero behavior change. When it IS configured, REST position wins over the
+save file's own position everywhere position gets set — both the fast poll
+(server.py's _fast_position_loop) and the regular save-file refresh
+(refresh.run()) — so a live position never regresses to a stale save-file
+reading and then snaps forward again; see refresh.py's
+_prefer_live_positions.
 
 Uses stdlib `urllib` rather than the `requests` package, matching rcon.py's
 own "hand-roll it instead of adding a dependency for one small client"

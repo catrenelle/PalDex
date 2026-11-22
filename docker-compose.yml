@@ -18,11 +18,13 @@ services:
       - AMP_SAVE_ROOT=${AMP_SAVE_ROOT}
       - AMP_WORLD_GUID=${AMP_WORLD_GUID}
       # Optional -- fast live player position via Palworld's REST API, see
-      # deploy/README.md. Unset in .env -> both resolve to an empty string,
-      # which backend/config.py's get_optional_config treats as "not set"
-      # same as omitting the var entirely, so this stays a true no-op.
+      # deploy/README.md. Unset in .env -> all three resolve to an empty
+      # string, which backend/config.py's get_optional_config treats as
+      # "not set" same as omitting the var entirely, so this stays a true
+      # no-op.
       - REST_API_PASSWORD=${REST_API_PASSWORD}
       - REST_API_PORT=${REST_API_PORT}
+      - FAST_POSITION_INTERVAL_SECONDS=${FAST_POSITION_INTERVAL_SECONDS}
     volumes:
       # Mounted only at data/live/ (not all of /app/data) so the image's
       # baked-in data/*_static.json (schematics/relics/etc., refreshed by

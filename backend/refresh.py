@@ -18,8 +18,9 @@ from parse import (
     load_player_common_inventory,
     load_player_names_and_levels,
 )
-from remote import get_server_uptime_seconds, refresh_and_pull
+import restapi
 from rcon import get_online_uids, get_server_version
+from remote import get_server_uptime_seconds, refresh_and_pull
 
 # Everything under data/live/ is mutable, refresh-loop-written state (save
 # cache + the derived players/bases/dungeons-state JSON) — kept in its own
@@ -41,21 +42,18 @@ DUNGEONS_STATE_OUTPUT = LIVE_DIR / "dungeons_state.json"
 INVENTORIES_OUTPUT = LIVE_DIR / "inventories.json"
 
 
-def apply_live_positions(positions: dict[str, tuple[float, float]]) -> None:
-    """Patches pixel_x/pixel_y/map/raw_x/raw_y in the existing players.json
-    cache in place from a REST-API fast-position poll (see restapi.py and
-    server.py's _fast_position_loop) — a cheap read-patch-write of the
-    already-built small JSON, not a rerun of the full save-file refresh (no
-    SSH, no Level.sav reparse, no RCON call). Everything else about a
-    player (nickname/level/hp/hunger/guild/online) still only ever comes
-    from the regular save-file-based run() below; this only ever touches
-    position. No-ops if a full refresh hasn't produced an OUTPUT yet, or if
-    none of the given uids match a currently-known player."""
-    if not OUTPUT.exists():
-        return
-    payload = json.loads(OUTPUT.read_text())
+def _prefer_live_positions(players: list[dict], positions: dict[str, tuple[float, float]]) -> bool:
+    """Overwrites pixel_x/pixel_y/map/raw_x/raw_y in place on an in-memory
+    players list for every uid present in `positions`, leaving everyone else
+    untouched. Shared by apply_live_positions (patches the on-disk cache
+    between full refreshes) and run() (so a full save-file refresh prefers
+    REST-reported position over the save file's own for any uid REST
+    currently knows about, rather than momentarily overwriting a live
+    position with one that's stale by up to AutoSaveSpan - see run()'s own
+    comment and server.py's _fast_position_loop). Returns True if anything
+    changed."""
     changed = False
-    for p in payload["players"]:
+    for p in players:
         pos = positions.get(p["uid"])
         if pos is None:
             continue
@@ -63,7 +61,23 @@ def apply_live_positions(positions: dict[str, tuple[float, float]]) -> None:
         map_name, pixel_x, pixel_y = locate(raw_x, raw_y)
         p["raw_x"], p["raw_y"], p["map"], p["pixel_x"], p["pixel_y"] = raw_x, raw_y, map_name, pixel_x, pixel_y
         changed = True
-    if changed:
+    return changed
+
+
+def apply_live_positions(positions: dict[str, tuple[float, float]]) -> None:
+    """Patches the existing players.json cache in place from a REST-API
+    fast-position poll (see restapi.py and server.py's _fast_position_loop)
+    — a cheap read-patch-write of the already-built small JSON, not a rerun
+    of the full save-file refresh (no SSH, no Level.sav reparse, no RCON
+    call). Everything else about a player (nickname/level/hp/hunger/guild/
+    online) still only ever comes from the regular save-file-based run()
+    below; this only ever touches position. No-ops if a full refresh hasn't
+    produced an OUTPUT yet, or if none of the given uids match a currently-
+    known player."""
+    if not OUTPUT.exists():
+        return
+    payload = json.loads(OUTPUT.read_text())
+    if _prefer_live_positions(payload["players"], positions):
         payload["updated_at"] = datetime.now(timezone.utc).isoformat()
         OUTPUT.write_text(json.dumps(payload, indent=2, default=str))
 
@@ -104,6 +118,26 @@ def run() -> list[dict]:
     world_save_data = load_level_world_save_data(SAVE_DIR / "Level.sav")
     names = load_player_names_and_levels(world_save_data)
     players = build_player_snapshot(SAVE_DIR, names)
+
+    # Position above just came from the save file, which is only ever as
+    # fresh as AutoSaveSpan (30s default) - prefer the REST API's live
+    # position for any uid it currently knows about, same as the fast-poll
+    # loop between full refreshes (_prefer_live_positions/
+    # server.py's _fast_position_loop). Without this, every full refresh
+    # would momentarily overwrite an already-live position with a stale
+    # save-file one - a visible "jump back then snap forward" each cycle.
+    # The save's own position is the real fallback only when REST isn't
+    # configured/reachable. is_configured() short-circuits the common case
+    # (REST never set up at all) so an unconfigured deploy doesn't print a
+    # traceback every single refresh cycle, forever - same guard
+    # _fast_position_loop uses.
+    live_positions = {}
+    if restapi.is_configured():
+        try:
+            live_positions = restapi.fetch_positions()
+        except Exception:
+            traceback.print_exc()
+    _prefer_live_positions(players, live_positions)
 
     # Computed here (not just below for BASES_OUTPUT) so each player's own
     # guild name can be attached before the players.json payload is built.

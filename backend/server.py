@@ -1,5 +1,7 @@
 import json
 import re
+import subprocess
+import sys
 import threading
 import time
 import traceback
@@ -9,6 +11,7 @@ from flask import Flask, jsonify, request, send_from_directory
 
 import refresh
 import restapi
+from config import get_optional_config
 from bosses import load_bosses, load_bounties, load_oilrigs, load_towers
 from dungeons import load_dungeon_contents, load_dungeons
 from fasttravel import load_watchtowers, load_waypoints
@@ -30,8 +33,14 @@ from quests import load_quests
 from relics import RELIC_META, load_relics
 from schematics import load_schematics
 
-REFRESH_INTERVAL_SECONDS = 30
-FAST_POSITION_INTERVAL_SECONDS = 1.5
+# Env-var-first/secrets.py-fallback, same as every other tunable in this
+# project (see config.py) - defaults to 1s, override with
+# FAST_POSITION_INTERVAL_SECONDS if the REST API or network can't keep up.
+FAST_POSITION_INTERVAL_SECONDS = float(get_optional_config("FAST_POSITION_INTERVAL_SECONDS") or 1)
+# The heavy save-file refresh itself (REFRESH_INTERVAL_SECONDS) runs in its
+# own OS process - see refresh_worker.py's module docstring for why - so
+# that constant lives there, not here.
+REFRESH_WORKER_SCRIPT = Path(__file__).resolve().parent / "refresh_worker.py"
 FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
 PLAYERS_DIR = refresh.SAVE_DIR / "Players"
 BUILD_VERSION_FILE = Path(__file__).resolve().parent / "BUILD_VERSION"
@@ -478,21 +487,15 @@ def api_dungeon_contents():
     return jsonify({"contents": _dungeon_contents_cache})
 
 
-def _refresh_loop():
-    while True:
-        try:
-            refresh.run()
-        except Exception:
-            traceback.print_exc()
-        time.sleep(REFRESH_INTERVAL_SECONDS)
-
-
 def _fast_position_loop():
-    # Pure opt-in speed layer on top of _refresh_loop's save-file position —
-    # see restapi.py's module docstring. A deploy that never sets
-    # REST_API_PASSWORD gets exactly today's behavior (position only as
-    # fresh as the 30s save-file refresh): this returns immediately and the
-    # save-file path remains the sole, failsafe source of position data.
+    # Pure opt-in speed layer on top of the save-file refresh worker's own
+    # position — see restapi.py's module docstring. A deploy that never
+    # sets REST_API_PASSWORD gets exactly today's behavior (position only
+    # as fresh as the 30s save-file refresh): this returns immediately and
+    # the save-file path remains the sole, failsafe source of position
+    # data. Deliberately kept as a thread (not its own process like
+    # refresh_worker.py) - each tick is cheap (one small HTTP call + a
+    # small JSON read/patch/write), no CPU-bound work to isolate.
     if not restapi.is_configured():
         return
     failed_last_tick = False
@@ -503,7 +506,7 @@ def _fast_position_loop():
             failed_last_tick = False
         except Exception:
             # Log once per outage, not every tick while the REST API stays
-            # down/disabled/misconfigured - _refresh_loop's save-file poll
+            # down/disabled/misconfigured - the save-file refresh worker
             # keeps position data flowing regardless.
             if not failed_last_tick:
                 traceback.print_exc()
@@ -512,6 +515,6 @@ def _fast_position_loop():
 
 
 if __name__ == "__main__":
-    threading.Thread(target=_refresh_loop, daemon=True).start()
+    subprocess.Popen([sys.executable, str(REFRESH_WORKER_SCRIPT)])
     threading.Thread(target=_fast_position_loop, daemon=True).start()
     app.run(host="0.0.0.0", port=5151, debug=False)

@@ -36,6 +36,7 @@ started) — see `backend/config.py`:
 | `PALDEX_LOCAL_SAVE_ROOT` | *(Same-host mode only — see below)* Container path where the game server's `SaveGames/<world_guid>/` dir is already bind-mounted; when set, this **replaces** `AMP_USER`/`AMP_SAVE_ROOT`/`AMP_WORLD_GUID`/`PALDEX_SSH_KEY` entirely — no SSH pull happens at all. |
 | `REST_API_PASSWORD` | *(Optional — see "Fast live position" below)* The game server's REST API `AdminPassword`. Unset by default; leaving it unset keeps position updates tied to the save-file refresh only. |
 | `REST_API_PORT` | *(Optional)* Palworld REST API port, only needed if changed from the game's own default (`8212`). |
+| `FAST_POSITION_INTERVAL_SECONDS` | *(Optional)* How often to poll the REST API for position, in seconds. Defaults to `1`; only relevant if `REST_API_PASSWORD` is set. |
 
 Note the two similarly-named SSH key variables aren't interchangeable:
 `PALDEX_SSH_KEY_HOST_PATH` (below) is a `docker-compose.yml` build-time
@@ -200,7 +201,8 @@ fresher positions.
 
 Palworld's own built-in REST API reports position straight from the live
 server process's memory instead, so PalDex can poll it much faster
-(`FAST_POSITION_INTERVAL_SECONDS` in `backend/server.py`, 1.5s by default)
+(`FAST_POSITION_INTERVAL_SECONDS`, 1s by default — override via env var,
+same env-var-first/secrets.py-fallback convention as everything else)
 without touching the save-file path at all for it. To enable:
 
 1. In `PalWorldSettings.ini` on the game server, set `RESTAPIEnabled=True`
@@ -212,7 +214,11 @@ without touching the save-file path at all for it. To enable:
 3. Set `REST_API_PASSWORD` (the `AdminPassword` above) and, if you changed
    it from the default, `REST_API_PORT`.
 
-**This is purely additive** — it only ever patches position
+**This is purely additive, and REST position always wins over save-file
+position whenever it's available** — not just in the fast 1s poll, but in
+the regular save-file refresh too, so a player's position never
+momentarily reverts to a stale save-file reading and then snaps back once
+the fast poll catches up again. It only ever patches position
 (`pixel_x`/`pixel_y`/`map`) on top of whatever the save-file refresh
 already populated; nickname/level/HP/hunger/guild/online status are
 untouched. If `REST_API_PASSWORD` is unset, or the REST API is
