@@ -90,9 +90,13 @@ exists for the non-Docker case where nothing does that mount for you.
    rsync mirror has no `--delete`, so `/tmp/palworld-saves/` on the game
    server host grows forever unless you separately cron-prune it.
 
-2. **Copy the private key onto the Docker host**, e.g. into the same
-   directory as `docker-compose.yml` at `deploy/paldex_deploy_key`. Keep
-   permissions tight (`chmod 600`). Never commit it.
+2. **Copy the private key onto the Docker host, at a path *outside* this
+   repo's own checkout** — e.g. `/root/paldex_deploy_key` on the Docker
+   host, not `deploy/paldex_deploy_key` next to `docker-compose.yml`. Keep
+   permissions tight (`chmod 600`). Never commit it. Then set
+   `PALDEX_SSH_KEY_HOST_PATH` (table above) to that path. This matters more
+   than it looks like it should — see the GitOps gotcha in step 4 below for
+   why putting it inside the checkout silently stops working.
 
 3. **Set the required config** (table above). Copy `deploy/.env.example` to
    `deploy/.env` and fill it in. `deploy/.env` is *not* next to
@@ -102,22 +106,28 @@ exists for the non-Docker case where nothing does that mount for you.
    explicitly. Deploying via Portainer's own stack editor instead just needs
    these set in its environment variables section — no `--env-file` needed.
 
-4. **Gotcha on the very first deploy of a git-repository stack**: the
-   private key from step 2 is (correctly) gitignored, so it doesn't exist
-   yet in Portainer's freshly-cloned copy of this repo. Docker's bind-mount
-   behavior for a source path that doesn't exist is to silently
-   auto-vivify an **empty directory** there instead of erroring — the
-   container starts fine, but every save-file pull then fails an SSH
-   permission check in the background (only visible in the container's own
-   logs, no deploy-time error). Fix: find the real host path Portainer
-   resolved the relative bind mount to (`docker inspect <container>
-   --format '{{.Mounts}}'` — don't assume it's simply the repo path you'd
-   expect; Portainer stacks live under its own managed compose directory on
-   the host), remove the auto-created empty directory, put the real
-   private key file there instead (mode `0600`), then **recreate** the
-   container (not just restart it — once a mount's been set up as a
-   directory, `docker restart` won't reinterpret it as a file; a full
-   recreate is needed).
+4. **Gotcha, and why step 2 says to put the key outside the checkout**: on
+   a GitOps stack (auto-update enabled, per "Deploying" below), every pull
+   re-syncs the working tree to match the repo — which deletes anything
+   sitting inside a tracked directory (like `deploy/`) that isn't itself
+   tracked, including the gitignored private key if it's there. The *very
+   first* deploy hits the same failure for a different reason (the key
+   genuinely doesn't exist yet in the fresh clone), and auto-update then
+   silently re-triggers it on every later pull too — this bit a real deploy
+   of this project twice, the second time weeks after the first "fix" had
+   quietly stopped holding. Docker's bind-mount behavior for a missing
+   source path is to auto-vivify an **empty placeholder** there instead of
+   erroring, so the container starts fine and every save-file pull then
+   fails an SSH permission check in the background (only visible in the
+   container's own logs as a confusing `Permissions 0755 ... too open`
+   warning — it looks like a permissions bug, it's actually a missing
+   file). Symptom besides the log line: name/level/guild/inventory data
+   goes stale/frozen while position may still look fine if
+   `REST_API_PASSWORD` is set, since that path doesn't touch SSH at all.
+   **The actual fix is step 2 above** (key outside the checkout,
+   `PALDEX_SSH_KEY_HOST_PATH` pointed at it) — that survives every future
+   pull, unlike putting the key back at the in-repo default path, which
+   only looks fixed until the next auto-update cycle.
 
 ## Deploying
 
@@ -269,6 +279,14 @@ needed.
   git history to remove them from every commit, not just the latest — a new
   commit that deletes a file doesn't remove it from a public repo's
   reachable history, anyone could still fetch the earlier commit.
+- **The SSH deploy key silently stopped working weeks after the initial
+  deploy** — see "One-time setup" step 4 above for the full gotcha (GitOps
+  auto-update wipes anything untracked sitting inside the git-managed
+  checkout, including the key). Fixed operationally (moved the key to
+  `/root/paldex_deploy_key` on the Docker host, outside the checkout, via
+  `PALDEX_SSH_KEY_HOST_PATH`) rather than in code — noted here since it's
+  exactly the kind of silent-until-you-check-the-logs failure this section
+  is for.
 
 ## Verifying
 
