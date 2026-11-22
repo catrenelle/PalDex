@@ -41,6 +41,33 @@ DUNGEONS_STATE_OUTPUT = LIVE_DIR / "dungeons_state.json"
 INVENTORIES_OUTPUT = LIVE_DIR / "inventories.json"
 
 
+def apply_live_positions(positions: dict[str, tuple[float, float]]) -> None:
+    """Patches pixel_x/pixel_y/map/raw_x/raw_y in the existing players.json
+    cache in place from a REST-API fast-position poll (see restapi.py and
+    server.py's _fast_position_loop) — a cheap read-patch-write of the
+    already-built small JSON, not a rerun of the full save-file refresh (no
+    SSH, no Level.sav reparse, no RCON call). Everything else about a
+    player (nickname/level/hp/hunger/guild/online) still only ever comes
+    from the regular save-file-based run() below; this only ever touches
+    position. No-ops if a full refresh hasn't produced an OUTPUT yet, or if
+    none of the given uids match a currently-known player."""
+    if not OUTPUT.exists():
+        return
+    payload = json.loads(OUTPUT.read_text())
+    changed = False
+    for p in payload["players"]:
+        pos = positions.get(p["uid"])
+        if pos is None:
+            continue
+        raw_x, raw_y = pos
+        map_name, pixel_x, pixel_y = locate(raw_x, raw_y)
+        p["raw_x"], p["raw_y"], p["map"], p["pixel_x"], p["pixel_y"] = raw_x, raw_y, map_name, pixel_x, pixel_y
+        changed = True
+    if changed:
+        payload["updated_at"] = datetime.now(timezone.utc).isoformat()
+        OUTPUT.write_text(json.dumps(payload, indent=2, default=str))
+
+
 def run() -> list[dict]:
     try:
         online_uids = get_online_uids()

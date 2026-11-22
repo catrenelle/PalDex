@@ -8,6 +8,7 @@ from pathlib import Path
 from flask import Flask, jsonify, request, send_from_directory
 
 import refresh
+import restapi
 from bosses import load_bosses, load_bounties, load_oilrigs, load_towers
 from dungeons import load_dungeon_contents, load_dungeons
 from fasttravel import load_watchtowers, load_waypoints
@@ -30,6 +31,7 @@ from relics import RELIC_META, load_relics
 from schematics import load_schematics
 
 REFRESH_INTERVAL_SECONDS = 30
+FAST_POSITION_INTERVAL_SECONDS = 1.5
 FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
 PLAYERS_DIR = refresh.SAVE_DIR / "Players"
 BUILD_VERSION_FILE = Path(__file__).resolve().parent / "BUILD_VERSION"
@@ -485,6 +487,31 @@ def _refresh_loop():
         time.sleep(REFRESH_INTERVAL_SECONDS)
 
 
+def _fast_position_loop():
+    # Pure opt-in speed layer on top of _refresh_loop's save-file position —
+    # see restapi.py's module docstring. A deploy that never sets
+    # REST_API_PASSWORD gets exactly today's behavior (position only as
+    # fresh as the 30s save-file refresh): this returns immediately and the
+    # save-file path remains the sole, failsafe source of position data.
+    if not restapi.is_configured():
+        return
+    failed_last_tick = False
+    while True:
+        try:
+            positions = restapi.fetch_positions()
+            refresh.apply_live_positions(positions)
+            failed_last_tick = False
+        except Exception:
+            # Log once per outage, not every tick while the REST API stays
+            # down/disabled/misconfigured - _refresh_loop's save-file poll
+            # keeps position data flowing regardless.
+            if not failed_last_tick:
+                traceback.print_exc()
+            failed_last_tick = True
+        time.sleep(FAST_POSITION_INTERVAL_SECONDS)
+
+
 if __name__ == "__main__":
     threading.Thread(target=_refresh_loop, daemon=True).start()
+    threading.Thread(target=_fast_position_loop, daemon=True).start()
     app.run(host="0.0.0.0", port=5151, debug=False)

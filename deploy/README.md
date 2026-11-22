@@ -34,6 +34,8 @@ started) — see `backend/config.py`:
 | `AMP_WORLD_GUID` | *(SSH-pull mode only)* The live world's save GUID (subdirectory under SaveGames) |
 | `PALDEX_SSH_KEY` | *(SSH-pull mode only, container-internal, usually left unset)* Path `backend/remote.py` reads the SSH private key from — defaults to `/run/secrets/paldex_ssh_key`, the Docker-secrets mount path `docker-compose.yml` already wires up via `PALDEX_SSH_KEY_HOST_PATH` below. You only need to set this directly if you're running outside that compose setup. |
 | `PALDEX_LOCAL_SAVE_ROOT` | *(Same-host mode only — see below)* Container path where the game server's `SaveGames/<world_guid>/` dir is already bind-mounted; when set, this **replaces** `AMP_USER`/`AMP_SAVE_ROOT`/`AMP_WORLD_GUID`/`PALDEX_SSH_KEY` entirely — no SSH pull happens at all. |
+| `REST_API_PASSWORD` | *(Optional — see "Fast live position" below)* The game server's REST API `AdminPassword`. Unset by default; leaving it unset keeps position updates tied to the save-file refresh only. |
+| `REST_API_PORT` | *(Optional)* Palworld REST API port, only needed if changed from the game's own default (`8212`). |
 
 Note the two similarly-named SSH key variables aren't interchangeable:
 `PALDEX_SSH_KEY_HOST_PATH` (below) is a `docker-compose.yml` build-time
@@ -186,6 +188,41 @@ are still required for online/offline status, since RCON is a separate
 network connection to the game server's RCON port, not a file access.
 `AMP_USER`/`AMP_SAVE_ROOT`/`AMP_WORLD_GUID` (SSH-pull-only) are the ones
 this mode drops.
+
+## Fast live position (optional)
+
+By default, player position only updates as often as the save-file refresh
+(every `REFRESH_INTERVAL_SECONDS` in `backend/server.py`, 30s) — and a
+vanilla dedicated server only rewrites `Level.sav`/`Players/*.sav` that
+often anyway (`AutoSaveSpan` in `PalWorldSettings.ini`, also 30s by
+default), so a faster save-file poll alone wouldn't actually get you
+fresher positions.
+
+Palworld's own built-in REST API reports position straight from the live
+server process's memory instead, so PalDex can poll it much faster
+(`FAST_POSITION_INTERVAL_SECONDS` in `backend/server.py`, 1.5s by default)
+without touching the save-file path at all for it. To enable:
+
+1. In `PalWorldSettings.ini` on the game server, set `RESTAPIEnabled=True`
+   and an `AdminPassword` (if not already set for RCON — it's the same
+   value RCON already uses).
+2. Make sure the REST API's port (`RESTAPIPort`, default `8212`) is
+   reachable from wherever PalDex runs — same network reachability as the
+   RCON port already needs.
+3. Set `REST_API_PASSWORD` (the `AdminPassword` above) and, if you changed
+   it from the default, `REST_API_PORT`.
+
+**This is purely additive** — it only ever patches position
+(`pixel_x`/`pixel_y`/`map`) on top of whatever the save-file refresh
+already populated; nickname/level/HP/hunger/guild/online status are
+untouched. If `REST_API_PASSWORD` is unset, or the REST API is
+unreachable/disabled/misconfigured at any point, PalDex silently falls
+back to the save-file position with no behavior change — the REST API is
+never a hard dependency.
+
+⚠️ Palworld's REST API sends the `AdminPassword` as HTTP Basic Auth over
+**plain HTTP, unencrypted** — don't expose its port beyond a trusted
+network/VPN, same caution as RCON.
 
 ## Updating static game data
 
